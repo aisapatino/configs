@@ -2,3 +2,9 @@
 	email = aisapatino@gmail.com
 [color]
 	ui = always
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[push]
+	default = matching
