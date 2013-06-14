@@ -13,14 +13,14 @@ set lines=41 columns=169
 set guioptions="ai" " Hide menu, toolbar
 
 set wrap " soft wrap
+let &showbreak='> ' " Indicate start of wrapped
 set number " Show line numbers
 set cursorline " Highlight current line
 set colorcolumn=80 " Show where the 80-char line is
-let &showbreak='> ' " Indicate start of wrapped
 set list " Show non-chars
 set listchars=tab:>.,trail:.,extends:# " Show tabs, trailing spaces, off-screen
 set scrolloff=3 " Minimum lines above/below cursor
-set shortmess="ilmnrxO" " Shorter messages
+set shortmess=ilmnrxO " Shorter messages
 set showcmd " Show commands as you're typing
 
 " Custom keybindings
@@ -43,22 +43,25 @@ nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
 
+" Trim trailing spaces
+map ;trail :%s/\s\+$
+
 " Search
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set ignorecase " Case-insensitive search
-set smartcase " If uppercase letter, search case sensitive
-set incsearch " Show matches as you type
+set ignorecase " case-insensitive search
+set smartcase  " if uppercase letter, search case sensitive
+set incsearch  " show matches as you type
 
 " Indentation & folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set tabstop=2
 set shiftwidth=2 " auto indent width
-set smarttab " uses shiftwidth # spaces when inserting <tab>
-set autoindent " take indent for new line from previous line
-set expandtab " Use spaces instead of tabs
-set smartindent "Smart indent
+set smarttab     " uses shiftwidth # spaces when inserting <tab>
+set autoindent   " take indent for new line from previous line
+set expandtab    " spaces instead of tabs
+set smartindent
 
 set foldmethod=indent
 set nofoldenable " All open at start
@@ -74,13 +77,13 @@ endfunction
 
 set laststatus=2 " Always show
 
-set statusline=[%n]            " Buffer number
+set statusline=[%n]          " Buffer number
 set statusline+=\ %t         " File name
 set statusline+=%m%=         " Modified indic, end of left side
-set statusline+=%{ShortBufferPath()}
-set statusline+=\ %5L         " Total lines in file (padded)
+set statusline+=%{ShPath()}
+set statusline+=\ %5L        " Total lines in file (padded)
 
-function! ShortBufferPath()
+function! ShPath()
   let path = bufname('')
   let path = substitute(path, '/home/aisa', '~', '') " shorten home to ~
   let path = substitute(path, 'Devel', 'D', '') " shorten main Devel dir
