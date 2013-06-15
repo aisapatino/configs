@@ -1,27 +1,32 @@
 execute pathogen#infect()
 
-" Debugging
+" Computer-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set verbose=13
-" set verbosefile=~/.vim/vimlog.vim
+
+if has("win32")
+  cd ~\Devel\
+  set guifont=Consolas
+else
+  cd ~/Devel/sjfnw/
+endif
 
 " GUI / text appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-colorscheme aisa " My modified version of pyte
-set lines=41 columns=169
-set guioptions="ai" " Hide menu, toolbar
+colorscheme aisa          " modified version of pyte
+set guioptions="ai"       " hide menu, toolbar
 
-set wrap " soft wrap
-let &showbreak='> ' " Indicate start of wrapped
-set number " Show line numbers
-set cursorline " Highlight current line
-set colorcolumn=80 " Show where the 80-char line is
-set list " Show non-chars
-set listchars=tab:>.,trail:.,extends:# " Show tabs, trailing spaces, off-screen
-set scrolloff=3 " Minimum lines above/below cursor
-set shortmess=ilmnrxO " Shorter messages
-set showcmd " Show commands as you're typing
+set lines=100 columns=500 " maximize
+set wrap                  " soft wrap
+let &showbreak='> '       " indicate start of wrapped
+set number                " show line numbers
+set cursorline            " highlight current line
+set colorcolumn=80        " show where the 80-char line is
+set list                  " show non-chars
+set listchars=tab:>.,trail:.,extends:# " tabs, trailing spaces, off-screen
+set scrolloff=3           " minimum lines above/below cursor
+set shortmess=ilmnrxO     " shorter messages
+set showcmd               " show commands as you're typing
 
 " Custom keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -56,19 +61,19 @@ set incsearch  " show matches as you type
 " Indentation & folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set tabstop=2
-set shiftwidth=2 " auto indent width
+set tabstop=2    " how many columns wide a tab is
+set shiftwidth=2 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
 set autoindent   " take indent for new line from previous line
-set expandtab    " spaces instead of tabs
-set smartindent
+set expandtab    " hitting tab inserts spaces instead of <tab>
+set smartindent  " use shiftwidth value when inserting <tab>
 
 set foldmethod=indent
-set nofoldenable " All open at start
+set nofoldenable " all open at start
 set foldtext=GetFoldText() " would like maybe just num of lines?
 function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
-  return (repeat("~", 15) . num_lines . " lines")
+  return (repeat("- ", 35) . num_lines . " lines")
 endfunction
 " also would like to not highlight line num of folded?
 
@@ -77,30 +82,29 @@ endfunction
 
 set laststatus=2 " Always show
 
-set statusline=[%n]          " Buffer number
-set statusline+=\ %t         " File name
-set statusline+=%m%=         " Modified indic, end of left side
-set statusline+=%{ShPath()}
-set statusline+=\ %5L        " Total lines in file (padded)
+set statusline=[%n]          " buffer number
+set statusline+=\ %t         " file name
+set statusline+=%m%=         " modified indic, end of left side
+set statusline+=%{ShPath()}  " shortened path
+set statusline+=\ %5L        " total lines in file (padded)
 
 function! ShPath()
-  let path = bufname('')
-  let path = substitute(path, '/home/aisa', '~', '') " shorten home to ~
-  let path = substitute(path, 'Devel', 'D', '') " shorten main Devel dir
-"   let path = substitute(path, '/.\{-2,}$', '/', '') " remove file name
+  let path = expand('%:h')                            " path sans file
+  let path = substitute(path, '/home/aisa', '~', '')  " shorten home to ~
+  let path = substitute(path, '\Users\aisa', '~', '') " windows version
+  let path = substitute(path, 'Devel', 'D', '')       " shorten main Devel dir
   return path
 endfunction
 
 " Files, sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-cd ~/Devel/sjfnw/
 set wildignore+=*.pyc,__init__.py
 set autoread " when file is changed from the outside
 set nobackup
 set nowb
 set noswapfile
-set sessionoptions = "buffers,folds,resize,tabpages,winsize"
+set sessionoptions="buffers,folds,resize,tabpages,winsize"
 
 " Diffs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -121,4 +125,9 @@ let Tlist_Enable_Fold_Column=0
 
 let g:ctrlp_custom_ignore = {'dir':  'pytz$'}
 let g:ctrlp_by_filename = 1 " Search by filename, not dir
+
+" Debugging
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set verbose=13
+" set verbosefile=~/.vim/vimlog.vim
 

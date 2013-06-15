@@ -1,3 +1,4 @@
+[For my own reference]
 
 ### Files
 
@@ -13,7 +14,8 @@
 
 Clone the repo.
 
-**Linux**: Leave the files where they are and use symlinks
+**Linux**: Leave the files where they are and use symlinks.
+(No updating necessary unless file names change)
 
 * aisa.vim    -> ~/.vim/colors/
 * fl-gitconfig, flml-gitconfig -> repo/.git/, rename links to config
@@ -23,7 +25,7 @@ Clone the repo.
 * .pylintrc   -> ~/
 * .vimrc      -> ~/
 
-**Windows**: Copy the files
+**Windows**: Copy the files for every update (using auto\_copy.bat)
 
 ~ = C:\Users\username
 
