@@ -3,7 +3,7 @@
 [color]
 	ui = always
 [diff]
-	tool = vimdiff
+	tool = gvimdiff
 [difftool]
 	prompt = false
 [push]
