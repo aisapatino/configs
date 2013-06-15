@@ -15,14 +15,21 @@ endif
 
 colorscheme aisa          " modified version of pyte
 set guioptions="ai"       " hide menu, toolbar
+set lines=41 columns=169  " maximize (this appears to do nothing?)
+set guiheadroom=0         " account for menu/toolbar being hidden
 
-set lines=100 columns=500 " maximize
+if &diff
+  syntax off
+else
+  set list                " show non-chars
+  syntax on
+endif
+
 set wrap                  " soft wrap
 let &showbreak='> '       " indicate start of wrapped
 set number                " show line numbers
 set cursorline            " highlight current line
 set colorcolumn=80        " show where the 80-char line is
-set list                  " show non-chars
 set listchars=tab:>.,trail:.,extends:# " tabs, trailing spaces, off-screen
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
@@ -61,15 +68,15 @@ set incsearch  " show matches as you type
 " Indentation & folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set tabstop=2    " how many columns wide a tab is
+set tabstop=2    " how many columns wide a tab is visually
 set shiftwidth=2 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
-set autoindent   " take indent for new line from previous line
 set expandtab    " hitting tab inserts spaces instead of <tab>
-set smartindent  " use shiftwidth value when inserting <tab>
+set autoindent   " take indent for new line from previous line
+set smartindent  " use shiftwidth value when inserting <tab> TODO same as st?
 
 set foldmethod=indent
-set nofoldenable " all open at start
+set nofoldenable           " all open at start
 set foldtext=GetFoldText() " would like maybe just num of lines?
 function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
@@ -104,7 +111,7 @@ set autoread " when file is changed from the outside
 set nobackup
 set nowb
 set noswapfile
-set sessionoptions="buffers,folds,resize,tabpages,winsize"
+set sessionoptions="buffers,folds,resize,tabpages,winsize" " don't save opts
 
 " Diffs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,6 +132,10 @@ let Tlist_Enable_Fold_Column=0
 
 let g:ctrlp_custom_ignore = {'dir':  'pytz$'}
 let g:ctrlp_by_filename = 1 " Search by filename, not dir
+
+" Language-specific
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 " Debugging
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
