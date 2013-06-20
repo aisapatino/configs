@@ -35,22 +35,22 @@ hi Special     guifg=#70a0d0 gui=italic
 hi Title       guifg=#202020 gui=bold
 hi Underlined  guifg=#202020 gui=underline
 " color of <TAB>s etc
-hi SpecialKey guibg=#f0c8c8
+hi SpecialKey                guibg=#f0c8c8
 " Include -- from, import
 " Exception - except, finally, raise, try, built in Exceptions
 
 " ???
 hi PreProc    guifg=#1060a0 gui=NONE
-hi Constant  guifg=#a07040
+hi Constant   guifg=#a07040
 " HTML arguments, Python unused?
 hi Type       guifg=#e5a00d gui=italic
 
 " Text states
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi MatchParen guifg=white   guibg=#80a090 gui=bold
+hi MatchParen guifg=#166e42 guibg=NONE    gui=bold
 hi Error      guifg=red     guibg=white   gui=bold,underline
-hi Todo       guifg=#a0b0c0 guibg=NONE    gui=italic,bold,underline
+hi Todo       guifg=NONE    guibg=NONE    gui=italic,bold,underline
 hi Folded     guifg=#a0a0a0 guibg=#e8e8e8 gui=italic
 
 " Diff
