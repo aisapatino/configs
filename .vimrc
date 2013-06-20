@@ -130,7 +130,7 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 let Tlist_Show_One_File = 1 " Only show focused file
 let Tlist_Enable_Fold_Column=0
 
-let g:ctrlp_custom_ignore = {'dir':  'pytz$'}
+let g:ctrlp_custom_ignore = {'dir':  '(pytz|tmp|temp)$'}
 let g:ctrlp_by_filename = 1 " Search by filename, not dir
 
 " Language-specific
