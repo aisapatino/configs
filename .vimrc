@@ -15,14 +15,13 @@ endif
 
 colorscheme aisa          " modified version of pyte
 set guioptions="ai"       " hide menu, toolbar
-set lines=41 columns=169  " maximize (this appears to do nothing?)
+set lines=41 columns=169  " maximize
 set guiheadroom=0         " account for menu/toolbar being hidden
 
 if &diff
   syntax off
 else
-  set list                " show non-chars
-  syntax on
+  syntax enable           " enable syntax, don't override colors
 endif
 
 set wrap                  " soft wrap
@@ -30,10 +29,10 @@ let &showbreak='> '       " indicate start of wrapped
 set number                " show line numbers
 set cursorline            " highlight current line
 set colorcolumn=80        " show where the 80-char line is
-set listchars=tab:>.,trail:.,extends:# " tabs, trailing spaces, off-screen
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands as you're typing
+match TrailingSpaces /\s\+$/
 
 " Custom keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,10 +67,9 @@ set incsearch  " show matches as you type
 " Indentation & folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set tabstop=2    " how many columns wide a tab is visually
-set shiftwidth=2 " how many columns to indent with >>
+set tabstop=4    " how many columns wide a tab is visually
+set shiftwidth=4 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
-set expandtab    " hitting tab inserts spaces instead of <tab>
 set autoindent   " take indent for new line from previous line
 set smartindent  " use shiftwidth value when inserting <tab> TODO same as st?
 
@@ -122,10 +120,9 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" let g:syntastic_mode_map['mode']='passive'
-" let g:syntastic_check_on_open=1
-" let g:syntastic_enable_highlighting = 1
-" let g:syntastic_python_checker = 'pylint'
+let g:did_minibufexplorer_syntax_inits = 1 "tell minibuf not to set its own hi
+let g:miniBufExplHideWhenDiff = 1 " don't show buffer list in diff mode
+let g:miniBufExplStatusLineText = '.'
 
 let Tlist_Show_One_File = 1 " Only show focused file
 let Tlist_Enable_Fold_Column=0
@@ -133,9 +130,15 @@ let Tlist_Enable_Fold_Column=0
 let g:ctrlp_custom_ignore = {'dir':  '(pytz|tmp|temp)$'}
 let g:ctrlp_by_filename = 1 " Search by filename, not dir
 
+" let g:syntastic_mode_map['mode']='passive'
+" let g:syntastic_check_on_open=1
+" let g:syntastic_enable_highlighting = 1
+" let g:syntastic_python_checker = 'pylint'
+
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+au Filetype python set tabstop=2 |set shiftwidth=2 | set expandtab
+au Filetype lua    set tabstop=2 |set shiftwidth=2 | set expandtab
 
 " Debugging
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
