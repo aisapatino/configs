@@ -11,9 +11,9 @@ let colors_name = "aisa"
 
 hi Normal    guifg=#404850   guibg=#f0f0f0  ctermbg=15  ctermfg=black
 
-hi String    guifg=#a0b0c0 ctermfg=black
-hi Number    guifg=#40a070 ctermfg=black
-hi Float     guifg=#40a070 ctermfg=black
+hi String    guifg=#a0b0c0   ctermfg=black
+hi Number    guifg=#40a070   ctermfg=black
+hi Float     guifg=#40a070   ctermfg=black
 
 " PythonStatement, PreCondit (from, import). keywords:  class/def etc
 " html: tag-names
@@ -35,18 +35,14 @@ hi Special     guifg=#70a0d0 gui=italic
 hi Title       guifg=#202020 gui=bold
 hi Underlined  guifg=#202020 gui=underline
 " color of <TAB>s etc
-hi SpecialKey                guibg=#f0c8c8
-" Include -- from, import
-" Exception - except, finally, raise, try, built in Exceptions
-
-" ???
+"hi SpecialKey                guibg=#f0c8c8
 hi PreProc    guifg=#1060a0 gui=NONE
 hi Constant   guifg=#a07040
 " HTML arguments, Python unused?
 hi Type       guifg=#e5a00d gui=italic
 
 " Text states
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 hi MatchParen guifg=#166e42 guibg=NONE    gui=bold
 hi Error      guifg=red     guibg=white   gui=bold,underline
@@ -60,10 +56,11 @@ hi DiffAdd    guifg=#166e42 guibg=#e3faef     gui=NONE
 hi DiffDelete guifg=#fae6e6 guibg=#fae6e6 gui=italic
 
 " Window/screen components
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi NonText     guifg=#c0c0c0 guibg=#e0e0e0 ctermbg=grey  ctermfg=2
-hi ColorColumn guibg=#f6f6f6
+hi NonText        guifg=#c0c0c0 guibg=#e0e0e0 ctermbg=grey  ctermfg=2
+hi ColorColumn    guibg=#f6f6f6
+hi TrailingSpaces               guibg=#f0c8c8
 
 "Tabpages
 hi TabLine     guifg=black   guibg=#b0b8c0 gui=italic ctermbg=black  ctermfg=grey
@@ -87,4 +84,11 @@ hi StatusLineNC guifg=#506070 guibg=#a0b0c0 ctermbg=grey ctermfg=black
 
 " Split lines
 hi VertSplit guifg=#a0b0c0 guibg=#a0b0c0 gui=NONE ctermbg=black  ctermfg=grey
+
+hi MBENormal               guifg=#a0b0c0            gui=italic
+hi MBEChanged              guifg=#ff0000
+hi MBEVisibleNormal        guifg=#06287e            gui=NONE
+hi MBEVisibleChanged       guifg=#ff0000 guibg=NONE gui=NONE
+hi MBEVisibleActiveNormal  guifg=#70a0d0 guibg=NONE gui=bold
+hi MBEVisibleActiveChanged guifg=#ff0000 guibg=NONE gui=bold
 
