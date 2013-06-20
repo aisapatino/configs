@@ -1,5 +1,8 @@
 [For my own reference]
 
+### To do
+* app launchers
+
 ### Files
 
 * aisa.vim: customized version of the pyte colorscheme for vim
