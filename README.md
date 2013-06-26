@@ -12,6 +12,7 @@
 * .gitconfig: global git config
 * .pylintrc: settings for running pylint in vim with minimal django conflicts
 * .vimrc
+* bundle: vim plugins
 
 ### Setup
 
@@ -27,6 +28,7 @@ Clone the repo.
 * .gitconfig  -> ~/
 * .pylintrc   -> ~/
 * .vimrc      -> ~/
+* bundle      -> ~/.vim/
 
 **Windows**: Copy the files for every update (using auto\_copy.bat)
 
@@ -37,6 +39,7 @@ Clone the repo.
 * .gitconfig  -> ~\
 * .pylintrc   -> ~\
 * .vimrc      -> ~\
+* bundle      -> ~\vimfiles\
 
 *probably irrelevant on windows?
 * .bashrc     -> ~\
