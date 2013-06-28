@@ -1,5 +1,8 @@
 execute pathogen#infect()
 
+" TO DO
+"   shorten file name if needed
+
 " Computer-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -89,7 +92,7 @@ set laststatus=2 " Always show
 set statusline=[%n]          " buffer number
 set statusline+=\ %t         " file name
 set statusline+=%m%=         " modified indic, end of left side
-set statusline+=%{ShPath(expand('%:h'))}  " shortened path
+set statusline+=%<%{ShPath(expand('%:h'))}  " shortened path
 set statusline+=\ %5L        " total lines in file (padded)
 
 function! ShPath(path)
@@ -116,18 +119,21 @@ set sessionoptions="buffers,curdir,folds,resize,tabpages,winsize"
 set t_Co=256
 set diffopt=filler,context:2,vertical,foldcolumn:1
 
-" Custom functions
+" Custom shortcuts/functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use !command to run a shell command without dropping into shell
 
 " Store sessions in one place
 nnoremap ;so :so ~/Devel/vim-sessions/
+nnoremap ;mks :mks! ~/Devel/vim-sessions/
 
 " Trim trailing spaces
 map ;trail :%s/\s\+$
 
-" Format django's debug=True lists of queries 
-command FormatQLogs execute "%s/\(SELECT\|WHERE\|FROM\|\)/\r\t\1/gc | %s/`//gc"
+command! Reload execute "so %"
+
+" Format django's debug=True lists of queries
+command! FormatQLogs execute "%s/\(SELECT\|WHERE\|FROM\|\)/\r\t\1/gc | %s/`//gc"
 
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
