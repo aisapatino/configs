@@ -1,14 +1,12 @@
 execute pathogen#infect()
 
-" TO DO
-"   shorten file name if needed
-
 " Computer-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("win32")
   cd ~\Devel\
   set guifont=Consolas:h12
+  set backspace=indent,eol,start
 else
   cd ~/Devel/sjfnw/
 endif
@@ -36,8 +34,8 @@ set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands as you're typing
 set fillchars="vert:\|,fold:\ -,diff:\ -"
-match TrailingSpaces /\s\+$/
 filetype plugin indent on
+match TrailingSpaces /\s\+$/
 
 " Custom keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -74,6 +72,7 @@ set shiftwidth=4 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
 set autoindent   " take indent for new line from previous line
 set smartindent  " use shiftwidth value when inserting <tab> TODO same as st?
+set expandtab    " tabs are annoying; use spaces
 
 set foldmethod=indent
 set nofoldenable           " all open at start
@@ -130,6 +129,7 @@ nnoremap ;mks :mks! ~/Devel/vim-sessions/
 " Trim trailing spaces
 map ;trail :%s/\s\+$
 
+" Resource vimrc
 command! Reload execute "so %"
 
 " Format django's debug=True lists of queries
@@ -146,7 +146,6 @@ let Tlist_Show_One_File = 1     " only show focused file
 let Tlist_Enable_Fold_Column = 0
 
 let g:ctrlp_by_filename = 1  " search by filename, not dir
-let g:ctrlp_use_caching = 1  " preserve cache between sessions
 
 let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
 let g:EasyGrepEveryMatch = 1   " show all matches on a line
@@ -163,8 +162,8 @@ let g:EasyGrepFilesToExclude = 'pytz,djangoappengine' " ignore these dirs
 
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au Filetype python set tabstop=2 |set shiftwidth=2 | set expandtab
-au Filetype lua    set tabstop=2 |set shiftwidth=2 | set expandtab
+au Filetype python set tabstop=2 |set shiftwidth=2
+au Filetype lua    set tabstop=2 |set shiftwidth=2
 
 " Debugging
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
