@@ -8,7 +8,7 @@ execute pathogen#infect()
 
 if has("win32")
   cd ~\Devel\
-  set guifont=Consolas
+  set guifont=Consolas:h12
 else
   cd ~/Devel/sjfnw/
 endif
