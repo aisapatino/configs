@@ -19,7 +19,7 @@ let colors_name = "aisa"
 " numbers  comments diffs
 " #ff0000  #ff00f8  #5b3674  #fae6e6  #6c71c4
 " errors   func/class        diffs
-" #a07040
+" #5b3674
 " constant
 
 " Types of text
@@ -30,20 +30,20 @@ hi Normal      guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
 hi String      guifg=#a0b0c0 ctermfg=black
 hi Number      guifg=#40a070 ctermfg=black
 hi Float       guifg=#40a070 ctermfg=black
+hi Define      guifg=#06287e gui=bold
 hi Operator    guifg=#06287e gui=bold
 hi Statement   guifg=#06287e gui=bold
 hi Repeat      guifg=#06287e gui=bold
 hi Conditional guifg=#06287e gui=bold
 hi Comment     guifg=#7fbf58 gui=italic
-hi Identifier  guifg=#5b3674 gui=italic
 hi Function    guifg=#ff00f8 gui=bold
-hi Define      guifg=#1060a0 gui=italic
 hi Structure   guifg=#1060a0 gui=italic
 hi Special     guifg=#1060a0 gui=italic
 hi Title       guifg=NONE    gui=bold
 hi Underlined  guifg=NONE    gui=underline
 hi PreProc     guifg=#1060a0 gui=bold
-hi Constant    guifg=#a07040
+hi Identifier  guifg=#5b3674 gui=italic
+hi Constant    guifg=#6c71c4
 hi Type        guifg=#6c71c4 gui=NONE
 
 " Text states
@@ -53,6 +53,7 @@ hi MatchParen  guifg=#40a070 guibg=NONE    gui=bold
 hi Error       guifg=red     guibg=#ffffff   gui=bold,underline
 hi Todo        guifg=NONE    guibg=NONE    gui=italic,bold
 hi Folded      guifg=#a0a0a0 guibg=#e8e8e8 gui=italic
+hi Search      guifg=NONE    guibg=#f8f3cb
 hi TrailingSpaces            guibg=#f0c8c8
 
 hi DiffChange  guifg=NONE    guibg=NONE
@@ -90,3 +91,8 @@ hi MBEVisibleActiveChanged guifg=#ff0000 guibg=NONE gui=bold
 
 hi Directory   guifg=#1060a0
 
+"   TagListTagName  - Used for tag names
+"   TagListTagScope - Used for tag scope
+"   TagListTitle    - Used for tag titles
+"   TagListComment  - Used for comments
+"   TagListFileName - Used for filenames
