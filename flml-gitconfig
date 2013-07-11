@@ -14,3 +14,6 @@
 [remote "curseforge"]
 	url = git@git.curseforge.net:wow/flaming-loot-ml/mainline.git
 	fetch = +refs/heads/*:refs/remotes/curseforge/*
+[branch "edithistory"]
+	remote = origin
+	merge = refs/heads/edithistory
