@@ -1,8 +1,5 @@
 execute pathogen#infect()
 
-" TO DO
-"   shorten file name if needed
-
 " Computer-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -16,9 +13,9 @@ endif
 " GUI / text appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-colorscheme aisa          " modified version of pyte
+colorscheme aisa
 set guioptions="ai"       " hide menu, toolbar
-set lines=41 columns=169  " maximize
+set lines=41 columns=169  " maximize (on laptop)
 set guiheadroom=0         " account for menu/toolbar being hidden
 
 if &diff
@@ -51,7 +48,7 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 
 " Shorter tag window toggle
-nnoremap ;tt :TlistToggle
+nnoremap ;tt :TagbarToggle
 
 " Shorter file searches (find all, find files, find recent, find buffer)
 nnoremap ;fa :CtrlPMixed<Cr>
@@ -82,7 +79,6 @@ function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
   return (repeat("- ", 35) . num_lines . " lines")
 endfunction
-" also would like to not highlight line num of folded?
 
 " Status line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -92,7 +88,7 @@ set laststatus=2 " Always show
 set statusline=[%n]          " buffer number
 set statusline+=\ %t         " file name
 set statusline+=%m%=         " modified indic, end of left side
-set statusline+=%<%{ShPath(expand('%:h'))}  " shortened path
+set statusline+=%.30(%{ShPath(expand('%:h'))}%)  " shortened path
 set statusline+=\ %5L        " total lines in file (padded)
 
 function! ShPath(path)
@@ -111,7 +107,7 @@ set autoread " when file is changed from the outside
 set nobackup
 set nowb
 set noswapfile
-set sessionoptions="buffers,curdir,folds,resize,tabpages,winsize"
+set sessionoptions="buffers,folds,resize,tabpages,winsize"
 
 " Diffs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -142,8 +138,11 @@ let g:did_minibufexplorer_syntax_inits = 1 " tell minibuf not to set its own hi
 let g:miniBufExplHideWhenDiff = 1          " don't show in diff mode
 let g:miniBufExplStatusLineText = '%=cwd\ %{ShPath(getcwd())}'
 
-let Tlist_Show_One_File = 1     " only show focused file
-let Tlist_Enable_Fold_Column = 0
+let g:tagbar_left = 1
+let g:tagbar_sort = 0           " order of appearance in file, not alphabetical
+let g:tagbar_width = 30
+let g:tagbar_show_visibility = 0 " don't show symbols for public/private
+let g:tagbar_singleclick = 1    " single click to go to tag
 
 let g:ctrlp_by_filename = 1  " search by filename, not dir
 let g:ctrlp_use_caching = 1  " preserve cache between sessions
@@ -164,6 +163,7 @@ let g:EasyGrepFilesToExclude = 'pytz,djangoappengine' " ignore these dirs
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au Filetype python set tabstop=2 |set shiftwidth=2 | set expandtab
+let python_no_builtin_highlight = 1
 au Filetype lua    set tabstop=2 |set shiftwidth=2 | set expandtab
 
 " Debugging
