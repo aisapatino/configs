@@ -6,6 +6,7 @@ execute pathogen#infect()
 if has("win32")
   cd ~\Devel\
   set guifont=Consolas:h12
+  set backspace=indent,eol,start
 else
   cd ~/Devel/sjfnw/
 endif
@@ -33,8 +34,8 @@ set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands as you're typing
 set fillchars="vert:\|,fold:\ -,diff:\ -"
-match TrailingSpaces /\s\+$/
 filetype plugin indent on
+match TrailingSpaces /\s\+$/
 
 " Custom keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -71,6 +72,7 @@ set shiftwidth=4 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
 set autoindent   " take indent for new line from previous line
 set smartindent  " use shiftwidth value when inserting <tab> TODO same as st?
+set expandtab    " tabs are annoying; use spaces
 
 set foldmethod=indent
 set nofoldenable           " all open at start
@@ -126,6 +128,7 @@ nnoremap ;mks :mks! ~/Devel/vim-sessions/
 " Trim trailing spaces
 map ;trail :%s/\s\+$
 
+" Resource vimrc
 command! Reload execute "so %"
 
 " Format django's debug=True lists of queries
@@ -145,7 +148,6 @@ let g:tagbar_show_visibility = 0 " don't show symbols for public/private
 let g:tagbar_singleclick = 1    " single click to go to tag
 
 let g:ctrlp_by_filename = 1  " search by filename, not dir
-let g:ctrlp_use_caching = 1  " preserve cache between sessions
 
 let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
 let g:EasyGrepEveryMatch = 1   " show all matches on a line
