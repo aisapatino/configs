@@ -11,42 +11,51 @@ reset="\033[00m"
 # The $? holds the exit status of the previously executed command. 0 = success
 echo 'Checking git repos...'
 cd ~/Devel
-for d in 'configs' 'flamingloot' 'flamingloot-ml' 'sjfnw' 'tracker'
+for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'tracker'
 do
 	cd $d
-	OUT="\033[1m$d\033[0m"
+	printf "\033[1m%14s\033[0m  " "$d"
 	RES=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
 	SECTION=$( echo "$RES" | grep -o "On branch \([a-z]\+\)")
 	SECTION=$( echo "$SECTION" | grep -o "[a-z_/\-]\+$")
-	OUT="$OUT - $SECTION"
+	if [ "$SECTION" = "master" ] ; then
+		printf "%-13s%s" "$SECTION"
+	else
+		printf "$cyan%-13s$reset" "$SECTION"
+	fi
 	SECTION=""
 
+	OUT=0
 	SECTION=$(echo "$RES" | grep -e 'Untracked')
 	if [ "$SECTION" != "" ] ; then
-		OUT="$OUT $red[Untracked]$reset"
+		printf "$red[New files]$reset"
+		OUT=1
 	fi
 	SECTION=$(echo "$RES" | grep -e 'Changes not staged for commit')
 	if [ "$SECTION" != "" ] ; then
-		OUT="$OUT $red[Modified]$reset"
+		printf "$red[Modified]$reset"
+		OUT=1
 	fi
 	SECTION=$(echo "$RES" | grep -e 'Changes to be committed')
 	if [ "$SECTION" != "" ] ; then
-		OUT="$OUT $green[Staged]$reset"
+		printf "$green[Staged]$reset"
+		OUT=1
 	fi
 	SECTION=$(echo "$RES" | grep -e 'Your branch is ahead')
 	if [ "$SECTION" != "" ] ; then
-		OUT="$OUT $yellow[Ahead of remote]$reset"
+		printf "$yellow[Ahead of remote]$reset"
+		OUT=1
 	fi
 	SECTION=$(echo "$RES" | grep -e 'Your branch is behind')
 	if [ "$SECTION" != "" ] ; then
-		OUT="$OUT $cyan[Behind remote]$reset"
+		printf "$yellow[Behind remote]$reset"
+		OUT=1
 	fi
 
-	SECTION=$(echo "$OUT" | grep -o "\]")
-	if [ "$SECTION" = "" ] ; then
-		OUT="$OUT $green[up to date]$reset"
+	if [ "$OUT" -eq 0 ] ; then
+		printf "$green[Up to date]$reset"
 	fi
-	echo -e "$OUT"
+	printf "\n"
 	cd ..
 done
 
