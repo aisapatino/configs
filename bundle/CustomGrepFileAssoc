@@ -4,6 +4,7 @@
 
 " Added:
 Django=*.py *.html *.json
+WoW=*.lua *.xml *.toc
 Ada=*.adb *.ads *.ada *.gpr *.ada_m *.adc
 Assembly=*.asm *.[sS] *.[aA] *.mac *.lst *.i
 B=*.mch *.ref *.imp
