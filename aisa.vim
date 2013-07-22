@@ -13,8 +13,8 @@ let colors_name = "aisa"
 " *        *        *
 " #40a070  #7fbf58
 " numbers  comments
-" #ff0000  #ff00f8 
-"" errors   func/class    
+" #ff0000  #ff00f8
+"" errors   func/class
 " #5b3674  #6c71c4
 "
 " #fae6e6   #e3faef
@@ -26,10 +26,10 @@ let colors_name = "aisa"
 
 hi Normal      guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
 
-hi Comment       guifg=#7fbf58 gui=italic
-hi CommentHeader guifg=#7fbf58 gui=italic,bold
+hi Comment       guifg=#a0b0c0
+hi CommentHeader guifg=#a0b0c0 gui=bold
 hi Constant      guifg=#44047E
-hi String        guifg=#a0b0c0 ctermfg=black
+hi String        guifg=#506070 ctermfg=black
 hi Number        guifg=#40a070 ctermfg=black
 hi Float         guifg=#40a070 ctermfg=black
 " hi Character " character constant, 'c', '\n'
@@ -76,7 +76,7 @@ hi Underlined  guifg=NONE    gui=underline
 hi MatchParen  guifg=#40a070 guibg=NONE    gui=bold
 hi Error       guifg=#A70035               gui=bold,underline
 hi Todo        guifg=NONE    guibg=NONE    gui=italic,bold
-hi Folded      guifg=#a0a0a0               gui=italic
+hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3cb
 hi TrailingSpaces            guibg=#fae6e6
 
