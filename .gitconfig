@@ -13,3 +13,5 @@
 [alias]
 	st = status
   ch = checkout
+[core]
+  autocrlf = false

@@ -13,8 +13,8 @@ let colors_name = "aisa"
 " *        *        *
 " #40a070  #7fbf58
 " numbers  comments
-" #ff0000  #ff00f8 
-"" errors   func/class    
+" #ff0000  #ff00f8
+"" errors   func/class
 " #5b3674  #6c71c4
 "
 " #fae6e6   #e3faef
@@ -26,12 +26,12 @@ let colors_name = "aisa"
 
 hi Normal      guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
 
-hi Comment     guifg=#7fbf58 gui=italic
-hi CommentHeader guifg=#7fbf58 gui=italic,bold
-hi Constant    guifg=#44047E
-hi String      guifg=#a0b0c0 ctermfg=black
-hi Number      guifg=#40a070 ctermfg=black
-hi Float       guifg=#40a070 ctermfg=black
+hi Comment       guifg=#a0b0c0
+hi CommentHeader guifg=#a0b0c0 gui=bold
+hi Constant      guifg=#44047E
+hi String        guifg=#506070 ctermfg=black
+hi Number        guifg=#40a070 ctermfg=black
+hi Float         guifg=#40a070 ctermfg=black
 " hi Character " character constant, 'c', '\n'
 " hi Boolean
 
@@ -74,9 +74,9 @@ hi Underlined  guifg=NONE    gui=underline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 hi MatchParen  guifg=#40a070 guibg=NONE    gui=bold
-hi Error       guifg=red     guibg=#ffffff gui=bold,underline
+hi Error       guifg=#A70035               gui=bold,underline
 hi Todo        guifg=NONE    guibg=NONE    gui=italic,bold
-hi Folded      guifg=#a0a0a0 guibg=#e8e8e8 gui=italic
+hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3cb
 hi TrailingSpaces            guibg=#fae6e6
 
@@ -96,16 +96,16 @@ hi CursorLineNr  guifg=#a0b0c0 guibg=#f6f6f6
 hi StatusLine    guifg=#ffffff guibg=#a0b0c0 gui=bold ctermbg=grey ctermfg=black
 hi StatusLineNC  guifg=#506070 guibg=#a0b0c0 ctermbg=grey ctermfg=black
 hi VertSplit     guifg=#506070 guibg=#506070 gui=NONE ctermbg=black  ctermfg=grey
+hi SLWarn        guifg=#A70035
+hi Directory     guifg=#1060a0
 
-" Buffer list
 hi MBENormal               guifg=#a0b0c0            gui=italic
-hi MBEChanged              guifg=#ff0000
+hi MBEChanged              guifg=#A70035
 hi MBEVisibleNormal        guifg=#06287e            gui=NONE
-hi MBEVisibleChanged       guifg=#ff0000 guibg=NONE gui=NONE
+hi MBEVisibleChanged       guifg=#A70035 guibg=NONE gui=NONE
 hi MBEVisibleActiveNormal  guifg=#1060a0 guibg=NONE gui=bold
-hi MBEVisibleActiveChanged guifg=#ff0000 guibg=NONE gui=bold
+hi MBEVisibleActiveChanged guifg=#A70035 guibg=NONE gui=bold
 
-hi Directory   guifg=#1060a0
 
 "   TagListTagName  - Used for tag names
 "   TagListTagScope - Used for tag scope

@@ -1,14 +1,18 @@
 execute pathogen#infect()
 
-" Computer-specific
+" OS-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("win32")
   cd ~\Devel\
   set guifont=Consolas:h12
   set backspace=indent,eol,start
+  let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
+  set fileformats=unix,dos
 else
   cd ~/Devel/sjfnw/
+  let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
+  let g:EasyGrepFileAssociations = "/home/aisa/.vim/bundle/CustomGrepFileAssoc"
 endif
 
 " GUI / text appearance
@@ -67,12 +71,12 @@ set incsearch  " show matches as you type
 " Indentation & folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set expandtab    " tabs are annoying; use spaces
 set tabstop=4    " how many columns wide a tab is visually
 set shiftwidth=4 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
 set autoindent   " take indent for new line from previous line
-set smartindent  " use shiftwidth value when inserting <tab> TODO same as st?
-set expandtab    " tabs are annoying; use spaces
+set smartindent  " more intelligent indent for new lines
 
 set foldmethod=indent
 set nofoldenable           " all open at start
@@ -87,12 +91,18 @@ endfunction
 
 set laststatus=2 " Always show
 
-set statusline=[%n]          " buffer number
-set statusline+=\ %t         " file name
-set statusline+=%m%=         " modified indic, end of left side
-set statusline+=%.30(%{ShPath(expand('%:h'))}%)  " shortened path
-set statusline+=\ %5L        " total lines in file (padded)
+set statusline=[%n]                                     " buffer number
+set statusline+=\ %t\                                   " file name
+set statusline+=%{fugitive#statusline()}                " git branch
+set statusline+=%#SLWarn#%m%*                   " warn if dos format
+set statusline+=\ %#SLWarn#%{&ff!='unix'?'['.&ff.']':''}%*
+set statusline+=\ %{&shiftwidth}                        " tab size
+set statusline+=%{&expandtab==1?'':'%#SLWarn#T%*'} " warn if using \t
+set statusline+=%=                                      " end of left side
+set statusline+=\ %.30(\ \ %{ShPath(expand('%:h'))}%)   " shortened path
+set statusline+=\ %5L                                   " total lines in file
 
+" a: indicates arg
 function! ShPath(path)
   let path = a:path
   let path = substitute(path, '/home/aisa', '~', '')  " shorten home to ~
@@ -131,6 +141,9 @@ map ;trail :%s/\s\+$
 " Resource vimrc
 command! Reload execute "so %"
 
+" Convert file to unix
+command! FormatUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
+
 " Format django's debug=True lists of queries
 command! FormatQLogs execute "%s/\(SELECT\|WHERE\|FROM\|\)/\r\t\1/gc | %s/`//gc"
 
@@ -149,12 +162,10 @@ let g:tagbar_singleclick = 1    " single click to go to tag
 
 let g:ctrlp_by_filename = 1  " search by filename, not dir
 
-let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
 let g:EasyGrepEveryMatch = 1   " show all matches on a line
 let g:EasyGrepRecursive = 1    " search subfolders
 let g:EasyGrepMode = 2         " use file associations
 let g:EasyGrepAllOptionsInExplorer = 1
-let g:EasyGrepFileAssociations = "/home/aisa/.vim/bundle/CustomGrepFileAssoc"
 let g:EasyGrepFilesToExclude = 'pytz,djangoappengine' " ignore these dirs
 
 " let g:syntastic_mode_map['mode']='passive'
