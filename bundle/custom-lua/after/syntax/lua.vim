@@ -7,3 +7,6 @@ hi link luaCustomFunction Function
 syn match luaCommentHeader "---.*"
 hi link luaCommentHeader CommentHeader
 
+syn match luaNestedFunc ":\@<=\w\+"
+hi link luaNestedFunc Special
+
