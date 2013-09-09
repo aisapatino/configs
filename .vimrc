@@ -135,6 +135,9 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 nnoremap ;so :so ~/Devel/vim-sessions/
 nnoremap ;mks :mks! ~/Devel/vim-sessions/
 
+" Change working dir
+command! Current execute "cd %:p:h"
+
 " Trim trailing spaces
 map ;trail :%s/\s\+$
 
