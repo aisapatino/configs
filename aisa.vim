@@ -43,7 +43,7 @@ hi Statement   guifg=#06287e gui=bold
 hi Conditional guifg=#06287e gui=bold
 hi Repeat      guifg=#06287e gui=bold
 hi Operator    guifg=#06287e gui=bold
-" hi Keyword  " other keywords
+hi Keyword     guifg=#06287e gui=bold
 " hi Exception  " try, catch, throw
 " hi Label  " case, default, etc.
 
