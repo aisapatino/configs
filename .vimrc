@@ -4,13 +4,13 @@ execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("win32")
-  cd ~\Devel\
+  cd ~\Projects\
   set guifont=Consolas:h12
   set backspace=indent,eol,start
   let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
   set fileformats=unix,dos
 else
-  cd ~/Devel/sjfnw/
+  cd ~/Projects
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
   let g:EasyGrepFileAssociations = "/home/aisa/.vim/bundle/CustomGrepFileAssoc"
 endif
@@ -107,7 +107,7 @@ function! ShPath(path)
   let path = a:path
   let path = substitute(path, '/home/aisa', '~', '')  " shorten home to ~
   let path = substitute(path, '\Users\aisa', '~', '') " windows version
-  let path = substitute(path, 'Devel', 'D', '')       " shorten main Devel dir
+  let path = substitute(path, 'Projects', 'D', '')       " shorten main Projects dir
   return path
 endfunction
 
@@ -132,8 +132,8 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 " Use !command to run a shell command without dropping into shell
 
 " Store sessions in one place
-nnoremap ;so :so ~/Devel/vim-sessions/
-nnoremap ;mks :mks! ~/Devel/vim-sessions/
+nnoremap ;so :so ~/Projects/vim-sessions/
+nnoremap ;mks :mks! ~/Projects/vim-sessions/
 
 " Trim trailing spaces
 map ;trail :%s/\s\+$
@@ -146,6 +146,10 @@ command! FormatUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
 
 " Format django's debug=True lists of queries
 command! FormatQLogs execute "%s/\(SELECT\|WHERE\|FROM\|\)/\r\t\1/gc | %s/`//gc"
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+    \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+    \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -179,7 +183,10 @@ let g:syntastic_auto_loc_list = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au Filetype python set tabstop=2 |set shiftwidth=2 | set expandtab
 let python_no_builtin_highlight = 1
+
 au Filetype lua    set tabstop=2 |set shiftwidth=2 | set expandtab
+
+au BufRead,BufNewFile *.md set filetype=markdown
 
 " Debugging
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
