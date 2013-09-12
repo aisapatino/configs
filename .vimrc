@@ -4,7 +4,7 @@ execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("win32")
-  cd ~\Projects\
+  cd ~\Projects
   set guifont=Consolas:h12
   set backspace=indent,eol,start
   let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
@@ -72,8 +72,8 @@ set incsearch  " show matches as you type
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set expandtab    " tabs are annoying; use spaces
-set tabstop=4    " how many columns wide a tab is visually
-set shiftwidth=4 " how many columns to indent with >>
+set tabstop=2    " how many columns wide a tab is visually
+set shiftwidth=2 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
 set autoindent   " take indent for new line from previous line
 set smartindent  " more intelligent indent for new lines
@@ -99,7 +99,7 @@ set statusline+=\ %#SLWarn#%{&ff!='unix'?'['.&ff.']':''}%*
 set statusline+=\ %{&shiftwidth}                        " tab size
 set statusline+=%{&expandtab==1?'':'%#SLWarn#T%*'} " warn if using \t
 set statusline+=%=                                      " end of left side
-set statusline+=\ %.30(\ \ %{ShPath(expand('%:h'))}%)   " shortened path
+set statusline+=\ %.30(\ \ %{ShPath(expand('%:p:h'))}%)   " shortened path
 set statusline+=\ %5L                                   " total lines in file
 
 " a: indicates arg
@@ -107,7 +107,7 @@ function! ShPath(path)
   let path = a:path
   let path = substitute(path, '/home/aisa', '~', '')  " shorten home to ~
   let path = substitute(path, '\Users\aisa', '~', '') " windows version
-  let path = substitute(path, 'Projects', 'D', '')       " shorten main Projects dir
+  let path = substitute(path, 'Projects', 'P', '')       " shorten main Projects dir
   return path
 endfunction
 
@@ -119,7 +119,7 @@ set autoread " when file is changed from the outside
 set nobackup
 set nowb
 set noswapfile
-set sessionoptions="buffers,folds,resize,tabpages,winsize"
+set sessionoptions="buffers,folds,resize,winsize,curdir"
 
 " Diffs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -136,14 +136,16 @@ nnoremap ;so :so ~/Projects/vim-sessions/
 nnoremap ;mks :mks! ~/Projects/vim-sessions/
 
 " Change working dir
-command! Current execute "cd %:p:h"
+command! Current execute "cd %:h"
 
 " Trim trailing spaces
-map ;trail :%s/\s\+$
+command! Trail :%s/\s\+$
 
 " Resource vimrc
 command! Reload execute "so %"
 
+" Open scratch window
+command! Scratch execute "e scratch | setlocal readonly"
 " Convert file to unix
 command! FormatUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
 
@@ -177,17 +179,15 @@ let g:EasyGrepFilesToExclude = 'pytz,djangoappengine' " ignore these dirs
 
 "let g:syntastic_mode_map = {'mode': 'passive'}
 "let g:syntastic_check_on_open = 1
-"let g:syntastic_python_checker = 'pylint'
-"let g:syntastic_lua_checker = 'luac'
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_lua_checkers = ['luac']
+let g:syntastic_javascript_checkers = ['jslint', 'closurecompiler']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au Filetype python set tabstop=2 |set shiftwidth=2 | set expandtab
 let python_no_builtin_highlight = 1
-
-au Filetype lua    set tabstop=2 |set shiftwidth=2 | set expandtab
 
 au BufRead,BufNewFile *.md set filetype=markdown
 
