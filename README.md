@@ -15,6 +15,7 @@ git
 * check\_statuses.sh: script to check git status of multiple repos
 * fl-gitconfig, flml-gitconfig
 * .gitconfig: global git config
+* .gitignore: global git ignore
 
 other programs
 * terminator-config
