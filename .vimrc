@@ -75,7 +75,7 @@ set expandtab    " tabs are annoying; use spaces
 set tabstop=2    " how many columns wide a tab is visually
 set shiftwidth=2 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
-set autoindent   " take indent for new line from previous line
+"set autoindent   " take indent for new line from previous line
 set smartindent  " more intelligent indent for new lines
 
 set foldmethod=indent
@@ -86,7 +86,7 @@ function! GetFoldText()
   return (repeat("- ", 35) . num_lines . " lines")
 endfunction
 
-" Status line
+" Status line & tab labels
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set laststatus=2 " Always show
@@ -97,7 +97,7 @@ set statusline+=%{fugitive#statusline()}                " git branch
 set statusline+=%#SLWarn#%m%*                   " warn if dos format
 set statusline+=\ %#SLWarn#%{&ff!='unix'?'['.&ff.']':''}%*
 set statusline+=\ %{&shiftwidth}                        " tab size
-set statusline+=%{&expandtab==1?'':'%#SLWarn#T%*'} " warn if using \t
+set statusline+=%{&expandtab==1?'':'%#SLWarn#T%*'} 
 set statusline+=%=                                      " end of left side
 set statusline+=\ %.30(\ \ %{ShPath(expand('%:p:h'))}%)   " shortened path
 set statusline+=\ %5L                                   " total lines in file
@@ -111,6 +111,12 @@ function! ShPath(path)
   return path
 endfunction
 
+function! TabLabel()
+  return ShPath(getcwd())
+endfunction
+
+set guitablabel=%{TabLabel()}
+
 " Files, sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -119,7 +125,7 @@ set autoread " when file is changed from the outside
 set nobackup
 set nowb
 set noswapfile
-set sessionoptions="buffers,folds,resize,winsize,curdir"
+set sessionoptions=buffers,folds,resize,winsize,curdir
 
 " Diffs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
