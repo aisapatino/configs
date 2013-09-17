@@ -12,6 +12,9 @@ hi link pythonDecoratorContents Special
 " func names as function, class/def as define
 syn keyword pythonStatement class def nextgroup=pythonFunction skipwhite
 
+" fix syntax error in built in file
+syn keyword pythonStatement False None
+
 " REF
 "
 " Statement 		False None True as assert break lambda pass print return
