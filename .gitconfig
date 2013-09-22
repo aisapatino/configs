@@ -15,4 +15,5 @@
     ch = checkout
 [core]
     autocrlf = false
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
+    editor = gvim
