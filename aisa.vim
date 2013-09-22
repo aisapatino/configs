@@ -37,7 +37,8 @@ hi Float         guifg=#40a070 ctermfg=black
 
 " Identifier = any variable name
 hi Identifier  guifg=#5b3674 gui=italic
-hi Function    guifg=#ff00f8 gui=bold
+hi Function    guifg=#44047E gui=bold
+hi ClassName   guifg=#ff00f8 gui=bold
 
 hi Statement   guifg=#06287e gui=bold
 hi Conditional guifg=#06287e gui=bold
