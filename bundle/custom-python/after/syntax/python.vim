@@ -10,7 +10,10 @@ syn match pythonDecoratorContents "\%(\%(def\s\|class\s\|@\)\s*\)\@<=\h\%(\w\|\.
 hi link pythonDecoratorContents Special
 
 " func names as function, class/def as define
-syn keyword pythonStatement class def nextgroup=pythonFunction skipwhite
+syn keyword pythonStatement def nextgroup=pythonFunction skipwhite
+syn keyword pythonStatement class nextgroup=pythonClass skipwhite
+syn match pythonClass "[a-zA-Z]\+" contained
+hi link pythonClass ClassName
 
 " fix syntax error in built in file
 syn keyword pythonStatement False None

@@ -10,7 +10,7 @@ reset="\033[00m"
 
 # The $? holds the exit status of the previously executed command. 0 = success
 echo 'Checking git repos...'
-cd ~/Devel
+cd ~/Projects
 for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'tracker'
 do
 	cd $d

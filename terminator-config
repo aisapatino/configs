@@ -1,5 +1,4 @@
 [global_config]
-  enabled_plugins = ,
   title_transmit_bg_color = "#ffffff"
   title_transmit_fg_color = "#020202"
 [keybindings]
@@ -12,17 +11,36 @@
   go_left = <Ctrl>H
 [profiles]
   [[default]]
+    scrollbar_position = hidden
     palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    cursor_shape = underline
     exit_action = hold
+    show_titlebar = False
 [layouts]
-  [[default]]
-    [[[child1]]]
-      type = Terminal
-      parent = window0
-      profile = default
-    [[[window0]]]
+  [[flaming]]
+    [[[child0]]]
+      position = 0:0
       type = Window
+      order = 0
       parent = ""
+      size = 1366, 718
+    [[[child1]]]
+      position = 683
+      type = HPaned
+      order = 0
+      parent = child0
+    [[[terminal3]]]
+      profile = default
+      type = Terminal
+      order = 1
+      parent = child1
+      command = (cd Projects/flamingloot; bash)
+    [[[terminal2]]]
+      profile = default
+      type = Terminal
+      order = 0
+      parent = child1
+      command = (cd Projects/flamingloot-ml; bash)
   [[sjfnw]]
     [[[child0]]]
       position = 0:0
@@ -57,15 +75,14 @@
       type = Terminal
       order = 0
       parent = child3
-  [[flaming]]
+  [[default]]
     [[[child0]]]
       position = 0:0
       type = Window
       order = 0
       parent = ""
-      size = 1366, 718
+      size = 1392, 583
     [[[child1]]]
-      position = 683
       type = HPaned
       order = 0
       parent = child0
@@ -74,11 +91,9 @@
       type = Terminal
       order = 1
       parent = child1
-      command = (cd Devel/flamingloot; bash)
     [[[terminal2]]]
       profile = default
       type = Terminal
       order = 0
       parent = child1
-      command = (cd Devel/flamingloot-ml; bash)
 [plugins]
