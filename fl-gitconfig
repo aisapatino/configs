@@ -7,7 +7,7 @@
 	bare = false
 	logallrefupdates = true
 [remote "origin"]
-	url = https://flamingaddons@github.com/flamingaddons/flamingloot.git
+	url = https://aisapatino@github.com/flamingaddons/flamingloot.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 [branch "master"]
 	remote = origin
