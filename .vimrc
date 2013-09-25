@@ -184,8 +184,7 @@ let g:EasyGrepMode = 2         " use file associations
 let g:EasyGrepAllOptionsInExplorer = 1
 let g:EasyGrepFilesToExclude = 'pytz,djangoappengine' " ignore these dirs
 
-"let g:syntastic_mode_map = {'mode': 'passive'}
-"let g:syntastic_check_on_open = 1
+let g:syntastic_mode_map = {"mode": "passive"}
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_javascript_checkers = ['jslint', 'closurecompiler']
