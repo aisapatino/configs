@@ -13,10 +13,16 @@ echo 'Checking git repos...'
 cd ~/Projects
 for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'tracker'
 do
+
+  # cd into repo; print name
 	cd $d
 	printf "\033[1m%14s\033[0m  " "$d"
-	RES=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
-	SECTION=$( echo "$RES" | grep -o "On branch \([a-z]\+\)")
+
+  # run git status & pull out relevant lines
+	RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
+
+  # get branch name
+	SECTION=$( echo "$RESULTS" | grep -o "On branch \([a-z]\+\)")
 	SECTION=$( echo "$SECTION" | grep -o "[a-z_/\-]\+$")
 	if [ "$SECTION" = "master" ] ; then
 		printf "%-13s%s" "$SECTION"
@@ -26,29 +32,33 @@ do
 	SECTION=""
 
 	OUT=0
-	SECTION=$(echo "$RES" | grep -e 'Untracked')
+	SECTION=$(echo "$RESULTS" | grep -e 'Untracked')
 	if [ "$SECTION" != "" ] ; then
 		printf "$red[New files]$reset"
 		OUT=1
 	fi
-	SECTION=$(echo "$RES" | grep -e 'Changes not staged for commit')
+	SECTION=$(echo "$RESULTS" | grep -e 'Changes not staged for commit')
 	if [ "$SECTION" != "" ] ; then
 		printf "$red[Modified]$reset"
 		OUT=1
 	fi
-	SECTION=$(echo "$RES" | grep -e 'Changes to be committed')
+	SECTION=$(echo "$RESULTS" | grep -e 'Changes to be committed')
 	if [ "$SECTION" != "" ] ; then
 		printf "$green[Staged]$reset"
 		OUT=1
 	fi
-	SECTION=$(echo "$RES" | grep -e 'Your branch is ahead')
+	SECTION=$(echo "$RESULTS" | grep -e 'Your branch is ahead')
 	if [ "$SECTION" != "" ] ; then
 		printf "$yellow[Ahead of remote]$reset"
 		OUT=1
 	fi
-	SECTION=$(echo "$RES" | grep -e 'Your branch is behind')
+	SECTION=$(echo "$RESULTS" | grep -e 'Your branch is behind')
 	if [ "$SECTION" != "" ] ; then
 		printf "$yellow[Behind remote]$reset"
+    if ["$OUT" -eq 0 ] ; then # no local changes; ok to pull
+      SECTION=$(git pull --rebase)
+      printf "$green[Pulled]$reset}"
+    fi
 		OUT=1
 	fi
 
@@ -56,6 +66,9 @@ do
 		printf "$green[Up to date]$reset"
 	fi
 	printf "\n"
+
+  # cd back up to projects dir
 	cd ..
+
 done
 
