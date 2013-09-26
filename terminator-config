@@ -17,30 +17,38 @@
     exit_action = hold
     show_titlebar = False
 [layouts]
-  [[flaming]]
+  [[default]]
     [[[child0]]]
       position = 0:0
       type = Window
       order = 0
       parent = ""
-      size = 1366, 718
+      size = 1392, 583
     [[[child1]]]
-      position = 683
       type = HPaned
       order = 0
       parent = child0
-    [[[terminal3]]]
-      profile = default
-      type = Terminal
+    [[[child2]]]
+      position = 209
+      type = VPaned
       order = 1
       parent = child1
-      command = (cd Projects/flamingloot; bash)
-    [[[terminal2]]]
+    [[[terminal3]]]
       profile = default
       type = Terminal
       order = 0
       parent = child1
-      command = (cd Projects/flamingloot-ml; bash)
+    [[[terminal2]]]
+      profile = default
+      type = Terminal
+      order = 1
+      parent = child2
+    [[[terminal4]]]
+      profile = default
+      type = Terminal
+      order = 0
+      parent = child2
+      command = sh configs/check_statuses.sh
   [[sjfnw]]
     [[[child0]]]
       position = 0:0
@@ -75,14 +83,15 @@
       type = Terminal
       order = 0
       parent = child3
-  [[default]]
+  [[flaming]]
     [[[child0]]]
       position = 0:0
       type = Window
       order = 0
       parent = ""
-      size = 1392, 583
+      size = 1366, 718
     [[[child1]]]
+      position = 683
       type = HPaned
       order = 0
       parent = child0
@@ -91,9 +100,11 @@
       type = Terminal
       order = 1
       parent = child1
+      command = (cd Projects/flamingloot; bash)
     [[[terminal2]]]
       profile = default
       type = Terminal
       order = 0
       parent = child1
+      command = (cd Projects/flamingloot-ml; bash)
 [plugins]
