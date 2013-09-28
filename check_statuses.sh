@@ -18,6 +18,9 @@ do
 	cd $d
 	printf "\033[1m%14s\033[0m  " "$d"
 
+  # fetch silently
+  git fetch -q
+
   # run git status & pull out relevant lines
 	RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
 
@@ -55,9 +58,9 @@ do
 	SECTION=$(echo "$RESULTS" | grep -e 'Your branch is behind')
 	if [ "$SECTION" != "" ] ; then
 		printf "$yellow[Behind remote]$reset"
-    if ["$OUT" -eq 0 ] ; then # no local changes; ok to pull
+    if [ "$OUT" -eq 0 ] ; then # no local changes; ok to pull
       SECTION=$(git pull --rebase)
-      printf "$green[Pulled]$reset}"
+      printf "$green[Pulled]$reset"
     fi
 		OUT=1
 	fi
