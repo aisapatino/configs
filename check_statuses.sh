@@ -59,7 +59,7 @@ do
 	if [ "$SECTION" != "" ] ; then
 		printf "$yellow[Behind remote]$reset"
     if [ "$OUT" -eq 0 ] ; then # no local changes; ok to pull
-      SECTION=$(git pull --rebase)
+      SECTION=$(git pull --rebase -q)
       printf "$green[Pulled]$reset"
     fi
 		OUT=1
