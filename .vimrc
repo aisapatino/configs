@@ -182,7 +182,8 @@ let g:EasyGrepEveryMatch = 1   " show all matches on a line
 let g:EasyGrepRecursive = 1    " search subfolders
 let g:EasyGrepMode = 2         " use file associations
 let g:EasyGrepAllOptionsInExplorer = 1
-let g:EasyGrepFilesToExclude = 'pytz,djangoappengine' " ignore these dirs
+let g:EasyGrepFilesToExclude = 'pytz,djangoappengine,migrations' " ignore these dirs
+let g:EasyGrepReplaceWindowMode = 2    " don't open new tabs/splits
 
 let g:syntastic_mode_map = {"mode": "passive"}
 let g:syntastic_python_checkers = ['pylint']
