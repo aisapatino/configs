@@ -1,5 +1,5 @@
+# VIEWS
 
-# basic import for a views page
 snippet impv "common view imports" b
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,6 @@ import logging
 logger = logging.getLogger('tracker')
 endsnippet
 
-# view outline
 snippet view "basic view outline" b
 @login_required(login_url = constants.LOGIN_URL)
 def ${1:viewname}(request):
@@ -25,7 +24,8 @@ def ${1:viewname}(request):
 
 endsnippet
 
-# model outline
+# MODELS
+
 snippet model "basic class outline" b
 class ${1:CLASSNAME}(models.Model):
 
@@ -33,19 +33,6 @@ class ${1:CLASSNAME}(models.Model):
   def __unicode__(self):
     return self.${2:FIELDNAME}
 endsnippet
-
-# modelform outline
-snippet mform "modelform outline"
-class ${1:MODEL}Form(forms.ModelForm):
-
-  class Meta:
-    model = $1
-    exclude = []
-
-
-endsnippet
-
-# model field shortcuts
 
 snippet fk "foreignkey"
   ${1:FIELD} = models.ForeignKey(${2:MODEL})
@@ -67,6 +54,17 @@ snippet many "manytomanyfield"
 
 endsnippet
 
+# FORMS
+
+snippet mform "modelform outline"
+class ${1:MODEL}Form(forms.ModelForm):
+
+  class Meta:
+    model = $1
+    exclude = []
+
+
+endsnippet
 
 # TRACKER SPECIFIC
 
