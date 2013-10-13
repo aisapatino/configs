@@ -20,7 +20,7 @@ endif
 
 colorscheme aisa
 set guioptions="ai"       " hide menu, toolbar
-set lines=41 columns=169  " maximize (on laptop)
+set lines=81 columns=269  " maximize (on laptop)
 set guiheadroom=0         " account for menu/toolbar being hidden
 
 if &diff
