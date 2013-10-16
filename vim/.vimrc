@@ -86,7 +86,7 @@ function! GetFoldText()
   return (repeat("- ", 35) . num_lines . " lines")
 endfunction
 
-" Status line & tab labels
+" Status line, title, tab labels
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set laststatus=2 " Always show
@@ -110,6 +110,13 @@ function! ShPath(path)
   let path = substitute(path, 'Projects', 'P', '')       " shorten main Projects dir
   return path
 endfunction
+
+if exists('v:this_session')
+  function SessionTitle()
+    return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
+  endfunction
+  set titlestring=%{SessionTitle()}
+endif
 
 function! TabLabel()
   return ShPath(getcwd())
