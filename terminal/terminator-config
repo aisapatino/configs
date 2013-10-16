@@ -47,7 +47,7 @@
       type = Terminal
       order = 0
       parent = child2
-      command = sh configs/check_statuses.sh
+      command = sh configs/git/check_statuses.sh
   [[sjfnw]]
     [[[child0]]]
       position = 0:0
@@ -78,7 +78,7 @@
       parent = child3
     [[[terminal4]]]
       profile = default
-      command = bash configs/check_statuses.sh
+      command = bash configs/git/check_statuses.sh
       type = Terminal
       order = 0
       parent = child3

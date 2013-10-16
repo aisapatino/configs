@@ -1,19 +1,21 @@
 #!/bin/sh
 
-# global configs
-ln -s -v ~/Projects/configs/.gitignore ~/.gitignore
-ln -s -v ~/Projects/configs/.gitconfig ~/.gitconfig
-ln -s -v ~/Projects/configs/.bashrc ~/.bashrc
-ln -s -v ~/Projects/configs/.pylintrc ~/.pylintrc
-ln -s -v ~/Projects/configs/terminator-config ~/.config/terminator/config
+# terminal
+ln -s -f -v ~/Projects/configs/terminal/.bashrc ~/.bashrc
+ln -s -f -v ~/Projects/configs/terminal/terminator-config ~/.config/terminator/config
 
 # vim
-ln -s -v ~/Projects/configs/.vimrc ~/.vimrc
-ln -s -v ~/Projects/configs/aisa.vim ~/.vim/colors/aisa.vim
-ln -s -v ~/Projects/configs/bundle ~/.vim/bundle
-ln -s -v ~/Projects/configs/python.snippets ~/.vim/UltiSnips/python.snippets
+ln -s -f -v ~/Projects/configs/vim/.vimrc ~/.vimrc
+ln -s -f -v ~/Projects/configs/vim/aisa.vim ~/.vim/colors/aisa.vim
+ln -s -f -v ~/Projects/configs/vim/bundle ~/.vim/bundle
+ln -s -f -v ~/Projects/configs/vim/python.snippets ~/.vim/UltiSnips/python.snippets
+ln -s -f -v ~/Projects/configs/vim/htmldjango.snippets ~/.vim/UltiSnips/htmldjango.snippets
+ln -s -f -v ~/Projects/configs/vim/.pylintrc ~/.pylintrc
 
-# repo gitconfigs
-ln -s -v ~/Projects/configs/fl-gitconfig ~/Projects/flamingloot/.git/config
-ln -s -v ~/Projects/configs/flml-gitconfig ~/Projects/flaminglootsys/.git/config
+# git - global
+ln -s -f -v ~/Projects/configs/git/.gitignore ~/.gitignore
+ln -s -f -v ~/Projects/configs/git/.gitconfig ~/.gitconfig
+# git - repo
+ln -s -f -v ~/Projects/configs/git/fl-gitconfig ~/Projects/flamingloot/.git/config
+ln -s -f -v ~/Projects/configs/git/flml-gitconfig ~/Projects/flaminglootsys/.git/config
 
