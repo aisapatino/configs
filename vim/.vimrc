@@ -111,7 +111,7 @@ function! ShPath(path)
   return path
 endfunction
 
-if exists('v:this_session')
+if exists('v:this_session') && v:this_session != ''
   function SessionTitle()
     return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
   endfunction
@@ -182,7 +182,7 @@ let g:tagbar_width = 30
 let g:tagbar_show_visibility = 0  " don't show symbols for public/private
 let g:tagbar_singleclick = 1      " single click to go to tag
 
-let g:ctrlp_by_filename = 1       " search by filename, not dir
+"let g:ctrlp_by_filename = 1       " search by filename, not dir
 let g:ctrlp_show_hidden = 1       " show hidden files
 
 let g:EasyGrepEveryMatch = 1   " show all matches on a line
