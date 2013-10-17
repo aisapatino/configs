@@ -54,6 +54,14 @@ snippet many "manytomanyfield"
 
 endsnippet
 
+# resilience fields
+snippet resilf "insert resilience model fields"
+  physical = models.PositiveIntegerField(default=0)
+  emotional = models.PositiveIntegerField(default=0)
+  social = models.PositiveIntegerField(default=0)
+  mental = models.PositiveIntegerField(default=0)
+endsnippet
+
 # FORMS
 
 snippet mform "modelform outline"
@@ -66,13 +74,11 @@ class ${1:MODEL}Form(forms.ModelForm):
 
 endsnippet
 
-# TRACKER SPECIFIC
+# TESTS
 
-# resilience fields
-snippet resilf "insert resilience model fields"
-  physical = models.PositiveIntegerField(default=0)
-  emotional = models.PositiveIntegerField(default=0)
-  social = models.PositiveIntegerField(default=0)
-  mental = models.PositiveIntegerField(default=0)
+snippet testidea "placeholder for future test"
+@unittest.skip('Incomplete')
+def test_${1:DESC}(self):
+  pass
+
 endsnippet
-
