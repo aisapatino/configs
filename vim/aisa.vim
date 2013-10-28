@@ -78,7 +78,7 @@ hi MatchParen  guifg=#40a070 guibg=NONE    gui=bold
 hi Error       guifg=#A70035               gui=bold,underline
 hi Todo        guifg=NONE    guibg=NONE    gui=italic,bold
 hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
-hi Search      guifg=NONE    guibg=#f8f3cb
+hi Search      guifg=NONE    guibg=#f8f3a9
 hi TrailingSpaces            guibg=#fae6e6
 
 hi DiffChange  guifg=NONE    guibg=NONE

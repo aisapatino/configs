@@ -67,6 +67,9 @@ nnoremap ;fb :CtrlPBuffer<Cr>
 set ignorecase " case-insensitive search
 set smartcase  " if uppercase letter, search case sensitive
 set incsearch  " show matches as you type
+set hlsearch   " highlight search matches
+" escape to clear search highlighting
+nnoremap <esc> :noh<return><esc>
 
 " Indentation & folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -110,8 +113,7 @@ function! ShPath(path)
   let path = substitute(path, 'Projects', 'P', '')       " shorten main Projects dir
   return path
 endfunction
-" && v:this_session != ''
-if exists('v:this_session')
+if exists('v:this_session') && v:this_session != ''
   function SessionTitle()
     return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
   endfunction
