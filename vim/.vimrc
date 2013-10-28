@@ -113,12 +113,12 @@ function! ShPath(path)
   let path = substitute(path, 'Projects', 'P', '')       " shorten main Projects dir
   return path
 endfunction
-if exists('v:this_session') && v:this_session != ''
-  function SessionTitle()
-    return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
-  endfunction
-  set titlestring=%{SessionTitle()}
-endif
+
+function! SessionTitle()
+  echom "setting session title"
+  return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
+endfunction
+au SessionLoadPost * set titlestring=%{SessionTitle()}
 
 function! TabLabel()
   return ShPath(getcwd())
