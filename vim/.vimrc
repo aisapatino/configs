@@ -115,7 +115,6 @@ function! ShPath(path)
 endfunction
 
 function! SessionTitle()
-  echom "setting session title"
   return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
 endfunction
 au SessionLoadPost * set titlestring=%{SessionTitle()}
