@@ -54,6 +54,11 @@ snippet many "manytomanyfield"
 
 endsnippet
 
+snippet datef "datetimefield"
+  ${1:FIELD} = models.DateTimeField()
+
+endsnippet
+
 # resilience fields
 snippet resilf "insert resilience model fields"
   physical = models.PositiveIntegerField(default=0)
@@ -74,7 +79,24 @@ class ${1:MODEL}Form(forms.ModelForm):
 
 endsnippet
 
+# ADMIN
+
+snippet madmin "model admin outline"
+class ${1:MODEL_NAME}A(admin.ModelAdmin):
+  list_display = ()
+  list_filter = ()
+  exclude = ()
+  fields = ()
+  readonly_fields = ()
+
+endsnippet
+
 # TESTS
+
+snippet test "outline of a text func"
+def test_${1:DESC}(self):
+  
+endsnippet
 
 snippet testidea "placeholder for future test"
 @unittest.skip('Incomplete')
