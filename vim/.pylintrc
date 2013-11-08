@@ -1,6 +1,6 @@
 [MASTER]
 
-init-hook='import sys; sys.path.append("home/aisa/Devel/google_appengine:/home/aisa/Devel/sjfnw:/home/aisa/Devel/google_appengine/lib/django-1.4:/home/aisa/Devel/google_appengine/lib/yaml/lib")'
+init-hook='import sys; sys.path.append("home/aisa/Devel/google_appengine:/home/aisa/Project/sjfnw:/home/aisa/Devel/google_appengine/lib/django-1.5:/home/aisa/Devel/google_appengine/lib/yaml/lib")'
 
 [MESSAGES CONTROL]
 
@@ -36,7 +36,7 @@ good-names=i,qs,t
 
 [TYPECHECK]
 
-generated-members=REQUEST,acl_users,aq_parent,objects,_meta,id
+generated-members=REQUEST,acl_users,aq_parent,objects,_meta,id,appengine
 
 [FORMAT]
 
