@@ -186,6 +186,7 @@ let g:tagbar_singleclick = 1      " single click to go to tag
 "let g:ctrlp_by_filename = 1       " search by filename, not dir
 let g:ctrlp_show_hidden = 1       " show hidden files
 
+let g:EasyGrepSearchCurrentBufferDir = 0 "don't search buffer dirs (redundant)
 let g:EasyGrepEveryMatch = 1   " show all matches on a line
 let g:EasyGrepRecursive = 1    " search subfolders
 let g:EasyGrepMode = 2         " use file associations
