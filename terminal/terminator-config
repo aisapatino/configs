@@ -1,5 +1,6 @@
 [global_config]
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  window_state = maximise
   title_transmit_bg_color = "#ffffff"
   title_transmit_fg_color = "#020202"
 [keybindings]
@@ -23,13 +24,13 @@
       type = Window
       order = 0
       parent = ""
-      size = 1392, 583
+      size = 1920, 1130
     [[[child1]]]
       type = HPaned
       order = 0
       parent = child0
     [[[child2]]]
-      position = 209
+      position = 150
       type = VPaned
       order = 1
       parent = child1
@@ -55,14 +56,14 @@
       type = Window
       order = 0
       parent = ""
-      size = 1366, 720
+      size = 1920, 1030
     [[[child1]]]
-      position = 683
+      position = 960
       type = HPaned
       order = 0
       parent = child0
     [[[child3]]]
-      position = 222
+      position = 150
       type = VPaned
       order = 1
       parent = child1
