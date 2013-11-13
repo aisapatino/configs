@@ -7,7 +7,7 @@ ln -s -f -v ~/Projects/configs/terminal/terminator-config ~/.config/terminator/c
 # vim
 ln -s -f -v ~/Projects/configs/vim/.vimrc ~/.vimrc
 ln -s -f -v ~/Projects/configs/vim/aisa.vim ~/.vim/colors/aisa.vim
-ln -s -f -v ~/Projects/configs/vim/bundle ~/.vim/bundle
+ln -s -f -v ~/Projects/configs/vim/bundle ~/.vim/
 ln -s -f -v ~/Projects/configs/vim/python.snippets ~/.vim/UltiSnips/python.snippets
 ln -s -f -v ~/Projects/configs/vim/htmldjango.snippets ~/.vim/UltiSnips/htmldjango.snippets
 ln -s -f -v ~/Projects/configs/vim/.pylintrc ~/.pylintrc
