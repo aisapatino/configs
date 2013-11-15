@@ -1,3 +1,6 @@
+" not python but i'm being lazy
+hi! link qfLineNr NONE
+
 " docstrings as comments, not strings
 syn region PythonDocTest start=/"""/ end=/"""/
 hi link PythonDoctest Comment
@@ -17,6 +20,12 @@ hi link pythonClass ClassName
 
 " fix syntax error in built in file
 syn keyword pythonStatement False None
+
+" highlight self & super
+syn keyword pythonSelf self super
+
+hi link pythonSelf PreProc
+
 
 " REF
 "
