@@ -27,6 +27,7 @@ let colors_name = "aisa"
 hi Normal      guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
 
 hi Comment       guifg=#a0b0c0
+hi CommentKey    guifg=#a0b0c0 gui=italic
 hi CommentHeader guifg=#a0b0c0 gui=bold
 hi Constant      guifg=#44047E
 hi String        guifg=#506070 ctermfg=black
