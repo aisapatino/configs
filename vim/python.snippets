@@ -37,14 +37,22 @@ Raises:
 
 endsnippet
 
-# MODELS
+# MODELS/CLASSES
 
-snippet model "basic class outline" b
+snippet model "basic model outline" b
 class ${1:CLASSNAME}(models.Model):
 
 
   def __unicode__(self):
     return self.${2:FIELDNAME}
+endsnippet
+
+snippet cdoc "docstring outline for a class"
+""" ${1:SUMMARY}
+
+${2:LONGER_INFO}
+"""
+
 endsnippet
 
 snippet fk "foreignkey"
@@ -106,9 +114,29 @@ endsnippet
 
 # TESTS
 
+snippet ctest "outline of a test class" b
+@override_settings(MIDDLEWARE_CLASSES = TEST_MIDDLEWARE)
+class ${1:NAME}(${2:BASE}):
+  """ ${3:SUMMARY}
+  """
+
+endsnippet
+
 snippet test "outline of a text func"
 def test_${1:DESC}(self):
-  
+
+endsnippet
+
+snippet tdoc "docstring for test method"
+""" Verify ${1:VERIFY_WHAT}
+
+Setup:
+  ${2:SETUP}
+
+Asserts:
+  ${3:ASSERTIONS}
+"""
+
 endsnippet
 
 snippet testidea "placeholder for future test"
