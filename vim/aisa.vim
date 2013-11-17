@@ -5,79 +5,86 @@ if exists("syntax_on")
 endif
 let colors_name = "aisa"
 
+" fix whiteout of location list
+hi! link qfLineNr NONE
+
 " Colors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" #404850  #506070  #f0f0f0  #f6f6f6
-" normal   sline    bg       colorcol, cursorline
-" #a0b0c0  #06287e  #1060a0
-" *        *        *
-" #40a070  #7fbf58
-" numbers  comments
-" #ff0000  #ff00f8
-"" errors   func/class
-" #5b3674  #6c71c4
+" #404850   #506070 
+" normal    sline, strings   
 "
-" #fae6e6   #e3faef
-" diffs
+" #06287e        #1060a0   #a0b0c0
+" bold keywords  *         linenr, status
+"
+" #40a070   #8090b0
+" numbers   comments
+"
+" #ff00f8     #44047E
+" class name  func name
 
-" colors maybe   #A70035  #00804C  #005332  #44047E
+" #5b3674  #6c71c4  " not distinct from normal/comment unless italic/bold
+"
+" backgrounds:
+"
+" #f0f0f0  #f6f6f6                #fae6e6   #e3faef
+" bg       colorcol, cursorline   diffs
+"
+" #A70035 error
+" colors maybe     #00804C  #005332 
+
 " Types of text
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi Normal      guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
+hi Normal         guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
+hi! link Constant Normal
 
-hi Comment       guifg=#a0b0c0
-hi CommentKey    guifg=#a0b0c0 gui=italic
-hi CommentHeader guifg=#a0b0c0 gui=bold
-hi Constant      guifg=#44047E
-hi String        guifg=#506070 ctermfg=black
-hi Number        guifg=#40a070 ctermfg=black
-hi Float         guifg=#40a070 ctermfg=black
-" hi Character " character constant, 'c', '\n'
-" hi Boolean
+hi Comment        guifg=#8090b0
+hi CommentSpecial guifg=#6c71c4
+hi CommentHeader  guifg=#8090b0 gui=bold
 
-" Identifier = any variable name
-hi Identifier  guifg=#5b3674 gui=italic
-hi Function    guifg=#44047E gui=bold
-hi ClassName   guifg=#ff00f8 gui=bold
+hi String         guifg=#506070
+hi Number         guifg=#6c71c4
+hi! link Float Number
 
-hi Statement   guifg=#06287e gui=bold
-hi Conditional guifg=#06287e gui=bold
-hi Repeat      guifg=#06287e gui=bold
-hi Operator    guifg=#06287e gui=bold
-hi Keyword     guifg=#06287e gui=bold
-" hi Exception  " try, catch, throw
+hi Function       guifg=#44047E gui=bold
+hi ClassName      guifg=#ff00f8 gui=bold
+hi Identifier     guifg=#40a070
+hi Type           guifg=#6c71c4 gui=NONE
+
+hi Boolean        guifg=#5b3674
+hi Keyword        guifg=#5b3674 gui=italic
+" Keyword is for built-in functions; other reserved words should go into the
+" appropriate sub-group
+
+hi Statement      guifg=#06287e gui=bold
+hi Conditional    guifg=#06287e gui=bold
+hi Repeat         guifg=#06287e gui=bold
+hi Operator       guifg=#06287e
+hi Exception      guifg=#06287e gui=bold
 " hi Label  " case, default, etc.
 
-" PreProc is used for django tags in templates
-hi PreProc     guifg=#1060a0 gui=NONE
-" hi Include  " preprocessor #include
-" Define = preprocessor #define
-hi Define      guifg=#06287e gui=bold
-" hi Macro  " same as Define
-" hi PreCondit " preprocessor if else endif etc.
+hi PreProc        guifg=#1060a0 gui=NONE
+hi Include        guifg=#1060a0 gui=NONE
+hi Define         guifg=#1060a0 gui=italic
 
-hi Type        guifg=#6c71c4 gui=NONE
-" hi StorageClass " status, register, volatile, etc.
-" Structure = struct, union, enum, etc.
-hi Structure   guifg=#1060a0 gui=italic
-" hi Typedef
+hi Structure      guifg=#1060a0 gui=italic
+hi Special        guifg=#1060a0 gui=italic
+hi! link SpecialChar NONE
 
-hi Special     guifg=#1060a0 gui=italic
-" hi SpecialChar  " special char in a constant
-" hi Tag  " you can use CTRL-] on this
+hi Tag            guifg=#ff00f8
+
 " hi Delimiter  " character that needs attention
-" hi Debug  " debugging statements
+hi Debug          guifg=#5b3674 gui=italic
 
-hi Title       guifg=NONE    gui=bold
-hi Underlined  guifg=NONE    gui=underline
+hi Error          guifg=#A70035               gui=bold,underline
+hi Todo           guifg=NONE    guibg=NONE    gui=italic,bold
+hi Title          guifg=NONE    gui=bold
+hi Underlined     guifg=NONE    gui=underline
 
 " Text states
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi MatchParen  guifg=#40a070 guibg=NONE    gui=bold
-hi Error       guifg=#A70035               gui=bold,underline
-hi Todo        guifg=NONE    guibg=NONE    gui=italic,bold
+hi MatchParen  guifg=#ff00f8 guibg=NONE    gui=bold
 hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3a9
 hi TrailingSpaces            guibg=#fae6e6
