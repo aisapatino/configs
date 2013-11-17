@@ -61,6 +61,10 @@ nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
 
+" Go between location list items
+map [l :lprev<Cr>
+map ]l :lnext<Cr>
+
 " Search
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -198,6 +202,7 @@ let g:syntastic_mode_map = {"mode": "passive"}
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_javascript_checkers = ['jslint', 'closurecompiler']
+let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
@@ -207,9 +212,31 @@ let g:UltiSnipsJumpForwardTrigger="<s-tab>"
 
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let python_no_builtin_highlight = 1
 
 au BufRead,BufNewFile *.md set filetype=markdown
+
+" better htmldjango detection
+augroup filetypedetect
+  " removes current htmldjango detection located at $VIMRUNTIME/filetype.vim
+  au! BufNewFile,BufRead *.html
+  au  BufNewFile,BufRead *.html call FThtml()
+ 
+  func! FThtml()
+    let n = 1
+    while n < 10 && n < line("$")
+      if getline(n) =~ '\<DTD\s\+XHTML\s'
+        setf xhtml
+        return
+      endif
+      if getline(n) =~ '{%\|{{\|{#'
+        setf htmldjango
+        return
+      endif
+      let n = n + 1
+    endwhile
+    setf html
+  endfunc
+augroup END
 
 " Debugging
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
