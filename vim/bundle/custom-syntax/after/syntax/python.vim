@@ -1,10 +1,9 @@
 " " TODO
 " make builtin funcs italic, constants (True False None) reg
 
-
-" constants
-syn match pythonConstant "[A-Z_]\{2,30}"
-hi link pythonConstant Constant
+" None isn't a boolean but this seems like best fit anyway
+syn keyword pythonBoolean False True None
+hi link pythonBoolean Boolean
 
 " docstrings as comments, not strings
 syn region pythonDocTest start=/"""/ end=/"""/
@@ -32,11 +31,7 @@ hi! link pythonBuiltin Keyword
 " syn match pythonClassRef "\<\%(\u[a-z]\+\)\{2,4}\>"
 " hi link pythonClassRef Identifier
 
-" highlight self & super
-syn keyword pythonSelf self super
-hi link pythonSelf Identifier
-
 " highlight logging
-syn match pythonLogging "logger\.\%(debug|info\|warning\|error\)"
+syn match pythonLogging "logger\.\%(debug\|info\|warning\|error\)"
 hi link pythonLogging Debug
 
