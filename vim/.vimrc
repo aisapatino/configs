@@ -209,6 +209,7 @@ let g:syntastic_auto_loc_list = 1
 let g:SuperTabMappingBackward = '<c-tab>'
 let g:UltiSnipsExpandTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetsDir="~/.vim/bundle/custom-snippets"
 
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
