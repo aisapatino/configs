@@ -209,7 +209,10 @@ let g:syntastic_auto_loc_list = 1
 let g:SuperTabMappingBackward = '<c-tab>'
 let g:UltiSnipsExpandTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<s-tab>"
+" Which file opens with :UltiSnipsEdit
 let g:UltiSnipsSnippetsDir="~/.vim/bundle/custom-snippets"
+" Which files are searched for snippets (leaving default off since I don't use)
+let g:UltiSnipsSnippetDirectories=["bundle/custom-snippets"]
 
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
