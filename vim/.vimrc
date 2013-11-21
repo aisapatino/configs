@@ -1,16 +1,16 @@
 execute pathogen#infect()
 
+cd ~\Projects
+
 " OS-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("win32")
-  cd ~\Projects
   set guifont=Consolas:h12
   set backspace=indent,eol,start
   let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
   set fileformats=unix,dos
 else
-  cd ~/Projects
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
   let g:EasyGrepFileAssociations = "/home/aisa/.vim/bundle/CustomGrepFileAssoc"
 endif
@@ -20,7 +20,7 @@ endif
 
 colorscheme aisa
 set guioptions="ai"       " hide menu, toolbar
-set lines=81 columns=269  " maximize (on laptop)
+set lines=60 columns=238  " maximize
 set guiheadroom=0         " account for menu/toolbar being hidden
 
 if &diff
@@ -138,6 +138,8 @@ set nobackup
 set nowb
 set noswapfile
 set sessionoptions=buffers,folds,resize,winsize,curdir
+" auto reload vimrc when changed
+au BufWritePost .vimrc source %
 
 " Diffs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -189,6 +191,7 @@ let g:tagbar_singleclick = 1      " single click to go to tag
 
 "let g:ctrlp_by_filename = 1       " search by filename, not dir
 let g:ctrlp_show_hidden = 1       " show hidden files
+let g:ctrlp_open_multiple_files = '1vjr' " open first in curr window, rest hidden
 
 let g:EasyGrepSearchCurrentBufferDir = 0 "don't search buffer dirs (redundant)
 let g:EasyGrepEveryMatch = 1   " show all matches on a line
