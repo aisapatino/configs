@@ -1,3 +1,9 @@
+snippet log "logger defining"
+import logging
+logger = logging.getLogger('${1:NAME}')
+
+endsnippet
+
 # VIEWS
 
 snippet impv "common view imports" b
@@ -16,7 +22,7 @@ snippet view "basic view outline" b
 @login_required(login_url = constants.LOGIN_URL)
 def ${1:viewname}(request):
 
-  if request.method=='POST':
+  if request.method == 'POST':
 
 
   return render(request, '', {})
@@ -114,16 +120,41 @@ endsnippet
 
 # TESTS
 
+snippet timp "common test imports"
+from django.core.urlresolvers import reverse
+
+import unittest
+
+from ${1:BASE_APP}.tests import ${2:BASE_TEST_CLASS}
+
+${3:APP}_FIXTURE = '${4:PATH}'
+
+endsnippet
+
 snippet ctest "outline of a test class" b
-@override_settings(MIDDLEWARE_CLASSES = TEST_MIDDLEWARE)
 class ${1:NAME}(${2:BASE}):
-  """ ${3:SUMMARY}
-  """
+  """ ${3:SUMMARY} """
+
+  fixtures = [${4:FIXTURE}]
+  url = reverse('${5:VIEW}')
+  template_success = '${6:NAME}'
+  template_error = '${7:NAME}'
+
+  def setUp(self):
+    super($1, self).setUp()
 
 endsnippet
 
 snippet test "outline of a text func"
 def test_${1:DESC}(self):
+  """ Verify ${2:VERIFY_WHAT}
+
+  Setup:
+    ${3:SETUP}
+
+  Asserts:
+    ${4:ASSERTIONS}
+  """
 
 endsnippet
 
@@ -139,7 +170,7 @@ Asserts:
 
 endsnippet
 
-snippet testidea "placeholder for future test"
+snippet tidea "placeholder for future test"
 @unittest.skip('Incomplete')
 def test_${1:DESC}(self):
   pass
