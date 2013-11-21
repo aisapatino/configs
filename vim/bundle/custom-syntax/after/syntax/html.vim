@@ -12,4 +12,7 @@ syn clear htmlEndTag
 syn region htmlEndTag start=+</+      end=+>+ contains=htmlTagError
 hi link htmlEndTag Operator
 
+" Emphatic comments
+syn region htmlCommentHeader start=+<!---+ end=+-->+
+hi link htmlCommentHeader CommentHeader
 
