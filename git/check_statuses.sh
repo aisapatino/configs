@@ -11,67 +11,69 @@ reset="\033[00m"
 # The $? holds the exit status of the previously executed command. 0 = success
 echo 'Checking git repos...'
 cd ~/Projects
-for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'tracker'
+for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'mui' 'tracker' 'learnsuugaku'
 do
 
-  # cd into repo; print name
-	cd $d
-	printf "\033[1m%14s\033[0m  " "$d"
+  printf "\033[1m%14s\033[0m  " "$d"
+  if [ ! -d "$d" ] ; then
+    printf "$red *not found* $reset"
+  else # dir does exist
 
-  # fetch silently
-  git fetch -q
+    cd $d
 
-  # run git status & pull out relevant lines
-	RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
+    # fetch silently
+    git fetch -q
 
-  # get branch name
-	SECTION=$( echo "$RESULTS" | grep -o "On branch \([a-z]\+\)")
-	SECTION=$( echo "$SECTION" | grep -o "[a-z_/\-]\+$")
-	if [ "$SECTION" = "master" ] ; then
-		printf "%-13s%s" "$SECTION"
-	else
-		printf "$cyan%-13s$reset" "$SECTION"
-	fi
-	SECTION=""
+    # run git status & pull out relevant lines
+    RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
 
-	OUT=0
-	SECTION=$(echo "$RESULTS" | grep -e 'Untracked')
-	if [ "$SECTION" != "" ] ; then
-		printf "$red[New files]$reset"
-		OUT=1
-	fi
-	SECTION=$(echo "$RESULTS" | grep -e 'Changes not staged for commit')
-	if [ "$SECTION" != "" ] ; then
-		printf "$red[Modified]$reset"
-		OUT=1
-	fi
-	SECTION=$(echo "$RESULTS" | grep -e 'Changes to be committed')
-	if [ "$SECTION" != "" ] ; then
-		printf "$green[Staged]$reset"
-		OUT=1
-	fi
-	SECTION=$(echo "$RESULTS" | grep -e 'Your branch is ahead')
-	if [ "$SECTION" != "" ] ; then
-		printf "$yellow[Ahead of remote]$reset"
-		OUT=1
-	fi
-	SECTION=$(echo "$RESULTS" | grep -e 'Your branch is behind')
-	if [ "$SECTION" != "" ] ; then
-		printf "$yellow[Behind remote]$reset"
-    if [ "$OUT" -eq 0 ] ; then # no local changes; ok to pull
-      SECTION=$(git pull --rebase -q)
-      printf "$green[Pulled]$reset"
+    # get branch name
+    SECTION=$( echo "$RESULTS" | grep -o "On branch \([a-z]\+\)")
+    SECTION=$( echo "$SECTION" | grep -o "[a-z_/\-]\+$")
+    if [ "$SECTION" = "master" ] ; then
+      printf "%-13s%s" "$SECTION"
+    else
+      printf "$cyan%-13s$reset" "$SECTION"
     fi
-		OUT=1
-	fi
+    SECTION=""
 
-	if [ "$OUT" -eq 0 ] ; then
-		printf "$green[Up to date]$reset"
-	fi
-	printf "\n"
+    OUT=0
+    SECTION=$(echo "$RESULTS" | grep -e 'Untracked')
+    if [ "$SECTION" != "" ] ; then
+      printf "$red[New files]$reset"
+      OUT=1
+    fi
+    SECTION=$(echo "$RESULTS" | grep -e 'Changes not staged for commit')
+    if [ "$SECTION" != "" ] ; then
+      printf "$red[Modified]$reset"
+      OUT=1
+    fi
+    SECTION=$(echo "$RESULTS" | grep -e 'Changes to be committed')
+    if [ "$SECTION" != "" ] ; then
+      printf "$green[Staged]$reset"
+      OUT=1
+    fi
+    SECTION=$(echo "$RESULTS" | grep -e 'Your branch is ahead')
+    if [ "$SECTION" != "" ] ; then
+      printf "$yellow[Ahead of remote]$reset"
+      OUT=1
+    fi
+    SECTION=$(echo "$RESULTS" | grep -e 'Your branch is behind')
+    if [ "$SECTION" != "" ] ; then
+      printf "$yellow[Behind remote]$reset"
+      if [ "$OUT" -eq 0 ] ; then # no local changes; ok to pull
+        SECTION=$(git pull --rebase -q)
+        printf "$green[Pulled]$reset"
+      fi
+      OUT=1
+    fi
 
-  # cd back up to projects dir
-	cd ..
+    if [ "$OUT" -eq 0 ] ; then
+      printf "$green[Up to date]$reset"
+    fi
 
+    cd ..
+  fi
+  printf "\n"
 done
 
