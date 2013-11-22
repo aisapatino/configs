@@ -28,12 +28,12 @@ do
     RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
 
     # get branch name
-    SECTION=$( echo "$RESULTS" | grep -o "On branch \([a-z]\+\)")
+    SECTION=$( echo "$RESULTS" | grep -o "On branch \([a-z\-]\+\)")
     SECTION=$( echo "$SECTION" | grep -o "[a-z_/\-]\+$")
     if [ "$SECTION" = "master" ] ; then
-      printf "%-13s%s" "$SECTION"
+      printf "%-15s%s" "$SECTION"
     else
-      printf "$cyan%-13s$reset" "$SECTION"
+      printf "$cyan%-15s$reset" "$SECTION"
     fi
     SECTION=""
 
