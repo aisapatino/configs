@@ -221,6 +221,7 @@ let g:UltiSnipsSnippetDirectories=["bundle/custom-snippets"]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.json set filetype=json
 
 " better htmldjango detection
 augroup filetypedetect
