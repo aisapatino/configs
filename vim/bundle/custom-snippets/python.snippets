@@ -176,3 +176,30 @@ def test_${1:DESC}(self):
   pass
 
 endsnippet
+
+# COMMANDS
+
+snippet command "imports and outline of command class"
+from django.core.management import call_command
+from django.core.management.base import BaseCommand
+from django.conf import settings
+
+from ${1:APP} import ${2:MODELS}
+
+class Command(BaseCommand):
+
+  help = ('${3:DESCRIPTION}')
+
+  def handle(self, *args, **kwargs):
+    pass
+
+endsnippet
+
+snippet wr "self.stdout.write"
+self.stdout.write('${1:CONTENT}')
+endsnippet
+
+snippet ewr "self.stderr.write"
+self.stderr.write('${1:CONTENT}')
+endsnippet
+
