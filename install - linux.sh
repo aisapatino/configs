@@ -5,6 +5,7 @@ ln -s -f -v ~/Projects/configs/git/.gitignore ~/.gitignore
 ln -s -f -v ~/Projects/configs/git/.gitconfig ~/.gitconfig
 ln -s -f -v ~/Projects/configs/git/fl-gitconfig ~/Projects/flamingloot/.git/config
 ln -s -f -v ~/Projects/configs/git/flml-gitconfig ~/Projects/flaminglootsys/.git/config
+ln -s -f -v ~/Projects/configs/git/.gitk ~/.gitk
 
 # mysql
 ln -s -f -v ~/Projects/configs/mysql/my.cnf /etc/
