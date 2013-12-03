@@ -1,0 +1,30 @@
+snippet ch "comment header"
+-------------------------------------------------------------------------------
+--- ${1:HEADING}
+-------------------------------------------------------------------------------
+endsnippet
+
+snippet test "wowunit testsuite outline"
+local ${1:SUITENAME} = {
+
+  mocks = {
+    --ApiFunction = function(arg)
+  }
+
+  setUp = function()
+    flsys:UseTestDB()
+  end,
+
+  tearDown = function()
+    flsys:DeleteTestDB()
+  end,
+
+  test${3:NAME} = function(args)
+
+  end
+
+}
+
+WoWUnit:AddTestSuite("$1", $1)
+
+endsnippet
