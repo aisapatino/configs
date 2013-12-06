@@ -35,3 +35,5 @@ hi! link pythonBuiltin Keyword
 syn match pythonLogging "logger\.\%(debug\|info\|warning\|error\)"
 hi link pythonLogging Debug
 
+" comment headers
+syn match CommentHeader "#\s[A-Z][A-Z\ 0-9&]\{2,50}"
