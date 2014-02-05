@@ -230,6 +230,7 @@ augroup filetypedetect
   au  BufNewFile,BufRead *.html call FThtml()
  
   func! FThtml()
+    set colorcolumn=100
     let n = 1
     while n < 10 && n < line("$")
       if getline(n) =~ '\<DTD\s\+XHTML\s'
