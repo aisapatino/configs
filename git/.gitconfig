@@ -11,7 +11,7 @@
 [mergetool]
   prompt = false
   [mergetool.fugitive]
-    cmd = 'gvim -f -c "Gdiff" "$MERGED"'
+	cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
 [push]
   default = matching
 [credential]

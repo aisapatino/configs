@@ -14,10 +14,11 @@
 [profiles]
   [[default]]
     scrollbar_position = hidden
-    exit_action = hold
-    scrollback_lines = 1000
     palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
     show_titlebar = False
+    scrollback_lines = 1000
+    background_image = None
+    exit_action = hold
     copy_on_selection = True
 [layouts]
   [[default]]
@@ -31,27 +32,17 @@
       type = HPaned
       order = 0
       parent = child0
-    [[[child2]]]
-      position = 150
-      type = VPaned
-      order = 1
-      parent = child1
     [[[terminal3]]]
       profile = default
       type = Terminal
       order = 0
       parent = child1
-    [[[terminal2]]]
-      profile = default
-      type = Terminal
-      order = 1
-      parent = child2
     [[[terminal4]]]
       profile = default
       type = Terminal
-      order = 0
-      parent = child2
-      command = sh configs/git/check_statuses.sh
+      order = 1
+      parent = child1
+      command = (sh configs/git/check_statuses.sh; bash)
   [[sjfnw]]
     [[[child0]]]
       position = 0:0
