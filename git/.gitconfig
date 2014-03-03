@@ -1,19 +1,25 @@
 [user]
-    email = aisapatino@gmail.com
+  email = aisapatino@gmail.com
 [color]
-    ui = always
+  ui = always
 [diff]
-    tool = gvimdiff
+  tool = gvimdiff
 [difftool]
-    prompt = false
+  prompt = false
+[merge]
+  tool = fugitive
+[mergetool]
+  prompt = false
+  [mergetool.fugitive]
+    cmd = 'gvim -f -c "Gdiff" "$MERGED"'
 [push]
-    default = matching
+  default = matching
 [credential]
-    helper = cache --timeout=3600
+  helper = cache --timeout=3600
 [alias]
-    st = status
-    ch = checkout
+  st = status
+  ch = checkout
 [core]
-    autocrlf = false
-    excludesfile = ~/.gitignore
-    editor = gvim
+  autocrlf = false
+  excludesfile = ~/.gitignore
+  editor = gvim
