@@ -166,11 +166,15 @@ command! Reload execute "so %"
 
 " Open scratch window
 command! Scratch execute "e scratch | setlocal readonly"
+
 " Convert file to unix
 command! FormatUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
 
 " Format django's debug=True lists of queries
 command! FormatQLogs execute "%s/\(SELECT\|WHERE\|FROM\|\)/\r\t\1/gc | %s/`//gc"
+
+" Fix django template style
+command! DjangoTemplateStyle :%s/{{\(\S\)/{{\ \1/g|:%s/\(\S\)}}/\1\ }}/g
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
     \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
