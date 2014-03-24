@@ -4,6 +4,11 @@
 "   ajax builtins
 "   highlight word function (mildly)
 
+" comment headers
+
+syn match javaScriptCommentHeader "/\*\*.*\*/"
+hi! link javaScriptCommentHeader CommentHeader
+
 " highlight function names for prototypes
 syn match javaScriptFuncName "\([a-zA-Z0-9_]\+\)\(\s=\sfunction\)\@="
 syn match javaScriptFuncName "\(function\s\)\@<=\([a-zA-Z0-9_]\+\)"
