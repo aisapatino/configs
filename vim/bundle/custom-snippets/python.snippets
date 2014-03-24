@@ -4,6 +4,11 @@ logger = logging.getLogger('${1:NAME}')
 
 endsnippet
 
+snippet init "basic init function"
+def __init__(self, *args, **kwargs):
+  super(${1:CLASS}, self).__init__(*args, **kwargs)
+endsnippet
+
 # VIEWS
 
 snippet impv "common view imports" b
