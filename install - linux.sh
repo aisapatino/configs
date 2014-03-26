@@ -23,9 +23,8 @@ ln -s -f -v ~/Projects/configs/terminal/terminator-config ~/.config/terminator/c
 
 # vim
 ln -s -f -v ~/Projects/configs/vim/.vimrc ~/.vimrc
-if [ ! -d ~/.vim/colors ] ; then
-  mkdir -v ~/.vim/colors
-fi
+
+mkdir -p  -v ~/.vim/colors #make this and all parent dirs as needed
 ln -s -f -v ~/Projects/configs/vim/aisa.vim ~/.vim/colors/aisa.vim
 ln -s -f -v ~/Projects/configs/vim/aisadark.vim ~/.vim/colors/aisadark.vim
 ln -s -f -v ~/Projects/configs/vim/bundle ~/.vim/
