@@ -12,3 +12,7 @@ source /home/aisa/Devel/google-cloud-sdk/path.bash.inc
 
 # The next line enables bash completion for gcloud.
 source /home/aisa/Devel/google-cloud-sdk/completion.bash.inc
+
+# Shortcut for connecting to cloud sql
+alias cloudsql="mysql --host=173.194.109.221 -uroot -p"
+
