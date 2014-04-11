@@ -1,9 +1,10 @@
-.labelstyle-9EC2FF, .labelstyle-DBCFFF, .labelstyle-DDDDDD, .labelstyle-aefba1, .labelstyle-d4c5f9.darker, .labelstyle-ededed {
-    /* hide some labels for sjf */
+/* hide "area" labels */
+.label.labelstyle-c7def8 {
     display: none;
 }
 
+/* hide opened by */
 ul.list-group-item-meta li {
-    /** opened by etc below the issue name **/
     display: none;
 }
+
