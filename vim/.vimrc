@@ -87,7 +87,7 @@ set smartindent  " more intelligent indent for new lines
 
 set foldmethod=indent
 set nofoldenable           " all open at start
-set foldtext=GetFoldText() " would like maybe just num of lines?
+set foldtext=GetFoldText()
 function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
   return (repeat("- ", 35) . num_lines . " lines")
@@ -149,7 +149,6 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 
 " Custom shortcuts/functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use !command to run a shell command without dropping into shell
 
 " Store sessions in one place
 nnoremap ;so :so ~/Projects/vim-sessions/
@@ -208,8 +207,9 @@ let g:EasyGrepReplaceWindowMode = 2    " don't open new tabs/splits
 let g:syntastic_mode_map = {"mode": "passive"}
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_javascript_checkers = ['jslint', 'closurecompiler']
-let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
+let g:syntastic_javascript_checkers = ['jshint']
+", 'closurecompiler']
+" let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
