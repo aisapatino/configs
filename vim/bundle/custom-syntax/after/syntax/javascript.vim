@@ -9,9 +9,10 @@
 syn match javaScriptCommentHeader "/\*\*.*\*/"
 hi! link javaScriptCommentHeader CommentHeader
 
-" highlight function names for prototypes
+" highlight function names for prototypes, functions defined in arrays
 syn match javaScriptFuncName "\([a-zA-Z0-9_]\+\)\(\s=\sfunction\)\@="
 syn match javaScriptFuncName "\(function\s\)\@<=\([a-zA-Z0-9_]\+\)"
+syn match javaScriptFuncName "\([a-zA-Z0-9_]\+\)\(:\sfunction\)\@="
 hi link javaScriptFuncName Function
 
 " syntax highlighting on numbers
