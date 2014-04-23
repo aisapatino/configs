@@ -6,7 +6,7 @@
 
 " comment headers
 
-syn match javaScriptCommentHeader "/\*\*.*\*/"
+syn match javaScriptCommentHeader "/\*\s\?-.*\*/"
 hi! link javaScriptCommentHeader CommentHeader
 
 " highlight function names for prototypes, functions defined in arrays
