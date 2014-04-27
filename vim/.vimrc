@@ -175,6 +175,9 @@ command! FormatQLogs execute "%s/\(SELECT\|WHERE\|FROM\|\)/\r\t\1/gc | %s/`//gc"
 " Fix django template style
 command! DjangoTemplateStyle :%s/{{\(\S\)/{{\ \1/g|:%s/\(\S\)}}/\1\ }}/g
 
+" Copy all
+map <C-a> :%y+<CR>
+
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
     \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
     \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
@@ -207,9 +210,8 @@ let g:EasyGrepReplaceWindowMode = 2    " don't open new tabs/splits
 let g:syntastic_mode_map = {"mode": "passive"}
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_javascript_checkers = ['jshint']
-", 'closurecompiler']
-" let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
+let g:syntastic_javascript_checkers = ['closurecompiler']
+let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
