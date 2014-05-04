@@ -1,5 +1,4 @@
 [global_config]
-  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   window_state = maximise
   title_transmit_bg_color = "#ffffff"
   title_transmit_fg_color = "#020202"
@@ -17,8 +16,6 @@
     scrollbar_position = hidden
     palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
     show_titlebar = False
-    scrollback_lines = 1000
-    background_image = None
     exit_action = hold
     copy_on_selection = True
 [layouts]
@@ -44,40 +41,27 @@
       order = 1
       parent = child1
       command = (sh configs/git/check_statuses.sh; bash)
-  [[sjfnw]]
+  [[basic]]
     [[[child0]]]
       position = 0:0
       type = Window
       order = 0
       parent = ""
-      size = 1920, 1030
+      size = 1920, 1130
     [[[child1]]]
-      position = 960
       type = HPaned
       order = 0
       parent = child0
-    [[[child3]]]
-      position = 150
-      type = VPaned
-      order = 1
-      parent = child1
-    [[[terminal2]]]
+    [[[terminal3]]]
       profile = default
       type = Terminal
       order = 0
       parent = child1
-    [[[terminal5]]]
-      profile = default
-      command = (cd sjfnw; bash)
-      type = Terminal
-      order = 1
-      parent = child3
     [[[terminal4]]]
       profile = default
-      command = bash configs/git/check_statuses.sh
       type = Terminal
-      order = 0
-      parent = child3
+      order = 1
+      parent = child1
   [[flaming]]
     [[[child0]]]
       position = 0:0
