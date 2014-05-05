@@ -1,11 +1,8 @@
-" http://coderkeen.com/old/articles/identifiers-en.html
-
 " todo
 "   ajax builtins
 "   highlight word function (mildly)
 
 " comment headers
-
 syn match javaScriptCommentHeader "/\*\s\?-.*\*/"
 hi! link javaScriptCommentHeader CommentHeader
 
@@ -22,11 +19,11 @@ hi! link javaScriptNumber Number
 hi! link javaScriptBraces Statement
 hi! link javaScriptFunction NONE
 
-" highlight doc components inside comments
+" highlight jsdoc components
 syn match javaScriptParamDoc "@[a-z]\+" containedin=javaScriptComment
 syn match javaScriptDocType "{.\+}" containedin=javaScriptComment nextgroup=javaScriptIdent skipwhite
 syn match javaScriptIdent "[a-z_]\+" contained
 hi link javaScriptDocType CommentSpecial
 hi link javaScriptParamDoc CommentSpecial
-hi link javaScriptIdent Identifier
+hi link javaScriptIdent CommentSpecial
 
