@@ -1,6 +1,13 @@
 # Global gitignore
+temp/
+libs/
 
 # Python
 *.pyc
 .coverage
+
+# Node
+node_modules/
+**/bower_components/
+.tmp/
 
