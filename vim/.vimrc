@@ -11,6 +11,7 @@ if has("win32")
   let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
   set fileformats=unix,dos
 else
+  set shell=bash\ -i
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
   let g:EasyGrepFileAssociations = "/home/aisa/.vim/bundle/CustomGrepFileAssoc"
 endif
@@ -132,7 +133,7 @@ set guitablabel=%{TabLabel()}
 " Files, sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set wildignore+=*.pyc,__init__.py,*/tmp/*,*/pytz/*
+set wildignore+=*.pyc,__init__.py,*/tmp/*,*/pytz/*,*/node_modules/*,*/dist/*
 set autoread " when file is changed from the outside
 set nobackup
 set nowb
@@ -204,16 +205,16 @@ let g:EasyGrepEveryMatch = 1   " show all matches on a line
 let g:EasyGrepRecursive = 1    " search subfolders
 let g:EasyGrepMode = 2         " use file associations
 let g:EasyGrepAllOptionsInExplorer = 1
-let g:EasyGrepFilesToExclude = 'libs,pytz,djangoappengine,migrations' " ignore these dirs
+let g:EasyGrepFilesToExclude = 'libs,pytz,djangoappengine,migrations,node_modules' " ignore these dirs
 let g:EasyGrepReplaceWindowMode = 2    " don't open new tabs/splits
 
-let g:syntastic_mode_map = {"mode": "passive"}
+let g:syntastic_mode_map = {"mode": "active"}
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_javascript_checkers = ['jshint'] 
+let g:syntastic_javascript_checkers = ['jshint']
 "#, 'closurecompiler']
-let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
-let g:syntastic_jshint_exec = '~/Devel/node_modules/jshint/bin/jshint'
+"let g:syntastic_javascript_closure_compiler_path = '~/Devel/google_closure/compiler.jar'
+let g:syntastic_jshint_exec = '/home/aisa/.node/bin/jshint'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
@@ -224,6 +225,9 @@ let g:UltiSnipsJumpForwardTrigger="<s-tab>"
 let g:UltiSnipsSnippetsDir="~/.vim/bundle/custom-snippets"
 " Which files are searched for snippets (leaving default off since I don't use)
 let g:UltiSnipsSnippetDirectories=["bundle/custom-snippets"]
+
+let g:user_emmet_leader_key='<C-e>'
+let g:user_emmet_mode='i'
 
 " Language-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
