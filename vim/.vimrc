@@ -83,7 +83,7 @@ set expandtab    " tabs are annoying; use spaces
 set tabstop=2    " how many columns wide a tab is visually
 set shiftwidth=2 " how many columns to indent with >>
 set smarttab     " uses shiftwidth # spaces when inserting <tab>
-"set autoindent   " take indent for new line from previous line
+set autoindent   " take indent for new line from previous line
 set smartindent  " more intelligent indent for new lines
 
 set foldmethod=indent
@@ -226,7 +226,7 @@ let g:UltiSnipsSnippetsDir="~/.vim/bundle/custom-snippets"
 " Which files are searched for snippets (leaving default off since I don't use)
 let g:UltiSnipsSnippetDirectories=["bundle/custom-snippets"]
 
-let g:user_emmet_leader_key='<C-e>'
+let g:user_emmet_leader_key='<Leader>'
 let g:user_emmet_mode='i'
 
 " Language-specific
