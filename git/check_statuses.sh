@@ -11,7 +11,7 @@ reset="\033[00m"
 # The $? holds the exit status of the previously executed command. 0 = success
 echo 'Checking git repos...'
 cd ~/Projects
-for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'tracker' 'anita' 'dlisa'
+for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'anita' 'dlisa'
 do
 
   printf "\033[1m%15s\033[0m  " "$d"
