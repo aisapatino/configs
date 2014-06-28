@@ -20,10 +20,15 @@ hi! link javaScriptBraces Statement
 hi! link javaScriptFunction NONE
 
 " highlight jsdoc components
-syn match javaScriptParamDoc "@[a-z]\+" containedin=javaScriptComment
-syn match javaScriptDocType "{.\+}" containedin=javaScriptComment nextgroup=javaScriptIdent skipwhite
+syn match javaScriptParamDoc "@[a-z]\+" containedin=javaScriptComment nextgroup=javaScriptDocType skipwhite
+syn match javaScriptDocType "{.\+}" contained nextgroup=javaScriptIdent skipwhite
 syn match javaScriptIdent "[a-z_]\+" contained
 hi link javaScriptDocType CommentSpecial
 hi link javaScriptParamDoc CommentSpecial
 hi link javaScriptIdent CommentSpecial
+
+" highlight node builtins
+syn keyword mochaChai it describe expect before beforeEach after afterEach
+hi link mochaChai javaScriptStatement
+
 
