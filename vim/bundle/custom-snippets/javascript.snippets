@@ -1,4 +1,4 @@
-# Function docs
+### JSDOC ####################################################################
 snippet fdoc "outline for function documentation"
 /**
  * ${1:SUMMARY}
@@ -16,3 +16,70 @@ snippet adoc "attribute docs"
  */
 endsnippet
 
+### NODE #####################################################################
+snippet req "generic require"
+var $1 = require('${1:MODULE}');
+endsnippet
+
+snippet ex "most basic express outline"
+var express = require('express');
+
+var app = express();
+
+app.listen(3000);
+
+endsnippet
+
+snippet hserver "http.createServer"
+var server = http.createServer(function(request, response) {
+  ${2}
+});
+server.listen(${1:PORT});
+console.log('Server is running on $1');
+endsnippet
+
+snippet xget "app.get"
+app.get('${1:PATH}', function(request, response) {
+  ${2}
+});
+endsnippet
+
+snippet xpost "app.post"
+app.get('${1:PATH}', function(request, response) {
+  ${2}
+});
+endsnippet
+
+### TESTING ###################################################################
+
+snippet desc "skeleton for describe wrapper"
+describe('${1:TEST SUITE DESCRIPTION}', function() {
+
+  ${2}
+});
+endsnippet
+
+snippet it "skeleton for single test"
+it('should ${1:TEST DESC}', function() {
+  ${2}
+});
+
+endsnippet
+
+snippet exp "expect"
+expect(${1:VAR}).to.${2:ETC};
+endsnippet
+
+snippet superget "superagent get request"
+superagent.get('localhost:3000/${1}').end(function(err, res) {
+  ${2}
+});
+endsnippet
+
+snippet superpost "superagent post request"
+superagent.post('localhost:3000/${1}')
+  .send(${2:DATA})
+  .end(function(err, res) {
+    ${3}
+});
+endsnippet
