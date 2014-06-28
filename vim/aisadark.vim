@@ -10,8 +10,10 @@ hi! link qfLineNr NONE
 
 " Colors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" #404850   #506070
-" normal    sline, strings
+" #404850        #000000 
+" normal text    background
+" #506070
+" sline, strings
 "
 " #06287e        #1060a0   #a0b0c0
 " bold keywords  *         linenr, status
@@ -35,14 +37,14 @@ hi! link qfLineNr NONE
 " Types of text
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi Normal         guifg=#f0f0f0 guibg=#111  ctermbg=black  ctermfg=white
+hi Normal         guifg=#cccccc guibg=#000000  ctermbg=black  ctermfg=white
 hi! link Constant Normal
 
-hi Comment        guifg=#8090b0
+hi Comment        guifg=#506070
 hi CommentSpecial guifg=#6c71c4
 hi CommentHeader  guifg=#8090b0 gui=bold
 
-hi String         guifg=#506070
+hi String         guifg=#8090b0
 hi Number         guifg=#6c71c4
 hi! link Float Number
 
@@ -97,14 +99,14 @@ hi DiffDelete  guifg=#fae6e6 guibg=#fae6e6 gui=italic
 " Window/screen components
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi ColorColumn                 guibg=#111111
+hi ColorColumn                  guibg=#111111
 hi Cursor        guibg=#ffffff
-hi CursorLine    guibg=#000000
-hi LineNr        guifg=#ffffff guibg=#333333 ctermfg=white ctermbg=32
-hi CursorLineNr  guifg=#333333 guibg=#f6f6f6
-hi StatusLine    guifg=#ffffff guibg=#333333 gui=bold ctermbg=grey ctermfg=black
-hi StatusLineNC  guifg=#555555 guibg=#000000 ctermbg=grey ctermfg=black
-hi VertSplit                   guibg=#000000 gui=NONE ctermbg=black  ctermfg=grey
+hi CursorLine    guibg=#111111
+hi LineNr        guifg=#555555  guibg=#000000  ctermfg=white ctermbg=32
+hi CursorLineNr  guifg=#ffffff                 gui=NONE
+hi StatusLine    guifg=#ffffff  guibg=#111111  gui=bold ctermbg=grey ctermfg=black
+hi StatusLineNC  guifg=#101010  guibg=#000000  ctermbg=grey ctermfg=black
+hi VertSplit                    guibg=#111111  gui=NONE
 hi SLWarn        guifg=#A70035
 hi Directory     guifg=#1060a0
 
