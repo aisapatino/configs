@@ -17,7 +17,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 ### PYTHONPATH ################################################################
 
 # gae
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine:/home/aisa/Devel/google_appengine/lib/django-1.5:/home/aisa/Devel/google_appengine/lib/yaml/lib
+export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine
+export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine/lib/django-1.5
+export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine/lib/yaml/lib
 # pip installs
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
 # misc installed tools
