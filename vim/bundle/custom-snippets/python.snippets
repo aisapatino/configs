@@ -152,27 +152,16 @@ endsnippet
 
 snippet test "outline of a text func" s
 def test_${1:DESC}(self):
-  """ Verify ${2:VERIFY_WHAT}
-
-  Setup:
-    ${3:SETUP}
-
-  Asserts:
-    ${4:ASSERTIONS}
-  """
+  """ Verify ${2:VERIFY_WHAT} """
 
 endsnippet
 
 snippet tdoc "docstring for test method" s
-""" Verify ${1:VERIFY_WHAT}
-
 Setup:
   ${2:SETUP}
 
 Asserts:
   ${3:ASSERTIONS}
-"""
-
 endsnippet
 
 snippet tidea "placeholder for future test" s
@@ -183,6 +172,13 @@ def test_${1:DESC}(self):
 
 endsnippet
 
+snippet get "self.client.get" s
+response = self.client.get(${1:URL}, follow=True)
+endsnippet
+
+snippet post "self.client.post" s
+response = self.client.post(${1:URL}, ${2:DATA}, follow=True)
+endsnippet
 # COMMANDS
 
 snippet command "imports and outline of command class"
