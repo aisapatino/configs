@@ -30,4 +30,6 @@
   editor = gvim -f
 [sequence]
   editor = gvim -f
+[commit]
+  template = ~/Projects/configs/git/commit_msg_template.txt
 
