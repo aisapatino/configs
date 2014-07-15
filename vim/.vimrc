@@ -1,6 +1,33 @@
-execute pathogen#infect()
-
 cd ~\Projects
+
+" Set up plugins with Vundle
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
+filetype off                  " will change once vundle is done
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" Manage other plugins
+Plugin 'chrisbra/Colorizer'
+Plugin 'kien/ctrlp.vim'
+Plugin 'dkprice/vim-easygrep'
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Shutnik/jshint2.vim'
+Plugin 'techlivezheng/vim-plugin-minibufexpl'
+Plugin 'ervandew/supertab'
+Plugin 'scrooloose/syntastic'
+Plugin 'SirVer/ultisnips'
+Plugin 'tpope/vim-vinegar'
+
+Plugin 'file:///home/.vim/custom-syntax'
+
+call vundle#end()
+filetype plugin indent on
 
 " OS-specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -13,7 +40,7 @@ if has("win32")
 else
   set shell=bash\ -i
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
-  let g:EasyGrepFileAssociations = "/home/aisa/.vim/bundle/CustomGrepFileAssoc"
+  let g:EasyGrepFileAssociations = "/home/aisa/.vim/CustomGrepFileAssoc"
 endif
 
 " GUI / text appearance
@@ -105,7 +132,7 @@ set statusline+=%{fugitive#statusline()}                " git branch
 set statusline+=%#SLWarn#%m%*                   " warn if dos format
 set statusline+=\ %#SLWarn#%{&ff!='unix'?'['.&ff.']':''}%*
 set statusline+=\ %{&shiftwidth}                        " tab size
-set statusline+=%{&expandtab==1?'':'%#SLWarn#T%*'} 
+set statusline+=%{&expandtab==1?'':'%#SLWarn#T%*'}
 set statusline+=%=                                      " end of left side
 set statusline+=\ %.30(\ \ %{ShPath(expand('%:p:h'))}%)   " shortened path
 set statusline+=\ %5L                                   " total lines in file
@@ -222,9 +249,9 @@ let g:SuperTabMappingBackward = '<c-tab>'
 let g:UltiSnipsExpandTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<s-tab>"
 " Which file opens with :UltiSnipsEdit
-let g:UltiSnipsSnippetsDir="~/.vim/bundle/custom-snippets"
+let g:UltiSnipsSnippetsDir="~/.vim/custom-snippets"
 " Which files are searched for snippets (leaving default off since I don't use)
-let g:UltiSnipsSnippetDirectories=["bundle/custom-snippets"]
+let g:UltiSnipsSnippetDirectories=["custom-snippets"]
 
 let g:user_emmet_leader_key='<Leader>'
 let g:user_emmet_mode='i'
@@ -240,7 +267,7 @@ augroup filetypedetect
   " removes current htmldjango detection located at $VIMRUNTIME/filetype.vim
   au! BufNewFile,BufRead *.html
   au  BufNewFile,BufRead *.html call FThtml()
- 
+
   func! FThtml()
     set colorcolumn=100
     let n = 1
