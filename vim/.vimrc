@@ -218,6 +218,7 @@ let g:UltiSnipsJumpForwardTrigger='<s-tab>'
 let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'
 " Which files are searched for snippets (leaving default off since I don't use)
 let g:UltiSnipsSnippetDirectories=['custom-snippets']
+let g:UltiSnipsEditSplit="vertical"
 
 let g:user_emmet_leader_key='<Leader>'
 let g:user_emmet_mode='i'

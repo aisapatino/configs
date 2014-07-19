@@ -6,7 +6,7 @@ endsnippet
 
 snippet init "basic init function"
 def __init__(self, *args, **kwargs):
-  super(${1:CLASS}, self).__init__(*args, **kwargs)
+	super(${1:CLASS}, self).__init__(*args, **kwargs)
 endsnippet
 
 # VIEWS
@@ -27,10 +27,10 @@ snippet view "basic view outline" bs
 @login_required(login_url = constants.LOGIN_URL)
 def ${1:viewname}(request):
 
-  if request.method == 'POST':
+	if request.method == 'POST':
 
 
-  return render(request, '', {})
+	return render(request, '', {})
 
 
 endsnippet
@@ -54,8 +54,13 @@ snippet model "basic model outline" bs
 class ${1:CLASSNAME}(models.Model):
 
 
-  def __unicode__(self):
-    return self.${2:FIELDNAME}
+	def __unicode__(self):
+		return self.${2:FIELDNAME}
+endsnippet
+
+snippet uni "unicode method" s
+def __unicode(self):
+	return self.${1:FIELDNAME}
 endsnippet
 
 snippet cdoc "docstring outline for a class" s
@@ -67,36 +72,36 @@ ${2:LONGER_INFO}
 endsnippet
 
 snippet fk "foreignkey"
-  ${1:FIELD} = models.ForeignKey(${2:MODEL})
+	${1:FIELD} = models.ForeignKey(${2:MODEL})
 
 endsnippet
 
 snippet pos "positiveintegerfield"
-  ${1:FIELD} = models.PositiveIntegerField(default=0)
+	${1:FIELD} = models.PositiveIntegerField(default=0)
 
 endsnippet
 
 snippet bool "booleanfield"
-  ${1:FIELD} = models.BooleanField(blank=True, default=False)
+	${1:FIELD} = models.BooleanField(blank=True, default=False)
 
 endsnippet
 
 snippet many "manytomanyfield"
-  ${1:FIELD} = models.ManyToManyField(${2:MODEL}, through='${3:THROUGH}', blank=True)
+	${1:FIELD} = models.ManyToManyField(${2:MODEL}, through='${3:THROUGH}', blank=True)
 
 endsnippet
 
 snippet datef "datetimefield"
-  ${1:FIELD} = models.DateTimeField()
+	${1:FIELD} = models.DateTimeField()
 
 endsnippet
 
 # resilience fields
 snippet resilf "insert resilience model fields"
-  physical = models.PositiveIntegerField(default=0)
-  emotional = models.PositiveIntegerField(default=0)
-  social = models.PositiveIntegerField(default=0)
-  mental = models.PositiveIntegerField(default=0)
+	physical = models.PositiveIntegerField(default=0)
+	emotional = models.PositiveIntegerField(default=0)
+	social = models.PositiveIntegerField(default=0)
+	mental = models.PositiveIntegerField(default=0)
 endsnippet
 
 # FORMS
@@ -104,9 +109,9 @@ endsnippet
 snippet mform "modelform outline" s
 class ${1:MODEL}Form(forms.ModelForm):
 
-  class Meta:
-    model = $1
-    exclude = []
+	class Meta:
+		model = $1
+		exclude = []
 
 
 endsnippet
@@ -115,11 +120,11 @@ endsnippet
 
 snippet madmin "model admin outline"
 class ${1:MODEL_NAME}A(admin.ModelAdmin):
-  list_display = ()
-  list_filter = ()
-  exclude = ()
-  fields = ()
-  readonly_fields = ()
+	list_display = ()
+	list_filter = ()
+	exclude = ()
+	fields = ()
+	readonly_fields = ()
 
 endsnippet
 
@@ -138,15 +143,15 @@ endsnippet
 
 snippet ctest "outline of a test class" bs
 class ${1:NAME}(${2:BASE}):
-  """ ${3:SUMMARY} """
+	""" ${3:SUMMARY} """
 
-  fixtures = [${4:FIXTURE}]
-  url = reverse('${5:VIEW}')
-  template_success = '${6:NAME}'
-  template_error = '${7:NAME}'
+	fixtures = [${4:FIXTURE}]
+	url = reverse('${5:VIEW}')
+	template_success = '${6:NAME}'
+	template_error = '${7:NAME}'
 
-  def setUp(self):
-    super($1, self).setUp()
+	def setUp(self):
+		super($1, self).setUp()
 
 endsnippet
 
@@ -158,18 +163,27 @@ endsnippet
 
 snippet tdoc "docstring for test method" s
 Setup:
-  ${2:SETUP}
+	${2:SETUP}
 
 Asserts:
   ${3:ASSERTIONS}
+
 endsnippet
 
 snippet tidea "placeholder for future test" s
 @unittest.skip('Incomplete')
 def test_${1:DESC}(self):
-  """ Verify ${2:DESC} """
-  pass
+	""" Verify ${2:DESC} """
+	pass
 
+endsnippet
+
+snippet tpost "test post"
+response = self.client.post(${1:URL}, ${2:DATA}, follow=True)
+endsnippet
+
+snippet tget "test get"
+response = self.client.get(${1:URL}, follow=True)
 endsnippet
 
 snippet get "self.client.get" s
@@ -190,10 +204,10 @@ from ${1:APP} import ${2:MODELS}
 
 class Command(BaseCommand):
 
-  help = ('${3:DESCRIPTION}')
+	help = ('${3:DESCRIPTION}')
 
-  def handle(self, *args, **kwargs):
-    pass
+	def handle(self, *args, **kwargs):
+		pass
 
 endsnippet
 
