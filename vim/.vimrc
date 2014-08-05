@@ -22,7 +22,8 @@ Plugin 'techlivezheng/vim-plugin-minibufexpl'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
-Plugin 'tpope/vim-vinegar'
+Plugin 'digitaltoad/vim-jade'
+
 
 Plugin 'file:///home/.vim/custom-syntax'
 
@@ -46,7 +47,12 @@ endif
 " GUI / text appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-colorscheme aisa
+if has('gui_running')
+  colorscheme aisa
+else
+  colorscheme aisadark
+end
+
 set guioptions="ai"       " hide menu, toolbar
 set lines=60 columns=238  " maximize
 set guiheadroom=0         " account for menu/toolbar being hidden
