@@ -4,6 +4,9 @@
 
 " Added:
 Django=*.py *.html *.json
+" Modified:
+Web=*.htm *.html *.shtml *.xhtml *.css *.js *.javascript *.sass *.scss *.less *.styl
+
 WoW=*.lua *.xml *.toc
 Ada=*.adb *.ads *.ada *.gpr *.ada_m *.adc
 Assembly=*.asm *.[sS] *.[aA] *.mac *.lst *.i
@@ -54,7 +57,6 @@ Vera=*.vr *.vri *.vrh
 Vim=*.vim .vimrc .gvimrc *.vba .exrc _exrc .vim*
 Virata=*.hw *.module *.pkg
 VisualStudioProject=*.sln *.vcproj *.icproj *.csproj *.rc *.def
-Web=*.htm *.html *.shtml *.stm *.xhtml *.xht *.css *.js *.javascript *.es *.jsp *.asp *.asa
 X11=XF86* .X* *.ad <Configuration>
 XML=*.xml *.dtd
 Xquery=*.xq *.xql *.xqm *.xquery *.xqy
