@@ -5,6 +5,7 @@ cd ~\Projects
 set nocompatible
 filetype off                  " will change once vundle is done
 
+set rtp+=~/.vim/custom-syntax
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -24,9 +25,6 @@ Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'digitaltoad/vim-jade'
 
-
-Plugin 'file:///home/.vim/custom-syntax'
-
 call vundle#end()
 filetype plugin indent on
 
@@ -41,7 +39,7 @@ if has("win32")
 else
   set shell=bash\ -i
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
-  let g:EasyGrepFileAssociations = "/home/aisa/.vim/CustomGrepFileAssoc"
+  let g:EasyGrepFileAssociations = "&runtimepath/CustomGrepFileAssoc"
 endif
 
 " GUI / text appearance
