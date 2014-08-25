@@ -1,5 +1,6 @@
 cd ~\Projects
 
+
 " Set up plugins with Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
@@ -9,7 +10,7 @@ set rtp+=~/.vim/custom-syntax
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, required
+" let Vundle manage Vundle (required)
 Plugin 'gmarik/Vundle.vim'
 
 " Manage other plugins
@@ -18,12 +19,17 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Shutnik/jshint2.vim'
 Plugin 'techlivezheng/vim-plugin-minibufexpl'
 Plugin 'ervandew/supertab'
-Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
+
+" Linting
+Plugin 'scrooloose/syntastic'
+Plugin 'Shutnik/jshint2.vim'
+
+" Syntax highlighting for non-default languages
 Plugin 'digitaltoad/vim-jade'
+Plugin 'wavded/vim-stylus'
 
 call vundle#end()
 filetype plugin indent on
@@ -39,7 +45,12 @@ if has("win32")
 else
   set shell=bash\ -i
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
-  let g:EasyGrepFileAssociations = "&runtimepath/CustomGrepFileAssoc"
+  if has("gui_macvim")
+    let g:EasyGrepFileAssociations = "/Users/aisa/.vim/CustomGrepFileAssoc"
+    set guifont=Menlo:h14
+  else
+    let g:EasyGrepFileAssociations = "/home/aisa/.vim/CustomGrepFileAssoc"
+  endif
 endif
 
 " GUI / text appearance
@@ -63,7 +74,7 @@ else
 endif
 
 set nowrap                " don't wrap lines by default
-let &showbreak='> '       " indicate start of wrapped
+let &showbreak=' '       " indicate start of wrapped
 set number                " show line numbers
 set cursorline            " highlight current line
 set colorcolumn=80        " show where the 80-char line is
@@ -135,11 +146,12 @@ set statusline+=\ %#SLWarn#%{&ff!='unix'?'['.&ff.']':''}%* " warn if dos format
 set statusline+=\ %{&shiftwidth}                        " tab size
 set statusline+=%=                                      " end of left side
 set statusline+=\ %.30(\ \ %{ShPath(expand('%:p:h'))}%) " shortened path
-set statusline+=\ %5L                                   " total lines in file
+set statusline+=\ %5L,%v                                  " total lines in file
 
 function! ShPath(path)
   let path = a:path
   let path = substitute(path, '/home/aisa', '~', '')  " shorten home to ~
+  let path = substitute(path, '/Users/aisa', '~', '') " mac version
   let path = substitute(path, '\Users\aisa', '~', '') " windows version
   let path = substitute(path, 'Projects', 'P', '')    " shorten main Projects dir
   return path
@@ -180,12 +192,32 @@ command! Current execute "cd %:h"
 
 " Trim trailing spaces
 command! Trail :%s/\s\+$
+" Only trim full lines of spaces (for jade, which needs other trailing spaces)
+command! LineTrail :%s/^\s\+$
 
 " Convert file to unix
 command! FormatUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
 
 " Fix django template style
 command! DjangoTemplateStyle :%s/{{\(\S\)/{{\ \1/g|:%s/\(\S\)}}/\1\ }}/g
+
+" Toggle tab-style indentation
+command! UseTabs execute "set noexpandtab | set tabstop=4 | set shiftwidth=4 | set nosmarttab"
+
+func! HtmlToJade()
+  :%s/<\/\w\+>//gc
+  :%s/<div\s//gc
+  :%s/class="/\./gc
+  :%s/id="/#/gc
+  :%s/->/\./gc
+  :%s/<//gc
+  :%s/>$//gc
+  :%s/>/\ /gc
+  :%s/a\s/a(/gc
+  :%s/\n\n/\r/gc
+endfunc
+
+command! HtmlToJade exec HtmlToJade()
 
 " Copy all to global register
 map <C-a> :%y+<CR>
@@ -196,6 +228,7 @@ map <C-a> :%y+<CR>
 let g:did_minibufexplorer_syntax_inits = 1 " tell minibuf not to set its own hi
 let g:miniBufExplHideWhenDiff = 1          " don't show in diff mode
 let g:miniBufExplStatusLineText = '%=cwd\ %{ShPath(getcwd())}'
+let g:miniBufExplBuffersNeeded = 1
 
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
