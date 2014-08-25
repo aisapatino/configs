@@ -51,7 +51,7 @@ if [ ! -d ~/.vim/bundle/Vundle.vim ] ; then
 fi
 
 ln -s -f -v ~/Projects/configs/vim/custom-syntax ~/.vim/
-ln -s -f -v ~/Projects/configs/vim/snippets ~/.vim/
+ln -s -f -v ~/Projects/configs/vim/custom-snippets ~/.vim/
 ln -s -f -v ~/Projects/configs/vim/CustomGrepFileAssoc ~/.vim/CustomGrepFileAssoc
 
 # linters
