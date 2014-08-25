@@ -1,6 +1,5 @@
 # Global gitignore
 temp/
-libs/
 
 # Python
 *.pyc
@@ -10,4 +9,7 @@ libs/
 node_modules/
 app/bower_components/
 .tmp/
+
+# Mac OS
+.DS_Store
 
