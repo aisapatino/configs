@@ -107,6 +107,7 @@ hi StatusLineNC  guifg=#506070 guibg=#a0b0c0 ctermbg=grey ctermfg=black
 hi VertSplit     guifg=#506070 guibg=#506070 gui=NONE ctermbg=black  ctermfg=grey
 hi SLWarn        guifg=#A70035
 hi Directory     guifg=#1060a0
+hi NonText       guifg=#a0b0c0
 
 hi MBENormal               guifg=#a0b0c0            gui=italic
 hi MBEChanged              guifg=#A70035
