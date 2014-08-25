@@ -1,10 +1,23 @@
+### APPEARANCE ################################################################
+
 TERM=xterm-256color
+
+# PROMPT
+#    \[\e[color\] = start coloring, \[\e[m\] = end coloring
+PS1='\u \[\e[1;32m\]\w\[\e[m\] \[\e[1;34m\]$\[\e[m\] '
 
 ### PATH ######################################################################
 
+### AUTOCOMPLETE ##############################################################
+
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+  . `brew --prefix`/etc/bash_completion
+fi
+
 ### ALIASES ###################################################################
 
+alias g="git"
 alias gk="gitk --all"
-alias tr="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|db' -L "
-alias trd="tree -a -d"
+alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|db' -L "
+alias trd="tree -a -d -I '.git'"
 
