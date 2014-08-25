@@ -35,6 +35,7 @@ source /home/aisa/Devel/google-cloud-sdk/completion.bash.inc
 
 alias cloudsql="mysql --host=173.194.109.221 -uroot -p"
 alias hero="heroku"
+alias g="git"
 alias gk="gitk --all"
 alias tr="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|db' -L "
 alias trd="tree -a -d"
