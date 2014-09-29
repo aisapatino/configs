@@ -30,6 +30,7 @@ Plugin 'Shutnik/jshint2.vim'
 " Syntax highlighting for non-default languages
 Plugin 'digitaltoad/vim-jade'
 Plugin 'wavded/vim-stylus'
+Plugin 'kchmck/vim-coffee-script'
 
 call vundle#end()
 filetype plugin indent on
@@ -48,6 +49,7 @@ else
   if has("gui_macvim")
     let g:EasyGrepFileAssociations = "/Users/aisa/.vim/CustomGrepFileAssoc"
     set guifont=Menlo:h14
+    cd formidable
   else
     let g:EasyGrepFileAssociations = "/home/aisa/.vim/CustomGrepFileAssoc"
   endif
@@ -83,6 +85,8 @@ set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands as you type
 set fillchars="vert:\|,fold:\ -,diff:\ -"
 match TrailingSpaces /\s\+$/
+2match WrongIndent /\t/
+
 
 " Custom keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -196,13 +200,17 @@ command! Trail :%s/\s\+$
 command! LineTrail :%s/^\s\+$
 
 " Convert file to unix
-command! FormatUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
+command! DosToUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
 
 " Fix django template style
 command! DjangoTemplateStyle :%s/{{\(\S\)/{{\ \1/g|:%s/\(\S\)}}/\1\ }}/g
 
 " Toggle tab-style indentation
-command! UseTabs execute "set noexpandtab | set tabstop=4 | set shiftwidth=4 | set nosmarttab"
+command! UseTabs execute "set noexpandtab | set tabstop=4 | set shiftwidth=4 | set nosmarttab | 2match none | 2match WrongIndent /\ \ /"
+command! UseSpaces execute "set expandtab | set tabstop=2 | set shiftwidth=2 | set smarttab | 2match none | 2match WrongIndent /\t/"
+
+command! SpacesToTabs :%s/\ \ /\t/gc
+command! SpacesToTabs4 :%s/\ \ \ \ /\t/gc
 
 func! HtmlToJade()
   :%s/<\/\w\+>//gc

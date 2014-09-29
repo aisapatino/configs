@@ -88,6 +88,7 @@ hi MatchParen  guifg=#ff00f8 guibg=NONE    gui=bold
 hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3a9
 hi TrailingSpaces            guibg=#fae6e6
+hi WrongIndent               guibg=#faecd9
 
 hi DiffChange  guifg=NONE    guibg=NONE
 hi DiffText    guifg=#06287e guibg=#e3faef gui=NONE
