@@ -22,8 +22,11 @@
   ch = checkout
   br = branch
   com = commit
-  logm = log --format=\"%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s%n\" --date=relative
-  diffc = diff --cached
+  l = log --format=\"%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s%n\" --date=relative
+  lf = log --format=\"%n%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s\" --date=relative --stat --name-status
+  d = diff
+  dc = diff --cached
+  fp = fetch -p
 [core]
   autocrlf = false
   excludesfile = ~/.gitignore
