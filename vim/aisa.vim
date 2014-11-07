@@ -43,7 +43,7 @@ hi CommentSpecial guifg=#6c71c4
 hi CommentHeader  guifg=#8090b0 gui=bold
 
 hi String         guifg=#506070
-hi Number         guifg=#6c71c4
+hi Number         guifg=#5b3674
 hi! link Float Number
 
 hi Function       guifg=#44047E gui=bold
@@ -89,11 +89,11 @@ hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3a9
 hi TrailingSpaces            guibg=#fae6e6
 hi WrongIndent               guibg=#faecd9
-
+" e3faef old diff background
 hi DiffChange  guifg=NONE    guibg=NONE
-hi DiffText    guifg=#06287e guibg=#e3faef gui=NONE
-hi DiffAdd     guifg=#06287e guibg=#e3faef gui=NONE
-hi DiffDelete  guifg=#fae6e6 guibg=#fae6e6 gui=italic
+hi DiffText    guifg=#06287e guibg=#DFF0E6 gui=NONE
+hi DiffAdd     guifg=#06287e guibg=#DFF0E6 gui=NONE
+hi DiffDelete  guifg=#F5E9ED guibg=#F5E9ED gui=italic
 
 " Window/screen components
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -110,12 +110,13 @@ hi SLWarn        guifg=#A70035
 hi Directory     guifg=#1060a0
 hi NonText       guifg=#a0b0c0
 
-hi MBENormal               guifg=#a0b0c0            gui=italic
-hi MBEChanged              guifg=#A70035
-hi MBEVisibleNormal        guifg=#06287e            gui=NONE
-hi MBEVisibleChanged       guifg=#A70035 guibg=NONE gui=NONE
-hi MBEVisibleActiveNormal  guifg=#1060a0 guibg=NONE gui=bold
-hi MBEVisibleActiveChanged guifg=#A70035 guibg=NONE gui=bold
+" BufLine
+hi BufLineHidden                guifg=#a0b0c0            gui=italic
+hi BufLineInactive              guifg=#06287e            gui=italic
+hi BufLineActive                guifg=#1060a0 guibg=NONE gui=bold
+hi BufLineHiddenModified        guifg=#A70035
+hi BufLineInactiveModified      guifg=#A70035
+hi BufLineActiveModified        guifg=#A70035 guibg=NONE gui=bold
 
 
 "   TagListTagName  - Used for tag names
