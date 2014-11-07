@@ -1,27 +1,35 @@
-### JSDOC ####################################################################
-snippet fdoc "outline for function documentation"
-/**
- * ${1:SUMMARY}
- *
- * @param {${2:TYPE}} ${3:NAME} ${4:DESC}
- * @private
- */
+### GENERAL ##################################################################
+snippet pf "prototype function" ws
+prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
+
+};
+
 endsnippet
 
-snippet adoc "attribute docs"
-/**
- * ${1:DESC}
- * @type {${2:TYPE}}
- * @private
- */
+snippet f "anonymous function" ws
+function() {
+${1}
+});
+endsnippet
+
+snippet con "console.log" ws
+console.log(${1});
+endsnippet
+
+### WHEN #####################################################################
+snippet ca "catch" ws
+catch(function(err) {
+	logger.error('Error: ' + err);
+	return when.reject(err);
+});
 endsnippet
 
 ### NODE #####################################################################
-snippet req "generic require"
+snippet req "generic require" s
 var $1 = require('${1:MODULE}');
 endsnippet
 
-snippet ex "most basic express outline"
+snippet ex "most basic express outline" s
 var express = require('express');
 
 var app = express();
@@ -30,56 +38,64 @@ app.listen(3000);
 
 endsnippet
 
-snippet hserver "http.createServer"
+snippet hserver "http.createServer" s
 var server = http.createServer(function(request, response) {
-  ${2}
+	${2}
 });
 server.listen(${1:PORT});
 console.log('Server is running on $1');
 endsnippet
 
-snippet xget "app.get"
+snippet xget "app.get" s
 app.get('${1:PATH}', function(request, response) {
-  ${2}
+	${2}
 });
 endsnippet
 
-snippet xpost "app.post"
+snippet xpost "app.post" s
 app.get('${1:PATH}', function(request, response) {
-  ${2}
+	${2}
 });
 endsnippet
 
 ### TESTING ###################################################################
 
-snippet desc "skeleton for describe wrapper"
+snippet desc "skeleton for describe wrapper" s
 describe('${1:TEST SUITE DESCRIPTION}', function() {
-
-  ${2}
 });
 endsnippet
 
-snippet it "skeleton for single test"
-it('should ${1:TEST DESC}', function() {
-  ${2}
+snippet suite "skeleton for suite wrapper" s
+suite('${1:SUITE DESC}', function() {
+});
+endsnippet
+
+snippet test "skeleton for single test" s
+test('${1:TEST DESC}', function(done) {
+});
+endsnippet
+
+snippet it "skeleton for single test" s
+it('should ${1:TEST DESC}', function(done) {
 });
 
 endsnippet
 
-snippet exp "expect"
+snippet exp "expect" s
 expect(${1:VAR}).to.${2:ETC};
 endsnippet
 
-snippet superget "superagent get request"
+snippet superget "superagent get request" s
 superagent.get('localhost:3000/${1}').end(function(err, res) {
-  ${2}
+	${2}
 });
 endsnippet
 
-snippet superpost "superagent post request"
+snippet superpost "superagent post request" s
 superagent.post('localhost:3000/${1}')
-  .send(${2:DATA})
-  .end(function(err, res) {
-    ${3}
+	.send(${2:DATA})
+	.end(function(err, res) {
+		${3}
 });
 endsnippet
+
