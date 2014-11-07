@@ -19,16 +19,25 @@ hi! link javaScriptNumber Number
 hi! link javaScriptBraces Statement
 hi! link javaScriptFunction NONE
 
+" override highlighting on this
+syn keyword jsThis this _this self
+hi link jsThis Type
+
 " highlight jsdoc components
 syn match javaScriptParamDoc "@[a-z]\+" containedin=javaScriptComment nextgroup=javaScriptDocType skipwhite
 syn match javaScriptDocType "{.\+}" contained nextgroup=javaScriptIdent skipwhite
-syn match javaScriptIdent "[a-z_]\+" contained
+syn match javaScriptIdent "[a-zA-Z]\+" contained
 hi link javaScriptDocType CommentSpecial
 hi link javaScriptParamDoc CommentSpecial
 hi link javaScriptIdent CommentSpecial
 
-" highlight node builtins
-syn keyword mochaChai it describe expect before beforeEach after afterEach
-hi link mochaChai javaScriptStatement
-
+" highlight mocha/chai test keywords
+syn keyword mochaChaiHeader suite describe
+hi link mochaChaiHeader Function
+syn keyword chaiAssert expect
+hi link chaiAssert Include
+"syn keyword mochaChai it test before setup beforeEach after teardown afterEach
+"hi link mochaChai javaScriptStatement
+syn keyword mochaChai2 xit xdescribe done skip
+hi link mochaChai2 javaScriptSpecial
 
