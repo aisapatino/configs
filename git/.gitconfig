@@ -10,9 +10,9 @@
   tool = fugitive
 [mergetool]
   prompt = false
-  [mergetool.fugitive]
-	cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
   keepBackup = false
+  [mergetool.fugitive]
+  cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
 [push]
   default = simple
 [credential]
@@ -26,13 +26,16 @@
   lf = log --format=\"%n%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s\" --date=relative --stat --name-status
   d = diff
   dc = diff --cached
+  ds = diff --stat
   fp = fetch -p
+  r = rebase
+  ri = rebase -i
+  cp = cherry-pick
 [core]
   autocrlf = false
   excludesfile = ~/.gitignore
   editor = gvim -f
 [sequence]
   editor = gvim -f
-[commit]
-  template = ~/Projects/configs/git/commit_msg_template.txt
-
+[http]
+  postBuffer = 524288000
