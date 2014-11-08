@@ -8,32 +8,6 @@ let colors_name = "aisadark"
 " fix whiteout of location list
 hi! link qfLineNr NONE
 
-" Colors
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" #404850        #000000 
-" normal text    background
-" #506070
-" sline, strings
-"
-" #06287e        #1060a0   #a0b0c0
-" bold keywords  *         linenr, status
-"
-" #40a070   #8090b0
-" numbers   comments
-"
-" #ff00f8     #44047E
-" class name  func name
-
-" #5b3674  #6c71c4  " not distinct from normal/comment unless italic/bold
-"
-" backgrounds:
-"
-" #f0f0f0  #f6f6f6                #fae6e6   #e3faef
-" bg       colorcol, cursorline   diffs
-"
-" #A70035 error
-" colors maybe     #00804C  #005332
-
 " Types of text
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
