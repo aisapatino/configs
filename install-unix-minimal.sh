@@ -29,11 +29,11 @@ ln -s -f -v ~/Projects/configs/terminal/.bashrc ~/.bashrc
 # vim
 echo "--- VIM ---"
 ln -s -f -v ~/Projects/configs/vim/.vimrc ~/.vimrc
+ln -s -f -v ~/Projects/configs/vim/.gvimrc ~/.gvimrc
 
 mkdir -p -v ~/.vim/colors
 ln -s -f -v ~/Projects/configs/vim/colors/aisa.vim ~/.vim/colors/aisa.vim
 ln -s -f -v ~/Projects/configs/vim/colors/aisadark.vim ~/.vim/colors/aisadark.vim
-ln -s -f -v ~/Projects/configs/vim/colors/terminal.vim ~/.vim/colors/terminal.vim
 
 if [ ! -d ~/.vim/bundle ] ; then
   mkdir -v ~/.vim/bundle

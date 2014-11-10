@@ -8,34 +8,10 @@ let colors_name = "aisa"
 " fix whiteout of location list
 hi! link qfLineNr NONE
 
-" Colors
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" #404850   #506070 
-" normal    sline, strings   
-"
-" #06287e        #1060a0   #a0b0c0
-" bold keywords  *         linenr, status
-"
-" #40a070   #8090b0
-" numbers   comments
-"
-" #ff00f8     #44047E
-" class name  func name
-
-" #5b3674  #6c71c4  " not distinct from normal/comment unless italic/bold
-"
-" backgrounds:
-"
-" #f0f0f0  #f6f6f6                #fae6e6   #e3faef
-" bg       colorcol, cursorline   diffs
-"
-" #A70035 error
-" colors maybe     #00804C  #005332 
-
 " Types of text
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi Normal         guifg=#404850 guibg=#f0f0f0  ctermbg=15  ctermfg=black
+hi Normal         guifg=#404850 guibg=#f0f0f0
 hi! link Constant Normal
 
 hi Comment        guifg=#8090b0
@@ -101,26 +77,22 @@ hi DiffDelete  guifg=#F5E9ED guibg=#F5E9ED gui=italic
 hi ColorColumn                 guibg=#f6f6f6
 hi Cursor        guifg=#ffffff guibg=#404850
 hi CursorLine                  guibg=#f6f6f6
-hi LineNr        guifg=#ffffff guibg=#a0b0c0 ctermfg=white ctermbg=32
+hi LineNr        guifg=#ffffff guibg=#a0b0c0
 hi CursorLineNr  guifg=#a0b0c0 guibg=#f6f6f6
-hi StatusLine    guifg=#ffffff guibg=#a0b0c0 gui=bold ctermbg=grey ctermfg=black
-hi StatusLineNC  guifg=#506070 guibg=#a0b0c0 ctermbg=grey ctermfg=black
-hi VertSplit     guifg=#506070 guibg=#506070 gui=NONE ctermbg=black  ctermfg=grey
+hi StatusLine    guifg=#ffffff guibg=#a0b0c0 gui=bold
+hi StatusLineNC  guifg=#506070 guibg=#a0b0c0
+hi VertSplit     guifg=#506070 guibg=#506070 gui=NONE
 hi SLWarn        guifg=#A70035
 hi Directory     guifg=#1060a0
 hi NonText       guifg=#a0b0c0
 
-" BufLine
-hi BufLineHidden                guifg=#a0b0c0            gui=italic
-hi BufLineInactive              guifg=#06287e            gui=italic
-hi BufLineActive                guifg=#1060a0 guibg=NONE gui=bold
-hi BufLineHiddenModified        guifg=#A70035
-hi BufLineInactiveModified      guifg=#A70035
-hi BufLineActiveModified        guifg=#A70035 guibg=NONE gui=bold
+" Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+hi BufLineHidden             guifg=#a0b0c0            gui=italic
+hi BufLineInactive           guifg=#06287e            gui=italic
+hi BufLineActive             guifg=#1060a0 guibg=NONE gui=bold
+hi BufLineHiddenModified     guifg=#A70035
+hi BufLineInactiveModified   guifg=#A70035
+hi BufLineActiveModified     guifg=#A70035 guibg=NONE gui=bold
 
-"   TagListTagName  - Used for tag names
-"   TagListTagScope - Used for tag scope
-"   TagListTitle    - Used for tag titles
-"   TagListComment  - Used for comments
-"   TagListFileName - Used for filenames

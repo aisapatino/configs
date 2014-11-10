@@ -23,7 +23,7 @@ Plugin 'editorconfig/editorconfig-vim'
 " Occassionally used for replace all within directory
 Plugin 'dkprice/vim-easygrep'
 " Used when working with html
-"Plugin 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 " Working on themes/css
 Plugin 'vim-scripts/hexHighlight.vim'
 Plugin 'lambdalisue/vim-gista'
@@ -43,34 +43,25 @@ filetype plugin indent on
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("win32")
-  set guifont=Consolas:h12
   set backspace=indent,eol,start
   let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
   set fileformats=unix,dos
 else
   set shell=bash\ -i
   let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
+  let g:EasyGrepFileAssociations = "~/.vim/CustomGrepFileAssoc"
   if has("gui_macvim") || has('mac')
-    let g:EasyGrepFileAssociations = "/Users/aisa/.vim/CustomGrepFileAssoc"
-    set guifont=Menlo:h14
     cd formidable
-  else
-    let g:EasyGrepFileAssociations = "/home/aisa/.vim/CustomGrepFileAssoc"
   endif
 endif
 
 " GUI / text appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if has('gui_running')
-  colorscheme aisa
-else
+if !has('gui_running')
   colorscheme aisadark "TODO needs a lot of work
 end
 
-set guioptions="ai"       " hide menu, toolbar
-set guiheadroom=0         " account for menu/toolbar being hidden
-"set lines=999 columns=999 " maximize
 set t_Co=256              " 256-color if running in terminal
 
 if &diff
@@ -82,7 +73,6 @@ endif
 set nowrap                " don't wrap lines by default
 let &showbreak=' '        " indicate start of wrapped
 set number                " show line numbers
-set cursorline            " highlight current line
 set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
@@ -90,9 +80,13 @@ set showcmd               " show commands as you type
 set fillchars="vert:\|,fold:\ -,diff:\ -"
 match TrailingSpaces /\s\+$/
 
+" don't make error noises
+set vb
 
 " Custom keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let mapleader="`"
 
 map ; :
 
@@ -191,7 +185,7 @@ endfunction
 " Tab line
 let g:bufline_modified_sign='+'
 
-" Set gvim's title based on current session. Expects .vim filename
+" Set vim's title based on current session. Expects .vim filename
 function! SessionTitle()
   return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
 endfunction
@@ -275,7 +269,7 @@ let g:EasyGrepReplaceWindowMode = 2       " don't open new tabs/splits
 
 let g:syntastic_mode_map = {'mode': 'active'}
 " let g:syntastic_python_checkers = ['pylint']
-" let g:syntastic_lua_checkers = ['luac']
+let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_javascript_checkers = ['jshint']
 " let g:syntastic_javascript_jshint_exec = '/usr/local/bin/jshint'
 let g:syntastic_always_populate_loc_list = 1
@@ -336,7 +330,7 @@ augroup END
 " set verbose=13
 " set verbosefile=~/.vim/vimlog.vim
 
-"map <F10> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
-"    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
-"    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
+map <leader>s :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
+    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
+    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
 
