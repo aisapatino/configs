@@ -10,6 +10,7 @@ if has("win32")
   set guifont=Consolas:h12
 elseif has("gui_macvim")
   set guifont=Menlo:h14
+endif
 
 set cursorline            " highlight current line
 

@@ -1,9 +1,9 @@
-cd ~\Projects
+cd ~/Projects
 
-" Set up plugins with Vundle
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Set up plugins with Vundle
+" -----------------------------------------------------------------------------
 set nocompatible
-filetype off                  " will change once vundle is done
+filetype off
 
 set rtp+=~/.vim/custom-syntax/after/
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -16,20 +16,16 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'
-Plugin 'vim-scripts/BufLine'
+Plugin 'aisapatino/bufline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'editorconfig/editorconfig-vim'
-
-" Occassionally used for replace all within directory
-Plugin 'dkprice/vim-easygrep'
-" Used when working with html
-Plugin 'mattn/emmet-vim'
-" Working on themes/css
-Plugin 'vim-scripts/hexHighlight.vim'
-Plugin 'lambdalisue/vim-gista'
-
-" Linting
 Plugin 'scrooloose/syntastic'
+
+" Occasional use
+Plugin 'rking/ag.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'aisapatino/hex-highlight'
+Plugin 'lambdalisue/vim-gista'
 
 " Syntax highlighting for non-default languages
 Plugin 'digitaltoad/vim-jade'
@@ -39,29 +35,19 @@ Plugin 'kchmck/vim-coffee-script'
 call vundle#end()
 filetype plugin indent on
 
-" OS-specific
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Basics
+" -----------------------------------------------------------------------------
 
-if has("win32")
-  set backspace=indent,eol,start
-  let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
-  set fileformats=unix,dos
-else
-  set shell=bash\ -i
-  let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
-  let g:EasyGrepFileAssociations = "~/.vim/CustomGrepFileAssoc"
-  if has("gui_macvim") || has('mac')
-    cd formidable
-  endif
-endif
+" typical backspace behavior (not default on windows & terminal)
+set backspace=indent,eol,start
 
-" GUI / text appearance
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" don't make error noises
+set vb
 
-if !has('gui_running')
-  colorscheme aisadark "TODO needs a lot of work
-end
+"  Appearance
+" -----------------------------------------------------------------------------
 
+colorscheme aisadark      " overridden in .gvimrc
 set t_Co=256              " 256-color if running in terminal
 
 if &diff
@@ -71,68 +57,38 @@ else
 endif
 
 set nowrap                " don't wrap lines by default
-let &showbreak=' '        " indicate start of wrapped
+let &showbreak='・'       " indicate start of wrapped
 set number                " show line numbers
 set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
-set showcmd               " show commands as you type
-set fillchars="vert:\|,fold:\ -,diff:\ -"
-match TrailingSpaces /\s\+$/
+set showcmd               " show commands in gutter as you type
+set fillchars='vert:\|,fold:\ -,diff:\ -'
 
-" don't make error noises
-set vb
+"  Search
+" -----------------------------------------------------------------------------
 
-" Custom keybindings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set ignorecase      " case-insensitive search
+set smartcase       " if uppercase letter, search case sensitive
+set incsearch       " show matches as you type
+set hlsearch        " highlight search matches
 
-let mapleader="`"
-
-map ; :
-
-" Go between splits more easily
-map <C-h> <C-w>h
-map <C-l> <C-w>l
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-
-" Shorter keybindings for ctrlp (find all, files, recent, buffer)
-nnoremap ;fa :CtrlPMixed<Cr>
-nnoremap ;ff :CtrlP<Cr>
-nnoremap ;fr :CtrlPMRU<Cr>
-nnoremap ;fb :CtrlPBuffer<Cr>
-
-" Go between location list items
-map [l :lprev<Cr>
-map ]l :lnext<Cr>
-
-" Cycle through buffers
-map <Leader>h :bp<Cr>
-map <Leader>l :bn<Cr>
-
-" Search
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set ignorecase " case-insensitive search
-set smartcase  " if uppercase letter, search case sensitive
-set incsearch  " show matches as you type
-set hlsearch   " highlight search matches
 " escape to clear search highlighting
 nnoremap <esc> :noh<return><esc>
 
-" Indentation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Indentation
+" -----------------------------------------------------------------------------
 
 " These will be overridden by editorconfig as needed
-set expandtab    " use spaces instead of tabs
-set tabstop=2    " how many columns wide a tab is visually
-set shiftwidth=2 " how many columns to indent with >>
-set smarttab     " uses shiftwidth # spaces when inserting <tab>
-set autoindent   " take indent for new line from previous line
-set smartindent  " more intelligent indent for new lines
+set expandtab        " use spaces instead of tabs
+set tabstop=2        " how many columns wide a tab is visually
+set shiftwidth=2     " how many columns to indent with >>
+set smarttab         " uses shiftwidth # spaces when inserting <tab>
+set autoindent       " take indent for new line from previous line
+set smartindent      " more intelligent indent for new lines
 
-" Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Folding
+" -----------------------------------------------------------------------------
 
 set foldmethod=indent
 set nofoldenable           " start with all folds open
@@ -142,10 +98,10 @@ function! GetFoldText()
   return (repeat("- ", 35) . num_lines . " lines")
 endfunction
 
-" Status line, title, tab labels
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Status line, title
+" -----------------------------------------------------------------------------
 
-set laststatus=2 " Always show status line
+set laststatus=2                           " always show status line
 
 set statusline=\ %n                        " buffer number
 set statusline+=\ %t                       " file name
@@ -165,12 +121,9 @@ function! IndentDisplay()
 endfunction
 
 function! ShPath()
-  let path = expand('%:p:h')
-  let path = substitute(path, '/home/aisa', '~', '')  " shorten home to ~
-  let path = substitute(path, '/Users/aisa', '~', '') " mac version
-  let path = substitute(path, '\Users\aisa', '~', '') " windows version
-  let path = substitute(path, 'Projects', 'P', '')    " shorten main Projects dir
-  let path = substitute(path, 'formidable', 'f', '')    " shorten work dir
+  let path = expand('%:~:h')
+  let path = substitute(path, 'Projects', 'P', '')
+  let path = substitute(path, 'formidable', 'f', '')
   return path
 endfunction
 
@@ -182,39 +135,65 @@ function! ShortBranch()
   return br
 endfunction
 
-" Tab line
-let g:bufline_modified_sign='+'
-
 " Set vim's title based on current session. Expects .vim filename
 function! SessionTitle()
   return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
 endfunction
 au SessionLoadPost * set titlestring=%{SessionTitle()}
 
-" Files, sessions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Files, sessions
+" -----------------------------------------------------------------------------
 
-set wildignore+=*.pyc,__init__.py,*/tmp/*,*/pytz/*,*/node_modules/*,*/dist/*
 set autoread                " auto-update when file is changed from the outside
 set nobackup                " don't create backup/swap files
 set nowb
 set noswapfile
 set sessionoptions=buffers,folds,resize,winsize,curdir
 
-" Diffs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set diffopt=filler,context:2,vertical,foldcolumn:1
-
-" Custom functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " Store sessions in one place
 nnoremap ;so :so ~/Projects/vim-sessions/
 nnoremap ;mks :mks! ~/Projects/vim-sessions/
 
+"  Diffs
+" -----------------------------------------------------------------------------
+
+set diffopt=filler,context:2,vertical,foldcolumn:1
+
+"  Keybindings, shortcuts, custom functions
+" -----------------------------------------------------------------------------
+
+map ; :
+
+"let mapleader="-"
+
+" Go between splits using Ctrl + direction keys
+map <C-h> <C-w>h
+map <C-l> <C-w>l
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+
+" Go between location list items
+map [l :lprev<Cr>
+map ]l :lnext<Cr>
+
+" list buffers
+map <Leader>b :buffers<Cr>
+
+" Cycle through buffers
+"map <Leader>h :bp<Cr>
+"map <Leader>l :bn<Cr>
+
+" Search for conflict markers
+map <Leader>g :Conflict<cr>n
+command! Conflict /\(<<<<<<\|======\|>>>>>>\)
+
+" Copy all to global register
+map <C-a> :%y+<CR>
+
 " Change working dir to current file's dir
 command! Current execute "cd %:h"
+
+command! Reload :so %
 
 " Trim trailing spaces
 command! Trail :%s/\s\+$
@@ -249,54 +228,69 @@ endfunc
 
 command! HtmlToJade exec HtmlToJade()
 
-" Copy all to global register
-map <C-a> :%y+<CR>
 
-command! Reload :so %
+"  Plugin config
+" -----------------------------------------------------------------------------
 
-" Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BufLine
+
+let g:bufline_modified_sign='+'
+
+" CtrlP
 
 let g:ctrlp_show_hidden = 1               " show hidden files
+let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules)$', 'file': '\.pyc$'}
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
 
-let g:EasyGrepSearchCurrentBufferDir = 0  "don't search buffer dirs (redundant)
-let g:EasyGrepEveryMatch = 1              " show all matches on a line (/g)
-let g:EasyGrepRecursive = 1               " search subfolders
-let g:EasyGrepMode = 2                    " use file associations
-let g:EasyGrepFilesToExclude = 'libs,pytz,djangoappengine,migrations,node_modules' " ignore these dirs
-let g:EasyGrepReplaceWindowMode = 2       " don't open new tabs/splits
+nnoremap ;fa :CtrlPMixed<Cr>
+nnoremap ;ff :CtrlP<Cr>
+nnoremap ;fr :CtrlPMRU<Cr>
+nnoremap ;fb :CtrlPBuffer<Cr>
 
-let g:syntastic_mode_map = {'mode': 'active'}
-" let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_javascript_checkers = ['jshint']
-" let g:syntastic_javascript_jshint_exec = '/usr/local/bin/jshint'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+" Emmet
+
+let g:user_emmet_leader_key='<Leader>'
+let g:user_emmet_mode='a'
+
+" Gista
+
+let g:gista#github_user='aisapatino'
+let g:gista#close_list_after_open=1          " hide list after opening one
+let g:gista#update_on_write=1                " update with :w
+
+command! Gistl :Gista --list
+
+" HexHighlight
+command! Highlight exec "call HexHighlight()"
+
+" SuperTab
 
 let g:SuperTabMappingBackward = '<c-tab>'
 
+" Syntastic
+
+let g:syntastic_mode_map = {'mode': 'passive', 'active_filetypes': ['javascript']}
+let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_lua_checkers = ['luac']
+let g:syntastic_python_checkers = ['pylint']
+
+let g:syntastic_always_populate_loc_list = 1 " show errors in location list
+let g:syntastic_loc_list_height = 5
+let g:syntastic_enable_balloons = 0          " don't do mouseover balloons
+let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
+let g:syntastic_error_symbol = '»'
+let g:syntastic_warning_symbol = '›'
+
+" Ultisnips
+
 let g:UltiSnipsExpandTrigger='<s-tab>'
 let g:UltiSnipsJumpForwardTrigger='<s-tab>'
-" Which file opens with :UltiSnipsEdit
-let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'
-" Which files are searched for snippets (leaving default off since I don't use)
-let g:UltiSnipsSnippetDirectories=['custom-snippets']
+let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'   " dir for :UltiSnipsEdit
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetDirectories=['custom-snippets'] " don't include default dir
 
-let g:user_emmet_leader_key='<Leader>'
-let g:user_emmet_mode='i'
-
-let g:gista#github_user = 'aisapatino'
-let g:gista#close_list_after_open = 1          " hide list after opening one
-let g:gista#update_on_write = 1                " update with :w
-
-" better shortcut for color
-command! Highlight exec "call HexHighlight()"
-
-" Language-specific
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Language-specific
+" -----------------------------------------------------------------------------
 
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.json set filetype=json
@@ -325,12 +319,37 @@ augroup filetypedetect
   endfunc
 augroup END
 
-" Debugging
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set verbose=13
-" set verbosefile=~/.vim/vimlog.vim
+"  OS-specific
+" -----------------------------------------------------------------------------
 
-map <leader>s :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
-    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
-    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
+if has("win32")
+  let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
+  set fileformats=unix,dos
+else
+  set shell=bash\ -i
+  let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
+  let g:EasyGrepFileAssociations = "/Users/aisa/.vim/CustomGrepFileAssoc"
+  if has("gui_macvim") || has('mac')
+    cd formidable
+  endif
+endif
+
+"  Debugging
+" -----------------------------------------------------------------------------
+"set verbose=9
+"set verbosefile=~/.vim/vimlog.vim
+
+" Show highlight group for item at cursor
+function! ShowHighlightGroup()
+  let l:synid = synID(line('.'), col('.'), 1)
+  let l:synname = synIDattr(l:synid, 'name')
+  " what syn group is actually highlighting this item (follows links)
+  let l:synlinked = synIDattr(synIDtrans(l:synid), 'name')
+  " transparent item
+  let l:syntrans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
+  
+  return 'hi<' . l:synname . '> linked<' . l:synlinked . '> transparent<' .  l:syntrans . '>'
+endfunction
+
+command! ShowHighlightGroup echo ShowHighlightGroup()
 
