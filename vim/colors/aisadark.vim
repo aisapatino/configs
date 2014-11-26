@@ -3,7 +3,7 @@ hi clear
 if exists("syntax_on")
   syntax reset
 endif
-let colors_name = "terminal"
+let colors_name = "aisadark"
 
 " fix whiteout of location list
 hi! link qfLineNr NONE
