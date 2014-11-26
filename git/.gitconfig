@@ -1,7 +1,17 @@
 [user]
   email = aisapatino@gmail.com
+[credential]
+  helper = cache --timeout=3600
 [color]
   ui = always
+[core]
+  autocrlf = false
+  excludesfile = ~/.gitignore
+  editor = gvim -f
+[push]
+  default = simple
+[http]
+  postBuffer = 524288000
 [diff]
   tool = gvimdiff
 [difftool]
@@ -13,33 +23,30 @@
   keepBackup = false
   [mergetool.fugitive]
   cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
-[push]
-  default = simple
-[credential]
-  helper = cache --timeout=3600
+[sequence]
+  editor = gvim -f
 [alias]
   st = status
   ch = checkout
-  br = branch
   a = add
   com = commit
+  ca = commit --amend
+  br = branch
+  # history
   l = log --format=\"%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s%n\" --date=relative
   lf = log --format=\"%n%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s\" --date=relative --stat --name-status
   d = diff
   dc = diff --cached
   ds = diff --stat
+  # fetch, merge, rebase
   fp = fetch -p
+  pr = pull --rebase
   r = rebase
   ri = rebase -i
+  rc = rebase --continue
   cp = cherry-pick
+  # stash
   ss = stash save
   sp = stash pop
   sl = stash list
-[core]
-  autocrlf = false
-  excludesfile = ~/.gitignore
-  editor = gvim -f
-[sequence]
-  editor = gvim -f
-[http]
-  postBuffer = 524288000
+  sd = stash drop
