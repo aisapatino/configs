@@ -5,10 +5,7 @@ if exists("syntax_on")
 endif
 let colors_name = "aisa"
 
-" fix whiteout of location list
-hi! link qfLineNr NONE
-
-" Types of text
+" Syntax groups
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 hi Normal         guifg=#404850 guibg=#f0f0f0
@@ -65,7 +62,6 @@ hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3a9
 hi TrailingSpaces            guibg=#fae6e6
 hi WrongIndent               guibg=#faecd9
-" e3faef old diff background
 hi DiffChange  guifg=NONE    guibg=NONE
 hi DiffText    guifg=#06287e guibg=#DFF0E6 gui=NONE
 hi DiffAdd     guifg=#06287e guibg=#DFF0E6 gui=NONE
@@ -82,17 +78,25 @@ hi CursorLineNr  guifg=#a0b0c0 guibg=#f6f6f6
 hi StatusLine    guifg=#ffffff guibg=#a0b0c0 gui=bold
 hi StatusLineNC  guifg=#506070 guibg=#a0b0c0
 hi VertSplit     guifg=#506070 guibg=#506070 gui=NONE
+hi SignColumn                  guibg=#506070
 hi SLWarn        guifg=#A70035
 hi Directory     guifg=#1060a0
 hi NonText       guifg=#a0b0c0
 
+" fix whiteout of location list
+hi! link qfLineNr NONE
+
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-hi BufLineHidden             guifg=#a0b0c0            gui=italic
-hi BufLineInactive           guifg=#06287e            gui=italic
+hi BufLineHidden             guifg=#a0b0c0            gui=NONE
+hi BufLineInactive           guifg=#06287e            gui=NONE
 hi BufLineActive             guifg=#1060a0 guibg=NONE gui=bold
 hi BufLineHiddenModified     guifg=#A70035
 hi BufLineInactiveModified   guifg=#A70035
 hi BufLineActiveModified     guifg=#A70035 guibg=NONE gui=bold
 
+hi! link SyntasticWarningSign NONE
+hi! link SyntasticErrorSign NONE
+hi SyntasticWarningSign guifg=#ffffff   guibg=#ff8800
+hi SyntasticErrorSign   guifg=#ffffff   guibg=#ff1111 gui=bold
