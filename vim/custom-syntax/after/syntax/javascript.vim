@@ -1,10 +1,3 @@
-" todo
-"   ajax builtins
-"   highlight word function (mildly)
-
-" comment headers
-syn match javaScriptCommentHeader "/\*\s\?-.*\*/"
-hi! link javaScriptCommentHeader CommentHeader
 
 " highlight function names for prototypes, functions defined in arrays
 syn match javaScriptFuncName "\([a-zA-Z0-9_]\+\)\(\s=\sfunction\)\@="
@@ -40,4 +33,8 @@ hi link chaiAssert Include
 "hi link mochaChai javaScriptStatement
 syn keyword mochaChai2 xit xdescribe done skip
 hi link mochaChai2 javaScriptSpecial
+
+" comment headers
+syn match javaScriptCommentHeader "/\*\s\?-.*\*/"
+hi! link javaScriptCommentHeader CommentHeader
 
