@@ -63,7 +63,6 @@ set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
-set fillchars='vert:\|,fold:\ -,diff:\ -'
 
 "  Search
 " -----------------------------------------------------------------------------
@@ -103,8 +102,8 @@ endfunction
 
 set laststatus=2                           " always show status line
 
-set statusline=\ %n                        " buffer number
-set statusline+=\ %t                       " file name
+set statusline=%1*\ %n               " buffer number
+set statusline+=\ %t\ %*                       " file name
 set statusline+=%{ShortBranch()}           " git branch
 set statusline+=\ %#SLWarn#%m%*            " modified flag
 set statusline+=\ %{IndentDisplay()}       " tab size & flag for tabs
@@ -112,28 +111,28 @@ set statusline+=%=                         " end of left side
 set statusline+=\ \ \ %.35(%{ShPath()}%)   " shortened path
 set statusline+=\ %5L,%v                   " total lines in file, cursor column
 
-function! IndentDisplay()
+func! IndentDisplay()
   let display = &shiftwidth
   if (&expandtab == 'noexpandtab')
     let display = display . 't'
   endif
   return display
-endfunction
+endf
 
-function! ShPath()
+func! ShPath()
   let path = expand('%:~:h')
   let path = substitute(path, 'Projects', 'P', '')
   let path = substitute(path, 'formidable', 'f', '')
   return path
-endfunction
+endf
 
 " Get rid of excess chars in default [Git(branch)] format
-function! ShortBranch()
+func! ShortBranch()
   let br = fugitive#statusline()
-  let br = substitute(br, '[Git', ' ', '')
+  let br = substitute(br, '[Git', '', '')
   let br = substitute(br, ']', '', '')
   return br
-endfunction
+endf
 
 " Set vim's title based on current session. Expects .vim filename
 function! SessionTitle()
