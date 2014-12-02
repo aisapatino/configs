@@ -16,6 +16,10 @@ snippet con "console.log" ws
 console.log('${1}');
 endsnippet
 
+snippet err "new Error" ws
+err = new Error('${1:MSG}');
+endsnippet
+
 ### WHEN #####################################################################
 snippet ca "catch" ws
 catch(function(err) {
