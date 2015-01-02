@@ -31,6 +31,7 @@
   a = add
   com = commit
   ca = commit --amend
+  can = commit --amend -C HEAD
   br = branch
   # history
   l = log --format=\"%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s%n\" --date=relative
