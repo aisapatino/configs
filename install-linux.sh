@@ -24,8 +24,8 @@ fi
 ln -s -f -v ~/Projects/configs/git/.gitk ~/.gitk
 
 # mysql
-echo "--- MYSQL ---"
-sudo ln -s -f -v ~/Projects/configs/mysql/my.cnf /etc/
+# echo "--- MYSQL ---"
+# sudo ln -s -f -v ~/Projects/configs/mysql/my.cnf /etc/
 
 # terminal
 echo "--- TERMINAL ---"
