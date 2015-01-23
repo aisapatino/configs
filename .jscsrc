@@ -1,0 +1,44 @@
+{
+  "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"], 
+  "disallowKeywordsOnNewLine": ["else"],
+  "disallowMixedSpacesAndTabs": true,
+  "disallowNewlineBeforeBlockStatements": true,
+  "disallowOperatorBeforeLineBreak": ["."],
+  "disallowPaddingNewlinesInBlocks": true,
+  "disallowQuotedKeysInObjects": true,
+  "disallowSpaceAfterObjectKeys": true,
+  "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
+  "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
+  "disallowSpacesInCallExpression": true,
+  "disallowSpacesInsideArrayBrackets": true,
+  "disallowSpacesInsideObjectBrackets": true,
+  "disallowSpacesInsideParentheses": true,
+  "disallowTrailingComma": true,
+  "disallowTrailingWhitespace": true,
+  "disallowYodaConditions": true, // ex: if (1 == a) 
+  "requireBlocksOnNewline": true, // can be int for min lines before this kicks in
+  "requireCamelCaseOrUpperCaseIdentifiers": true, // could be a problem for _
+  "requireCapitalizedConstructors": true,
+  "requireCommaBeforeLineBreak": true, // can't do comma at start of line
+  "requireCurlyBraces": true,
+  "requireDotNotation": true,
+  "requireLineBreakAfterVariableAssignment": true,
+  "requireOperatorBeforeLineBreak": true,
+  "requireSpaceAfterBinaryOperators": true,
+  "requireSpaceAfterLineComment": true,
+  "requireSpaceBeforeBinaryOperators":  true,
+  "requireSpaceBeforeBlockStatements": true,
+  "requireSpaceBeforeKeywords": true,
+  "requireSpaceBeforeObjectValues": true,
+  "requireSpaceBetweenArguments": true,
+  "requireSpacesInConditionalExpression": true,
+  "requireSpacesInForStatement": true,
+  "safeContextKeyword": ["_this, self"],
+  "validateIndentation": 2,
+  "validateParameterSeparator": ", ",
+  "validateQuoteMarks": "'"
+  
+  // disallowMultipleVarDecl
+  // disallowPaddingNewlinesBeforeKeywords = []
+  
+}
