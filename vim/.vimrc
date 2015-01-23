@@ -1,6 +1,6 @@
 cd ~/Projects
 
-"  Set up plugins with Vundle
+""  Set up plugins with Vundle
 " -----------------------------------------------------------------------------
 set nocompatible
 filetype off
@@ -35,7 +35,7 @@ Plugin 'kchmck/vim-coffee-script'
 call vundle#end()
 filetype plugin indent on
 
-"  Basics
+""  Basics
 " -----------------------------------------------------------------------------
 
 " typical backspace behavior (not default on windows & terminal)
@@ -44,7 +44,7 @@ set backspace=indent,eol,start
 " don't make error noises
 set vb
 
-"  Appearance
+""  Appearance
 " -----------------------------------------------------------------------------
 
 colorscheme aisadark      " overridden in .gvimrc
@@ -63,9 +63,10 @@ set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
+set fillchars=fold:\ ,vert:\ 
 
-"  Search
-" -----------------------------------------------------------------------------
+""  Search
+" ----------------------------------------------------------------------------
 
 set ignorecase      " case-insensitive search
 set smartcase       " if uppercase letter, search case sensitive
@@ -75,7 +76,7 @@ set hlsearch        " highlight search matches
 " escape to clear search highlighting
 nnoremap <esc> :noh<return><esc>
 
-"  Indentation
+""  Indentation
 " -----------------------------------------------------------------------------
 
 " These will be overridden by editorconfig as needed
@@ -86,7 +87,7 @@ set smarttab         " uses shiftwidth # spaces when inserting <tab>
 set autoindent       " take indent for new line from previous line
 set smartindent      " more intelligent indent for new lines
 
-"  Folding
+""  Folding
 " -----------------------------------------------------------------------------
 
 set foldmethod=indent
@@ -94,21 +95,21 @@ set nofoldenable           " start with all folds open
 set foldtext=GetFoldText()
 function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
-  return (repeat("- ", 35) . num_lines . " lines")
+  return (repeat("- ", 36) . num_lines . " lines")
 endfunction
 
-"  Status line, title
+""  Status line, title
 " -----------------------------------------------------------------------------
 
 set laststatus=2                           " always show status line
 
-set statusline=%1*\ %n               " buffer number
-set statusline+=\ %t\ %*                       " file name
+set statusline=%1*\ %n     " buffer number (%1* = midwidth 1, use User1 hi group)
+set statusline+=\ %t\ %*                   " file name (then restore normal hi)
 set statusline+=%{ShortBranch()}           " git branch
 set statusline+=\ %#SLWarn#%m%*            " modified flag
 set statusline+=\ %{IndentDisplay()}       " tab size & flag for tabs
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %.35(%{ShPath()}%)   " shortened path
+set statusline+=\ \ \ %<%{ShPath()}   " shortened path
 set statusline+=\ %5L,%v                   " total lines in file, cursor column
 
 func! IndentDisplay()
@@ -120,7 +121,8 @@ func! IndentDisplay()
 endf
 
 func! ShPath()
-  let path = expand('%:~:h')
+  let path = expand("%")
+  let path = substitute(path, '\/Users\/aisa', '~', '')
   let path = substitute(path, 'Projects', 'P', '')
   let path = substitute(path, 'formidable', 'f', '')
   return path
@@ -140,7 +142,7 @@ function! SessionTitle()
 endfunction
 au SessionLoadPost * set titlestring=%{SessionTitle()}
 
-"  Files, sessions
+""  Files, sessions
 " -----------------------------------------------------------------------------
 
 set autoread                " auto-update when file is changed from the outside
@@ -153,17 +155,18 @@ set sessionoptions=buffers,folds,resize,winsize,curdir
 nnoremap ;so :so ~/Projects/vim-sessions/
 nnoremap ;mks :mks! ~/Projects/vim-sessions/
 
-"  Diffs
+""  Diffs
 " -----------------------------------------------------------------------------
 
 set diffopt=filler,context:2,vertical,foldcolumn:1
 
-"  Keybindings, shortcuts, custom functions
+""  Keybindings, shortcuts, custom functions
 " -----------------------------------------------------------------------------
 
+" TODO this causes vim to open in terminal with 95;c in commandline
 map ; :
 
-"let mapleader="-"
+let mapleader="`"
 
 " Go between splits using Ctrl + direction keys
 map <C-h> <C-w>h
@@ -173,7 +176,7 @@ map <C-k> <C-w>k
 
 " Go between location list items
 map [l :lprev<Cr>
-map ]l :lnext<Cr>
+map ]l :lNext<Cr>
 
 " list buffers
 map <Leader>b :buffers<Cr>
@@ -228,7 +231,7 @@ endfunc
 command! HtmlToJade exec HtmlToJade()
 
 
-"  Plugin config
+""  Plugin config
 " -----------------------------------------------------------------------------
 
 " BufLine
@@ -240,6 +243,17 @@ let g:bufline_modified_sign='+'
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules)$', 'file': '\.pyc$'}
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
+let g:ctrlp_status_func = {'main': 'CtrlPStatus'}
+
+func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
+  let statustext = '  ' . a:byfname
+  if a:regex
+    let statustext .= ' (regex)'
+  endif
+  let statustext .= '        ' . a:item . '%=%{getcwd()}'
+
+  return statustext
+endf
 
 nnoremap ;fa :CtrlPMixed<Cr>
 nnoremap ;ff :CtrlP<Cr>
@@ -254,12 +268,14 @@ let g:user_emmet_mode='a'
 " Gista
 
 let g:gista#github_user='aisapatino'
-let g:gista#close_list_after_open=1          " hide list after opening one
-let g:gista#update_on_write=1                " update with :w
+let g:gista#close_list_after_open = 1          " hide list after opening one
+let g:gista#update_on_write = 1                " update with :w
+let g:gista#post_private = 1
 
 command! Gistl :Gista --list
 
-" HexHighlight
+" HexHighlight TODO move to plugin
+
 command! Highlight exec "call HexHighlight()"
 
 " SuperTab
@@ -268,10 +284,12 @@ let g:SuperTabMappingBackward = '<c-tab>'
 
 " Syntastic
 
-let g:syntastic_mode_map = {'mode': 'passive', 'active_filetypes': ['javascript']}
+let g:syntastic_mode_map = { 'mode': 'active'}
+" , 'active_filetypes': ['javascript', 'json', 'lua'] }
 let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_json_checkers = ['jsonlint']
 
 let g:syntastic_always_populate_loc_list = 1 " show errors in location list
 let g:syntastic_loc_list_height = 5
@@ -288,7 +306,7 @@ let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'   " dir for :UltiSnipsEdit
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=['custom-snippets'] " don't include default dir
 
-"  Language-specific
+""  Language-specific
 " -----------------------------------------------------------------------------
 
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -318,7 +336,7 @@ augroup filetypedetect
   endfunc
 augroup END
 
-"  OS-specific
+""  OS-specific
 " -----------------------------------------------------------------------------
 
 if has("win32")
@@ -333,7 +351,7 @@ else
   endif
 endif
 
-"  Debugging
+""  Debugging
 " -----------------------------------------------------------------------------
 "set verbose=9
 "set verbosefile=~/.vim/vimlog.vim
