@@ -29,8 +29,8 @@ syn keyword mochaChaiHeader suite describe
 hi link mochaChaiHeader Function
 syn keyword chaiAssert expect
 hi link chaiAssert Include
-"syn keyword mochaChai it test before setup beforeEach after teardown afterEach
-"hi link mochaChai javaScriptStatement
+syn keyword mochaChai it before after beforeEach afterEach test suiteSetup suiteTeardown setup teardown 
+hi link mochaChai Function
 syn keyword mochaChai2 xit xdescribe done skip
 hi link mochaChai2 javaScriptSpecial
 
