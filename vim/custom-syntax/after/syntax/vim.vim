@@ -1,3 +1,4 @@
+" TODO:
 " less strong highlighting for function/endfunction
 " highlight function names in definition
 " differentiate bn different keywords?
@@ -7,3 +8,8 @@
 "
 " funcname = vimFunction
 hi! link vimFunction ClassName
+
+" comment headers
+syn match vimCommentHeader '^"".*'
+hi! link vimCommentHeader CommentHeader
+
