@@ -1,4 +1,18 @@
-### GENERAL ##################################################################
+# options: by default, only expands if at beginning of line or after whitespace
+#   b = beginning of line only
+#   w = word boundary (can be adjacent to non-word, non-whitespace chars)
+#   i = inword expansion allowed
+
+#   s = trim trailing whitespace before going to next line
+# 			(useful when there are optional params after a tab)
+#-----------------------------------------------------------------------------
+# GENERAL
+#-----------------------------------------------------------------------------
+
+snippet strict "use strict statement" bs
+'use strict';
+endsnippet
+
 snippet pf "prototype function" ws
 prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
 
@@ -6,9 +20,15 @@ prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
 
 endsnippet
 
+snippet func "function with params" ws
+function(${1}) {
+	${2}
+});
+endsnippet
+
 snippet f "anonymous function" ws
 function() {
-${1}
+	${1}
 });
 endsnippet
 
@@ -20,15 +40,16 @@ snippet err "new Error" ws
 err = new Error('${1:MSG}');
 endsnippet
 
-### WHEN #####################################################################
-snippet ca "catch" ws
-catch(function(err) {
-	logger.error('Error: ' + err);
-	return when.reject(err);
-});
+snippet ife "if err throw err" ws
+if (err) {
+	throw err;
+}
 endsnippet
 
-### NODE #####################################################################
+#-----------------------------------------------------------------------------
+# NODE
+#-----------------------------------------------------------------------------
+
 snippet req "generic require" s
 var $1 = require('${1:MODULE}');
 endsnippet
@@ -62,7 +83,9 @@ app.get('${1:PATH}', function(request, response) {
 });
 endsnippet
 
-### TESTING ###################################################################
+#-----------------------------------------------------------------------------
+# TESTING - mocha, chai, superagent
+#-----------------------------------------------------------------------------
 
 snippet desc "skeleton for describe wrapper" s
 describe('${1:TEST SUITE DESCRIPTION}', function() {
@@ -85,21 +108,37 @@ it('should ${1:TEST DESC}', function(done) {
 
 endsnippet
 
-snippet exp "expect" s
-expect(${1:VAR}).to.${2:ETC};
-endsnippet
-
-snippet superget "superagent get request" s
-superagent.get('localhost:3000/${1}').end(function(err, res) {
+snippet expr "expect request" s
+.expect(${1:status}, function(err, res) {
+	if (err) {
+		throw err;
+	}
 	${2}
 });
 endsnippet
 
-snippet superpost "superagent post request" s
-superagent.post('localhost:3000/${1}')
-	.send(${2:DATA})
-	.end(function(err, res) {
-		${3}
+snippet exp "expect" s
+expect(${1:VAR}).to.${2:ETC};
+endsnippet
+
+snippet exprop "expect property"
+expect(${1:OBJ}).to.have.property('${2:PROP}');
+endsnippet
+
+snippet experr "expect sync error"
+expect(res.body).to.have.property('code', ${1:CODE});
+expect(res.body).to.have.property('message', '${2:MSG}');
+done();
+endsnippet
+
+#-----------------------------------------------------------------------------
+# WHEN
+#-----------------------------------------------------------------------------
+
+snippet ca "catch" ws
+catch(function(err) {
+	logger.error('Error: ' + err);
+	return when.reject(err);
 });
 endsnippet
 
