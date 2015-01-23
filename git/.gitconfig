@@ -47,7 +47,10 @@
   rc = rebase --continue
   cp = cherry-pick
   # stash
+  shows = stash show -p
+  sa = "!sh -c 'git stash apply stash@{$1}' -"
   ss = stash save
   sp = stash pop
   sl = stash list
-  sd = stash drop
+  sa = "!sh -c 'git stash apply stash@{$1}' -"
+  sd = "!sh -c 'git stash drop stash@{$1}' -"
