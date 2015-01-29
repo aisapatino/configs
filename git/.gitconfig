@@ -5,12 +5,14 @@
 [color]
   ui = always
 [core]
+  # don't handle line endings, vim does
   autocrlf = false
   excludesfile = ~/.gitignore
   editor = gvim -f
 [push]
   default = simple
 [http]
+  # prevent failures if repo is large
   postBuffer = 524288000
 [diff]
   tool = gvimdiff
@@ -26,13 +28,15 @@
 [sequence]
   editor = gvim -f
 [alias]
+  # basics
   st = status
   ch = checkout
   a = add
+  br = branch
+  # commit
   com = commit
   ca = commit --amend
   can = commit --amend -C HEAD
-  br = branch
   # history
   l = log --format=\"%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s%n\" --date=relative
   lf = log --format=\"%n%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s\" --date=relative --stat --name-status
@@ -48,9 +52,10 @@
   cp = cherry-pick
   # stash
   shows = stash show -p
-  sa = "!sh -c 'git stash apply stash@{$1}' -"
   ss = stash save
   sp = stash pop
   sl = stash list
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
+  # pull staging (up short for update)
+  up = "!sh -c 'git ch staging && git pull'"
