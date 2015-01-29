@@ -84,7 +84,7 @@ app.get('${1:PATH}', function(request, response) {
 endsnippet
 
 #-----------------------------------------------------------------------------
-# TESTING - mocha, chai, superagent
+# TESTING - mocha, chai, superagent, nock
 #-----------------------------------------------------------------------------
 
 snippet desc "skeleton for describe wrapper" s
@@ -127,8 +127,20 @@ endsnippet
 
 snippet experr "expect sync error"
 expect(res.body).to.have.property('code', ${1:CODE});
-expect(res.body).to.have.property('message', '${2:MSG}');
+expect(res.body).to.have.property('error', '${2:MSG}');
 done();
+endsnippet
+
+snippet nock "nock outline" sw
+nock
+	.${1:METHOD}('/${2:URL}')
+	.reply(${3:200}, ${4:DATA});
+endsnippet
+
+snippet pnock "parse nock" sw
+parse
+	.${1:METHOD}('/1/classes/${2:CLASS}')
+	.reply(${3:200}, ${4:DATA});
 endsnippet
 
 #-----------------------------------------------------------------------------
