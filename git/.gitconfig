@@ -38,8 +38,8 @@
   ca = commit --amend
   can = commit --amend -C HEAD
   # history
-  l = log --format=\"%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s%n\" --date=relative
-  lf = log --format=\"%n%Cgreen%h %Cblue%ad %Cgreen%an%Creset%n%Cred%d%Creset %s\" --date=relative --stat --name-status
+  l = log --format=\"%Cgreen%h %Creset %s%n  %Cblue%ad %Cgreen%an%Creset %Cred%d%n\" --date=relative
+  lf = log --format=\"%n%Cgreen%h %Creset %s%n  %Cblue%ad %Cgreen%an %Cred%d\" --date=relative --stat --name-status
   d = diff
   dc = diff --cached
   ds = diff --stat
