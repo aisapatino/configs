@@ -5,6 +5,7 @@ colorscheme aisa
 set guioptions="ai"       " hide menu, toolbar
 set guiheadroom=0         " account for menu/toolbar being hidden
 
+set vb t_vb=
 
 if has("win32")
   set guifont=Consolas:h12

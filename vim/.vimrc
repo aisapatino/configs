@@ -42,7 +42,7 @@ filetype plugin indent on
 set backspace=indent,eol,start
 
 " don't make error noises
-set vb
+set vb t_vb=
 
 ""  Appearance
 " -----------------------------------------------------------------------------
@@ -176,7 +176,7 @@ map <C-k> <C-w>k
 
 " Go between location list items
 map [l :lprev<Cr>
-map ]l :lNext<Cr>
+map ]l :lnext<Cr>
 
 " list buffers
 map <Leader>b :buffers<Cr>
@@ -289,6 +289,7 @@ let g:syntastic_mode_map = { 'mode': 'active'}
 let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_pylint_args = '--rcfile=/home/aisa/Projects/sjfnw/.pylintrc' 
 let g:syntastic_json_checkers = ['jsonlint']
 
 let g:syntastic_always_populate_loc_list = 1 " show errors in location list
