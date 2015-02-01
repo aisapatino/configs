@@ -26,5 +26,5 @@ ln -s -f -v ~/Projects/configs/terminal/terminator-config ~/.config/terminator/c
 # linters
 echo "--- LINTERS ---"
 ln -s -f -v ~/Projects/configs/linters/.pylintrc ~/.pylintrc
-ln -s -f -v ~/Projects/configs/linters/.jscsrc ~/.jscsrc
+ln -s -f -v ~/Projects/configs/linters/.eslintrc ~/.eslintrc
 
