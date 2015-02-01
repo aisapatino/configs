@@ -15,33 +15,14 @@
   [[default]]
     scrollbar_position = hidden
     palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
-    show_titlebar = False
+    font = DejaVu Sans Mono 10
     exit_action = hold
+    background_image = None
+    use_system_font = False
+    show_titlebar = False
     copy_on_selection = True
 [layouts]
   [[default]]
-    [[[child0]]]
-      position = 0:0
-      type = Window
-      order = 0
-      parent = ""
-      size = 1920, 1130
-    [[[child1]]]
-      type = HPaned
-      order = 0
-      parent = child0
-    [[[terminal3]]]
-      profile = default
-      type = Terminal
-      order = 0
-      parent = child1
-    [[[terminal4]]]
-      profile = default
-      type = Terminal
-      order = 1
-      parent = child1
-      command = (sh configs/git/check_statuses.sh; bash)
-  [[basic]]
     [[[child0]]]
       position = 0:0
       type = Window
@@ -86,4 +67,26 @@
       order = 0
       parent = child1
       command = (cd Projects/flamingloot-ml; bash)
+  [[statuses]]
+    [[[child0]]]
+      position = 0:0
+      type = Window
+      order = 0
+      parent = ""
+      size = 1920, 1130
+    [[[child1]]]
+      type = HPaned
+      order = 0
+      parent = child0
+    [[[terminal3]]]
+      profile = default
+      type = Terminal
+      order = 0
+      parent = child1
+    [[[terminal4]]]
+      profile = default
+      type = Terminal
+      order = 1
+      parent = child1
+      command = (sh configs/git/check_statuses.sh; bash)
 [plugins]

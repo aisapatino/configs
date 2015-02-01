@@ -1,33 +1,10 @@
-### APPEARANCE ################################################################
+### INCLUDE BASE BASHRC #######################################################
 
-TERM=xterm-256color
-
-### PROMPT#####################################################################
-
-GIT_PS1_SHOWUPSTREAM=1 # indicate ahead/behind upstream
-GIT_PS1_SHOWCOLORHINTS=1 # color like git status for untracked/modified
-
-source ~/.git-prompt.sh
-
-# \[\e[color\] = start coloring, \[\e[m\] = end coloring
-PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \[\e[1;34m\]$\[\e[m\] "'
-
-### PATH ######################################################################
+source ~/Project/configs/terminal/.bashrc-base
 
 ### AUTOCOMPLETE ##############################################################
 
 if [ -f `brew --prefix`/etc/bash_completion ]; then
   . `brew --prefix`/etc/bash_completion
 fi
-
-### ALIASES ###################################################################
-
-# git
-alias g="git"
-alias gk="gitk --all"
-alias gca="git add . && git commit"
-alias gs="git status"
-
-alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|db' -L "
-alias trd="tree -a -d -I '.git'"
 

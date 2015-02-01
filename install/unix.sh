@@ -4,39 +4,22 @@
 
 # -v verbose (write actions to stdout)
 #
-# ln:
-#   -s symbolic link
-#   -f override existing
+# ln: -s symbolic link
+#     -f override existing
 #
-# mkdir:
-#   -p no error if existing, make parent dirs as needed
+# mkdir: -p no error if existing, make parent dirs as needed
 
-# git
-echo "--- GIT ---"
+echo "\n--- GIT ---"
 ln -s -f -v ~/Projects/configs/git/.gitignore ~/.gitignore
 ln -s -f -v ~/Projects/configs/git/.gitconfig ~/.gitconfig
-if [ -d /home/aisa/Projects/flamingloot ] ; then
-  ln -s -f -v ~/Projects/configs/git/fl-gitconfig ~/Projects/flamingloot/.git/config
-fi
-if [ -d ~/Projects/flaminglootsys ] ; then
-  ln -s -f -v ~/Projects/configs/git/flml-gitconfig ~/Projects/flaminglootsys/.git/config
-fi
 ln -s -f -v ~/Projects/configs/git/.gitk ~/.gitk
 
-# mysql
-# echo "--- MYSQL ---"
-# sudo ln -s -f -v ~/Projects/configs/mysql/my.cnf /etc/
-
-# terminal
-echo "--- TERMINAL ---"
-ln -s -f -v ~/Projects/configs/terminal/.bashrc ~/.bashrc
-if [ ! -d ~/.config/terminator ] ; then
-  mkdir -v ~/.config/terminator
-fi
-ln -s -f -v ~/Projects/configs/terminal/terminator-config ~/.config/terminator/config
+# links base bashrc. presumably overridden in specific install script
+echo "\n--- BASH ---"
+ln -s -f -v ~/Projects/configs/terminal/.bashrc-base ~/.bashrc
 
 # vim
-echo "--- VIM ---"
+echo "\n--- VIM ---"
 ln -s -f -v ~/Projects/configs/vim/.vimrc ~/.vimrc
 ln -s -f -v ~/Projects/configs/vim/.gvimrc ~/.gvimrc
 
@@ -54,10 +37,6 @@ fi
 ln -s -f -v ~/Projects/configs/vim/custom-syntax ~/.vim/
 ln -s -f -v ~/Projects/configs/vim/custom-snippets ~/.vim/
 ln -s -f -v ~/Projects/configs/vim/CustomGrepFileAssoc ~/.vim/CustomGrepFileAssoc
-
-# linters
-echo "--- LINTERS ---"
-ln -s -f -v ~/Projects/configs/vim/.pylintrc ~/.pylintrc
 
 echo "\nMake sure to run :BundleInstall once you open vim"
 
