@@ -1,6 +1,4 @@
-# FLAMINGLOOT .GIT/CONFIG
-[user]
-	email=flamingmirah@gmail.com
+# flamingloot .git/config
 [core]
 	repositoryformatversion = 0
 	filemode = true
