@@ -1,6 +1,6 @@
 ### INCLUDE BASE BASHRC #######################################################
 
-source ~/Project/configs/terminal/.bashrc-base
+source ~/Projects/configs/terminal/.bashrc-base
 
 ### PATH ######################################################################
 
