@@ -5,16 +5,13 @@ source ~/Projects/configs/terminal/.bashrc-base
 ### PATH ######################################################################
 
 # gae
-export PATH=$PATH:/home/aisa/Devel/google_appengine/lib/django-1.5
+export PATH=$PATH:/home/aisa/Devel/google_appengine
 # pip installs
 export PATH=$PATH:/usr/local/lib/python2.7/dist-packages
 # node / npm
-export PATH=$PATH:/home/aisa/.node/bin:/home/aisa/.node/lib/node_modules
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# Update PATH for the Google Cloud SDK
-source /home/aisa/Devel/google-cloud-sdk/path.bash.inc
+if [ -d /home/aisa/.node ] ; then
+  export PATH=$PATH:/home/aisa/.node/bin:/home/aisa/.node/lib/node_modules
+fi
 
 ### PYTHONPATH ################################################################
 
@@ -28,10 +25,14 @@ export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
 # misc installed tools
 export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel
 
-### AUTOCOMPLETE ##############################################################
+### GCLOUD ####################################################################
 
-# Enable bash completion for gcloud
-source /home/aisa/Devel/google-cloud-sdk/completion.bash.inc
+if [ -d /home/aisa/Devel/google-cloud-sdk ] ; then
+  # Update PATH for the Google Cloud SDK
+  source /home/aisa/Devel/google-cloud-sdk/path.bash.inc
+  # Enable bash completion for gcloud
+  source /home/aisa/Devel/google-cloud-sdk/completion.bash.inc
+fi
 
 ### ALIASES ###################################################################
 
