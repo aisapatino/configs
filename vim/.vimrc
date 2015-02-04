@@ -31,6 +31,7 @@ Plugin 'lambdalisue/vim-gista'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'wavded/vim-stylus'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'jsx/jsx.vim.git'
 
 call vundle#end()
 filetype plugin indent on
@@ -59,7 +60,7 @@ endif
 set nowrap                " don't wrap lines by default
 let &showbreak='・'       " indicate start of wrapped
 set number                " show line numbers
-set colorcolumn=80        " show where the 80-char line is
+set colorcolumn=85        " show where the 80-char line is (loosened to 85)
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
