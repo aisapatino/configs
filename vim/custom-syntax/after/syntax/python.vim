@@ -1,6 +1,3 @@
-" " TODO
-" make builtin funcs italic, constants (True False None) reg
-
 " None isn't a boolean but this seems like best fit anyway
 syn keyword pythonBoolean False True None
 hi link pythonBoolean Boolean

@@ -20,6 +20,13 @@ prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
 
 endsnippet
 
+snippet fa "function with params" ws
+function(${1}) {
+	${2}
+});
+endsnippet
+
+# same as above, just different trigger
 snippet func "function with params" ws
 function(${1}) {
 	${2}
@@ -88,7 +95,7 @@ endsnippet
 #-----------------------------------------------------------------------------
 
 snippet desc "skeleton for describe wrapper" s
-describe('${1:TEST SUITE DESCRIPTION}', function() {
+describe('${1:SUITE DESC}', function() {
 });
 endsnippet
 
@@ -100,6 +107,7 @@ endsnippet
 snippet test "skeleton for single test" s
 test('${1:TEST DESC}', function(done) {
 });
+
 endsnippet
 
 snippet it "skeleton for single test" s
