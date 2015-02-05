@@ -31,6 +31,10 @@ Plugin 'lambdalisue/vim-gista'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'wavded/vim-stylus'
 Plugin 'kchmck/vim-coffee-script'
+" this one sets ft=javascript
+"Plugin 'mxw/vim-jsx'
+" this one sets ft jsx (doesn't work with syntastic, but avoids irrelevant
+" jscs errors)
 Plugin 'jsx/jsx.vim.git'
 
 call vundle#end()
@@ -285,9 +289,26 @@ let g:SuperTabMappingBackward = '<c-tab>'
 
 " Syntastic
 
-let g:syntastic_mode_map = { 'mode': 'active'}
-" , 'active_filetypes': ['javascript', 'json', 'lua'] }
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+func! GetJavascriptCheckers()
+  " get checkers based on configs present in working directory
+  echom "getting js checkers"
+  let cwd = getcwd()
+  let checkers = ['jsxhint']
+  if filereadable(cwd . '/.jshintrc')
+    call add(checkers, 'jshint')
+  endif
+  if filereadable(cwd . '/.jscsrc')
+    call add(checkers, 'jscs')
+  endif
+  if filereadable(cwd . '/.eslintrc')
+    call add(checkers, 'eslint')
+  endif
+  return checkers
+endfunc
+
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['javascript', 'json', 'lua'] }
+let g:syntastic_javascript_checkers = GetJavascriptCheckers()
+let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper' 
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--rcfile=/home/aisa/Projects/sjfnw/.pylintrc' 
