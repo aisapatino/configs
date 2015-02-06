@@ -2,6 +2,14 @@
 syn keyword pythonBoolean False True None
 hi link pythonBoolean Boolean
 
+" highlight self
+syn keyword pythonSelf self
+hi link pythonSelf Type
+
+" highlight *args **kwargs
+syn match pythonArgs "*\(*kw\)\?args"
+hi link pythonArgs Keyword
+
 " docstrings as comments, not strings
 syn region pythonDocTest start=/"""/ end=/"""/
 hi link pythonDocTest Comment
