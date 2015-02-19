@@ -75,11 +75,12 @@ hi Cursor        guifg=#ffffff guibg=#404850
 hi CursorLine                  guibg=#f6f6f6
 hi LineNr        guifg=#ffffff guibg=#a0b0c0
 hi CursorLineNr  guifg=#a0b0c0 guibg=#f6f6f6
+" uses fg of linenr
 
 hi StatusLine    guifg=#ffffff guibg=#a0b0c0 gui=NONE
 hi User1         guifg=#fffffe guibg=#a0b0c0 gui=bold
 hi StatusLineNC  guifg=#a0b0c0 guibg=#506070 gui=NONE
-hi SLWarn        guifg=#A70035
+hi SLWarn        guifg=#a70035
 
 hi VertSplit     guifg=#506070 guibg=#506070 gui=NONE
 hi SignColumn                  guibg=#506070
@@ -87,7 +88,8 @@ hi Directory     guifg=#1060a0
 hi NonText       guifg=#f0f0f0 guibg=#f0f0f0
 
 " fix whiteout of location list
-hi! link qfLineNr NONE
+hi! link qfLineNr Directory
+hi! link qfSeparator NonText
 
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

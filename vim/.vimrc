@@ -235,6 +235,12 @@ endfunc
 
 command! HtmlToJade exec HtmlToJade()
 
+command! ToLowerCase :%s/\(\w\)\(\u\)/\1_\U\2/gc
+
+command! RemoveAnsiCodes :%s/\e.\{-}m//gc
+
+" TODO parens with non-greedy matching
+command! RemoveOperatorSpaces :%s/\ \(=\|+\|-\|*\|%\/\/\)\ /\1/gc
 
 ""  Plugin config
 " -----------------------------------------------------------------------------
@@ -246,7 +252,7 @@ let g:bufline_modified_sign='+'
 " CtrlP
 
 let g:ctrlp_show_hidden = 1               " show hidden files
-let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules)$', 'file': '\.pyc$'}
+let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$', 'file': '\.pyc$'}
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
 let g:ctrlp_status_func = {'main': 'CtrlPStatus'}
 
@@ -306,12 +312,13 @@ func! GetJavascriptCheckers()
   return checkers
 endfunc
 
-let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['javascript', 'json', 'lua'] }
-let g:syntastic_javascript_checkers = GetJavascriptCheckers()
-let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper' 
+let g:syntastic_mode_map = {'mode': 'active'}
+", 'active_filetypes': ['javascript', 'json', 'lua'] }
+let g:syntastic_javascript_checkers = ['eslint', 'jshint', 'jscsrc']
+"let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper' 
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pylint_args = '--rcfile=/home/aisa/Projects/sjfnw/.pylintrc' 
+let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc' 
 let g:syntastic_json_checkers = ['jsonlint']
 
 let g:syntastic_always_populate_loc_list = 1 " show errors in location list
@@ -387,8 +394,15 @@ function! ShowHighlightGroup()
   let l:synlinked = synIDattr(synIDtrans(l:synid), 'name')
   " transparent item
   let l:syntrans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
+
+  let l:synid2 = synID(line('.')-1, col('.'), 1)
+  let l:synname2 = synIDattr(l:synid2, 'name')
+  " what syn group is actually highlighting this item (follows links)
+  let l:synlinked2 = synIDattr(synIDtrans(l:synid2), 'name')
+  " transparent item
+  let l:syntrans2 = synIDattr(synIDtrans(synID(line('.')-1, col('.'), 0)), 'name')
   
-  return 'hi<' . l:synname . '> linked<' . l:synlinked . '> transparent<' .  l:syntrans . '>'
+  return 'hi<' . l:synname . '> linked<' . l:synlinked . '> transparent<' .  l:syntrans . '> line above: hi<' . l:synname2 . '> linked<' . l:synlinked2 . '> transparent<' .  l:syntrans2 . '>'
 endfunction
 
 command! ShowHighlightGroup echo ShowHighlightGroup()
