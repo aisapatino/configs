@@ -5,11 +5,12 @@
 [color]
   ui = always
 [core]
-  # don't handle line endings, vim does
+  # don't handle line endings, vim/editorconfig do
   autocrlf = false
   excludesfile = ~/.gitignore
   editor = gvim -f
 [push]
+  # only push current branch
   default = simple
 [http]
   # prevent failures if repo is large
@@ -38,8 +39,8 @@
   ca = commit --amend
   can = commit --amend -C HEAD
   # history
-  l = log --format=\"%Cgreen%h %Creset %s%n  %Cblue%ad %Cgreen%an%Creset %Cred%d%n\" --date=relative
-  lf = log --format=\"%n%Cgreen%h %Creset %s%n  %Cblue%ad %Cgreen%an %Cred%d\" --date=relative --stat --name-status
+  l = log --format=\"%Cgreen%h%Creset: %Cblue%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
+  lf = log --format=\"%n%Cgreen%h%Creset: %Cblue%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
   d = diff
   dc = diff --cached
   ds = diff --stat
