@@ -13,8 +13,8 @@ echo "\n--- FLAMING LOOT ---"
 if [ -d /home/aisa/Projects/flamingloot ] ; then
   ln -s -f -v ~/Projects/configs/git/fl-gitconfig ~/Projects/flamingloot/.git/config
 fi
-if [ -d ~/Projects/flaminglootsys ] ; then
-  ln -s -f -v ~/Projects/configs/git/flml-gitconfig ~/Projects/flaminglootsys/.git/config
+if [ -d ~/Projects/flamingloot-ml ] ; then
+  ln -s -f -v ~/Projects/configs/git/flml-gitconfig ~/Projects/flamingloot-ml/.git/config
 fi
 
 echo "--- TERMINATOR ---"
