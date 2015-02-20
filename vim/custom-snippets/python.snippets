@@ -1,3 +1,7 @@
+snippet super "super call" w
+super(${1:CLASS}, self).${2:method}(${3})
+endsnippet
+
 snippet log "logger defining"
 import logging
 logger = logging.getLogger('${1:NAME}')
@@ -9,7 +13,9 @@ def __init__(self, *args, **kwargs):
 	super(${1:CLASS}, self).__init__(*args, **kwargs)
 endsnippet
 
+#------------------------------------------------------------------------------
 # VIEWS
+#------------------------------------------------------------------------------
 
 snippet impv "common view imports" b
 from django.contrib import messages
@@ -48,7 +54,9 @@ Raises:
 
 endsnippet
 
+#------------------------------------------------------------------------------
 # MODELS/CLASSES
+#------------------------------------------------------------------------------
 
 snippet model "basic model outline" bs
 class ${1:CLASSNAME}(models.Model):
@@ -104,7 +112,9 @@ snippet resilf "insert resilience model fields"
 	mental = models.PositiveIntegerField(default=0)
 endsnippet
 
+#------------------------------------------------------------------------------
 # FORMS
+#------------------------------------------------------------------------------
 
 snippet mform "modelform outline" s
 class ${1:MODEL}Form(forms.ModelForm):
@@ -116,7 +126,9 @@ class ${1:MODEL}Form(forms.ModelForm):
 
 endsnippet
 
+#------------------------------------------------------------------------------
 # ADMIN
+#------------------------------------------------------------------------------
 
 snippet madmin "model admin outline"
 class ${1:MODEL_NAME}A(admin.ModelAdmin):
@@ -128,7 +140,9 @@ class ${1:MODEL_NAME}A(admin.ModelAdmin):
 
 endsnippet
 
+#------------------------------------------------------------------------------
 # TESTS
+#------------------------------------------------------------------------------
 
 snippet timp "common test imports"
 from django.core.urlresolvers import reverse
@@ -137,18 +151,22 @@ import unittest
 
 from ${1:BASE_APP}.tests import ${2:BASE_TEST_CLASS}
 
-${3:APP}_FIXTURE = '${4:PATH}'
-
 endsnippet
 
 snippet ctest "outline of a test class" bs
 class ${1:NAME}(${2:BASE}):
-	""" ${3:SUMMARY} """
 
-	fixtures = [${4:FIXTURE}]
-	url = reverse('${5:VIEW}')
-	template_success = '${6:NAME}'
-	template_error = '${7:NAME}'
+	url = reverse('${3:VIEW}')
+
+	def setUp(self):
+		super($1, self).setUp()
+
+endsnippet
+
+snippet ftc "fundraising test class"
+class ${1:NAME}(BaseFundTestCase):
+
+	url = reverse('sjfnw.fund.views.${2:VIEW}')
 
 	def setUp(self):
 		super($1, self).setUp()
@@ -157,7 +175,7 @@ endsnippet
 
 snippet test "outline of a text func" s
 def test_${1:DESC}(self):
-  """ Verify ${2:VERIFY_WHAT} """
+	""" Verify ${2:VERIFY_WHAT} """
 
 endsnippet
 
@@ -166,7 +184,7 @@ Setup:
 	${2:SETUP}
 
 Asserts:
-  ${3:ASSERTIONS}
+	${3:ASSERTIONS}
 
 endsnippet
 
@@ -179,20 +197,33 @@ def test_${1:DESC}(self):
 endsnippet
 
 snippet tpost "test post"
-response = self.client.post(${1:URL}, ${2:DATA}, follow=True)
+response = self.client.post(self.url, ${2:DATA}, follow=True)
 endsnippet
 
 snippet tget "test get"
-response = self.client.get(${1:URL}, follow=True)
+response = self.client.get(self.url, follow=True)
 endsnippet
 
-snippet get "self.client.get" s
-response = self.client.get(${1:URL}, follow=True)
+snippet templ "assertTemplateUsed"
+self.assertTemplateUsed(response, '${1:path}.html')
 endsnippet
 
-snippet post "self.client.post" s
-response = self.client.post(${1:URL}, ${2:DATA}, follow=True)
+snippet eq "assertEqual"
+self.assertEqual(${1}, ${2})
 endsnippet
+
+snippet con "get response context"
+ctx = response.context
+endsnippet
+
+snippet var "specific response context variable" w
+response.context['${1}']
+endsnippet
+
+snippet formerr "get form errors"
+errors = response.context['form'].errors
+endsnippet
+
 # COMMANDS
 
 snippet command "imports and outline of command class"
