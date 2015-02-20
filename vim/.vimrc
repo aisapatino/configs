@@ -46,7 +46,7 @@ filetype plugin indent on
 " typical backspace behavior (not default on windows & terminal)
 set backspace=indent,eol,start
 
-" don't make error noises
+" don't make error noises/flashing
 set vb t_vb=
 
 ""  Appearance
@@ -68,7 +68,7 @@ set colorcolumn=85        " show where the 80-char line is (loosened to 85)
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
-set fillchars=fold:\ ,vert:\ 
+set fillchars=fold:\ ,vert:\
 
 ""  Search
 " ----------------------------------------------------------------------------
@@ -200,7 +200,7 @@ map <C-a> :%y+<CR>
 " Change working dir to current file's dir
 command! Current execute "cd %:h"
 
-command! Reload :so %
+command! Reload execute "so ~/.vimrc | so ~/.gvimrc"
 
 " Trim trailing spaces
 command! Trail :%s/\s\+$
@@ -295,11 +295,27 @@ let g:SuperTabMappingBackward = '<c-tab>'
 
 " Syntastic
 
-func! GetJavascriptCheckers()
+"let g:syntastic_debug = 3
+let g:syntastic_mode_map = { 'mode': 'active' }
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_args = '--env node,mocha --global expect,sandbox'
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
+let g:syntastic_json_checkers = ['jsonlint']
+let g:syntastic_lua_checkers = ['luac']
+
+let g:syntastic_always_populate_loc_list = 1 " show errors in location list
+let g:syntastic_loc_list_height = 5
+let g:syntastic_enable_balloons = 0          " don't do mouseover balloons
+let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
+let g:syntastic_error_symbol = '»'
+let g:syntastic_warning_symbol = '›'
+
+func! UpdateSyntasticJavascriptCheckers()
   " get checkers based on configs present in working directory
   echom "getting js checkers"
   let cwd = getcwd()
-  let checkers = ['jsxhint']
+  let checkers = []
   if filereadable(cwd . '/.jshintrc')
     call add(checkers, 'jshint')
   endif
@@ -309,24 +325,10 @@ func! GetJavascriptCheckers()
   if filereadable(cwd . '/.eslintrc')
     call add(checkers, 'eslint')
   endif
-  return checkers
+  let g:syntastic_javascript_checkers = checkers
 endfunc
 
-let g:syntastic_mode_map = {'mode': 'active'}
-", 'active_filetypes': ['javascript', 'json', 'lua'] }
-let g:syntastic_javascript_checkers = ['eslint', 'jshint', 'jscsrc']
-"let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper' 
-let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc' 
-let g:syntastic_json_checkers = ['jsonlint']
-
-let g:syntastic_always_populate_loc_list = 1 " show errors in location list
-let g:syntastic_loc_list_height = 5
-let g:syntastic_enable_balloons = 0          " don't do mouseover balloons
-let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
-let g:syntastic_error_symbol = '»'
-let g:syntastic_warning_symbol = '›'
+command! UpdateJavascriptCheckers exec "call UpdateSyntasticJavascriptCheckers()"
 
 " Ultisnips
 
@@ -401,9 +403,8 @@ function! ShowHighlightGroup()
   let l:synlinked2 = synIDattr(synIDtrans(l:synid2), 'name')
   " transparent item
   let l:syntrans2 = synIDattr(synIDtrans(synID(line('.')-1, col('.'), 0)), 'name')
-  
+
   return 'hi<' . l:synname . '> linked<' . l:synlinked . '> transparent<' .  l:syntrans . '> line above: hi<' . l:synname2 . '> linked<' . l:synlinked2 . '> transparent<' .  l:syntrans2 . '>'
 endfunction
 
 command! ShowHighlightGroup echo ShowHighlightGroup()
-
