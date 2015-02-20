@@ -5,8 +5,8 @@
 
 bash ~/Projects/configs/install/unix.sh
 
-# links base bashrc. presumably overridden in specific install script
 echo "\n--- BASH ---"
+# override base that was set in unix.sh
 ln -s -f -v ~/Projects/configs/terminal/.bashrc-linux ~/.bashrc
 
 echo "\n--- FLAMING LOOT ---"
@@ -27,4 +27,3 @@ ln -s -f -v ~/Projects/configs/terminal/terminator-config ~/.config/terminator/c
 echo "--- LINTERS ---"
 ln -s -f -v ~/Projects/configs/linters/.pylintrc ~/.pylintrc
 ln -s -f -v ~/Projects/configs/linters/.eslintrc ~/.eslintrc
-
