@@ -2,7 +2,7 @@
 
 TERM=xterm-256color
 
-### PROMPT#####################################################################
+### PROMPT ####################################################################
 
 GIT_PS1_SHOWUPSTREAM=1 # indicate ahead/behind upstream
 GIT_PS1_SHOWCOLORHINTS=1 # color like git status for untracked/modified
@@ -11,6 +11,12 @@ source ~/.git-prompt.sh
 
 # \[\e[color\] = start coloring, \[\e[m\] = end coloring
 PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \[\e[1;34m\]$\[\e[m\] "'
+
+#### AUTOCOMPLETE #############################################################
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
 
 ### ALIASES ###################################################################
 

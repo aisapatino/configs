@@ -12,6 +12,10 @@ ln -s -f -v ~/Projects/configs/git/.gitignore ~/.gitignore
 ln -s -f -v ~/Projects/configs/git/.gitconfig ~/.gitconfig
 ln -s -f -v ~/Projects/configs/git/.gitk ~/.gitk
 
+if [ ! -f ~/.git-completion.bash ]; then
+  curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+fi
+
 echo "\n--- BASH ---"
 # links base bashrc. will presumably be overridden in specific install script
 ln -s -f -v ~/Projects/configs/terminal/.bashrc-base ~/.bashrc
