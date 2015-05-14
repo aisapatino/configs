@@ -26,6 +26,5 @@ alias gk="gitk --all"
 alias gca="git add . && git commit"
 alias gs="git status"
 
-alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|db|*.pyc' -L "
+alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|*.pyc' -L "
 alias trd="tree -a -d -I '.git'"
-
