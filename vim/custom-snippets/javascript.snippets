@@ -1,9 +1,8 @@
 # options: by default, only expands if at beginning of line or after whitespace
-#   b = beginning of line only
-#   w = word boundary (can be adjacent to non-word, non-whitespace chars)
-#   i = inword expansion allowed
-
-#   s = trim trailing whitespace before going to next line
+#	b = beginning of line only
+#	w = word boundary (can be adjacent to non-word, non-whitespace chars)
+#	i = inword expansion allowed
+#	s = trim trailing whitespace before going to next line
 # 			(useful when there are optional params after a tab)
 #-----------------------------------------------------------------------------
 # GENERAL
@@ -20,37 +19,38 @@ prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
 
 endsnippet
 
+snippet of "object function" ws
+${1:FUNC_NAME} = function $1(${2:PARAMS}) {
+
+};
+
+endsnippet
+
 snippet fa "function with params" ws
 function(${1}) {
 	${2}
-});
+})
 endsnippet
 
-# same as above, just different trigger
+# same as above, but with semicolon
 snippet func "function with params" ws
 function(${1}) {
 	${2}
 });
 endsnippet
 
-snippet f "anonymous function" ws
+snippet f "anonymous function no args" ws
 function() {
 	${1}
 });
 endsnippet
 
-snippet con "console.log" ws
+snippet co "console.log" ws
+console.log(${1});
+endsnippet
+
+snippet con "console.log with quotes" ws
 console.log('${1}');
-endsnippet
-
-snippet err "new Error" ws
-err = new Error('${1:MSG}');
-endsnippet
-
-snippet ife "if err throw err" ws
-if (err) {
-	throw err;
-}
 endsnippet
 
 #-----------------------------------------------------------------------------
@@ -61,83 +61,68 @@ snippet req "generic require" s
 var $1 = require('${1:MODULE}');
 endsnippet
 
-snippet ex "most basic express outline" s
-var express = require('express');
-
-var app = express();
-
-app.listen(3000);
-
-endsnippet
-
-snippet hserver "http.createServer" s
-var server = http.createServer(function(request, response) {
-	${2}
-});
-server.listen(${1:PORT});
-console.log('Server is running on $1');
-endsnippet
-
-snippet xget "app.get" s
-app.get('${1:PATH}', function(request, response) {
-	${2}
-});
-endsnippet
-
-snippet xpost "app.post" s
-app.get('${1:PATH}', function(request, response) {
-	${2}
-});
-endsnippet
-
 #-----------------------------------------------------------------------------
-# TESTING - mocha, chai, superagent, nock
+# TESTING
 #-----------------------------------------------------------------------------
+
+# mocha
 
 snippet desc "skeleton for describe wrapper" s
 describe('${1:SUITE DESC}', function() {
+	${2}
 });
 endsnippet
 
 snippet suite "skeleton for suite wrapper" s
 suite('${1:SUITE DESC}', function() {
+	${2}
 });
 endsnippet
 
 snippet test "skeleton for single test" s
 test('${1:TEST DESC}', function(done) {
-});
-
-endsnippet
-
-snippet it "skeleton for single test" s
-it('should ${1:TEST DESC}', function(done) {
-});
-
-endsnippet
-
-snippet expr "expect request" s
-.expect(${1:status}, function(err, res) {
-	if (err) {
-		throw err;
-	}
 	${2}
 });
+
 endsnippet
+
+snippet it "skeleton for single it" s
+it('should ${1:TEST DESC}', function(done) {
+	${2}
+});
+
+endsnippet
+
+# supertest-as-promised
+
+snippet treq "test request" s
+request.${1:get}('${2:URL}')
+	.expect(${3:200})
+	.then(function(res) {
+		${4}
+	})
+	.catch(done);
+endsnippet
+
+# chai bdd
 
 snippet exp "expect" s
 expect(${1:VAR}).to.${2:ETC};
 endsnippet
 
-snippet exprop "expect property"
-expect(${1:OBJ}).to.have.property('${2:PROP}');
+snippet ep "expect property"
+expect(${1:OBJ}).to.have.property('${2:PROP}'${3});
 endsnippet
 
-snippet experr "expect sync error"
-expect(res.body).to.have.property('code', ${1:CODE});
-expect(res.body).to.have.property('error', '${2:MSG}');
-done();
+snippet epp "expect property that is a..."
+expect(${1:OBJ}).to.have.property('${2:PROP}'${3}).that.is.a${4}('${5}');
 endsnippet
+
+snippet et "expect type" s
+expect(${1}).to.be.a${2}('${3}')${4};
+endsnippet
+
+# nock
 
 snippet nock "nock outline" sw
 nock
@@ -145,20 +130,105 @@ nock
 	.reply(${3:200}, ${4:DATA});
 endsnippet
 
-snippet pnock "parse nock" sw
-parse
-	.${1:METHOD}('/1/classes/${2:CLASS}')
-	.reply(${3:200}, ${4:DATA});
+#------------------------------------------------------------------------------
+# BACKBONE & MARIONETTE
+#------------------------------------------------------------------------------
+
+snippet model "outline for backbone model"
+
 endsnippet
 
-#-----------------------------------------------------------------------------
-# WHEN
-#-----------------------------------------------------------------------------
+snippet coll "outline of backbone collection"
+'use strict';
 
-snippet ca "catch" ws
-catch(function(err) {
-	logger.error('Error: ' + err);
-	return when.reject(err);
+var assert = require('assert');
+var Collection = require('backbone').Collection;
+
+var config = require('../config');
+
+module.exports = Collection.extend({
+
+	url: function() {
+	return config.server + ${1:'other/stuff'};
+	},
+
+	initialize: function initialize(options) {
+	assert(options.providerId, 'options.providerId is required');
+	}
 });
 endsnippet
 
+snippet layout "layoutview"
+'use strict';
+
+var assert = require('assert');
+var Marionette = require('marionette');
+
+var template = require('templates/${1:TEMPLATE}.jade');
+
+module.exports = Marionette.LayoutView.extend({
+
+	template: template,
+
+	regions: {
+	},
+
+	initialize: function initialize(options) {
+		// assert required options
+		// Create models and collections
+
+		// Create child views
+		// call listener setup
+	},
+
+	// View events
+	// -----------
+
+	onAttach: function onAttach() {
+		// this.showChildView('region', view);
+	},
+
+	addViewListeners: function addViewListeners() {
+
+	// Collection events
+	// -----------------
+
+	addCollectionListeners: function addCollectionListeners() {
+	},
+
+	// Private methods
+	// ---------------
+});
+endsnippet
+
+snippet itemview "ItemView"
+'use strict';
+
+var assert = require('assert');
+var Marionette = require('marionette');
+
+// require model
+var template = require('templates/${1:TEMPLATE}.jade');
+
+module.exports = Marionette.ItemView.extend({
+	template: template,
+
+	initialize: function initialize(options) {
+		assert(options.${2:model}, 'options.$2 is required');
+		this.listenTo(this.$2, 'sync', this.render);
+		this.$2.fetch();
+	},
+
+	// View events
+	// -----------
+	events: {
+	},
+
+	// Template helpers
+	// ----------------
+
+	templateHelpers: function templateHelpers() {
+		return {};
+	}
+});
+endsnippet
