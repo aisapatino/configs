@@ -1,6 +1,6 @@
 cd ~/Projects
 
-""  Set up plugins with Vundle
+"" Set up plugins with Vundle
 " -----------------------------------------------------------------------------
 set nocompatible
 filetype off
@@ -29,13 +29,14 @@ Plugin 'lambdalisue/vim-gista'
 
 " Syntax highlighting for non-default languages
 Plugin 'digitaltoad/vim-jade'
-Plugin 'wavded/vim-stylus'
-Plugin 'kchmck/vim-coffee-script'
+Plugin 'groenewege/vim-less'
+" Plugin 'wavded/vim-stylus'
+" Plugin 'kchmck/vim-coffee-script'
 " this one sets ft=javascript
 "Plugin 'mxw/vim-jsx'
 " this one sets ft jsx (doesn't work with syntastic, but avoids irrelevant
 " jscs errors)
-Plugin 'jsx/jsx.vim.git'
+" Plugin 'jsx/jsx.vim.git'
 
 call vundle#end()
 filetype plugin indent on
@@ -62,9 +63,10 @@ else
 endif
 
 set nowrap                " don't wrap lines by default
-let &showbreak='・'       " indicate start of wrapped
+set linebreak             " when we do wrap, only at word breaks
+set showbreak=>           " indicate start of wrapped
 set number                " show line numbers
-set colorcolumn=85        " show where the 80-char line is (loosened to 85)
+set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
@@ -171,7 +173,7 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 " TODO this causes vim to open in terminal with 95;c in commandline
 map ; :
 
-let mapleader="`"
+let mapleader=","
 
 " Go between splits using Ctrl + direction keys
 map <C-h> <C-w>h
@@ -298,7 +300,6 @@ let g:SuperTabMappingBackward = '<c-tab>'
 "let g:syntastic_debug = 3
 let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_args = '--env node,mocha --global expect,sandbox'
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
 let g:syntastic_json_checkers = ['jsonlint']
@@ -341,7 +342,7 @@ let g:UltiSnipsSnippetDirectories=['custom-snippets'] " don't include default di
 ""  Language-specific
 " -----------------------------------------------------------------------------
 
-au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap
 au BufRead,BufNewFile *.json set filetype=json
 
 " better htmldjango detection
