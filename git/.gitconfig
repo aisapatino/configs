@@ -39,8 +39,8 @@
   ca = commit --amend
   can = commit --amend -C HEAD
   # history
-  l = log --format=\"%Cgreen%h%Creset: %Cblue%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
-  lf = log --format=\"%n%Cgreen%h%Creset: %Cblue%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
+  l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
+  lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
   d = diff
   dc = diff --cached
   ds = diff --stat
@@ -58,5 +58,3 @@
   sl = stash list
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
-  # pull staging (up short for update)
-  up = "!sh -c 'git ch staging && git pull'"
