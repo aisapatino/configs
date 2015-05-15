@@ -1,6 +1,7 @@
 cd ~/Projects
 
-"" Set up plugins with Vundle
+"------------------------------------------------------------------------------
+" Plugins (managed by Vundle)
 " -----------------------------------------------------------------------------
 set nocompatible
 filetype off
@@ -13,6 +14,8 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Main plugins
+"--------------
+
 Plugin 'kien/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'
@@ -22,27 +25,24 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'scrooloose/syntastic'
 
 " Occasional use
-Plugin 'rking/ag.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'aisapatino/hex-highlight'
-Plugin 'lambdalisue/vim-gista'
+"----------------
 
-" Syntax highlighting for non-default languages
+Plugin 'rking/ag.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'aisapatino/hex-highlight'
+
+" Syntax highlighting
+"---------------------
+
 Plugin 'digitaltoad/vim-jade'
 Plugin 'groenewege/vim-less'
-" Plugin 'wavded/vim-stylus'
-" Plugin 'kchmck/vim-coffee-script'
-" this one sets ft=javascript
-"Plugin 'mxw/vim-jsx'
-" this one sets ft jsx (doesn't work with syntastic, but avoids irrelevant
-" jscs errors)
-" Plugin 'jsx/jsx.vim.git'
 
 call vundle#end()
 filetype plugin indent on
 
-""  Basics
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Basics
+"------------------------------------------------------------------------------
 
 " typical backspace behavior (not default on windows & terminal)
 set backspace=indent,eol,start
@@ -50,8 +50,9 @@ set backspace=indent,eol,start
 " don't make error noises/flashing
 set vb t_vb=
 
-""  Appearance
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Appearance
+"------------------------------------------------------------------------------
 
 colorscheme aisadark      " overridden in .gvimrc
 set t_Co=256              " 256-color if running in terminal
@@ -63,8 +64,8 @@ else
 endif
 
 set nowrap                " don't wrap lines by default
-set linebreak             " when we do wrap, only at word breaks
-set showbreak=>           " indicate start of wrapped
+set linebreak             " when wrapping, only at word breaks
+set showbreak=>           " indicate start of wrapped (doesn't work due to NonText hi)
 set number                " show line numbers
 set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
@@ -72,8 +73,9 @@ set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
 set fillchars=fold:\ ,vert:\
 
-""  Search
-" ----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Search
+"-----------------------------------------------------------------------------
 
 set ignorecase      " case-insensitive search
 set smartcase       " if uppercase letter, search case sensitive
@@ -83,10 +85,12 @@ set hlsearch        " highlight search matches
 " escape to clear search highlighting
 nnoremap <esc> :noh<return><esc>
 
-""  Indentation
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Indentation
+"------------------------------------------------------------------------------
 
-" These will be overridden by editorconfig as needed
+" These may be overridden by editorconfig as needed
+
 set expandtab        " use spaces instead of tabs
 set tabstop=2        " how many columns wide a tab is visually
 set shiftwidth=2     " how many columns to indent with >>
@@ -94,8 +98,9 @@ set smarttab         " uses shiftwidth # spaces when inserting <tab>
 set autoindent       " take indent for new line from previous line
 set smartindent      " more intelligent indent for new lines
 
-""  Folding
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Folding
+"------------------------------------------------------------------------------
 
 set foldmethod=indent
 set nofoldenable           " start with all folds open
@@ -105,8 +110,9 @@ function! GetFoldText()
   return (repeat("- ", 36) . num_lines . " lines")
 endfunction
 
-""  Status line, title
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Status line
+"------------------------------------------------------------------------------
 
 set laststatus=2                           " always show status line
 
@@ -116,7 +122,7 @@ set statusline+=%{ShortBranch()}           " git branch
 set statusline+=\ %#SLWarn#%m%*            " modified flag
 set statusline+=\ %{IndentDisplay()}       " tab size & flag for tabs
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{ShPath()}   " shortened path
+set statusline+=\ \ \ %<%{ShPath()}        " shortened path
 set statusline+=\ %5L,%v                   " total lines in file, cursor column
 
 func! IndentDisplay()
@@ -128,7 +134,7 @@ func! IndentDisplay()
 endf
 
 func! ShPath()
-  let path = expand("%")
+  let path = expand('%')
   let path = substitute(path, '\/Users\/aisa', '~', '')
   let path = substitute(path, 'Projects', 'P', '')
   let path = substitute(path, 'formidable', 'f', '')
@@ -143,14 +149,9 @@ func! ShortBranch()
   return br
 endf
 
-" Set vim's title based on current session. Expects .vim filename
-function! SessionTitle()
-  return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
-endfunction
-au SessionLoadPost * set titlestring=%{SessionTitle()}
-
-""  Files, sessions
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Files, sessions
+"------------------------------------------------------------------------------
 
 set autoread                " auto-update when file is changed from the outside
 set nobackup                " don't create backup/swap files
@@ -162,18 +163,26 @@ set sessionoptions=buffers,folds,resize,winsize,curdir
 nnoremap ;so :so ~/Projects/vim-sessions/
 nnoremap ;mks :mks! ~/Projects/vim-sessions/
 
-""  Diffs
-" -----------------------------------------------------------------------------
+" Set vim's title based on current session. Expects .vim filename
+func! SessionTitle()
+  return matchstr(v:this_session, '[a-zA-Z0-9]\+\(\.vim\)\@=')
+endf
+au SessionLoadPost * set titlestring=%{SessionTitle()}
+
+"------------------------------------------------------------------------------
+" Diffs
+"------------------------------------------------------------------------------
 
 set diffopt=filler,context:2,vertical,foldcolumn:1
 
-""  Keybindings, shortcuts, custom functions
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Keybindings, shortcuts, custom functions
+"------------------------------------------------------------------------------
 
 " TODO this causes vim to open in terminal with 95;c in commandline
 map ; :
 
-let mapleader=","
+let mapleader=','
 
 " Go between splits using Ctrl + direction keys
 map <C-h> <C-w>h
@@ -185,73 +194,33 @@ map <C-k> <C-w>k
 map [l :lprev<Cr>
 map ]l :lnext<Cr>
 
-" list buffers
+" List buffers
 map <Leader>b :buffers<Cr>
-
-" Cycle through buffers
-"map <Leader>h :bp<Cr>
-"map <Leader>l :bn<Cr>
 
 " Search for conflict markers
 map <Leader>g :Conflict<cr>n
-command! Conflict /\(<<<<<<\|======\|>>>>>>\)
+com! Conflict /\(<<<<<<\|======\|>>>>>>\)
 
 " Copy all to global register
 map <C-a> :%y+<CR>
 
 " Change working dir to current file's dir
-command! Current execute "cd %:h"
+com! Current exec "cd %:h"
 
-command! Reload execute "so ~/.vimrc | so ~/.gvimrc"
+com! Reload exec 'so ~/.vimrc | so ~/.gvimrc'
 
 " Trim trailing spaces
-command! Trail :%s/\s\+$
+com! Trail :%s/\s\+$
+
 " Only trim full lines of spaces (for jade, which needs other trailing spaces)
-command! LineTrail :%s/^\s\+$
+com! LineTrail :%s/^\s\+$
 
-" Convert file to unix
-command! DosToUnix execute "update | e ++ff=dos | setlocal ff=unix | w"
-
-" Fix django template style
-command! DjangoTemplateStyle :%s/{{\(\S\)/{{\ \1/g|:%s/\(\S\)}}/\1\ }}/g
-
-" Toggle tab-style indentation
-command! UseTabs execute "set noexpandtab | set tabstop=4 | set shiftwidth=4 | set nosmarttab | 2match none | 2match WrongIndent /\ \ /"
-command! UseSpaces execute "set expandtab | set tabstop=2 | set shiftwidth=2 | set smarttab | 2match none | 2match WrongIndent /\t/"
-
-command! SpacesToTabs :%s/\ \ /\t/gc
-command! SpacesToTabs4 :%s/\ \ \ \ /\t/gc
-
-func! HtmlToJade()
-  :%s/<\/\w\+>//gc
-  :%s/<div\s//gc
-  :%s/class="/\./gc
-  :%s/id="/#/gc
-  :%s/->/\./gc
-  :%s/<//gc
-  :%s/>$//gc
-  :%s/>/\ /gc
-  :%s/a\s/a(/gc
-  :%s/\n\n/\r/gc
-endfunc
-
-command! HtmlToJade exec HtmlToJade()
-
-command! ToLowerCase :%s/\(\w\)\(\u\)/\1_\U\2/gc
-
-command! RemoveAnsiCodes :%s/\e.\{-}m//gc
-
-" TODO parens with non-greedy matching
-command! RemoveOperatorSpaces :%s/\ \(=\|+\|-\|*\|%\/\/\)\ /\1/gc
-
-""  Plugin config
-" -----------------------------------------------------------------------------
-
-" BufLine
-
-let g:bufline_modified_sign='+'
+"------------------------------------------------------------------------------
+" Plugin config
+"------------------------------------------------------------------------------
 
 " CtrlP
+"-------
 
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$', 'file': '\.pyc$'}
@@ -273,29 +242,18 @@ nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
 
-" Emmet
-
-let g:user_emmet_leader_key='<Leader>'
-let g:user_emmet_mode='a'
-
-" Gista
-
-let g:gista#github_user='aisapatino'
-let g:gista#close_list_after_open = 1          " hide list after opening one
-let g:gista#update_on_write = 1                " update with :w
-let g:gista#post_private = 1
-
-command! Gistl :Gista --list
-
 " HexHighlight TODO move to plugin
+"-----------
 
-command! Highlight exec "call HexHighlight()"
+com! Highlight exec "call HexHighlight()"
 
 " SuperTab
+"-----------
 
 let g:SuperTabMappingBackward = '<c-tab>'
 
 " Syntastic
+"-----------
 
 "let g:syntastic_debug = 3
 let g:syntastic_mode_map = { 'mode': 'active' }
@@ -327,11 +285,12 @@ func! UpdateSyntasticJavascriptCheckers()
     call add(checkers, 'eslint')
   endif
   let g:syntastic_javascript_checkers = checkers
-endfunc
+endf
 
-command! UpdateJavascriptCheckers exec "call UpdateSyntasticJavascriptCheckers()"
+com! UpdateJavascriptCheckers exec "call UpdateSyntasticJavascriptCheckers()"
 
 " Ultisnips
+"-----------
 
 let g:UltiSnipsExpandTrigger='<s-tab>'
 let g:UltiSnipsJumpForwardTrigger='<s-tab>'
@@ -339,8 +298,9 @@ let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'   " dir for :UltiSnipsEdit
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=['custom-snippets'] " don't include default dir
 
-""  Language-specific
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" Language-specific
+"------------------------------------------------------------------------------
 
 au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap
 au BufRead,BufNewFile *.json set filetype=json
@@ -366,46 +326,42 @@ augroup filetypedetect
       let n = n + 1
     endwhile
     setf html
-  endfunc
+  endf
 augroup END
 
-""  OS-specific
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" OS-specific
+"------------------------------------------------------------------------------
 
 if has("win32")
-  let g:EasyGrepFileAssociations = "C:\\Users\\aisa\\vimfiles\\bundle\\CustomGrepFileAssoc.vim"
   set fileformats=unix,dos
 else
   set shell=bash\ -i
-  let g:EasyGrepCommand = 1      " use :grep instead of :vimgrep
-  let g:EasyGrepFileAssociations = "/Users/aisa/.vim/CustomGrepFileAssoc"
   if has("gui_macvim") || has('mac')
     cd formidable
   endif
 endif
 
-""  Debugging
-" -----------------------------------------------------------------------------
-"set verbose=9
-"set verbosefile=~/.vim/vimlog.vim
+"------------------------------------------------------------------------------
+" Debugging
+"------------------------------------------------------------------------------
 
 " Show highlight group for item at cursor
-function! ShowHighlightGroup()
+func! ShowHighlightGroup()
   let l:synid = synID(line('.'), col('.'), 1)
   let l:synname = synIDattr(l:synid, 'name')
+
   " what syn group is actually highlighting this item (follows links)
   let l:synlinked = synIDattr(synIDtrans(l:synid), 'name')
+
   " transparent item
   let l:syntrans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
 
-  let l:synid2 = synID(line('.')-1, col('.'), 1)
-  let l:synname2 = synIDattr(l:synid2, 'name')
-  " what syn group is actually highlighting this item (follows links)
-  let l:synlinked2 = synIDattr(synIDtrans(l:synid2), 'name')
-  " transparent item
-  let l:syntrans2 = synIDattr(synIDtrans(synID(line('.')-1, col('.'), 0)), 'name')
+  return 'name<'.l:synname.'> hi<'.l:synlinked.'> trans<'. l:syntrans.'>'
+endf
 
-  return 'hi<' . l:synname . '> linked<' . l:synlinked . '> transparent<' .  l:syntrans . '> line above: hi<' . l:synname2 . '> linked<' . l:synlinked2 . '> transparent<' .  l:syntrans2 . '>'
-endfunction
+com! ShowHighlightGroup echo ShowHighlightGroup()
 
-command! ShowHighlightGroup echo ShowHighlightGroup()
+" Enable this to get verbose vim logs (troubleshooting a plugin/setting)
+"   set verbose=9
+"   set verbosefile=~/.vim/vimlog.vim
