@@ -38,7 +38,7 @@ hi link javaScriptFuncName Function
 " highlight jsdoc components
 syn match javaScriptParamDoc "@[a-z]\+" containedin=javaScriptComment nextgroup=javaScriptDocType skipwhite
 syn match javaScriptDocType "{.\+}" contained nextgroup=javaScriptIdent skipwhite
-syn match javaScriptIdent "[a-z\.\[\]A-Z]\+" contained
+syn match javaScriptIdent "[a-zA-Z\.\[\]_\-]\+" contained
 hi link javaScriptDocType CommentSpecial
 hi link javaScriptParamDoc CommentSpecial
 hi link javaScriptIdent CommentSpecial

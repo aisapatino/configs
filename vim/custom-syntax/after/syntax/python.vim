@@ -43,7 +43,7 @@ hi link pythonLogging Debug
 syn match CommentHeader "#\s[A-Z][A-Z\ 0-9&]\{2,50}.*"
 
 " highlight model and form fields
-syn match pythonDjangoField "[a-z_]\+\%(\s=\s\%(models\|forms\).*Field\)\@="
+syn match pythonDjangoField "[a-z0-9_]\+\%(\s=\s[a-zA-Z\.]*\%(Field\|Key\)\)\@="
 hi link pythonDjangoField Include
 
 " docstrings as comments, not strings
