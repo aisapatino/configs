@@ -57,6 +57,7 @@ hi Underlined     guifg=NONE    gui=underline
 " Text states
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+syn match TrailingSpaces "\s\+$"
 hi MatchParen  guifg=#ff00f8 guibg=NONE    gui=bold
 hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
 hi Search      guifg=NONE    guibg=#f8f3a9
