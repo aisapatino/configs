@@ -198,7 +198,7 @@ map ]l :lnext<Cr>
 map <Leader>b :buffers<Cr>
 
 " Search for conflict markers
-map <Leader>g :Conflict<cr>n
+map <Leader>g :Conflict<cr>
 com! Conflict /\(<<<<<<\|======\|>>>>>>\)
 
 " Copy all to global register
@@ -214,6 +214,8 @@ com! Trail :%s/\s\+$
 
 " Only trim full lines of spaces (for jade, which needs other trailing spaces)
 com! LineTrail :%s/^\s\+$
+
+com! PrettyJson :%!python -m json.tool
 
 "------------------------------------------------------------------------------
 " Plugin config
@@ -243,7 +245,7 @@ nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
 
 " HexHighlight TODO move to plugin
-"-----------
+"-------------
 
 com! Highlight exec "call HexHighlight()"
 
@@ -257,9 +259,11 @@ let g:SuperTabMappingBackward = '<c-tab>'
 
 "let g:syntastic_debug = 3
 let g:syntastic_mode_map = { 'mode': 'active' }
+let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
+let g:syntastic_python_pep8_args = '--max-line-length=100'
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
 
