@@ -39,3 +39,7 @@ fi
 alias cloudsql="mysql --host=173.194.109.221 -uroot -p"
 alias hero="heroku"
 
+### ETC #######################################################################
+
+# selenium chrome driver
+export CHROMEDRIVER='/home/aisa/Devel/chromedriver'
