@@ -20,7 +20,6 @@ fi
 
 ### ALIASES ###################################################################
 
-# git
 alias g="git"
 alias gk="gitk --all"
 alias gca="git add . && git commit"
@@ -28,3 +27,8 @@ alias gs="git status"
 
 alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|*.pyc' -L "
 alias trd="tree -a -d -I '.git'"
+
+sr() {
+  echo "replacing $1 with $2 in files matching $3"
+  find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
+}
