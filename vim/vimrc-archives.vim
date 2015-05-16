@@ -46,3 +46,4 @@ com! RemoveAnsiCodes :%s/\e.\{-}m//gc
 " TODO parens with non-greedy matching
 com! RemoveOperatorSpaces :%s/\ \(=\|+\|-\|*\|%\/\/\)\ /\1/gc
 
+command! SingleQuotes :%s/\([^"]\)"\([^"]\)/\1'\2/gc
