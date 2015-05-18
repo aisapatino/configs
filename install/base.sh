@@ -13,6 +13,7 @@ ln -s -f -v ~/Projects/configs/git/.gitconfig ~/.gitconfig
 ln -s -f -v ~/Projects/configs/git/.gitk ~/.gitk
 
 if [ ! -f ~/.git-completion.bash ]; then
+  echo "Getting git-completion.bash"
   curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 fi
 
