@@ -5,8 +5,9 @@ if exists("syntax_on")
 endif
 let colors_name = "aisa"
 
+"------------------------------------------------------------------------------
 " Syntax groups
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------------------
 
 hi Normal         guifg=#404850 guibg=#f0f0f0
 hi! link Constant Normal
@@ -54,8 +55,9 @@ hi Todo           guifg=NONE    guibg=NONE    gui=italic,bold
 hi Title          guifg=NONE    gui=bold
 hi Underlined     guifg=NONE    gui=underline
 
+"------------------------------------------------------------------------------
 " Text states
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------------------
 
 syn match TrailingSpaces "\s\+$"
 hi MatchParen  guifg=#ff00f8 guibg=NONE    gui=bold
@@ -68,8 +70,9 @@ hi DiffText    guifg=#06287e guibg=#DFF0E6 gui=NONE
 hi DiffAdd     guifg=#06287e guibg=#DFF0E6 gui=NONE
 hi DiffDelete  guifg=#F5E9ED guibg=#F5E9ED gui=italic
 
+"------------------------------------------------------------------------------
 " Window/screen components
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------------------
 
 hi ColorColumn                 guibg=#f6f6f6
 hi Cursor        guifg=#ffffff guibg=#404850
@@ -92,8 +95,9 @@ hi NonText       guifg=#f0f0f0 guibg=#f0f0f0
 hi! link qfLineNr Directory
 hi! link qfSeparator NonText
 
+"------------------------------------------------------------------------------
 " Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------------------
 
 hi BufLineHidden             guifg=#a0b0c0            gui=NONE
 hi BufLineInactive           guifg=#06287e            gui=NONE
