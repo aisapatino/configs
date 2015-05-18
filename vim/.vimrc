@@ -27,6 +27,8 @@ Plugin 'scrooloose/syntastic'
 " Occasional use
 "----------------
 
+Plugin 'gregsexton/gitv'
+Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'aisapatino/hex-highlight'
@@ -44,12 +46,18 @@ filetype plugin indent on
 " Basics
 "------------------------------------------------------------------------------
 
+" don't redraw when executing background/auto commands
+set lazyredraw
+
 " typical backspace behavior (not default on windows & terminal)
 set backspace=indent,eol,start
 
 " don't make error noises/flashing
 set vb t_vb=
 
+" hit tab to show options in command mode
+set wildchar=<tab>
+set wildmenu
 "------------------------------------------------------------------------------
 " Appearance
 "------------------------------------------------------------------------------
@@ -81,9 +89,6 @@ set ignorecase      " case-insensitive search
 set smartcase       " if uppercase letter, search case sensitive
 set incsearch       " show matches as you type
 set hlsearch        " highlight search matches
-
-" escape to clear search highlighting
-nnoremap <esc> :noh<return><esc>
 
 "------------------------------------------------------------------------------
 " Indentation
@@ -179,10 +184,11 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 " Keybindings, shortcuts, custom functions
 "------------------------------------------------------------------------------
 
-" TODO this causes vim to open in terminal with 95;c in commandline
+let mapleader=','
 map ; :
 
-let mapleader=','
+" escape to clear search highlighting
+map <Leader><Leader> :noh<return>
 
 " Go between splits using Ctrl + direction keys
 map <C-h> <C-w>h
@@ -220,6 +226,29 @@ com! PrettyJson :%!python -m json.tool
 "------------------------------------------------------------------------------
 " Plugin config
 "------------------------------------------------------------------------------
+
+" Gitv
+"------
+
+let g:Gitv_WipeAllOnClose = 1
+let g:Gitv_DoNotMapCtrlKey = 1
+
+nmap gv :Gitv --all
+
+" Tagbar
+"-------
+
+let g:tagbar_sort = 0
+let g:tagbar_show_visibility = 0
+let g:tagbar_iconchars = ['▸', '▾']
+let g:tagbar_type_python = {
+    \ 'kinds' : [
+        \ 'c:classes:1',
+        \ 'f:functions:1',
+        \ 'm:members:1',
+        \ 'v:variables:1',
+    \ ],
+\ }
 
 " CtrlP
 "-------
