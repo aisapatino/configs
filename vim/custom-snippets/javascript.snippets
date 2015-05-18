@@ -4,11 +4,12 @@
 #	i = inword expansion allowed
 #	s = trim trailing whitespace before going to next line
 # 			(useful when there are optional params after a tab)
+
 #-----------------------------------------------------------------------------
 # GENERAL
 #-----------------------------------------------------------------------------
 
-snippet strict "use strict statement" bs
+snippet str "use strict statement" bs
 'use strict';
 endsnippet
 
@@ -93,7 +94,15 @@ it('should ${1:TEST DESC}', function(done) {
 
 endsnippet
 
+snippet its "skeleton for single sync it (without callback)" s
+it('should ${1:TEST DESC}', function() {
+	${2}
+});
+
+endsnippet
+
 # supertest-as-promised
+#----------------------
 
 snippet treq "test request" s
 request.${1:get}('${2:URL}')
@@ -105,6 +114,7 @@ request.${1:get}('${2:URL}')
 endsnippet
 
 # chai bdd
+#---------
 
 snippet exp "expect" s
 expect(${1:VAR}).to.${2:ETC};
@@ -123,6 +133,7 @@ expect(${1}).to.be.a${2}('${3}')${4};
 endsnippet
 
 # nock
+#-----
 
 snippet nock "nock outline" sw
 nock
@@ -134,11 +145,18 @@ endsnippet
 # BACKBONE & MARIONETTE
 #------------------------------------------------------------------------------
 
-snippet model "outline for backbone model"
+snippet model "outline for Backbone Model"
+'use strict';
 
+var Model = require('backbone').Model;
+
+module.exports = Model.extend({
+
+});
 endsnippet
 
-snippet coll "outline of backbone collection"
+# specific to project
+snippet coll "outline of Backbone Collection"
 'use strict';
 
 var assert = require('assert');
@@ -149,16 +167,16 @@ var config = require('../config');
 module.exports = Collection.extend({
 
 	url: function() {
-	return config.server + ${1:'other/stuff'};
+		return config.server + ${1:'other/stuff'};
 	},
 
 	initialize: function initialize(options) {
-	assert(options.providerId, 'options.providerId is required');
+		assert(options.${1:OPT}, 'options.$1 is required');
 	}
 });
 endsnippet
 
-snippet layout "layoutview"
+snippet layout "LayoutView"
 'use strict';
 
 var assert = require('assert');
@@ -201,13 +219,12 @@ module.exports = Marionette.LayoutView.extend({
 });
 endsnippet
 
-snippet itemview "ItemView"
+snippet iview "Marionette ItemView" bs
 'use strict';
 
 var assert = require('assert');
 var Marionette = require('marionette');
 
-// require model
 var template = require('templates/${1:TEMPLATE}.jade');
 
 module.exports = Marionette.ItemView.extend({
