@@ -12,81 +12,137 @@ hi! link qfLineNr NONE
 " shows xterm256 color codes used
 
 "------------------------------------------------------------------------------
-" Window/screen components
+" Terminal
 "------------------------------------------------------------------------------
 
-hi ColorColumn                  guibg=#111111  ctermbg=233
-hi Cursor                       guibg=#ffffff  ctermbg=white
-hi CursorLine                   guibg=#111111  ctermbg=black
-hi LineNr        guifg=#555555  guibg=#000000  ctermfg=8     ctermbg=0
-hi CursorLineNr  guifg=#ffffff  gui=bold ctermfg=white  cterm=bold
-hi StatusLine    guifg=#ffffff  guibg=#111111  gui=bold ctermfg=black  ctermbg=234 cterm=bold
-hi StatusLineNC  guifg=#101010  guibg=#000000  ctermfg=black  ctermbg=234
-hi VertSplit                    guibg=#111111  gui=NONE ctermbg=23
+hi ColorColumn     ctermbg=233
+hi Cursor          ctermbg=255
+hi LineNr          ctermfg=8    ctermbg=0
+hi CursorLineNr    ctermfg=255  cterm=bold
+hi CursorLine      ctermbg=0
+hi StatusLine      ctermfg=0    ctermbg=234   cterm=bold
+
+hi StatusLineNC    ctermfg=0    ctermbg=234
+hi VertSplit       ctermbg=23
+
+hi Normal          ctermfg=7    ctermbg=0
+hi Comment         ctermfg=8
+hi CommentSpecial  ctermfg=57
+hi CommentHeader   ctermfg=8    cterm=bold
+
+hi String          ctermfg=4
+hi Number          ctermfg=62
+hi Function        ctermfg=129  cterm=bold
+hi ClassName       ctermfg=162  cterm=bold
+hi Identifier      ctermfg=22   cterm=NONE
+hi Type            ctermfg=57
+
+hi Boolean         ctermfg=135
+hi Keyword         ctermfg=135
+
+hi Statement       ctermfg=24  cterm=bold
+hi Conditional     ctermfg=25  cterm=bold
+hi Repeat          ctermfg=25  cterm=bold
+hi Operator        ctermfg=25
+hi Exception       ctermfg=25  cterm=bold
+
+hi PreProc         ctermfg=25
+hi Include         ctermfg=25
+hi Define          ctermfg=25
+hi Structure       ctermfg=25
+hi Special         ctermfg=25
+
+hi Tag             ctermfg=162
+hi Debug           ctermfg=63
+hi Error           ctermfg=88
+
+hi MatchParen      ctermfg=162
+hi Folded          ctermfg=8    ctermbg=0
+hi Search          ctermbg=22
+hi TrailingSpaces  ctermbg=94
+
+"------------------------------------------------------------------------------
+" GUI Version
+"------------------------------------------------------------------------------
+
+hi ColorColumn                  guibg=#111111
+hi Cursor                       guibg=#ffffff
+hi CursorLine                   guibg=#111111
+hi LineNr        guifg=#555555  guibg=#000000
+hi CursorLineNr  guifg=#ffffff                 gui=bold
+hi StatusLine    guifg=#ffffff  guibg=#111111  gui=bold
+
+hi StatusLineNC  guifg=#101010  guibg=#000000
+hi VertSplit                    guibg=#111111  gui=NONE
 hi SLWarn        guifg=#A70035
 hi Directory     guifg=#1060a0
 
-"------------------------------------------------------------------------------
-" Types of text
-"------------------------------------------------------------------------------
+hi ColorColumn                  guibg=#111111
+hi Cursor                       guibg=#ffffff
+hi CursorLine                   guibg=#111111
+hi LineNr        guifg=#555555  guibg=#000000
+hi CursorLineNr  guifg=#ffffff                 gui=bold
+hi StatusLine    guifg=#ffffff  guibg=#111111  gui=bold
 
-hi Normal         guifg=#cccccc guibg=#000000 ctermfg=7 ctermbg=0
+hi StatusLineNC  guifg=#101010  guibg=#000000
+hi VertSplit                    guibg=#111111  gui=NONE
+hi SLWarn        guifg=#A70035
+hi Directory     guifg=#1060a0
+
+hi Normal         guifg=#cccccc guibg=#000000
 hi! link Constant Normal
 
-hi Comment        guifg=#506070            ctermfg=8
-hi CommentSpecial guifg=#6c71c4            ctermfg=57
-hi CommentHeader  guifg=#8090b0 gui=bold   ctermfg=8    cterm=bold
-
-hi String         guifg=#8090b0            ctermfg=242
-hi Number         guifg=#6c71c4            ctermfg=62
+hi Comment        guifg=#506070
+hi CommentSpecial guifg=#6c71c4
+hi CommentHeader  guifg=#8090b0 gui=bold
+hi String         guifg=#8090b0
+hi Number         guifg=#6c71c4
 hi! link Float Number
 
-hi Function       guifg=#44047E gui=bold   ctermfg=129  cterm=bold
-hi ClassName      guifg=#ff00f8 gui=bold   ctermfg=162  cterm=bold
-hi Identifier     guifg=#40a070            ctermfg=22
-hi Type           guifg=#6c71c4 gui=NONE   ctermfg=57
+hi Function       guifg=#44047E   gui=bold
+hi Function
+hi ClassName      guifg=#ff00f8 gui=bold
+hi Identifier     guifg=#40a070
+hi Type           guifg=#6c71c4 gui=NONE
 
-hi Boolean        guifg=#5b3674            ctermfg=135
-hi Keyword        guifg=#5b3674 gui=italic ctermfg=135
+hi Boolean        guifg=#5b3674
+hi Keyword        guifg=#5b3674 gui=italic
 " Keyword is for built-in functions; other reserved words should go into the
 " appropriate sub-group
 
-hi Statement      guifg=#06287e gui=bold  ctermfg=24  cterm=bold
-hi Conditional    guifg=#06287e gui=bold  ctermfg=25  cterm=bold
-hi Repeat         guifg=#06287e gui=bold  ctermfg=25  cterm=bold
-hi Operator       guifg=#06287e ctermfg=25
-hi Exception      guifg=#06287e gui=bold  ctermfg=25  cterm=bold
+hi Statement      guifg=#06287e gui=bold
+hi Conditional    guifg=#06287e gui=bold
+hi Repeat         guifg=#06287e gui=bold
+hi Operator       guifg=#06287e
+hi Exception      guifg=#06287e gui=bold
 " hi Label  " case, default, etc.
 
-hi PreProc        guifg=#1060a0 gui=NONE ctermfg=25
-hi Include        guifg=#1060a0 gui=NONE ctermfg=25
-hi Define         guifg=#1060a0 gui=italic ctermfg=25
+hi PreProc        guifg=#1060a0 gui=NONE
+hi Include        guifg=#1060a0 gui=NONE
+hi Define         guifg=#1060a0 gui=italic
 
-hi Structure      guifg=#1060a0 gui=italic ctermfg=25
-hi Special        guifg=#1060a0 gui=italic ctermfg=25
+hi Structure      guifg=#1060a0 gui=italic
+hi Special        guifg=#1060a0 gui=italic
 
 hi! link SpecialChar NONE
 
-hi Tag            guifg=#ff00f8 ctermfg=162
+hi Tag            guifg=#ff00f8
 
 " hi Delimiter  " character that needs attention
-hi Debug          guifg=#5b3674 gui=italic ctermfg=63
+hi Debug          guifg=#5b3674 gui=italic
 
-hi Error          guifg=#A70035 gui=bold,underline ctermfg=88
+hi Error          guifg=#A70035 gui=bold,underline
 hi Todo           guifg=NONE    guibg=NONE    gui=italic,bold
 hi Title          guifg=NONE    gui=bold
 hi Underlined     guifg=NONE    gui=underline
 
-"------------------------------------------------------------------------------
-" Text states
-"------------------------------------------------------------------------------
-
-hi MatchParen  guifg=#ff00f8 guibg=NONE    gui=bold ctermfg=162
-hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic ctermfg=8
-hi Search      guifg=NONE    guibg=#f8f3a9 ctermbg=22
-hi TrailingSpaces            guibg=#fae6e6 ctermbg=94
+hi MatchParen  guifg=#ff00f8 guibg=NONE    gui=bold
+hi Folded      guifg=#a0a0a0 guibg=NONE    gui=italic
+hi Search      guifg=NONE    guibg=#f8f3a9
+hi TrailingSpaces            guibg=#fae6e6
 
 hi DiffChange  guifg=NONE    guibg=NONE
 hi DiffText    guifg=#06287e guibg=#e3faef gui=NONE
 hi DiffAdd     guifg=#06287e guibg=#e3faef gui=NONE
 hi DiffDelete  guifg=#fae6e6 guibg=#fae6e6 gui=italic
+
