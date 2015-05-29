@@ -34,6 +34,7 @@
   ch = checkout
   a = add
   br = branch
+  bra = branch --all
   # commit
   com = commit
   ca = commit --amend
