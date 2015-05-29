@@ -112,7 +112,7 @@ set nofoldenable           " start with all folds open
 set foldtext=GetFoldText()
 function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
-  return (repeat("- ", 36) . num_lines . " lines")
+  return (repeat('- ', 36) . num_lines)
 endfunction
 
 "------------------------------------------------------------------------------
@@ -317,6 +317,7 @@ func! UpdateSyntasticJavascriptCheckers()
   if filereadable(cwd . '/.eslintrc')
     call add(checkers, 'eslint')
   endif
+  echom "checkers: " . join(checkers, ', ')
   let g:syntastic_javascript_checkers = checkers
 endf
 
