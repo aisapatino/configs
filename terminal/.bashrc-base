@@ -1,6 +1,8 @@
 ### APPEARANCE ################################################################
 
 TERM=xterm-256color
+BLUE='\[\e[1;34m\]'
+RESET='\[\e[m\]'
 
 ### PROMPT ####################################################################
 
@@ -10,7 +12,7 @@ GIT_PS1_SHOWCOLORHINTS=1 # color like git status for untracked/modified
 source ~/.git-prompt.sh
 
 # \[\e[color\] = start coloring, \[\e[m\] = end coloring
-PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \[\e[1;34m\]$\[\e[m\] "'
+PROMPT_COMMAND='__git_ps1 "$BLUE\w$RESET" " $BLUE\$$RESET "'
 
 #### AUTOCOMPLETE #############################################################
 
@@ -26,7 +28,7 @@ alias gca="git add . && git commit"
 alias gs="git status"
 
 alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|*.pyc' -L "
-alias trd="tree -a -d -I '.git'"
+alias trd="tree -a -d -I 'node_modules|.git|*bower_components|*.pyc'"
 
 sr() {
   echo "replacing $1 with $2 in files matching $3"
