@@ -4,8 +4,6 @@ source ~/Projects/configs/terminal/.bashrc-base
 
 ### PATH ######################################################################
 
-# gae
-export PATH=$PATH:/home/aisa/Devel/google_appengine
 # pip installs
 export PATH=$PATH:/usr/local/lib/python2.7/dist-packages
 # node / npm
@@ -16,10 +14,10 @@ fi
 ### PYTHONPATH ################################################################
 
 # gae
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine/lib/django-1.5
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine/lib/yaml/lib
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine/lib/webob-1.2.3
+export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google-cloud-sdk/platform/google_appengine
+export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google-cloud-sdk/platform/google_appengine/lib/django-1.5
+#export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google-cloud-sdk/platform/google_appengine/lib/yaml/lib
+export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google-cloud-sdk/platform/google_appengine/lib/webob-1.2.3
 # pip installs
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
 # misc installed tools
