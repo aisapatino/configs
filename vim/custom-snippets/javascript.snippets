@@ -1,9 +1,10 @@
-# options: by default, only expands if at beginning of line or after whitespace
-#	b = beginning of line only
-#	w = word boundary (can be adjacent to non-word, non-whitespace chars)
-#	i = inword expansion allowed
-#	s = trim trailing whitespace before going to next line
-# 			(useful when there are optional params after a tab)
+# by default, only expands if at beginning of line or after whitespace
+# options:
+#	 b  beginning of line only
+#	 w  word boundary (can be adjacent to non-word, non-whitespace chars)
+#	 i  inword expansion allowed
+#	 s  trim trailing whitespace before going to next line
+# 	  (useful when there are optional params after a tab)
 
 #-----------------------------------------------------------------------------
 # GENERAL
@@ -58,8 +59,12 @@ endsnippet
 # NODE
 #-----------------------------------------------------------------------------
 
-snippet req "generic require" s
-var $1 = require('${1:MODULE}');
+snippet req "generic matching require" b
+var ${1} = require('$1');
+endsnippet
+
+snippet re "generic non-matching require" b
+var ${1} = require('${2}');
 endsnippet
 
 #-----------------------------------------------------------------------------
@@ -67,6 +72,7 @@ endsnippet
 #-----------------------------------------------------------------------------
 
 # mocha
+# ------
 
 snippet desc "skeleton for describe wrapper" s
 describe('${1:SUITE DESC}', function() {
@@ -74,15 +80,9 @@ describe('${1:SUITE DESC}', function() {
 });
 endsnippet
 
-snippet suite "skeleton for suite wrapper" s
-suite('${1:SUITE DESC}', function() {
-	${2}
-});
-endsnippet
-
-snippet test "skeleton for single test" s
-test('${1:TEST DESC}', function(done) {
-	${2}
+snippet be "beforeEach"
+beforeEach(function() {
+	${1}
 });
 
 endsnippet
@@ -101,31 +101,48 @@ it('should ${1:TEST DESC}', function() {
 
 endsnippet
 
-# supertest-as-promised
-#----------------------
+snippet tt "test then (with catch done)" ws
+then(function(${1:results}) {
+	${2}
+	done();
+})
+.catch(done);
+endsnippet
 
-snippet treq "test request" s
+# supertest-as-promised
+# ---------------------
+
+snippet tget "test request" s
 request.${1:get}('${2:URL}')
 	.expect(${3:200})
 	.then(function(res) {
 		${4}
+		done();
 	})
 	.catch(done);
 endsnippet
 
 # chai bdd
-#---------
+# --------
+
+snippet tf "test file - require expect" b
+'use strict';
+
+var expect = require('chai').expect;
+
+${1}
+endsnippet
 
 snippet exp "expect" s
 expect(${1:VAR}).to.${2:ETC};
 endsnippet
 
 snippet ep "expect property"
-expect(${1:OBJ}).to.have.property('${2:PROP}'${3});
+expect(${1}).to.have.property('${2}'${3});
 endsnippet
 
 snippet epp "expect property that is a..."
-expect(${1:OBJ}).to.have.property('${2:PROP}'${3}).that.is.a${4}('${5}');
+expect(${1}).to.have.property('${2}').that.is.a${3}('${4}');
 endsnippet
 
 snippet et "expect type" s
@@ -133,7 +150,7 @@ expect(${1}).to.be.a${2}('${3}')${4};
 endsnippet
 
 # nock
-#-----
+# -----
 
 snippet nock "nock outline" sw
 nock
@@ -167,11 +184,11 @@ var config = require('../config');
 module.exports = Collection.extend({
 
 	url: function() {
-		return config.server + ${1:'other/stuff'};
+		return config.server + ${1:''};
 	},
 
 	initialize: function initialize(options) {
-		assert(options.${1:OPT}, 'options.$1 is required');
+		assert(options.${2:prop}, 'options.$2 is required');
 	}
 });
 endsnippet
@@ -180,33 +197,35 @@ snippet layout "LayoutView"
 'use strict';
 
 var assert = require('assert');
-var Marionette = require('marionette');
+var LayoutView = require('marionette').LayoutView;
 
 var template = require('templates/${1:TEMPLATE}.jade');
 
-module.exports = Marionette.LayoutView.extend({
+module.exports = LayoutView.extend({
 
 	template: template,
 
-	regions: {
-	},
+	regions: {${2}},
+
+	// Initialization
+	// ---------------
 
 	initialize: function initialize(options) {
 		// assert required options
-		// Create models and collections
+		// create models and collections
 
-		// Create child views
-		// call listener setup
+		// create child views, call listener setup (or in onAttach)
 	},
-
-	// View events
-	// -----------
 
 	onAttach: function onAttach() {
 		// this.showChildView('region', view);
 	},
 
+	// View events
+	// -----------
+
 	addViewListeners: function addViewListeners() {
+	},
 
 	// Collection events
 	// -----------------
