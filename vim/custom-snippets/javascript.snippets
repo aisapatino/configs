@@ -1,6 +1,6 @@
 # by default, only expands if at beginning of line or after whitespace
 # options:
-#	 b  beginning of line only
+#	 b  beginning of line only (not after whitespace)
 #	 w  word boundary (can be adjacent to non-word, non-whitespace chars)
 #	 i  inword expansion allowed
 #	 s  trim trailing whitespace before going to next line
@@ -275,4 +275,20 @@ endsnippet
 
 snippet param "@param" ws
 @param {${1:TYPE}} ${2:NAME} - ${3:DESC}
+endsnippet
+
+#-----------------------------------------------------------------------------
+# ESLINT
+#-----------------------------------------------------------------------------
+
+snippet dl "disable line" ws
+// eslint-disable-line ${1}
+endsnippet
+
+snippet dis "eslint disable"
+/* eslint-disable ${1} */
+endsnippet
+
+snippet en "eslint enable"
+/* eslint-enable ${1} */
 endsnippet
