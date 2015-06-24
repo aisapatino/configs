@@ -3,6 +3,7 @@ cd ~/Projects
 "------------------------------------------------------------------------------
 " Plugins (managed by Vundle)
 " -----------------------------------------------------------------------------
+
 set nocompatible
 filetype off
 
@@ -58,6 +59,7 @@ set vb t_vb=
 " hit tab to show options in command mode
 set wildchar=<tab>
 set wildmenu
+
 "------------------------------------------------------------------------------
 " Appearance
 "------------------------------------------------------------------------------
@@ -112,7 +114,7 @@ set nofoldenable           " start with all folds open
 set foldtext=GetFoldText()
 function! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
-  return (repeat('- ', 36) . num_lines)
+  return (' ' . repeat('- ', 38) . num_lines)
 endfunction
 
 "------------------------------------------------------------------------------
@@ -253,8 +255,8 @@ let g:tagbar_type_python = {
 " CtrlP
 "-------
 
-let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$', 'file': '\.pyc$'}
+let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
 let g:ctrlp_status_func = {'main': 'CtrlPStatus'}
 
@@ -303,8 +305,8 @@ let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
 let g:syntastic_error_symbol = '»'
 let g:syntastic_warning_symbol = '›'
 
+" get checkers based on configs present in working directory
 func! UpdateSyntasticJavascriptCheckers()
-  " get checkers based on configs present in working directory
   echom "getting js checkers"
   let cwd = getcwd()
   let checkers = []

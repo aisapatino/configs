@@ -8,22 +8,22 @@ let colors_name = "aisadark"
 " fix whiteout of location list
 hi! link qfLineNr NONE
 
-" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
-" shows xterm256 color codes used
-
 "------------------------------------------------------------------------------
 " Terminal
 "------------------------------------------------------------------------------
 
-hi ColorColumn     ctermbg=233
-hi Cursor          ctermbg=255
+" xterm256 color codes used:
+" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+
+hi ColorColumn                  ctermbg=233
+hi Cursor                       ctermbg=255
 hi LineNr          ctermfg=8    ctermbg=0
-hi CursorLineNr    ctermfg=255  cterm=bold
-hi CursorLine      ctermbg=0
-hi StatusLine      ctermfg=0    ctermbg=234   cterm=bold
+hi CursorLineNr    ctermfg=255               cterm=bold
+hi CursorLine                   ctermbg=0
+hi StatusLine      ctermfg=0    ctermbg=234  cterm=bold
 
 hi StatusLineNC    ctermfg=0    ctermbg=234
-hi VertSplit       ctermbg=23
+hi VertSplit                    ctermbg=23
 
 hi Normal          ctermfg=7    ctermbg=0
 hi Comment         ctermfg=8
@@ -58,8 +58,8 @@ hi Error           ctermfg=88
 
 hi MatchParen      ctermfg=162
 hi Folded          ctermfg=8    ctermbg=0
-hi Search          ctermbg=22
-hi TrailingSpaces  ctermbg=94
+hi Search                       ctermbg=22
+hi TrailingSpaces               ctermbg=94
 
 "------------------------------------------------------------------------------
 " GUI Version
@@ -99,23 +99,19 @@ hi String         guifg=#8090b0
 hi Number         guifg=#6c71c4
 hi! link Float Number
 
-hi Function       guifg=#44047E   gui=bold
-hi Function
+hi Function       guifg=#44047E gui=bold
 hi ClassName      guifg=#ff00f8 gui=bold
 hi Identifier     guifg=#40a070
 hi Type           guifg=#6c71c4 gui=NONE
 
 hi Boolean        guifg=#5b3674
 hi Keyword        guifg=#5b3674 gui=italic
-" Keyword is for built-in functions; other reserved words should go into the
-" appropriate sub-group
 
 hi Statement      guifg=#06287e gui=bold
 hi Conditional    guifg=#06287e gui=bold
 hi Repeat         guifg=#06287e gui=bold
 hi Operator       guifg=#06287e
 hi Exception      guifg=#06287e gui=bold
-" hi Label  " case, default, etc.
 
 hi PreProc        guifg=#1060a0 gui=NONE
 hi Include        guifg=#1060a0 gui=NONE
@@ -128,7 +124,6 @@ hi! link SpecialChar NONE
 
 hi Tag            guifg=#ff00f8
 
-" hi Delimiter  " character that needs attention
 hi Debug          guifg=#5b3674 gui=italic
 
 hi Error          guifg=#A70035 gui=bold,underline
@@ -145,4 +140,3 @@ hi DiffChange  guifg=NONE    guibg=NONE
 hi DiffText    guifg=#06287e guibg=#e3faef gui=NONE
 hi DiffAdd     guifg=#06287e guibg=#e3faef gui=NONE
 hi DiffDelete  guifg=#fae6e6 guibg=#fae6e6 gui=italic
-
