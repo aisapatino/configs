@@ -8,3 +8,8 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
   . `brew --prefix`/etc/bash_completion
 fi
 
+### INCLUDE LOCAL BASHRC ######################################################
+
+if [ -f ~/Projects/formidable/.bashrc ] ; then
+  source ~/Projects/formidable/.bashrc
+fi
