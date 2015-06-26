@@ -22,14 +22,13 @@ Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'
 Plugin 'aisapatino/bufline'
 Plugin 'tpope/vim-fugitive'
-Plugin 'editorconfig/editorconfig-vim'
 Plugin 'scrooloose/syntastic'
 
 " Occasional use
 "----------------
 
+Plugin 'editorconfig/editorconfig-vim'
 Plugin 'gregsexton/gitv'
-Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'aisapatino/hex-highlight'
@@ -189,7 +188,7 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 let mapleader=','
 map ; :
 
-" escape to clear search highlighting
+" Clear search highlighting (Rebinding esc had side effects)
 map <Leader><Leader> :noh<return>
 
 " Go between splits using Ctrl + direction keys
@@ -215,13 +214,11 @@ map <C-a> :%y+<CR>
 " Change working dir to current file's dir
 com! Current exec "cd %:h"
 
+" Reload vim configs
 com! Reload exec 'so ~/.vimrc | so ~/.gvimrc'
 
 " Trim trailing spaces
 com! Trail :%s/\s\+$
-
-" Only trim full lines of spaces (for jade, which needs other trailing spaces)
-com! LineTrail :%s/^\s\+$
 
 com! PrettyJson :%!python -m json.tool
 
@@ -236,21 +233,6 @@ let g:Gitv_WipeAllOnClose = 1
 let g:Gitv_DoNotMapCtrlKey = 1
 
 nmap gv :Gitv --all
-
-" Tagbar
-"-------
-
-let g:tagbar_sort = 0
-let g:tagbar_show_visibility = 0
-let g:tagbar_iconchars = ['▸', '▾']
-let g:tagbar_type_python = {
-    \ 'kinds' : [
-        \ 'c:classes:1',
-        \ 'f:functions:1',
-        \ 'm:members:1',
-        \ 'v:variables:1',
-    \ ],
-\ }
 
 " CtrlP
 "-------
@@ -270,6 +252,7 @@ func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   return statustext
 endf
 
+" quick shortcuts: find all, files, recent, buffers
 nnoremap ;fa :CtrlPMixed<Cr>
 nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
@@ -288,7 +271,6 @@ let g:SuperTabMappingBackward = '<c-tab>'
 " Syntastic
 "-----------
 
-"let g:syntastic_debug = 3
 let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_javascript_checkers = ['eslint']
