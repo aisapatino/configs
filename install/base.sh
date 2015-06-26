@@ -29,17 +29,13 @@ mkdir -p -v ~/.vim/colors
 ln -s -f -v ~/Projects/configs/vim/colors/aisa.vim ~/.vim/colors/aisa.vim
 ln -s -f -v ~/Projects/configs/vim/colors/aisadark.vim ~/.vim/colors/aisadark.vim
 
-# create empty bundle folder if needed
-if [ ! -d ~/.vim/bundle ] ; then
-  mkdir -v ~/.vim/bundle
-fi
-# clone Vundle if needed
-if [ ! -d ~/.vim/bundle/Vundle.vim ] ; then
-  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+if [ ! -d ~/.vim/autoload/plug.vim ] ; then
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 ln -s -f -v ~/Projects/configs/vim/custom-syntax ~/.vim/
 ln -s -f -v ~/Projects/configs/vim/custom-snippets ~/.vim/
 ln -s -f -v ~/Projects/configs/vim/CustomGrepFileAssoc ~/.vim/CustomGrepFileAssoc
 
-echo "\nMake sure to run :PluginInstall once you open vim"
+echo "\nMake sure to run :PlugInstall once you open vim"

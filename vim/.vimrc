@@ -1,46 +1,32 @@
 cd ~/Projects
 
-"------------------------------------------------------------------------------
-" Plugins (managed by Vundle)
-" -----------------------------------------------------------------------------
-
-set nocompatible
-filetype off
+" Custom syntax overrides
 
 set rtp+=~/.vim/custom-syntax/after/
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-" let Vundle manage Vundle (required)
-Plugin 'gmarik/Vundle.vim'
+"------------------------------------------------------------------------------
+" Plugins (managed by vim-plug)
+" -----------------------------------------------------------------------------
 
-" Main plugins
-"--------------
+call plug#begin('~/.vim/plugged')
 
-Plugin 'kien/ctrlp.vim'
-Plugin 'ervandew/supertab'
-Plugin 'SirVer/ultisnips'
-Plugin 'aisapatino/bufline'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/syntastic'
+Plug 'kien/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
+Plug 'aisapatino/bufline'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/syntastic'
 
-" Occasional use
-"----------------
+Plug 'editorconfig/editorconfig-vim'
+Plug 'gregsexton/gitv'
+Plug 'rking/ag.vim'
+Plug 'tpope/vim-surround'
+Plug 'aisapatino/hex-highlight'
 
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'gregsexton/gitv'
-Plugin 'rking/ag.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'aisapatino/hex-highlight'
+Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
+Plug 'groenewege/vim-less', { 'for': 'less' }
 
-" Syntax highlighting
-"---------------------
-
-Plugin 'digitaltoad/vim-jade'
-Plugin 'groenewege/vim-less'
-
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 
 "------------------------------------------------------------------------------
 " Basics
