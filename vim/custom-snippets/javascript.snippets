@@ -2,40 +2,42 @@
 # options:
 #	 b  beginning of line only (not after whitespace)
 #	 w  word boundary (can be adjacent to non-word, non-whitespace chars)
-#	 i  inword expansion allowed
+#	 i  in-word expansion allowed
 #	 s  trim trailing whitespace before going to next line
 # 	  (useful when there are optional params after a tab)
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # GENERAL
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
-snippet str "use strict statement" bs
+# functions
+# ---------
+
+snippet str "use strict statement" b
 'use strict';
 endsnippet
 
 snippet pf "prototype function" ws
 prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
-
+	${3}
 };
 
 endsnippet
 
 snippet of "object function" ws
 ${1:FUNC_NAME} = function $1(${2:PARAMS}) {
-
+	${3}
 };
 
 endsnippet
 
-snippet fa "function with params" ws
+snippet fa "function with args" ws
 function(${1}) {
 	${2}
 })
 endsnippet
 
-# same as above, but with semicolon
-snippet func "function with params" ws
+snippet fas "function with args & semicolon" ws
 function(${1}) {
 	${2}
 });
@@ -47,17 +49,20 @@ function() {
 });
 endsnippet
 
-snippet co "console.log" ws
+# console logging
+# ---------------
+
+snippet co "console.log" w
 console.log(${1});
 endsnippet
 
-snippet con "console.log with quotes" ws
+snippet con "console.log with quotes" w
 console.log('${1}');
 endsnippet
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # NODE
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 snippet req "generic matching require" b
 var ${1} = require('$1');
@@ -67,9 +72,9 @@ snippet re "generic non-matching require" b
 var ${1} = require('${2}');
 endsnippet
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # TESTING
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 # mocha
 # ------
@@ -87,14 +92,14 @@ beforeEach(function() {
 
 endsnippet
 
-snippet it "skeleton for single it" s
+snippet it "skeleton for single it (with done cb)" s
 it('should ${1:TEST DESC}', function(done) {
 	${2}
 });
 
 endsnippet
 
-snippet its "skeleton for single sync it (without callback)" s
+snippet its "skeleton for single sync it (without done cb)" s
 it('should ${1:TEST DESC}', function() {
 	${2}
 });
