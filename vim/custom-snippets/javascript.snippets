@@ -99,6 +99,12 @@ it('should ${1:TEST DESC}', function(done) {
 
 endsnippet
 
+snippet iti "skeleton for single skipped it (with done cb)" s
+it.skip('should ${1:TEST DESC}', function(done) {
+});
+
+endsnippet
+
 snippet its "skeleton for single sync it (without done cb)" s
 it('should ${1:TEST DESC}', function() {
 	${2}
