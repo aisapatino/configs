@@ -261,6 +261,7 @@ let g:SuperTabMappingBackward = '<c-tab>'
 let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_args = '--quiet'
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
 let g:syntastic_python_pep8_args = '--max-line-length=100'
