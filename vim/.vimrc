@@ -172,7 +172,8 @@ set diffopt=filler,context:2,vertical,foldcolumn:1
 "------------------------------------------------------------------------------
 
 let mapleader=','
-map ; :
+noremap ; :
+noremap : ;
 
 " Clear search highlighting (Rebinding esc had side effects)
 map <Leader><Leader> :noh<return>
