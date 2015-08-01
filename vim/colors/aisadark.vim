@@ -14,31 +14,33 @@ hi! link qfLineNr NONE
 
 " xterm256 color codes used:
 " http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+" https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 
+hi Normal          ctermfg=250  ctermbg=233
+
+hi LineNr          ctermfg=8    ctermbg=233
 hi ColorColumn                  ctermbg=233
 hi Cursor                       ctermbg=255
-hi LineNr          ctermfg=8    ctermbg=0
 hi CursorLineNr    ctermfg=255               cterm=bold
 hi CursorLine                   ctermbg=0
-hi StatusLine      ctermfg=0    ctermbg=234  cterm=bold
+hi StatusLine      ctermfg=0    ctermbg=231  cterm=bold
 
 hi StatusLineNC    ctermfg=0    ctermbg=234
 hi VertSplit                    ctermbg=23
 
-hi Normal          ctermfg=7    ctermbg=0
-hi Comment         ctermfg=8
+hi Comment         ctermfg=240
 hi CommentSpecial  ctermfg=57
-hi CommentHeader   ctermfg=8    cterm=bold
+hi CommentHeader   ctermfg=240  cterm=bold
 
-hi String          ctermfg=4
+hi String          ctermfg=246
 hi Number          ctermfg=62
-hi Function        ctermfg=129  cterm=bold
+hi Function        ctermfg=90   cterm=bold
 hi ClassName       ctermfg=162  cterm=bold
-hi Identifier      ctermfg=22   cterm=NONE
+hi Identifier      ctermfg=79   cterm=NONE
 hi Type            ctermfg=57
 
-hi Boolean         ctermfg=135
-hi Keyword         ctermfg=135
+hi Boolean         ctermfg=97
+hi Keyword         ctermfg=97
 
 hi Statement       ctermfg=24  cterm=bold
 hi Conditional     ctermfg=25  cterm=bold
@@ -58,7 +60,7 @@ hi Error           ctermfg=88
 
 hi MatchParen      ctermfg=162
 hi Folded          ctermfg=8    ctermbg=0
-hi Search                       ctermbg=22
+hi Search                       ctermbg=230
 hi TrailingSpaces               ctermbg=94
 
 "------------------------------------------------------------------------------
