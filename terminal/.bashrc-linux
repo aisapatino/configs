@@ -4,6 +4,8 @@ source ~/Projects/configs/terminal/.bashrc-base
 
 ### PATH ######################################################################
 
+# google app engine sdk
+export PATH=$PATH:/home/aisa/Devel/google_appengine
 # pip installs
 export PATH=$PATH:/usr/local/lib/python2.7/dist-packages
 # node / npm
