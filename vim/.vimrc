@@ -68,6 +68,7 @@ set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
 set fillchars=fold:\ ,vert:\
+set listchars=trail:@,extends:>,precedes:<,tab:>-
 
 "------------------------------------------------------------------------------
 " Search
@@ -335,24 +336,20 @@ au BufRead,BufNewFile *.json set filetype=json
 augroup filetypedetect
   " removes current htmldjango detection located at $VIMRUNTIME/filetype.vim
   au! BufNewFile,BufRead *.html
-  au  BufNewFile,BufRead *.html call FThtml()
+  au  BufNewFile,BufRead *.html call s:DetectDjangoTemplate()
 
-  func! FThtml()
-    set colorcolumn=100
+  " check for django template tag in first ten lines
+  func! s:DetectDjangoTemplate()
     let n = 1
-    while n < 10 && n < line("$")
-      if getline(n) =~ '\<DTD\s\+XHTML\s'
-        setf xhtml
-        return
-      endif
+    while n < 10 && n < line('$')
       if getline(n) =~ '{%\|{{\|{#'
-        setf htmldjango
+        set ft=htmldjango
         return
       endif
       let n = n + 1
     endwhile
     setf html
-  endf
+  endfunc
 augroup END
 
 "------------------------------------------------------------------------------
@@ -389,5 +386,5 @@ endf
 com! ShowHighlightGroup echo ShowHighlightGroup()
 
 " Enable this to get verbose vim logs (troubleshooting a plugin/setting)
-"   set verbose=9
-"   set verbosefile=~/.vim/vimlog.vim
+"set verbose=9
+"set verbosefile=~/.vim/vimlog.vim
