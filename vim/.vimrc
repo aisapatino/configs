@@ -10,19 +10,20 @@ set rtp+=~/.vim/custom-syntax/after/
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
-Plug 'aisapatino/bufline'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/syntastic'
-
 Plug 'editorconfig/editorconfig-vim'
-Plug 'gregsexton/gitv'
-Plug 'rking/ag.vim'
-Plug 'tpope/vim-surround'
-Plug 'aisapatino/hex-highlight'
 
+Plug 'rking/ag.vim'
+
+" Off by default
+
+Plug 'aisapatino/hex-highlight', { 'on': 'PlugHighlight' }
+Plug 'gregsexton/gitv', { 'on': 'PlugGitv' }
+Plug 'tpope/vim-surround', { 'on': 'PlugSurround' }
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
 
@@ -103,7 +104,7 @@ function! GetFoldText()
 endfunction
 
 "------------------------------------------------------------------------------
-" Status line
+" Statusline and titlestring
 "------------------------------------------------------------------------------
 
 set laststatus=2                           " always show status line
@@ -114,7 +115,7 @@ set statusline+=%{ShortBranch()}           " git branch
 set statusline+=\ %#SLWarn#%m%*            " modified flag
 set statusline+=\ %{IndentDisplay()}       " tab size & flag for tabs
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{ShPath()}        " shortened path
+set statusline+=\ \ \ %<%{ShPath(0)}        " shortened path
 set statusline+=\ %5L,%v                   " total lines in file, cursor column
 
 func! IndentDisplay()
@@ -125,9 +126,13 @@ func! IndentDisplay()
   return display
 endf
 
-func! ShPath()
-  let path = expand('%')
-  let path = substitute(path, '\/Users\/aisa', '~', '')
+func! ShPath(cwd)
+  if a:cwd
+    let path = getcwd()
+  else
+    let path = expand('%')
+  endif
+  let path = substitute(path, $HOME, '~', '')
   let path = substitute(path, 'Projects', 'P', '')
   let path = substitute(path, 'formidable', 'f', '')
   return path
@@ -140,6 +145,8 @@ func! ShortBranch()
   let br = substitute(br, ']', '', '')
   return br
 endf
+
+set titlestring=%{ShPath(1)}
 
 "------------------------------------------------------------------------------
 " Files, sessions
@@ -176,7 +183,7 @@ noremap ; :
 noremap : ;
 
 " Clear search highlighting (Rebinding esc had side effects)
-map <Leader><Leader> :noh<return>
+map <Leader><Leader> ;noh<return>
 
 " Go between splits using Ctrl + direction keys
 map <C-h> <C-w>h
@@ -185,29 +192,35 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 
 " Go between location list items
-map [l :lprev<Cr>
-map ]l :lnext<Cr>
-
-" List buffers
-map <Leader>b :buffers<Cr>
+map [l ;lprev<Cr>
+map ]l ;lnext<Cr>
 
 " Search for conflict markers
-map <Leader>g :Conflict<cr>
 com! Conflict /\(<<<<<<\|======\|>>>>>>\)
+map <Leader>g ;Conflict<Cr>
 
 " Copy all to global register
-map <C-a> :%y+<CR>
+map <C-a> exec '%y+'
 
 " Change working dir to current file's dir
-com! Current exec "cd %:h"
+com! Current exec 'cd %:h'
 
 " Reload vim configs
 com! Reload exec 'so ~/.vimrc | so ~/.gvimrc'
 
 " Trim trailing spaces
-com! Trail :%s/\s\+$
+com! Trail exec '%s/\s\+$'
 
-com! PrettyJson :%!python -m json.tool
+com! PrettyJson exec '%!python -m json.tool'
+
+func! BufferList()
+  let msg = ''
+  for b in range(1, bufnr('$'))
+    let l:name = bufname(b)
+    let msg .= b . '  ' . fnamemodify(l:name, ':t') . '     ' . l:name . "\n"
+  endfor
+  echo msg
+endfunc
 
 "------------------------------------------------------------------------------
 " Plugin config
@@ -219,7 +232,7 @@ com! PrettyJson :%!python -m json.tool
 let g:Gitv_WipeAllOnClose = 1
 let g:Gitv_DoNotMapCtrlKey = 1
 
-nmap gv :Gitv --all
+nmap gv ;Gitv --all<Cr>
 
 " CtrlP
 "-------
@@ -227,7 +240,7 @@ nmap gv :Gitv --all
 let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$', 'file': '\.pyc$'}
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
-let g:ctrlp_status_func = {'main': 'CtrlPStatus'}
+let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
 
 func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   let statustext = '  ' . a:byfname
@@ -237,6 +250,10 @@ func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   let statustext .= '        ' . a:item . '%=%{getcwd()}'
 
   return statustext
+endf
+
+func! CtrlPProgress(str)
+  return a:str . ' files scanned...'
 endf
 
 " quick shortcuts: find all, files, recent, buffers
@@ -259,12 +276,15 @@ let g:SuperTabMappingBackward = '<c-tab>'
 "-----------
 
 let g:syntastic_mode_map = { 'mode': 'active' }
-let g:syntastic_css_checkers = ['csslint']
+
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_args = '--quiet'
+
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
 let g:syntastic_python_pep8_args = '--max-line-length=100'
+
+let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
 
