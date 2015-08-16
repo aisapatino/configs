@@ -9,7 +9,7 @@
   # don't handle line endings, vim/editorconfig do
   autocrlf = false
   excludesfile = ~/.gitignore
-  editor = gvim -f
+  editor = vim
 [push]
   # only push current branch
   default = simple
