@@ -4,6 +4,9 @@ TERM=xterm-256color
 BLUE='\[\e[1;34m\]'
 RESET='\[\e[m\]'
 
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+export CLICOLOR=1
+
 ### PROMPT ####################################################################
 
 GIT_PS1_SHOWUPSTREAM=1 # indicate ahead/behind upstream
@@ -22,13 +25,16 @@ fi
 
 ### ALIASES ###################################################################
 
+alias ll="ls -la"
 alias g="git"
 alias gk="gitk --all"
 alias gca="git add . && git commit"
 alias gs="git status"
 
-alias t="tree -a --dirsfirst -I 'node_modules|.git|*bower_components|*.pyc' -L "
-alias trd="tree -a -d -I 'node_modules|.git|*bower_components|*.pyc'"
+# -C = color, -d = dirs only, -I = ignore, -L = max depth level
+IGNORE="node_modules|.git|*bower_components|.DS_Store|*.pyc"
+alias t="tree -a -C --dirsfirst -I '$IGNORE' -L "
+alias trd="tree -a -C -d -I '$IGNORE'"
 
 sr() {
   echo "replacing $1 with $2 in files matching $3"
