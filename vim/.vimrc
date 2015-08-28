@@ -1,12 +1,11 @@
 cd ~/Projects
 
 " Custom syntax overrides
-
 set rtp+=~/.vim/custom-syntax/after/
 
 "------------------------------------------------------------------------------
 " Plugins (managed by vim-plug)
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
 
 call plug#begin('~/.vim/plugged')
 
@@ -16,16 +15,20 @@ Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/syntastic'
 Plug 'editorconfig/editorconfig-vim'
-
 Plug 'rking/ag.vim'
+" vim-javascript is required for jsx plugin
+Plug 'pangloss/vim-javascript'
 
 " Off by default
 
-Plug 'aisapatino/hex-highlight', { 'on': 'PlugHighlight' }
-Plug 'gregsexton/gitv', { 'on': 'PlugGitv' }
-Plug 'tpope/vim-surround', { 'on': 'PlugSurround' }
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
+Plug 'mxw/vim-jsx', { 'for': 'jsx' }
+
+Plug 'aisapatino/hex-highlight', { 'on': 'Highlight' }
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+Plug 'tpope/vim-surround', { 'on': 'PlugSurround' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 call plug#end()
 
@@ -279,7 +282,7 @@ let g:SuperTabMappingBackward = '<c-tab>'
 let g:syntastic_mode_map = { 'mode': 'active' }
 
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_args = '--quiet'
+let g:syntastic_javascript_eslint_args = '--quiet'   " only errors, no warnings
 
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
@@ -322,13 +325,14 @@ com! UpdateJavascriptCheckers exec "call UpdateSyntasticJavascriptCheckers()"
 let g:UltiSnipsExpandTrigger='<s-tab>'
 let g:UltiSnipsJumpForwardTrigger='<s-tab>'
 let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'   " dir for :UltiSnipsEdit
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsSnippetDirectories=['custom-snippets'] " don't include default dir
 
 "------------------------------------------------------------------------------
 " Language-specific
 "------------------------------------------------------------------------------
 
+au FileType git setlocal nonumber
 au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap
 au BufRead,BufNewFile *.json set filetype=json
 
