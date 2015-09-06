@@ -6,6 +6,6 @@
 hi! link djangoFilter Keyword
 
 " highlight block names
-syn match djangoBlockName "\%(block\ \)\@<=\([a-z_]\+\)" containedin=djangoTagBlock
+syn match djangoBlockName "\%(block\ \)\@<=\([a-z_\-]\+\)" containedin=djangoTagBlock
 hi link djangoBlockName ClassName
 
