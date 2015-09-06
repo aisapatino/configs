@@ -238,7 +238,7 @@ nmap gv ;Gitv --all<Cr>
 " CtrlP
 "-------
 
-let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$', 'file': '\.pyc$'}
+let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage|libs)$', 'file': '\.pyc$'}
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
 let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
