@@ -32,5 +32,6 @@ alias trd="tree -a -d -I 'node_modules|.git|*bower_components|*.pyc'"
 
 sr() {
   echo "replacing $1 with $2 in files matching $3"
+  echo "(if the match looks wrong, make sure you put quotes around it)"
   find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
 }
