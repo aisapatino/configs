@@ -8,6 +8,9 @@ hi! link javaScriptNumber Number
 " don't bold braces or the word function
 hi! link javaScriptBraces Statement
 hi! link javaScriptFunction NONE
+hi! link jsFunction Operator
+
+hi! link jsStorageClass Identifier
 
 "-------------------------------------------------------------------------------
 " Keywords
