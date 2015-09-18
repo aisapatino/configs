@@ -1,20 +1,21 @@
-### APPEARANCE ################################################################
+### COLORS ####################################################################
 
 TERM=xterm-256color
-BLUE='\[\e[1;34m\]'
-RESET='\[\e[m\]'
 
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 export CLICOLOR=1
 
+# store these for re-use
+BLUE='\[\e[1;34m\]'
+RESET='\[\e[m\]'
+
 ### PROMPT ####################################################################
 
-GIT_PS1_SHOWUPSTREAM=1 # indicate ahead/behind upstream
-GIT_PS1_SHOWCOLORHINTS=1 # color like git status for untracked/modified
+GIT_PS1_SHOWUPSTREAM=1     # indicate ahead/behind upstream
+GIT_PS1_SHOWCOLORHINTS=1   # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
-# \[\e[color\] = start coloring, \[\e[m\] = end coloring
 PROMPT_COMMAND='__git_ps1 "$BLUE\w$RESET" " $BLUE\$$RESET "'
 
 #### AUTOCOMPLETE #############################################################
@@ -30,6 +31,8 @@ alias g="git"
 alias gk="gitk --all"
 alias gca="git add . && git commit"
 alias gs="git status"
+
+alias npmlist="npm ls --depth=0"
 
 # -C = color, -d = dirs only, -I = ignore, -L = max depth level
 IGNORE="node_modules|.git|*bower_components|.DS_Store|*.pyc"
