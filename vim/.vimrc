@@ -16,16 +16,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/syntastic'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rking/ag.vim'
-" vim-javascript is required for jsx plugin
-Plug 'pangloss/vim-javascript'
+Plug 'aisapatino/hex-highlight'
 
-" Off by default
+" Languages
+" ---------
 
+Plug 'pangloss/vim-javascript'             " required for jsx plugin
+Plug 'mustache/vim-mustache-handlebars'    " doesn't work well loaded on demand
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'mxw/vim-jsx', { 'for': 'jsx' }
 
-Plug 'aisapatino/hex-highlight', { 'on': 'Highlight' }
+" Seldom-used
+" -----------
+
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'tpope/vim-surround', { 'on': 'PlugSurround' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -57,7 +61,7 @@ colorscheme aisadark      " overridden in .gvimrc
 set t_Co=256              " 256-color if running in terminal
 
 if &diff
-  syntax off              " syntax hightlighting off when diffing
+  syntax off              " syntax highlighting off when diffing
 else
   syntax enable           " enable syntax, don't override colors
 endif
@@ -70,7 +74,7 @@ set colorcolumn=80        " show where the 80-char line is
 set scrolloff=3           " minimum lines above/below cursor
 set shortmess=ilmnrxO     " shorter messages
 set showcmd               " show commands in gutter as you type
-set fillchars=fold:\ ,vert:\
+set fillchars=fold:\ ,vert:\|
 set listchars=trail:@,extends:>,precedes:<,tab:>-
 
 "------------------------------------------------------------------------------
@@ -138,7 +142,7 @@ func! ShPath(cwd)
   endif
   let path = substitute(path, $HOME, '~', '')
   let path = substitute(path, 'Projects', 'P', '')
-  let path = substitute(path, 'formidable', 'f', '')
+  let path = substitute(path, 'flabs', 'f', '')
   return path
 endf
 
@@ -241,9 +245,13 @@ nmap gv ;Gitv --all<Cr>
 " CtrlP
 "-------
 
-let g:ctrlp_custom_ignore = {'dir': '\v(\.git|node_modules|\.coverage-html|coverage|libs)$', 'file': '\.pyc$'}
+let g:ctrlp_working_path_mode = 'w'       " search from cwd
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$',
+  \ 'file': '\.pyc$'
+  \ }
 let g:ctrlp_show_hidden = 1               " show hidden files
-let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in cur window, rest hidden
+let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in current window, rest hidden
 let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
 
 func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
@@ -266,11 +274,6 @@ nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
 
-" HexHighlight TODO move to plugin
-"-------------
-
-com! Highlight exec "call HexHighlight()"
-
 " SuperTab
 "-----------
 
@@ -278,8 +281,10 @@ let g:SuperTabMappingBackward = '<c-tab>'
 
 " Syntastic
 "-----------
-
-let g:syntastic_mode_map = { 'mode': 'active' }
+let g:syntastic_mode_map = {
+  \ 'mode': 'passive',
+  \ 'active_filetypes': ['python', 'javascript', 'json', 'css', 'lua']
+\ }
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_args = '--quiet'   " only errors, no warnings
@@ -312,6 +317,10 @@ func! UpdateSyntasticJavascriptCheckers()
   endif
   if filereadable(cwd . '/.eslintrc')
     call add(checkers, 'eslint')
+"  elseif filereadable(cwd . '/.eslintrc-base')
+"    call add(checkers, 'eslint')
+"    echom "configuring to use .eslintrc-client"
+"    let g:syntastic_javascript_eslint_args = '--ext .js,.jsx -c .eslintrc-client'
   endif
   echom "checkers: " . join(checkers, ', ')
   let g:syntastic_javascript_checkers = checkers
@@ -365,7 +374,7 @@ if has("win32")
 else
   set shell=bash\ -i
   if has("gui_macvim") || has('mac')
-    cd formidable
+    cd flabs
   endif
 endif
 
