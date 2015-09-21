@@ -18,6 +18,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'rking/ag.vim'
 Plug 'aisapatino/hex-highlight'
 
+Plug 'justinmk/vim-sneak'
+
 " Languages
 " ---------
 
@@ -115,16 +117,33 @@ endfunction
 " Statusline and titlestring
 "------------------------------------------------------------------------------
 
-set laststatus=2                           " always show status line
+set laststatus=2                             " always show status line
 
-set statusline=%1*\ %n     " buffer number (%1* = midwidth 1, use User1 hi group)
-set statusline+=\ %t\ %*                   " file name (then restore normal hi)
-set statusline+=%{ShortBranch()}           " git branch
-set statusline+=\ %#SLWarn#%m%*            " modified flag
-set statusline+=\ %{IndentDisplay()}       " tab size & flag for tabs
-set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{ShPath(0)}        " shortened path
-set statusline+=\ %5L,%v                   " total lines in file, cursor column
+set statusline=%1*\ %n         " buf nr (%1* = minwidth 1 & use User1 hi group)
+set statusline+=%{SLModifiable()}            " flag if not writeable
+set statusline+=\ %t\ %*                     " file name (then restore normal hi)
+set statusline+=%{ShortBranch()}             " git branch
+set statusline+=\ %#SLWarn#%{SLModified()}%* " modified flag
+set statusline+=\ %{IndentDisplay()}         " tab size & flag for tabs
+set statusline+=%=                           " end of left side
+set statusline+=\ \ \ %<%{ShPath(0)}         " shortened path
+set statusline+=%6L,%v                       " total lines in file, cursor column
+
+func! SLModified()
+  if getbufvar('%', '&modified')
+    return '[+]'
+  else
+    return ''
+  endif
+endf
+
+func! SLModifiable()
+  if !getbufvar('%', '&modifiable')
+    return ' [-]'
+  else
+    return ''
+  endif
+endf
 
 func! IndentDisplay()
   let display = &shiftwidth
@@ -132,18 +151,6 @@ func! IndentDisplay()
     let display = display . 't'
   endif
   return display
-endf
-
-func! ShPath(cwd)
-  if a:cwd
-    let path = getcwd()
-  else
-    let path = expand('%')
-  endif
-  let path = substitute(path, $HOME, '~', '')
-  let path = substitute(path, 'Projects', 'P', '')
-  let path = substitute(path, 'flabs', 'f', '')
-  return path
 endf
 
 " Get rid of excess chars in default [Git(branch)] format
@@ -154,6 +161,20 @@ func! ShortBranch()
   return br
 endf
 
+" Shortened path. Defaults to path of current buffer, optionally use cwd instead
+func! ShPath(cwd)
+  if a:cwd
+    let path = getcwd()
+  else
+    let path = expand('%:h')
+  endif
+  let path = substitute(path, $HOME, '~', '')
+  let path = substitute(path, 'Projects', 'P', '')
+  let path = substitute(path, 'flabs', 'f', '')
+  return path
+endf
+
+" Set titlestring to cwd (it will auto update)
 set titlestring=%{ShPath(1)}
 
 "------------------------------------------------------------------------------
@@ -273,6 +294,11 @@ nnoremap ;fa :CtrlPMixed<Cr>
 nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
+
+" Sneak
+"------
+
+let g:sneak#s_next = 1
 
 " SuperTab
 "-----------
