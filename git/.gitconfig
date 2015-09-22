@@ -1,34 +1,5 @@
-[user]
-  email = aisapatino@gmail.com
-  name = "Anna Luisa Patiño West"
-[credential]
-  helper = cache --timeout=3600
-[color]
-  ui = always
-[core]
-  # don't handle line endings, vim/editorconfig do
-  autocrlf = false
-  excludesfile = ~/.gitignore
-  editor = vim
-[push]
-  # only push current branch
-  default = simple
-[http]
-  # prevent failures if repo is large
-  postBuffer = 524288000
-[diff]
-  tool = gvimdiff
-[difftool]
-  prompt = false
-[merge]
-  tool = fugitive
-[mergetool]
-  prompt = false
-  keepBackup = false
-  [mergetool.fugitive]
-  cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
-[sequence]
-  editor = gvim -f
+[advice]
+  statusHints = false
 [alias]
   # basics
   st = status
@@ -40,14 +11,14 @@
   com = commit
   ca = commit --amend
   can = commit --amend -C HEAD
-  # history
-  l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
-  lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
+  # diffs
   d = diff
   dc = diff --cached
   ds = diff --stat
-  # fetch, merge, rebase
-  fp = fetch -p
+  # history
+  l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
+  lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
+  # pull, rebase
   pr = pull --rebase
   r = rebase
   ri = rebase -i
@@ -60,3 +31,40 @@
   sl = stash list
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
+  # submodules
+  sup = submodule update
+  subst = submodule status
+[color]
+  ui = always
+[core]
+  autocrlf = false    # don't handle line endings, leave it to vim/editorconfig
+  excludesfile = ~/.gitignore
+  editor = vim
+[credential]
+  helper = cache --timeout=3600
+[diff]
+  renames = "copies"
+  tool = gvimdiff
+[difftool]
+  prompt = false
+[fetch]
+  prune = true
+[http]
+  # prevent failures if repo is large
+  postBuffer = 524288000
+[merge]
+  tool = fugitive
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "fugitive"]
+  cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
+[push]
+  default = simple
+[rerere]
+  enabled = true
+[sequence]
+  editor = gvim -f
+[user]
+  email = anna.luisa.west@formidablelabs.com
+  name = "Anna Luisa Patiño West"
