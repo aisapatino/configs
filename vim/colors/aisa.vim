@@ -24,7 +24,7 @@ let colors_name = "aisa"
 "------------------------------------------------------------------------------
 
 hi Normal         guifg=#404850  guibg=#f0f0f0
-hi NonText        guifg=#f0f0f0  guibg=#f0f0f0
+hi NonText        guifg=#a0b0c0  guibg=#f0f0f0  gui=italic
 
 hi VertSplit      guifg=#3f5472  guibg=#3f5472
 hi SignColumn     guifg=#ffffff  guibg=#3f5472
