@@ -1,28 +1,24 @@
 cd ~/Projects
 
-" Custom syntax overrides
-set rtp+=~/.vim/custom-syntax/after/
-
 "------------------------------------------------------------------------------
-" Plugins (managed by vim-plug)
+" Plugins & runtime path
 "------------------------------------------------------------------------------
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/plugged') " vim-plug
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-Plug 'tpope/vim-fugitive'
+Plug 'sirver/ultisnips'
 Plug 'scrooloose/syntastic'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'rking/ag.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'aisapatino/hex-highlight'
-
 Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-vinegar'
 
 " Languages
 " ---------
-
 Plug 'pangloss/vim-javascript'             " required for jsx plugin
 Plug 'mustache/vim-mustache-handlebars'    " doesn't work well loaded on demand
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
@@ -31,118 +27,129 @@ Plug 'mxw/vim-jsx', { 'for': 'jsx' }
 
 " Seldom-used
 " -----------
-
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'tpope/vim-surround', { 'on': 'PlugSurround' }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 call plug#end()
 
-"------------------------------------------------------------------------------
-" Basics
-"------------------------------------------------------------------------------
-
-" don't redraw when executing background/auto commands
-set lazyredraw
-
-" typical backspace behavior (not default on windows & terminal)
-set backspace=indent,eol,start
-
-" don't make error noises/flashing
-set vb t_vb=
-
-" hit tab to show options in command mode
-set wildchar=<tab>
-set wildmenu
-
-"------------------------------------------------------------------------------
-" Appearance
-"------------------------------------------------------------------------------
-
-colorscheme aisadark      " overridden in .gvimrc
-set t_Co=256              " 256-color if running in terminal
-
-if &diff
-  syntax off              " syntax highlighting off when diffing
-else
-  syntax enable           " enable syntax, don't override colors
+" Load built-in plugin matchit.vim, if a newer version isn't already installed
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) != ''
+  runtime! macros/matchit.vim
 endif
 
-set nowrap                " don't wrap lines by default
-set linebreak             " when wrapping, only at word breaks
-set showbreak=>           " indicate start of wrapped (doesn't work due to NonText hi)
-set number                " show line numbers
-set colorcolumn=80        " show where the 80-char line is
-set scrolloff=3           " minimum lines above/below cursor
-set shortmess=ilmnrxO     " shorter messages
-set showcmd               " show commands in gutter as you type
-set fillchars=fold:\ ,vert:\|
-set listchars=trail:@,extends:>,precedes:<,tab:>-
+" Load custom syntax overrides
+set rtp+=~/.vim/custom-syntax/after/
 
 "------------------------------------------------------------------------------
-" Search
-"-----------------------------------------------------------------------------
+" Basic display & behavior
+"------------------------------------------------------------------------------
 
-set ignorecase      " case-insensitive search
-set smartcase       " if uppercase letter, search case sensitive
-set incsearch       " show matches as you type
-set hlsearch        " highlight search matches
+set encoding=utf-8
+
+colorscheme aisadark             " overridden in .gvimrc
+set t_Co=256                     " 256-color if running in terminal
+
+set lazyredraw           " don't redraw when executing background/auto commands
+
+" disable error noises/flashes
+set vb t_vb=
+
+set wildmenu wildchar=<tab>      " autocomplete for commands
+set showcmd                      " show commands as you type
+set shortmess=ilmnrxOI           " shorter messages
+
+set nowrap                       " don't wrap lines by default
+set linebreak                    " when wrapping, only at word breaks
+set showbreak=>                  " indicate start of wrapped lines
+
+set number                       " show line numbers
+set colorcolumn=80               " show where the 80-char line is
+
+set formatoptions+=j             " remove comment char(s) when joining
+
+set diffopt=filler,context:2,vertical,foldcolumn:1
+set listchars=trail:+,extends:>,precedes:<,tab:>-,eol:$
+
+"------------------------------------------------------------------------------
+" Keybinding
+"------------------------------------------------------------------------------
+
+let mapleader=','
+
+noremap ; :
+noremap : ;
 
 "------------------------------------------------------------------------------
 " Indentation
 "------------------------------------------------------------------------------
 
-" These may be overridden by editorconfig as needed
-
 set expandtab        " use spaces instead of tabs
 set tabstop=2        " how many columns wide a tab is visually
 set shiftwidth=2     " how many columns to indent with >>
-set smarttab         " uses shiftwidth # spaces when inserting <tab>
+set smarttab         " use shiftwidth # spaces when inserting <tab>
 set autoindent       " take indent for new line from previous line
 set smartindent      " more intelligent indent for new lines
 
 "------------------------------------------------------------------------------
-" Folding
+" Movement
+"------------------------------------------------------------------------------
+
+" Typical backspace behavior (not default on windows & terminal)
+set backspace=indent,eol,start
+
+set scrolloff=3           " minimum lines above/below cursor
+set sidescrolloff=3       " minimum columns between cursor and edge
+
+" Go between location list items
+nmap [l ;lprev<Cr>
+nmap ]l ;lnext<Cr>
+
+"------------------------------------------------------------------------------
+" Search
+"------------------------------------------------------------------------------
+
+set ignorecase smartcase   " case-insensitive unless search has uppercase letter
+set incsearch              " show matches as you type
+set hlsearch               " highlight search matches
+
+" Clear search highlighting (Was bound to <Esc>, but had side effects)
+map <Leader><Leader> ;noh<return>
+
+"------------------------------------------------------------------------------
+" Folds
 "------------------------------------------------------------------------------
 
 set foldmethod=indent
 set nofoldenable           " start with all folds open
 set foldtext=GetFoldText()
-function! GetFoldText()
+func! GetFoldText()
   let num_lines = v:foldend - v:foldstart + 1
   return (' ' . repeat('- ', 38) . num_lines)
-endfunction
+endf
+set fillchars=fold:\ 
 
 "------------------------------------------------------------------------------
-" Statusline and titlestring
+" Statusline, titlestring
 "------------------------------------------------------------------------------
 
 set laststatus=2                             " always show status line
 
 set statusline=%1*\ %n         " buf nr (%1* = minwidth 1 & use User1 hi group)
 set statusline+=%{SLModifiable()}            " flag if not writeable
-set statusline+=\ %t\ %*                     " file name (then restore normal hi)
+set statusline+=\ %t\ %*                     " file name, then restore normal hi
 set statusline+=%{ShortBranch()}             " git branch
 set statusline+=\ %#SLWarn#%{SLModified()}%* " modified flag
-set statusline+=\ %{IndentDisplay()}         " tab size & flag for tabs
+set statusline+=\ %{IndentDisplay()}         " indent size & flag for tabs
 set statusline+=%=                           " end of left side
 set statusline+=\ \ \ %<%{ShPath(0)}         " shortened path
 set statusline+=%6L,%v                       " total lines in file, cursor column
 
 func! SLModified()
-  if getbufvar('%', '&modified')
-    return '[+]'
-  else
-    return ''
-  endif
+  return getbufvar('%', '&modified') ? '[+]' : ''
 endf
 
 func! SLModifiable()
-  if !getbufvar('%', '&modifiable')
-    return ' [-]'
-  else
-    return ''
-  endif
+  return getbufvar('%', '&modifiable') ? '' : ' [-]'
 endf
 
 func! IndentDisplay()
@@ -155,19 +162,15 @@ endf
 
 " Get rid of excess chars in default [Git(branch)] format
 func! ShortBranch()
-  let br = fugitive#statusline()
-  let br = substitute(br, '[Git', '', '')
-  let br = substitute(br, ']', '', '')
-  return br
+  let branch = fugitive#statusline()
+  let branch = substitute(branch, '[Git', '', '')
+  let branch = substitute(branch, ']', '', '')
+  return branch
 endf
 
 " Shortened path. Defaults to path of current buffer, optionally use cwd instead
 func! ShPath(cwd)
-  if a:cwd
-    let path = getcwd()
-  else
-    let path = expand('%:h')
-  endif
+  let path = a:cwd ? getcwd() : expand('%:h')
   let path = substitute(path, $HOME, '~', '')
   let path = substitute(path, 'Projects', 'P', '')
   let path = substitute(path, 'flabs', 'f', '')
@@ -182,10 +185,11 @@ set titlestring=%{ShPath(1)}
 "------------------------------------------------------------------------------
 
 set autoread                " auto-update when file is changed from the outside
-set nobackup                " don't create backup/swap files
-set nowb
-set noswapfile
-set sessionoptions=buffers,folds,resize,winsize,curdir
+
+set nowritebackup nobackup  " don't create backup file when overwriting something
+set noswapfile              " no temp files that store changes since save
+
+set sessionoptions=buffers,curdir,folds,resize,winsize
 
 " Store sessions in one place
 nnoremap ;so :so ~/Projects/vim-sessions/
@@ -198,21 +202,11 @@ endf
 au SessionLoadPost * set titlestring=%{SessionTitle()}
 
 "------------------------------------------------------------------------------
-" Diffs
+" Custom keybindings & commands
 "------------------------------------------------------------------------------
 
-set diffopt=filler,context:2,vertical,foldcolumn:1
-
-"------------------------------------------------------------------------------
-" Keybindings, shortcuts, custom functions
-"------------------------------------------------------------------------------
-
-let mapleader=','
-noremap ; :
-noremap : ;
-
-" Clear search highlighting (Rebinding esc had side effects)
-map <Leader><Leader> ;noh<return>
+" Open netrw in vsplit
+nmap ;ex ;Vexplore<CR>
 
 " Go between splits using Ctrl + direction keys
 map <C-h> <C-w>h
@@ -220,27 +214,22 @@ map <C-l> <C-w>l
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 
-" Go between location list items
-map [l ;lprev<Cr>
-map ]l ;lnext<Cr>
-
 " Search for conflict markers
-com! Conflict /\(<<<<<<\|======\|>>>>>>\)
-map <Leader>g ;Conflict<Cr>
+map <Leader>g /\(<<<<<<\\|======\\|>>>>>>\)<Cr>
 
 " Copy all to global register
 map <C-a> exec '%y+'
 
 " Change working dir to current file's dir
-com! Current exec 'cd %:h'
+com! Current cd %:h
 
 " Reload vim configs
-com! Reload exec 'so ~/.vimrc | so ~/.gvimrc'
+com! Reload so ~/.vimrc|so ~/.gvimrc
 
 " Trim trailing spaces
-com! Trail exec '%s/\s\+$'
+com! Trail %s/\s\+$
 
-com! PrettyJson exec '%!python -m json.tool'
+com! PrettyJson %!python -m json.tool
 
 func! BufferList()
   let msg = ''
@@ -255,17 +244,8 @@ endfunc
 " Plugin config
 "------------------------------------------------------------------------------
 
-" Gitv
-"------
-
-let g:Gitv_WipeAllOnClose = 1
-let g:Gitv_DoNotMapCtrlKey = 1
-
-nmap gv ;Gitv --all<Cr>
-
 " CtrlP
 "-------
-
 let g:ctrlp_working_path_mode = 'w'       " search from cwd
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$',
@@ -289,20 +269,25 @@ func! CtrlPProgress(str)
   return a:str . ' files scanned...'
 endf
 
-" quick shortcuts: find all, files, recent, buffers
+" Quick shortcuts: find all, files, recent, buffers
 nnoremap ;fa :CtrlPMixed<Cr>
 nnoremap ;ff :CtrlP<Cr>
 nnoremap ;fr :CtrlPMRU<Cr>
 nnoremap ;fb :CtrlPBuffer<Cr>
 
+" Gitv
+"------
+let g:Gitv_WipeAllOnClose = 1
+let g:Gitv_DoNotMapCtrlKey = 1
+
+nmap gv ;Gitv --all<Cr>
+
 " Sneak
 "------
-
 let g:sneak#s_next = 1
 
 " SuperTab
 "-----------
-
 let g:SuperTabMappingBackward = '<c-tab>'
 
 " Syntastic
@@ -311,6 +296,12 @@ let g:syntastic_mode_map = {
   \ 'mode': 'passive',
   \ 'active_filetypes': ['python', 'javascript', 'json', 'css', 'lua']
 \ }
+let g:syntastic_always_populate_loc_list = 1 " show errors in location list
+let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
+let g:syntastic_loc_list_height = 5
+let g:syntastic_enable_balloons = 0          " don't do mouseover balloons
+let g:syntastic_error_symbol = '»'
+let g:syntastic_warning_symbol = '›'
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_args = '--quiet'   " only errors, no warnings
@@ -323,15 +314,8 @@ let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
 
-let g:syntastic_always_populate_loc_list = 1 " show errors in location list
-let g:syntastic_loc_list_height = 5
-let g:syntastic_enable_balloons = 0          " don't do mouseover balloons
-let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
-let g:syntastic_error_symbol = '»'
-let g:syntastic_warning_symbol = '›'
-
-" get checkers based on configs present in working directory
-func! UpdateSyntasticJavascriptCheckers()
+" Get checkers based on configs present in working directory
+func! s:UpdateSyntasticJavascriptCheckers()
   echom "getting js checkers"
   let cwd = getcwd()
   let checkers = []
@@ -343,52 +327,42 @@ func! UpdateSyntasticJavascriptCheckers()
   endif
   if filereadable(cwd . '/.eslintrc')
     call add(checkers, 'eslint')
-"  elseif filereadable(cwd . '/.eslintrc-base')
-"    call add(checkers, 'eslint')
-"    echom "configuring to use .eslintrc-client"
-"    let g:syntastic_javascript_eslint_args = '--ext .js,.jsx -c .eslintrc-client'
   endif
   echom "checkers: " . join(checkers, ', ')
   let g:syntastic_javascript_checkers = checkers
 endf
-
-com! UpdateJavascriptCheckers exec "call UpdateSyntasticJavascriptCheckers()"
+com! UpdateJavascriptCheckers call s:UpdateSyntasticJavascriptCheckers()
 
 " Ultisnips
 "-----------
-
-let g:UltiSnipsExpandTrigger='<s-tab>'
-let g:UltiSnipsJumpForwardTrigger='<s-tab>'
-let g:UltiSnipsSnippetsDir='~/.vim/custom-snippets'   " dir for :UltiSnipsEdit
-let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsSnippetDirectories=['custom-snippets'] " don't include default dir
+let g:UltiSnipsExpandTrigger = '<s-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<s-tab>'
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " when using :UltiSnipsEdit
+let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 
 "------------------------------------------------------------------------------
-" Language-specific
+" Language/filetype-specific autocommands
 "------------------------------------------------------------------------------
 
 au FileType git setlocal nonumber
 au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap
-au BufRead,BufNewFile *.json set filetype=json
 
 " better htmldjango detection
 augroup filetypedetect
-  " removes current htmldjango detection located at $VIMRUNTIME/filetype.vim
+  " remove current htmldjango detection located at $VIMRUNTIME/filetype.vim
   au! BufNewFile,BufRead *.html
   au  BufNewFile,BufRead *.html call s:DetectDjangoTemplate()
-
   " check for django template tag in first ten lines
   func! s:DetectDjangoTemplate()
-    let n = 1
-    while n < 10 && n < line('$')
+    for n in range(10, line('$') - 1)
       if getline(n) =~ '{%\|{{\|{#'
-        set ft=htmldjango
-        return
+        setfiletype htmldjango
+        break
       endif
-      let n = n + 1
-    endwhile
-    setf html
-  endfunc
+    endfor
+    setfiletype html
+  endf
 augroup END
 
 "------------------------------------------------------------------------------
@@ -409,7 +383,7 @@ endif
 "------------------------------------------------------------------------------
 
 " Show highlight group for item at cursor
-func! ShowHighlightGroup()
+func! s:ShowHighlightGroup()
   let l:synid = synID(line('.'), col('.'), 1)
   let l:synname = synIDattr(l:synid, 'name')
 
@@ -419,10 +393,9 @@ func! ShowHighlightGroup()
   " transparent item
   let l:syntrans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
 
-  return 'name<'.l:synname.'> hi<'.l:synlinked.'> trans<'. l:syntrans.'>'
+  return 'name<' . l:synname . '> hi<' . l:synlinked . '> trans<' . l:syntrans . '>'
 endf
-
-com! ShowHighlightGroup echo ShowHighlightGroup()
+com! ShowHighlightGroup echo s:ShowHighlightGroup()
 
 " Enable this to get verbose vim logs (troubleshooting a plugin/setting)
 "set verbose=9
