@@ -24,6 +24,9 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+# Autocomplete for 'g' as well
+complete -o default -o nospace -F _git g
+
 ### ALIASES ###################################################################
 
 alias ll="ls -la"
