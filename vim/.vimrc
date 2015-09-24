@@ -248,9 +248,9 @@ endfunc
 "-------
 let g:ctrlp_working_path_mode = 'w'       " search from cwd
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v(\.git|node_modules|\.coverage-html|coverage)$',
-  \ 'file': '\.pyc$'
-  \ }
+  \ 'dir': '\v(\.git|node_modules|\.coverage-html|coverage|build|dist|gen|dist-.*)$',
+  \ 'file': '\v\.(pyc|min.js|map|DS_Store)$'
+\ }
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in current window, rest hidden
 let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
@@ -372,7 +372,7 @@ augroup END
 if has("win32")
   set fileformats=unix,dos
 else
-  set shell=bash\ -i
+  set shell=bash
   if has("gui_macvim") || has('mac')
     cd flabs
   endif
