@@ -21,6 +21,7 @@ Plug 'tpope/vim-vinegar'
 " ---------
 Plug 'pangloss/vim-javascript'             " required for jsx plugin
 Plug 'mustache/vim-mustache-handlebars'    " doesn't work well loaded on demand
+Plug 'sheerun/vim-json'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'mxw/vim-jsx', { 'for': 'jsx' }
@@ -60,15 +61,14 @@ set shortmess=ilmnrxOI           " shorter messages
 
 set nowrap                       " don't wrap lines by default
 set linebreak                    " when wrapping, only at word breaks
-set showbreak=>                  " indicate start of wrapped lines
-
+set showbreak=↳\                  " indicate start of wrapped lines
 set number                       " show line numbers
 set colorcolumn=80               " show where the 80-char line is
-
 set formatoptions+=j             " remove comment char(s) when joining
 
 set diffopt=filler,context:2,vertical,foldcolumn:1
-set listchars=trail:+,extends:>,precedes:<,tab:>-,eol:$
+set listchars=trail:⨯,extends:›,precedes:‹,tab:▷⎯
+set list
 
 "------------------------------------------------------------------------------
 " Keybinding
@@ -347,6 +347,7 @@ let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 
 au FileType git setlocal nonumber
 au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap
+au BufRead,BufNewFile *.json set filetype=json | setlocal wrap
 
 " better htmldjango detection
 augroup filetypedetect

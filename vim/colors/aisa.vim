@@ -79,6 +79,7 @@ hi Include        guifg=#1158a1  gui=NONE
 hi Define         guifg=#1158a1  gui=italic
 hi Structure      guifg=#1158a1  gui=italic
 hi Special        guifg=#1158a1  gui=italic
+hi SpecialKey     guifg=#a70035
 
 hi Tag            guifg=#c600bd
 
