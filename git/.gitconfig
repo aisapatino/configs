@@ -34,6 +34,8 @@
   # submodules
   sup = submodule update
   subst = submodule status
+[blame]
+  date = short
 [color]
   ui = always
 [core]
