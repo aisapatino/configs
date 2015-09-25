@@ -1,39 +1,43 @@
-### INCLUDE BASE BASHRC #######################################################
+# Base
+#------
 
 source ~/Projects/configs/terminal/.bashrc-base
 
-### PATH ######################################################################
+# Path
+#------
 
-# google app engine sdk
-export PATH=$PATH:/home/aisa/Devel/google_appengine
-# node / npm
-if [ -d /home/aisa/.node ] ; then
-  export PATH=$PATH:/home/aisa/.node/bin:/home/aisa/.node/lib/node_modules
+export PATH=$PATH:$HOME/Devel/google_appengine
+
+if [ -d "$HOME/.node" ] ; then
+  export PATH=$PATH:$HOME/.node/bin:$HOME/.node/lib/node_modules
 fi
 
-### PYTHONPATH ################################################################
+# Pythonpath
+#------------
 
 # gae
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel/google_appengine/lib/webob-1.2.3
+export PYTHONPATH=$PYTHONPATH:$HOME/Devel/google_appengine
+export PYTHONPATH=$PYTHONPATH:$HOME/Devel/google_appengine/lib/webob-1.2.3
 # misc installed tools
-export PYTHONPATH=$PYTHONPATH:/home/aisa/Devel
+export PYTHONPATH=$PYTHONPATH:$HOME/Devel
+# django for pylint
+export PYTHONPATH=$PYTHONPATH:$HOME/Projects/sjfnw/libs
 
-### GCLOUD ####################################################################
-
-if [ -d /home/aisa/Devel/google-cloud-sdk ] ; then
-  # Update PATH for the Google Cloud SDK
-  source /home/aisa/Devel/google-cloud-sdk/path.bash.inc
-  # Enable bash completion for gcloud
-  source /home/aisa/Devel/google-cloud-sdk/completion.bash.inc
-fi
-
-### ALIASES ###################################################################
+# Aliases
+#---------
 
 alias cloudsql="mysql --host=173.194.109.221 -uroot -p"
-alias hero="heroku"
 
-### ETC #######################################################################
+# Google Cloud SDK
+#------------------
 
-# selenium chrome driver
-export CHROMEDRIVER='/home/aisa/Devel/chromedriver'
+if [ -d $HOME/Devel/google-cloud-sdk ] ; then
+  source $HOME/Devel/google-cloud-sdk/path.bash.inc
+  source $HOME/Devel/google-cloud-sdk/completion.bash.inc
+fi
+
+# Misc
+#-------
+
+# selenium
+export CHROMEDRIVER="$HOME/Devel/chromedriver"

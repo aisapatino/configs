@@ -1,15 +1,24 @@
-### INCLUDE BASE BASHRC #######################################################
+# Base
+#------
 
 source ~/Projects/configs/terminal/.bashrc-base
 
-### AUTOCOMPLETE ##############################################################
+# Colors
+#--------
+
+# see man ls for more info
+LSCOLORS=ExGxBxDxCxEgEdxbxgExEx
+
+# Autocomplete
+#--------------
 
 if [ -f `brew --prefix`/etc/bash_completion ]; then
   . `brew --prefix`/etc/bash_completion
 fi
 
-### INCLUDE LOCAL BASHRC ######################################################
+# Local .bashrc
+#---------------
 
-if [ -f ~/Projects/formidable/.bashrc ] ; then
-  source ~/Projects/formidable/.bashrc
+if [ -f ~/Projects/flabs/.bashrc ] ; then
+  source ~/Projects/flabs/.bashrc
 fi
