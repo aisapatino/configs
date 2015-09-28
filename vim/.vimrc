@@ -4,7 +4,7 @@ cd ~/Projects
 " Plugins & runtime path
 "------------------------------------------------------------------------------
 
-call plug#begin('~/.vim/plugged') " vim-plug
+call plug#begin('~/.vim/plugged')          " vim-plug for managing plugins
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
@@ -50,7 +50,7 @@ set encoding=utf-8
 colorscheme aisadark             " overridden in .gvimrc
 set t_Co=256                     " 256-color if running in terminal
 
-set lazyredraw           " don't redraw when executing background/auto commands
+set lazyredraw                   " don't redraw during background/auto commands
 
 " disable error noises/flashes
 set vb t_vb=
@@ -61,7 +61,7 @@ set shortmess=ilmnrxOI           " shorter messages
 
 set nowrap                       " don't wrap lines by default
 set linebreak                    " when wrapping, only at word breaks
-set showbreak=↳\                  " indicate start of wrapped lines
+set showbreak=↳\                 " indicate start of wrapped lines
 set number                       " show line numbers
 set colorcolumn=80               " show where the 80-char line is
 set formatoptions+=j             " remove comment char(s) when joining
@@ -246,10 +246,10 @@ endfunc
 
 " CtrlP
 "-------
-let g:ctrlp_working_path_mode = 'w'       " search from cwd
+let g:ctrlp_working_path_mode = 'rw'       " search within repo, or cwd
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v(\.git|node_modules|\.coverage-html|coverage|build|dist|gen|dist-.*)$',
-  \ 'file': '\v\.(pyc|min.js|map|DS_Store)$'
+  \ 'file': '\v\.(pyc|min.*|map|DS_Store)$'
 \ }
 let g:ctrlp_show_hidden = 1               " show hidden files
 let g:ctrlp_open_multiple_files = '1vjr'  " open 1st in current window, rest hidden
