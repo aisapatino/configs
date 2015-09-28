@@ -7,7 +7,7 @@ source ~/Projects/configs/terminal/.bashrc-base
 #--------
 
 # see man ls for more info
-LSCOLORS=ExGxBxDxCxEgEdxbxgExEx
+export LSCOLORS=ExGxBxDxCxEgEdxbxgExEx
 
 # Autocomplete
 #--------------

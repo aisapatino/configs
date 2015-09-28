@@ -1,8 +1,8 @@
 # Settings
 #----------
 
-EDITOR=vim
-VISUAL=$EDITOR
+export EDITOR=vim
+export VISUAL=$EDITOR
 
 HISTCONTROL=ignoreboth     # ignore duplicates & commands starting with space
 HISTIGNORE="ls:ll:cd *"    # ignore frequent short commands
@@ -12,8 +12,8 @@ shopt -s histappend        # add to existing history instead of overwriting
 # Colors
 #--------
 
-TERM=xterm-256color
-CLICOLOR=1
+export TERM=xterm-256color
+export CLICOLOR=1
 
 BLUE='\[\e[1;34m\]'
 RESET='\[\e[m\]'
