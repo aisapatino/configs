@@ -16,11 +16,12 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'aisapatino/hex-highlight'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-vinegar'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Languages
 " ---------
 Plug 'pangloss/vim-javascript'             " required for jsx plugin
-Plug 'mustache/vim-mustache-handlebars'    " doesn't work well loaded on demand
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'sheerun/vim-json'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
@@ -248,7 +249,7 @@ endfunc
 "-------
 let g:ctrlp_working_path_mode = 'rw'       " search within repo, or cwd
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v(\.git|node_modules|\.coverage-html|coverage|build|dist|gen|dist-.*)$',
+  \ 'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|gen|dist-.*)$',
   \ 'file': '\v\.(pyc|min.*|map|DS_Store)$'
 \ }
 let g:ctrlp_show_hidden = 1               " show hidden files
@@ -282,6 +283,11 @@ let g:Gitv_DoNotMapCtrlKey = 1
 
 nmap gv ;Gitv --all<Cr>
 
+" Gutentags
+"-----------
+
+let g:gutentags_tagfile = '.tags'
+
 " Sneak
 "------
 let g:sneak#s_next = 1
@@ -307,7 +313,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_args = '--quiet'   " only errors, no warnings
 
 let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pylint_args = '--load-plugins pylint_django --rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
+let g:syntastic_python_pylint_args = '--rcfile=/home/aisa/Projects/sjfnw/.pylintrc'
 let g:syntastic_python_pep8_args = '--max-line-length=100'
 
 let g:syntastic_css_checkers = ['csslint']
@@ -373,9 +379,15 @@ augroup END
 if has("win32")
   set fileformats=unix,dos
 else
-  set shell=bash
+  if &diff
+    set shell=bash
+  else
+    set shell=bash\ -i
+  endif
   if has("gui_macvim") || has('mac')
     cd flabs
+  else
+    cd sjfnw
   endif
 endif
 
