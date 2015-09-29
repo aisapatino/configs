@@ -6,22 +6,25 @@ source ~/Projects/configs/terminal/.bashrc-base
 # Path
 #------
 
-export PATH=$PATH:$HOME/Devel/google_appengine
+export PATH=$PATH:~/Devel/google_appengine
 
 if [ -d "$HOME/.node" ] ; then
-  export PATH=$PATH:$HOME/.node/bin:$HOME/.node/lib/node_modules
+  export PATH=$PATH:~/.node/bin:~/.node/lib/node_modules
 fi
 
 # Pythonpath
 #------------
 
+# pip installs
+export PYTHONPATH=$PYTHONPATH:~/Projects/pylint-django
+export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
 # gae
-export PYTHONPATH=$PYTHONPATH:$HOME/Devel/google_appengine
-export PYTHONPATH=$PYTHONPATH:$HOME/Devel/google_appengine/lib/webob-1.2.3
+export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine
+export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine/lib/webob-1.2.3
 # misc installed tools
-export PYTHONPATH=$PYTHONPATH:$HOME/Devel
+export PYTHONPATH=$PYTHONPATH:~/Devel
 # django for pylint
-export PYTHONPATH=$PYTHONPATH:$HOME/Projects/sjfnw/libs
+export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
 
 # Aliases
 #---------
@@ -31,9 +34,9 @@ alias cloudsql="mysql --host=173.194.109.221 -uroot -p"
 # Google Cloud SDK
 #------------------
 
-if [ -d $HOME/Devel/google-cloud-sdk ] ; then
-  source $HOME/Devel/google-cloud-sdk/path.bash.inc
-  source $HOME/Devel/google-cloud-sdk/completion.bash.inc
+if [ -d ~/Devel/google-cloud-sdk ] ; then
+  source ~/Devel/google-cloud-sdk/path.bash.inc
+  source ~/Devel/google-cloud-sdk/completion.bash.inc
 fi
 
 # Misc
