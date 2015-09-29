@@ -1,15 +1,17 @@
 # Global gitignore
+
+# General
+.tmp
 temp/
+.tags
 
 # Python
 *.pyc
 .coverage
 
 # Node
-node_modules/
-app/bower_components/
-.tmp/
+node_modules
+bower_components
 
 # Mac OS
 .DS_Store
-
