@@ -1,4 +1,5 @@
 #!/bin/bash
+# Script to report the current branch & status of multiple repos
 
 red="\033[00;31m"
 green="\033[00;32m"
@@ -9,16 +10,17 @@ cyan="\033[00;36m"
 reset="\033[00m"
 
 # The $? holds the exit status of the previously executed command. 0 = success
+
 echo 'Checking git repos...'
 cd ~/Projects
-for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'anita' 'dlisa'
-do
 
+for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'anita' 'dlisa' ; do
   printf "\033[1m%15s\033[0m  " "$d"
+
   if [ ! -d "$d" ] ; then
     printf "$red *not found* $reset"
-  else # dir does exist
 
+  else
     cd $d
 
     # fetch silently
@@ -28,8 +30,8 @@ do
     RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
 
     # get branch name
-    SECTION=$( echo "$RESULTS" | grep -o "On branch \([a-z\-]\+\)")
-    SECTION=$( echo "$SECTION" | grep -o "[a-z_/\-]\+$")
+    SECTION=$(echo "$RESULTS" | grep -o "On branch \([a-z\-]\+\)")
+    SECTION=$(echo "$SECTION" | grep -o "[a-z_/\-]\+$")
     if [ "$SECTION" = "master" ] ; then
       printf "%-16s%s" "$SECTION"
     else
@@ -37,6 +39,7 @@ do
     fi
     SECTION=""
 
+    # get branch status
     OUT=0
     SECTION=$(echo "$RESULTS" | grep -e 'Untracked')
     if [ "$SECTION" != "" ] ; then
@@ -77,4 +80,3 @@ do
   printf "\n"
 done
 printf "\n"
-
