@@ -1,39 +1,5 @@
 [advice]
   statusHints = false
-[alias]
-  # basics
-  st = status
-  ch = checkout
-  a = add
-  br = branch
-  bra = branch --all
-  # commit
-  com = commit
-  ca = commit --amend
-  can = commit --amend -C HEAD
-  # diffs
-  d = diff
-  dc = diff --cached
-  ds = diff --stat
-  # history
-  l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
-  lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
-  # pull, rebase
-  pr = pull --rebase
-  r = rebase
-  ri = rebase -i
-  rc = rebase --continue
-  cp = cherry-pick
-  # stash
-  shows = stash show -p
-  ss = stash save
-  sp = stash pop
-  sl = stash list
-  sa = "!sh -c 'git stash apply stash@{$1}' -"
-  sd = "!sh -c 'git stash drop stash@{$1}' -"
-  # submodules
-  sup = submodule update
-  subst = submodule status
 [blame]
   date = short
 [color]
@@ -70,3 +36,38 @@
 [user]
   email = anna.luisa.west@formidablelabs.com
   name = "Anna Luisa Patiño West"
+[alias]
+  # basics
+  s = status
+  st = status
+  ch = checkout
+  a = add
+  br = branch
+  bra = branch --all
+  # commit
+  com = commit
+  ca = commit --amend
+  can = commit --amend -C HEAD
+  # diffs
+  d = diff
+  dc = diff --cached
+  ds = diff --stat
+  # history
+  l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
+  lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
+  # pull, rebase
+  pr = pull --rebase
+  r = rebase
+  ri = rebase -i
+  rc = rebase --continue
+  cp = cherry-pick
+  # stash
+  shows = stash show -p
+  ss = stash save
+  sp = stash pop
+  sl = stash list --format=\"\n%C(bold)%gd%Creset %C(green)%s%Creset %ar\" --stat --name-status
+  sa = "!sh -c 'git stash apply stash@{$1}' -"
+  sd = "!sh -c 'git stash drop stash@{$1}' -"
+  # submodules
+  sup = submodule update
+  subst = submodule status
