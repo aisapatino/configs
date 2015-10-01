@@ -1,26 +1,70 @@
-set tabstop 8
-set findmergefiles 0
-set maxgraphpct 50
-set maxwidth 16
-set cmitmode patch
-set wrapcomment none
+# Starting config. Symlink it or copy/paste to ~/.config/git/gitk
+# gitk will update it automatically, so a symlink won't stay in place
+
+# fonts
+set mainfont {Menlo 14}
+set textfont {Menlo 14}
+set uifont {{Sans} 12 bold}
+
+# color
+set bgcolor white
+
+set colors {"#3a9281" "#a70035" "#06287e" magenta darkgrey brown orange}
+set currentsearchhitbgcolor orange
+set indexcirclecolor #3a9281
+set linehoverbgcolor #ffff80
+set linehoverfgcolor black
+set linehoveroutlinecolor black
+set linkfgcolor #1158a1
+set mainheadcirclecolor #c600bd
+set markbgcolor #a0b0c0
+set fgcolor black
+set filesepbgcolor #dddddd
+set filesepfgcolor black
+set foundbgcolor yellow
+set headbgcolor #06287e
+set headfgcolor white
+set headoutlinecolor #06287e
+
+# circles
+set circlecolors {"#06287e" "#dff0e6" gray "#1158a1" "#1158a1"}
+set circleoutlinecolor #06287e
+
+set tagbgcolor #5b40a6
+set tagfgcolor white
+set tagoutlinecolor white
+set uicolor grey85
+set uifgcolor black
+set uifgdisabledcolor #999
+set mergecolors {"#a70035" "#06287e" "#3a9281" purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
+set reflinecolor black
+set remotebgcolor #06287e
+set selectbgcolor gray85
+
+set workingfilescirclecolor #f8f3a9
+
+# diff
+set diffcolors {"#a70035" "#3a9281" "#06287e"}
+set diffcontext 3
+set extdifftool opendiff
+
 set autoselect 1
 set autosellen 40
-set showneartags 1
+set cmitmode patch
+set datetimeformat {%m/%d/%Y %H:%M}
+set findmergefiles 0
 set hideremotes 0
-set showlocalchanges 1
-set datetimeformat {%m/%d/%Y %H:%M:%S}
 set limitdiffs 1
-set uicolor grey85
-set want_ttk 1
-set bgcolor white
-set fgcolor black
-set colors {green red blue magenta darkgrey brown orange}
-set diffcolors {red "#00a000" blue}
-set markbgcolor #e0e0ff
-set diffcontext 3
-set selectbgcolor gray85
-set extdifftool meld
+set maxgraphpct 50
+set maxrefs 20
+set maxwidth 16
 set perfile_attrs 0
-set geometry(state) normal
 set permviews {{Chrono {} {--all --date-order} {}}}
+set showlocalchanges 1
+set showneartags 1
+set tabstop 4
+set visiblerefs {"master"}
+set want_ttk 1
+set wrapcomment none
+
+# window sizes get updated every time you exit
