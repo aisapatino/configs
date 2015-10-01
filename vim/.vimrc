@@ -110,6 +110,10 @@ set backspace=indent,eol,start
 set scrolloff=3           " minimum lines above/below cursor
 set sidescrolloff=3       " minimum columns between cursor and edge
 
+" Easier keybinding for first non-whitespace char
+nnoremap 0 ^
+nnoremap ^ 0
+
 " Go between location list items
 nmap [l ;lprev<Cr>
 nmap ]l ;lnext<Cr>
