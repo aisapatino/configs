@@ -44,6 +44,8 @@ hi FoldColumn     guifg=#ffffff  guibg=#3f5472
 hi StatusLine     guifg=#ffffff  guibg=#3f5472  gui=NONE
 hi StatusLineNC   guifg=#a0b0c0  guibg=#3f5472  gui=NONE
 
+hi TabLineFill    guifg=#ffffff  guibg=#3f5472  gui=NONE
+
 " statusline custom highlights (see :h User1)
 hi User1          guifg=#ffffff  guibg=#3f5472  gui=bold
 hi SLWarn         guifg=#a70035
