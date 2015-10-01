@@ -1,70 +1,82 @@
-# Starting config. Symlink it or copy/paste to ~/.config/git/gitk
-# gitk will update it automatically, so a symlink won't stay in place
+# Starting config. Copy it to ~/.config/git/gitk
+# gitk will update that file after every exit and a symlink won't stay in place
+
+# GENERAL
+#---------
 
 # fonts
 set mainfont {Menlo 14}
 set textfont {Menlo 14}
 set uifont {{Sans} 12 bold}
 
+# formatting
+set datetimeformat {%m/%d/%Y %H:%M}
+set tabstop 4
+
 # color
 set bgcolor white
-
-set colors {"#3a9281" "#a70035" "#06287e" magenta darkgrey brown orange}
-set currentsearchhitbgcolor orange
-set indexcirclecolor #3a9281
-set linehoverbgcolor #ffff80
-set linehoverfgcolor black
-set linehoveroutlinecolor black
-set linkfgcolor #1158a1
-set mainheadcirclecolor #c600bd
-set markbgcolor #a0b0c0
 set fgcolor black
-set filesepbgcolor #dddddd
-set filesepfgcolor black
+set uicolor grey85
+set uifgcolor black
+set uifgdisabledcolor #999
+
+set selectbgcolor gray85
 set foundbgcolor yellow
-set headbgcolor #06287e
-set headfgcolor white
-set headoutlinecolor #06287e
+
+# custom views
+set permviews {{Chrono {} {--all --date-order} {}}}
+
+# window sizes (updated every time you exit)
+set geometry(main) 1940x1028+267+223
+set geometry(state) normal
+set geometry(topwidth) 1940
+set geometry(topheight) 446
+set geometry(pwsash0) "1205 1"
+set geometry(pwsash1) "1721 1"
+set geometry(botwidth) 1605
+set geometry(botheight) 577
+
+# UPPER
+#-------
 
 # circles
 set circlecolors {"#06287e" "#dff0e6" gray "#1158a1" "#1158a1"}
 set circleoutlinecolor #06287e
+set mainheadcirclecolor #06287e
+set indexcirclecolor #3a9281
+set workingfilescirclecolor #f8f3a9
 
+# lines
+set colors {"#3a9281" "#06287e" "#1158a1" "#70f0b0" "#009000"}
+set reflinecolor #06287e
+
+# branch name
+set headbgcolor #06287e
+set headfgcolor white
+set headoutlinecolor #06287e
+set remotebgcolor #06287e
+
+# tags
 set tagbgcolor #5b40a6
 set tagfgcolor white
 set tagoutlinecolor white
-set uicolor grey85
-set uifgcolor black
-set uifgdisabledcolor #999
-set mergecolors {"#a70035" "#06287e" "#3a9281" purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
-set reflinecolor black
-set remotebgcolor #06287e
-set selectbgcolor gray85
 
-set workingfilescirclecolor #f8f3a9
+# LOWER
+#-------
 
-# diff
 set diffcolors {"#a70035" "#3a9281" "#06287e"}
 set diffcontext 3
-set extdifftool opendiff
 
-set autoselect 1
-set autosellen 40
-set cmitmode patch
-set datetimeformat {%m/%d/%Y %H:%M}
-set findmergefiles 0
-set hideremotes 0
-set limitdiffs 1
-set maxgraphpct 50
-set maxrefs 20
-set maxwidth 16
-set perfile_attrs 0
-set permviews {{Chrono {} {--all --date-order} {}}}
-set showlocalchanges 1
-set showneartags 1
-set tabstop 4
-set visiblerefs {"master"}
-set want_ttk 1
-set wrapcomment none
+set filesepbgcolor #dddddd
+set filesepfgcolor black
 
-# window sizes get updated every time you exit
+set linkfgcolor #1158a1
+
+# "Parent" labels for merge commits
+set mergecolors {"#06287e" "#3a9281"}
+
+# search within selected commit's diff
+set currentsearchhitbgcolor orange
+
+# "show the origin of this line"
+set markbgcolor #a0b0c0
