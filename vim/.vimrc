@@ -21,11 +21,11 @@ Plug 'ludovicchabant/vim-gutentags'
 " Languages
 " ---------
 Plug 'pangloss/vim-javascript'             " required for jsx plugin
+Plug 'mxw/vim-jsx'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'sheerun/vim-json'
-Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
-Plug 'groenewege/vim-less', { 'for': 'less' }
-Plug 'mxw/vim-jsx', { 'for': 'jsx' }
+Plug 'digitaltoad/vim-jade'
+Plug 'groenewege/vim-less'
 
 " Seldom-used
 " -----------
@@ -91,6 +91,15 @@ set smarttab         " use shiftwidth # spaces when inserting <tab>
 set autoindent       " take indent for new line from previous line
 set smartindent      " more intelligent indent for new lines
 
+func! UseTabs()
+  setlocal noexpandtab
+  setlocal tabstop=4
+  setlocal shiftwidth=4
+  setlocal nolist
+endf
+
+com! UseTabs :call UseTabs()
+
 "------------------------------------------------------------------------------
 " Movement
 "------------------------------------------------------------------------------
@@ -105,6 +114,12 @@ set sidescrolloff=3       " minimum columns between cursor and edge
 nmap [l ;lprev<Cr>
 nmap ]l ;lnext<Cr>
 
+" Fallback jump if nothing language-specific is defined
+func! Jump()
+  nmap <silent> [[ ;call search('^\S', 'bW')<Cr>
+  nmap <silent> ]] ;call search('^\S', 'W')<Cr>
+endf
+com! Jump ;call Jump()
 "------------------------------------------------------------------------------
 " Search
 "------------------------------------------------------------------------------
@@ -180,6 +195,8 @@ endf
 
 " Set titlestring to cwd (it will auto update)
 set titlestring=%{ShPath(1)}
+" Set tabline (for fullscreen/terminal)
+set tabline=%=%{ShPath(1)}\ 
 
 "------------------------------------------------------------------------------
 " Files, sessions
@@ -240,6 +257,8 @@ func! BufferList()
   endfor
   echo msg
 endfunc
+
+nmap tt ;echo strftime(' %b %d %H:%M')<Cr>
 
 "------------------------------------------------------------------------------
 " Plugin config
@@ -333,6 +352,9 @@ func! s:UpdateSyntasticJavascriptCheckers()
   endif
   if filereadable(cwd . '/.eslintrc')
     call add(checkers, 'eslint')
+  elseif filereadable(cwd . '/.eslintrc-client')
+    call add(checkers, 'eslint')
+    let g:syntastic_javascript_eslint_args='--config .eslintrc-client'
   endif
   echom "checkers: " . join(checkers, ', ')
   let g:syntastic_javascript_checkers = checkers
