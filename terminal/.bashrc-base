@@ -45,6 +45,7 @@ alias ll="ls -la"
 alias g="git"
 alias gk="gitk --all"
 alias gs="git status"
+alias gd="git diff"
 
 alias npmlist="npm ls --depth=0"
 
