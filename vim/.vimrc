@@ -62,7 +62,7 @@ set shortmess=ilmnrxOI           " shorter messages
 
 set nowrap                       " don't wrap lines by default
 set linebreak                    " when wrapping, only at word breaks
-set showbreak=↳\                 " indicate start of wrapped lines
+set showbreak=↳                  " indicate start of wrapped lines
 set number                       " show line numbers
 set colorcolumn=80               " show where the 80-char line is
 set formatoptions+=j             " remove comment char(s) when joining
@@ -352,7 +352,7 @@ let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 "------------------------------------------------------------------------------
 
 au FileType git setlocal nonumber
-au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap
+au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap | setlocal nolist
 au BufRead,BufNewFile *.json set filetype=json | setlocal wrap
 
 " better htmldjango detection
