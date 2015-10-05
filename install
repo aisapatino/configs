@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# Creates needed directiories and symbolic links for config files.
+#
+# Execute with an argument to specify install type. Defaults to base.
+#        ./install work         or        ./install linux
+
+run_setup() {
+  local header="\n*** %s ***\n"
+  local configs=~/Projects/configs
+
+  if [[ $1 == m* ]] || [[ $1 == w* ]] ; then # "mac" or "work"
+    local install_type='work'
+    local work=1
+  elif [[ $1 == l* ]] || [[ $1 == h* ]] ; then # "linux" or "home"
+    local install_type='linux'
+    local linux=1
+  else
+    install_type='base'
+  fi
+
+  echo "Running $install_type setup"
+
+  printf "$header" "git"
+
+  ln -s -f -v "$configs/git/.gitignore" ~/.gitignore
+  ln -s -f -v "$configs/git/.gitconfig" ~/.gitconfig
+  ln -s -f -v "$configs/git/.gitk" ~/.gitk
+
+  if [ ! -f ~/.git-completion.bash ]; then
+    echo "Getting git-completion.bash"
+    curl -o ~/.git-completion.bash \
+      https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+  fi
+
+  printf "$header" "shell/terminal"
+
+  if [ $work ] ; then
+    ln -s -f -v "$configs/terminal/.bashrc-work" ~/.bashrc
+  elif [ $linux ] ; then
+    ln -s -f -v "$configs/terminal/.bashrc-linux" ~/.bashrc
+    mkdir -v -p ~/.config/terminator
+    ln -s -f -v "$configs/terminal/terminator-config" ~/.config/terminator/config
+  else
+    ln -s -f -v "$configs/terminal/.bashrc-base" ~/.bashrc
+  fi
+
+  if [ $linux ] ; then
+    printf "$HEADER" "lint"
+    ln -s -f -v "$configs/linters/.pylintrc" ~/.pylintrc
+    ln -s -f -v "$configs/linters/.eslintrc" ~/.eslintrc
+  fi
+
+  printf "$header" "vim"
+
+  ln -s -f -v "$configs/vim/.vimrc" ~/.vimrc
+  ln -s -f -v "$configs/vim/.gvimrc" ~/.gvimrc
+  ln -s -f -v "$configs/vim/colors" ~/.vim/colors
+
+  if [ ! -f ~/.vim/autoload/plug.vim ] ; then
+    echo "Downloading vim-plug"
+    curl -Lo ~/.vim/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
+
+  ln -s -f -v "$configs/vim/custom-after" ~/.vim/
+  ln -s -f -v "$configs/vim/custom-snippets" ~/.vim/
+  ln -s -f -v "$configs/vim/CustomGrepFileAssoc" ~/.vim/
+  ln -s -f -v "$configs/vim/filetype.vim" ~/.vim/
+
+  echo -e "\n====> Make sure to run :PlugInstall once you open vim\n"
+}
+
+run_setup $1
