@@ -39,8 +39,8 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) != ''
   runtime! macros/matchit.vim
 endif
 
-" Load custom syntax overrides
-set rtp+=~/.vim/custom-syntax/after/
+" Load custom syntax overrides & ftplugins
+set rtp+=~/.vim/custom-after/
 
 "------------------------------------------------------------------------------
 " Basic display & behavior
@@ -48,7 +48,7 @@ set rtp+=~/.vim/custom-syntax/after/
 
 set encoding=utf-8
 
-colorscheme aisadark             " overridden in .gvimrc
+colorscheme aisadark             " may be overridden in .gvimrc
 set t_Co=256                     " 256-color if running in terminal
 
 set lazyredraw                   " don't redraw during background/auto commands
@@ -72,15 +72,6 @@ set listchars=trail:⨯,extends:›,precedes:‹,tab:▷⎯
 set list
 
 "------------------------------------------------------------------------------
-" Keybinding
-"------------------------------------------------------------------------------
-
-let mapleader=','
-
-noremap ; :
-noremap : ;
-
-"------------------------------------------------------------------------------
 " Indentation
 "------------------------------------------------------------------------------
 
@@ -98,32 +89,50 @@ func! UseTabs()
   setlocal nolist
 endf
 
-com! UseTabs :call UseTabs()
+com! UseTabs call UseTabs()
+
+"------------------------------------------------------------------------------
+" Keybinding
+"------------------------------------------------------------------------------
+
+let mapleader=' '
+
+noremap ; :
+noremap : ;
 
 "------------------------------------------------------------------------------
 " Movement
 "------------------------------------------------------------------------------
 
-" Typical backspace behavior (not default on windows & terminal)
+" Typical backspace behavior (not default on windows or terminal)
 set backspace=indent,eol,start
 
 set scrolloff=3           " minimum lines above/below cursor
 set sidescrolloff=3       " minimum columns between cursor and edge
 
+" Go between splits using Ctrl + direction keys
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+
 " Easier keybinding for first non-whitespace char
 nnoremap 0 ^
 nnoremap ^ 0
 
-" Go between location list items
-nmap [l ;lprev<Cr>
-nmap ]l ;lnext<Cr>
+" Navigate location list & quickfix
+nnoremap <Leader>l :lnext<CR>
+nnoremap <Leader>L :lprev<CR>
+nnoremap <Leader>q :cnext<CR>
+nnoremap <Leader>Q :cprev<CR>
 
 " Fallback jump if nothing language-specific is defined
 func! Jump()
-  nmap <silent> [[ ;call search('^\S', 'bW')<Cr>
-  nmap <silent> ]] ;call search('^\S', 'W')<Cr>
+  nnoremap <silent> [[ :call search('^\S', 'bW')<CR>
+  nnoremap <silent> ]] :call search('^\S', 'W')<CR>
 endf
-com! Jump ;call Jump()
+com! Jump call Jump()<CR>
+
 "------------------------------------------------------------------------------
 " Search
 "------------------------------------------------------------------------------
@@ -133,7 +142,7 @@ set incsearch              " show matches as you type
 set hlsearch               " highlight search matches
 
 " Clear search highlighting (Was bound to <Esc>, but had side effects)
-map <Leader><Leader> ;noh<return>
+nnoremap <Leader><Leader> :noh<CR>
 
 "------------------------------------------------------------------------------
 " Folds
@@ -228,31 +237,37 @@ au SessionLoadPost * set titlestring=%{SessionTitle()}
 "------------------------------------------------------------------------------
 
 " Open netrw in vsplit
-nmap ;ex ;Vexplore<CR>
+nnoremap <Leader>e :Vexplore<CR>
 
-" Go between splits using Ctrl + direction keys
-map <C-h> <C-w>h
-map <C-l> <C-w>l
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-
-" Search for conflict markers
-map <Leader>g /\(<<<<<<\\|======\\|>>>>>>\)<Cr>
+" Jump to conflict markers
+nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 
 " Copy all to global register
-map <C-a> exec '%y+'
+noremap <C-a> exec '%y+'
+
+" Commands
+"----------
 
 " Change working dir to current file's dir
 com! Current cd %:h
 
-" Reload vim configs
-com! Reload so ~/.vimrc|so ~/.gvimrc
+" Reload vim configs and retain working directory
+if !exists('*_Reload')
+  com! Vreload call _Reload()
+  func _Reload()
+    let c = getcwd()
+    source ~/.vimrc
+    source ~/.gvimrc
+    exec 'cd ' . c
+  endfunc
+endif
 
 " Trim trailing spaces
 com! Trail %s/\s\+$
 
 com! PrettyJson %!python -m json.tool
 
+" In progress cleaner buffer list
 func! BufferList()
   let msg = ''
   for b in range(1, bufnr('$'))
@@ -262,7 +277,21 @@ func! BufferList()
   echo msg
 endfunc
 
-nmap tt ;echo strftime(' %b %d %H:%M')<Cr>
+" Base jump function based on Python_jump.
+" Used to set jump shortcuts for specific file types. Example:
+"   nnoremap <silent> <buffer> ]] :call Alpw_Jump('/=====\n\d\+\.', 'e')<CR>
+func! Alpw_Jump(motion, flags) range
+  echo a:motion
+  let cnt = v:count1     " if triggered with number in front
+  let save = @/          " save last search pattern
+  mark '                 " mark starting spot so you can go back
+  while cnt > 0
+    exe search(a:motion, 'W' . a:flags)
+    let cnt -= 1
+  endwhile
+  call histdel('/', -1)  " remove this from search history
+  let @/ = save          " restore last search pattern
+endf
 
 "------------------------------------------------------------------------------
 " Plugin config
@@ -284,9 +313,7 @@ func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   if a:regex
     let statustext .= ' (regex)'
   endif
-  let statustext .= '        ' . a:item . '%=%{getcwd()}'
-
-  return statustext
+  return statustext . '        ' . a:item . '%=%{getcwd()}'
 endf
 
 func! CtrlPProgress(str)
@@ -294,22 +321,29 @@ func! CtrlPProgress(str)
 endf
 
 " Quick shortcuts: find all, files, recent, buffers
-nnoremap ;fa :CtrlPMixed<Cr>
-nnoremap ;ff :CtrlP<Cr>
-nnoremap ;fr :CtrlPMRU<Cr>
-nnoremap ;fb :CtrlPBuffer<Cr>
+nnoremap ;fa :CtrlPMixed<CR>
+nnoremap ;ff :CtrlP<CR>
+nnoremap ;fr :CtrlPMRU<CR>
+nnoremap ;fb :CtrlPBuffer<CR>
 
 " Gitv
 "------
 let g:Gitv_WipeAllOnClose = 1
 let g:Gitv_DoNotMapCtrlKey = 1
 
-nmap gv ;Gitv --all<Cr>
+nnoremap ;gk :Gitv --all<CR>
 
 " Gutentags
 "-----------
 
 let g:gutentags_tagfile = '.tags'
+
+" Notes
+"-------
+
+let g:notes_directories = ['~/Notes']
+let g:notes_suffix = '.md'
+let g:notes_tab_indents = 0
 
 " Sneak
 "------
@@ -377,26 +411,11 @@ let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 " Language/filetype-specific autocommands
 "------------------------------------------------------------------------------
 
-au FileType git setlocal nonumber
-au BufRead,BufNewFile *.md set filetype=markdown | setlocal wrap | setlocal nolist
-au BufRead,BufNewFile *.json set filetype=json | setlocal wrap
-
-" better htmldjango detection
-augroup filetypedetect
-  " remove current htmldjango detection located at $VIMRUNTIME/filetype.vim
-  au! BufNewFile,BufRead *.html
-  au  BufNewFile,BufRead *.html call s:DetectDjangoTemplate()
-  " check for django template tag in first ten lines
-  func! s:DetectDjangoTemplate()
-    for n in range(10, line('$') - 1)
-      if getline(n) =~ '{%\|{{\|{#'
-        setfiletype htmldjango
-        break
-      endif
-    endfor
-    setfiletype html
-  endf
-augroup END
+if !exists('autocommands_loaded')
+  let autocommands_loaded = 1
+  au FileType git setlocal nonumber
+  au FileType markdown setlocal wrap | setlocal textwidth=80 | setlocal nolist
+endif
 
 "------------------------------------------------------------------------------
 " OS-specific
