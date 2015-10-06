@@ -1,0 +1,10 @@
+*.min.js
+build
+dist
+gen
+*-dist
+*-dist-*
+*-release
+coverage
+*bundle.js
+*.map

@@ -44,6 +44,7 @@ run_setup() {
   else
     ln -s -f -v "$configs/terminal/.bashrc-base" ~/.bashrc
   fi
+  ln -s -f -v "$configs/.agignore" ~/.agignore
 
   if [ $linux ] ; then
     printf "$HEADER" "lint"
