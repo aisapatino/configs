@@ -17,11 +17,11 @@ Plug 'aisapatino/hex-highlight'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-vinegar'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
 
 " Languages
 " ---------
-Plug 'pangloss/vim-javascript'             " required for jsx plugin
-Plug 'mxw/vim-jsx'
+Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'sheerun/vim-json'
 Plug 'digitaltoad/vim-jade'
