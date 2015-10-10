@@ -1,10 +1,10 @@
-*.min.js
 build
+coverage
 dist
+*.min.*
 gen
 *-dist
 *-dist-*
 *-release
-coverage
 *bundle.js
 *.map
