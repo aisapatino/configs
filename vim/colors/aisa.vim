@@ -99,6 +99,7 @@ hi! link SpecialChar NONE
 
 hi CommentSpecial guifg=#5b40a6
 hi ClassName      guifg=#c600bd  gui=bold
+hi Code           guifg=#44047e  guibg=#ffffff
 
 "------------------------------------------------------------------------------
 " Text states (dynamic highlights)
