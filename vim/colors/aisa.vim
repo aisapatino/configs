@@ -90,6 +90,7 @@ hi Underlined     guifg=NONE     gui=underline
 
 hi Todo           guifg=NONE     guibg=NONE    gui=italic,bold
 
+hi! link Conceal     Statement
 hi! link Constant    Normal
 hi! link SpecialChar NONE
 
@@ -123,7 +124,7 @@ hi Directory     guifg=#1158a1
 hi! link qfLineNr    Directory
 hi! link qfSeparator NonText
 
-hi WildMenu      guifg=#ffffff   guibg=#3a9281
+hi WildMenu       guifg=#ffffff  guibg=#3a9281
 
 hi WarningMsg     guifg=#a70035  guibg=NONE    gui=bold
 hi ErrorMsg       guifg=#ffffff  guibg=#a70035

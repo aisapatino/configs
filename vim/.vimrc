@@ -23,7 +23,7 @@ Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
 " ---------
 Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'sheerun/vim-json'
+Plug 'elzr/vim-json'
 Plug 'digitaltoad/vim-jade'
 Plug 'groenewege/vim-less'
 
@@ -51,6 +51,7 @@ set encoding=utf-8
 colorscheme aisadark             " may be overridden in .gvimrc
 set t_Co=256                     " 256-color if running in terminal
 
+set conceallevel=1               " by default allow conceal chars
 set lazyredraw                   " don't redraw during background/auto commands
 
 " disable error noises/flashes
@@ -325,6 +326,10 @@ nnoremap ;fa :CtrlPMixed<CR>
 nnoremap ;ff :CtrlP<CR>
 nnoremap ;fr :CtrlPMRU<CR>
 nnoremap ;fb :CtrlPBuffer<CR>
+
+" Javascript
+"-----------
+let g:javascript_conceal_function = 'ƒ'
 
 " Gitv
 "------
