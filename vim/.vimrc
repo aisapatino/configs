@@ -4,7 +4,7 @@ cd ~/Projects
 " Plugins & runtime path
 "------------------------------------------------------------------------------
 
-call plug#begin('~/.vim/plugged')          " vim-plug for managing plugins
+call plug#begin('~/.vim/plugged')               " vim-plug for managing plugins
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
@@ -75,7 +75,7 @@ set list
 set expandtab        " use spaces instead of tabs
 set tabstop=2        " how many columns wide a tab is visually
 set shiftwidth=2     " how many columns to indent with >>
-set smarttab         " use shiftwidth # spaces when inserting <tab>
+set smarttab         " use shiftwidth # spaces when inserting <tab> at start of line
 set autoindent       " take indent for new line from previous line
 set smartindent      " more intelligent indent for new lines
 
@@ -160,7 +160,7 @@ set fillchars=fold:\
 set laststatus=2                             " always show status line
 
 set statusline=%1*\ %n         " buf nr (%1* = minwidth 1 & use User1 hi group)
-set statusline+=%{SLModifiable()}            " flag if not writeable
+set statusline+=%{SLModifiable()}          " flag if not writeable
 set statusline+=\ %t\ %*                     " file name, then restore normal hi
 set statusline+=%{ShortBranch()}             " git branch
 set statusline+=\ %#SLWarn#%{SLModified()}%* " modified flag
@@ -353,12 +353,15 @@ let g:gutentags_tagfile = '.tags'
 "-------
 
 let g:notes_directories = ['~/Notes']
+let g:notes_tab_indents = 0  " don't use tab to indent - it breaks autocomplete
 let g:notes_suffix = '.md'
-let g:notes_tab_indents = 0
+let g:notes_smart_quotes = 0
+let g:notes_ruler_text = '- - -'
 
 " Sneak
 "------
-let g:sneak#s_next = 1
+let g:sneak#s_next = 1        " let 's' go to next match
+let g:sneak#use_ic_scs = 1    " use ignorecaase/smartcase settings
 
 " SuperTab
 "-----------
@@ -425,7 +428,6 @@ let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 if !exists('autocommands_loaded')
   let autocommands_loaded = 1
   au FileType git setlocal nonumber
-  au FileType markdown setlocal wrap | setlocal textwidth=80 | setlocal nolist
 endif
 
 "------------------------------------------------------------------------------
