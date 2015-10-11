@@ -34,11 +34,6 @@ Plug 'tpope/vim-surround', { 'on': 'PlugSurround' }
 
 call plug#end()
 
-" Load built-in plugin matchit.vim, if a newer version isn't already installed
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) != ''
-  runtime! macros/matchit.vim
-endif
-
 " Load custom syntax overrides & ftplugins
 set rtp+=~/.vim/custom-after/
 
@@ -50,7 +45,8 @@ set encoding=utf-8
 
 colorscheme aisadark             " may be overridden in .gvimrc
 set t_Co=256                     " 256-color if running in terminal
-
+set number                       " show line numbers
+set colorcolumn=80               " show where the 80-char line is
 set conceallevel=1               " by default allow conceal chars
 set lazyredraw                   " don't redraw during background/auto commands
 
@@ -62,14 +58,14 @@ set showcmd                      " show commands as you type
 set shortmess=ilmnrxOI           " shorter messages
 
 set nowrap                       " don't wrap lines by default
-set linebreak                    " when wrapping, only at word breaks
+set breakindent                  " maintain indent when wrapping
+set linebreak                    " only break between words when wrapping
 set showbreak=↳                  " indicate start of wrapped lines
-set number                       " show line numbers
-set colorcolumn=80               " show where the 80-char line is
+
 set formatoptions+=j             " remove comment char(s) when joining
 
 set diffopt=filler,context:2,vertical,foldcolumn:1
-set listchars=trail:⨯,extends:›,precedes:‹,tab:▷⎯
+set listchars=trail:⨯,tab:▷-,extends:›,precedes:‹
 set list
 
 "------------------------------------------------------------------------------
@@ -89,7 +85,6 @@ func! UseTabs()
   setlocal shiftwidth=4
   setlocal nolist
 endf
-
 com! UseTabs call UseTabs()
 
 "------------------------------------------------------------------------------
@@ -179,7 +174,13 @@ func! SLModified()
 endf
 
 func! SLModifiable()
-  return getbufvar('%', '&modifiable') ? '' : ' [-]'
+  if getbufvar('%', 'current_syntax') == 'help'
+    return ' [help]'
+  elseif !getbufvar('%', '&modifiable')
+    return ' [-]'
+  else
+    return ''
+  endif
 endf
 
 func! IndentDisplay()
@@ -192,10 +193,14 @@ endf
 
 " Get rid of excess chars in default [Git(branch)] format
 func! ShortBranch()
-  let branch = fugitive#statusline()
-  let branch = substitute(branch, '[Git', '', '')
-  let branch = substitute(branch, ']', '', '')
-  return branch
+  if getbufvar('%', 'current_syntax') == 'help'
+    return ''
+  else
+    let branch = fugitive#statusline()
+    let branch = substitute(branch, '[Git', '', '')
+    let branch = substitute(branch, ']', '', '')
+    return branch
+  endif
 endf
 
 " Shortened path. Defaults to path of current buffer, optionally use cwd instead
@@ -204,6 +209,7 @@ func! ShPath(cwd)
   let path = substitute(path, $HOME, '~', '')
   let path = substitute(path, 'Projects', 'P', '')
   let path = substitute(path, 'flabs', 'f', '')
+  let path = substitute(path, $VIMRUNTIME, 'VIMRUNTIME', '')
   return path
 endf
 
@@ -254,13 +260,13 @@ com! Current cd %:h
 
 " Reload vim configs and retain working directory
 if !exists('*_Reload')
-  com! Vreload call _Reload()
   func _Reload()
     let c = getcwd()
     source ~/.vimrc
     source ~/.gvimrc
     exec 'cd ' . c
   endfunc
+  com! Vreload call _Reload()
 endif
 
 " Trim trailing spaces

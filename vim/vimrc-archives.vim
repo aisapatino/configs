@@ -14,6 +14,11 @@
 " let g:gista#post_private = 1
 " com! Gistl :Gista --list
 
+" Load built-in plugin matchit.vim, if a newer version isn't already installed
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) != ''
+  runtime! macros/matchit.vim
+endif
+
 "------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
