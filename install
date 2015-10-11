@@ -2,8 +2,8 @@
 
 # Creates needed directiories and symbolic links for config files.
 #
-# Execute with an argument to specify install type. Defaults to base.
-#        ./install work         or        ./install linux
+# Execute with an argument to specify install type: ./install work|linux
+# Otherwise will default to base install.
 
 run_setup() {
   local header="\n*** %s ***\n"

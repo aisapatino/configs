@@ -15,8 +15,8 @@ shopt -s histappend        # add to existing history instead of overwriting
 export TERM=xterm-256color
 export CLICOLOR=1
 
-BLUE='\[\e[1;34m\]'
-RESET='\[\e[m\]'
+blue='\[\e[1;34m\]'
+reset='\[\e[m\]'
 
 # Prompt
 #--------
@@ -26,7 +26,7 @@ GIT_PS1_SHOWCOLORHINTS=1   # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
-PROMPT_COMMAND='__git_ps1 "$BLUE\w$RESET" " $BLUE\$$RESET "'
+PROMPT_COMMAND='__git_ps1 "$blue\w$reset" " $blue\$$reset "'
 
 # Autocomplete
 #--------------
@@ -43,16 +43,15 @@ complete -o default -o nospace -F _git g
 
 alias ll="ls -la"
 alias g="git"
-alias gk="gitk --all"
 alias gs="git status"
 alias gd="git diff"
+alias gk="gitk --all"
 
 alias npmlist="npm ls --depth=0"
 
-# -C = color, -d = dirs only, -I = ignore, -L = max depth level
-IGNORE="node_modules|.git|*bower_components|.DS_Store|*.pyc"
-alias t="tree -a -C --dirsfirst -I '$IGNORE' -L "
-alias trd="tree -a -C -d -I '$IGNORE'"
+base_tree="tree -a -C -I 'node_modules|.git|*bower_components|.DS_Store|*.pyc'"
+alias t="$base_tree --dirsfirst -L "
+alias trd="$base_tree -d"
 
 # Custom functions
 #------------------

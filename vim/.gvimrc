@@ -1,4 +1,4 @@
-" GUI specific configs
+" GUI-specific vim configuration
 "------------------------------------------------------------------------------
 
 colorscheme aisa
