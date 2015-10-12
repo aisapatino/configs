@@ -50,4 +50,4 @@ hi link pythonDjangoField Include
 syn region pythonDocTest start=/"""/ end=/"""/
 hi link pythonDocTest Comment
 syn keyword pythonDocKeywords Arguments Returns Args Raises Attributes Setup Asserts containedin=pythonDocTest
-hi link pythonDocKeywords CommentSpecial
+hi link pythonDocKeywords Special

@@ -95,7 +95,6 @@ hi Normal         guifg=#cccccc guibg=#000000
 hi! link Constant Normal
 
 hi Comment        guifg=#506070
-hi CommentSpecial guifg=#6c71c4
 hi CommentHeader  guifg=#8090b0 gui=bold
 hi String         guifg=#8090b0
 hi Number         guifg=#6c71c4

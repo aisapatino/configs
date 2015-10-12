@@ -94,7 +94,6 @@ hi! link SpecialChar NONE
 " Custom syntax groups
 "---------------------
 
-hi CommentSpecial ctermfg=57
 hi ClassName      ctermfg=89  term=bold
 
 "------------------------------------------------------------------------------
