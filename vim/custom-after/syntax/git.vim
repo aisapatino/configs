@@ -1,7 +1,8 @@
-" Consistent diff highlighting
-hi! link gitKeyword Statement
+" Used for diff files from Gitv
 
-hi! link gitHash Normal
-hi! link gitEmail Identifier
-hi! link gitIdentity Identifier
-hi! link gitDate Normal
+" keyword = tree, parent, commit, tag, etc.
+hi! link gitKeyword   Statement
+hi! link gitHash      Normal
+hi! link gitDate      Normal
+hi! link gitEmail     Identifier
+hi! link gitIdentity  Identifier

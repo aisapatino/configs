@@ -1,8 +1,8 @@
-" prominent highlight for function names
-hi! link vimFunction ClassName
+hi! link vimFunction   ClassName
 
-" Adjust group linking for vim
-hi! link vimGroup Identifier
-" hi! link vimHiGuiRgb NONE
-hi! link vimHiGuiFgBg NONE
-hi! link vimHiGui NONE
+hi! link vimGroup      Identifier
+hi! link vimHiGuiFgBg  NONE
+hi! link vimHiGui      NONE
+
+" Remove `nextgroup=vimCommand` from default to fix hi for options like diffopt
+syn match  vimSetSep  contained  "[,:]" skipwhite
