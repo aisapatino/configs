@@ -46,7 +46,7 @@ set encoding=utf-8
 colorscheme aisadark             " may be overridden in .gvimrc
 set t_Co=256                     " 256-color if running in terminal
 set number                       " show line numbers
-set colorcolumn=80               " show where the 80-char line is
+set colorcolumn=80               " vertical line to show where the 80th col is
 set conceallevel=1               " by default allow conceal chars
 set lazyredraw                   " don't redraw during background/auto commands
 
@@ -467,6 +467,8 @@ func! s:ShowHighlightGroup()
   return 'name<' . l:synname . '> hi<' . l:synlinked . '> trans<' . l:syntrans . '>'
 endf
 com! ShowHighlightGroup echo s:ShowHighlightGroup()
+
+com! TestHi :so $VIMRUNTIME/syntax/hitest.vim
 
 " Enable this to get verbose vim logs (troubleshooting a plugin/setting)
 "set verbose=9
