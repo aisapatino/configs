@@ -72,7 +72,6 @@ hi Type           guifg=#3a9281  gui=NONE
 hi Function       guifg=#44047e  gui=bold
 
 hi Statement      guifg=#06287e  gui=bold
-hi Conceal        guifg=#06287e  gui=bold
 hi Operator       guifg=#06287e
 
 hi PreProc        guifg=#1158a1  gui=NONE
@@ -90,6 +89,7 @@ hi Underlined     guifg=NONE     gui=underline
 
 hi Todo           guifg=NONE     guibg=NONE    gui=italic,bold
 
+hi! link Conceal     Statement
 hi! link Constant    Normal
 hi! link SpecialChar NONE
 
