@@ -1,13 +1,17 @@
 # Global gitignore
 
-# General
+# Temp files
 .tmp
 temp/
+
+# Tags
 .tags
+.notags
+.tags.temp
+.tags.lock
 
 # Python
 *.pyc
-.coverage
 
 # Node
 node_modules
