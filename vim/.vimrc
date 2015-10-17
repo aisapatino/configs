@@ -61,7 +61,9 @@ set showcmd                      " show commands as you type
 set shortmess=ilmnrxOI           " shorter messages
 
 set nowrap                       " don't wrap lines by default
-set breakindent                  " maintain indent when wrapping
+if exists('+breakindent')
+  set breakindent                " maintain indent when wrapping
+endif
 set linebreak                    " only break between words when wrapping
 set showbreak=↳                  " indicate start of wrapped lines
 
