@@ -138,6 +138,7 @@ set autoread                " auto-update when file is changed from the outside
 set nowritebackup nobackup  " no backup file when overwriting something
 set noswapfile              " no temp file to store changes since save
 
+let g:netrw_list_hide = '.pyc$'
 set sessionoptions=buffers,curdir,folds,resize,winsize
 
 "------------------------------------------------------------------------------
@@ -174,16 +175,26 @@ nnoremap <Leader>Q :cprev<CR>
 " Jump to conflict markers
 nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 
-" Misc mappings
-"---------------
+" File navigation
+"-----------------
+
+" Open netrw in vsplit
+cabbrev ve Vexplore
+
+" Quick shortcuts: find all, files, recent, buffers
+nnoremap <Leader>a :CtrlPMixed<CR>
+nnoremap <Leader>f :CtrlP<CR>
+nnoremap <Leader>r :CtrlPMRU<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
+
+" Misc
+"------
+
+cabbrev hc helpclose
 
 " Clear search highlighting (Was bound to <Esc>, but had side effects)
 nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
 
-cabbrev hc helpclose
-
-" Open netrw in vsplit
-nnoremap <Leader>e :Vexplore<CR>
 " Copy all to global register
 noremap <C-a> exec '%y+'
 
@@ -214,12 +225,6 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|gen|dist-.*)$',
   \ 'file': '\v\.(pyc|min.*|map|DS_Store)$'
 \ }
-
-" Quick shortcuts: find all, files, recent, buffers
-nnoremap <Leader>fa :CtrlPMixed<CR>
-nnoremap <Leader>ff :CtrlP<CR>
-nnoremap <Leader>fr :CtrlPMRU<CR>
-nnoremap <Leader>fb :CtrlPBuffer<CR>
 
 " Enable CtrlPDelete plugin for deleting buffers
 call ctrlp_bdelete#init()
@@ -328,7 +333,7 @@ endif
 "------------------------------------------------------------------------------
 
 " Reload vimrc/gvimrc without losing working directory
-nnoremap ;vr :call ReloadVimrc()<CR>
+nnoremap <Leader>re :call ReloadVimrc()<CR>
 
 " Show highlight group for item at cursor
 func! s:ShowHighlightGroup()
@@ -488,6 +493,6 @@ func! s:UpdateSyntasticJavascriptCheckers()
     call add(checkers, 'eslint')
     let g:syntastic_javascript_eslint_args='--config .eslintrc-client'
   endif
-  echom "checkers: " . join(checkers, ', ')
+  echom 'checkers: ' . join(checkers, ', ')
   let g:syntastic_javascript_checkers = checkers
 endf
