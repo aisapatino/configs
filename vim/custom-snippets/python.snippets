@@ -175,16 +175,7 @@ endsnippet
 
 snippet test "outline of a text func" s
 def test_${1:DESC}(self):
-	""" Verify ${2:VERIFY_WHAT} """
-
-endsnippet
-
-snippet tdoc "docstring for test method" s
-Setup:
-	${2:SETUP}
-
-Asserts:
-	${3:ASSERTIONS}
+	""" Verify ${2:WHAT} """
 
 endsnippet
 
@@ -204,12 +195,16 @@ snippet tget "test get"
 response = self.client.get(self.url, follow=True)
 endsnippet
 
-snippet templ "assertTemplateUsed"
+snippet at "assertTemplateUsed"
 self.assertTemplateUsed(response, '${1:path}.html')
 endsnippet
 
 snippet eq "assertEqual"
 self.assertEqual(${1}, ${2})
+endsnippet
+
+snippet ac "assertContains"
+self.assertContains(${2:response}, '${1}')
 endsnippet
 
 snippet con "get response context"
