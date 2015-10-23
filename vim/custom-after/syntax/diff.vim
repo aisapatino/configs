@@ -1,7 +1,8 @@
 " Used for diff sections in git diffs via :Gitv
 
-" style added lines the same as in vimdiffs
+" style added/removed lines the same as in vimdiffs
 hi! link diffAdded DiffAdd
+hi! link diffRemoved DiffDelete
 
 " --- a/file.js ("diffNewFile")
 " +++ b/file.js ("diffOldFile")

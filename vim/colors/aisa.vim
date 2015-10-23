@@ -80,8 +80,6 @@ hi Special        guifg=#1158a1  gui=italic
 hi Define         guifg=#1158a1  gui=italic
 hi Structure      guifg=#1158a1  gui=italic
 
-hi SpecialKey     guifg=#a70035
-
 hi Tag            guifg=#c600bd
 
 hi Title          guifg=NONE     gui=bold
@@ -92,6 +90,7 @@ hi Todo           guifg=NONE     guibg=NONE    gui=italic,bold
 hi! link Conceal     Statement
 hi! link Constant    Normal
 hi! link SpecialChar NONE
+hi! link SpecialKey Comment
 
 " Custom syntax groups
 "---------------------
@@ -108,13 +107,11 @@ hi MatchParen     guifg=#c600bd  guibg=NONE     gui=bold
 hi Folded         guifg=#bbbbbb  guibg=NONE     gui=italic
 hi Search         guifg=NONE     guibg=#f8f3a9
 
-hi DiffAdd        guifg=#06287e  guibg=#dff0e6  gui=NONE
-hi DiffDelete     guifg=#f5e9ed  guibg=#f5e9ed
-" for git diffs, need to see removed text
-hi DiffRemoved    guifg=#06287e  guibg=#f5e9ed
+hi DiffAdd        guibg=#d6f4d6
+hi DiffDelete     guibg=#f8d6d6
 " DiffChange = line that was changed. DiffText = changed text itself
 hi DiffChange     guifg=NONE     guibg=NONE
-hi DiffText       guifg=#06287e  guibg=#dff0e6
+hi! link DiffText DiffAdd
 
 "------------------------------------------------------------------------------
 " Quickfix / location list / netrw

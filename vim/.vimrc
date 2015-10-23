@@ -24,6 +24,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-surround'
+Plug 'lambdalisue/vim-gista'
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -71,7 +72,7 @@ set formatoptions+=j             " remove comment chars when joining
 
 set fillchars=fold:\ ,diff:\ ,vert:\ 
 set diffopt=filler,context:2,vertical,foldcolumn:1
-set listchars=trail:⨯,tab:▷-,extends:›,precedes:‹
+set listchars=trail:•,tab:▷-,extends:›,precedes:‹
 set list
 
 " Indentation
@@ -182,13 +183,15 @@ nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 cabbrev ve Vexplore
 
 " Quick shortcuts: find all, files, recent, buffers
-nnoremap <Leader>a :CtrlPMixed<CR>
-nnoremap <Leader>f :CtrlP<CR>
-nnoremap <Leader>r :CtrlPMRU<CR>
+nnoremap <Leader>fa :CtrlPMixed<CR>
+nnoremap <Leader>ff :CtrlP<CR>
+nnoremap <Leader>fr :CtrlPMRU<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 
 " Misc
 "------
+
+cabbrev ag Ag!
 
 cabbrev hc helpclose
 
@@ -197,9 +200,6 @@ nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
 
 " Copy all to global register
 noremap <C-a> exec '%y+'
-
-" Commands
-"----------
 
 com! UseTabs call UseTabs()
 
@@ -210,6 +210,9 @@ com! Current cd %:h
 com! Trail %s/\s\+$
 
 com! PrettyJson %!python -m json.tool
+
+com! DeleteAnsiCodes :%s/\e.\{-}m//c
+
 
 "------------------------------------------------------------------------------
 " Plugin config
@@ -233,6 +236,15 @@ call ctrlp_bdelete#init()
 "----------
 
 let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']
+
+" Gist
+"------
+
+let g:gista#update_on_write = 2      " update on :w
+let g:gista#post_private = 1         " default to private
+
+" Create commands to use main options (autocompletable)
+com! Gistl Gista -l
 
 " Gitv
 "------
@@ -260,6 +272,7 @@ let g:notes_directories = ['~/Notes']
 let g:notes_suffix = '.md'
 let g:notes_title_sync = 'change_title'
 let g:notes_tab_indents = 0  " don't use tab to indent - it breaks autocomplete
+let g:notes_smart_quotes = 0 " don't use unicode replacements (all or nothing option)
 
 " Sneak
 "-------
@@ -431,11 +444,16 @@ func! BufferList()
   for b in range(1, bufnr('$'))
     if buflisted(b)
       let l:name = bufname(b)
-      let l:bufs[b] = {'name': fnamemodify(l:name, ':t'), 'full_name': l:name}
+      let l:bufs[b] = {'full_name': l:name}
+      if l:name != ''
+        let l:bufs[b]['name'] = fnamemodify(l:name, ':t')
+      else
+        let l:bufs[b]['name'] = '[No name]'
+      endif
     endif
   endfor
   for k in keys(l:bufs)
-    echom k . '  ' . l:bufs[k].name
+    echom printf('%3s %s', k, l:bufs[k].name)
   endfor
 endfunc
 
