@@ -42,6 +42,7 @@ complete -o default -o nospace -F _git g
 #---------
 
 alias ll="ls -la"
+alias f="find . -iname"       # see function ff() for specifying dir
 alias g="git"
 alias gs="git status"
 alias gd="git diff"
@@ -60,6 +61,14 @@ sr() {
   echo "replacing $1 with $2 in files matching $3"
   echo "(if the match looks wrong, make sure you put quotes around it)"
   find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
+}
+
+ff() {
+  find "$1" -iname "$2"
+}
+
+br() {
+  git br -vv | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
 }
 
 # Initialize Ruby
