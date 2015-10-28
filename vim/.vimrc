@@ -114,23 +114,19 @@ set foldtext=GetFoldText()
 
 set laststatus=2                             " always show status line
 
-set statusline=%1*\ %n         " buf nr (%1* = minwidth 1 & use User1 hi group)
-set statusline+=%{SLModifiable()}            " indicate help files or nowriteable
-set statusline+=\ %t\ %*                     " file name, then restore normal hi
-set statusline+=%{ShortBranch()}             " git branch
-set statusline+=\ %#SLWarn#%{SLModified()}%* " modified flag
-set statusline+=\ %{IndentDisplay()}         " indent size & flag for tabs
+set statusline=%1*                         " minwidth 1 & use User1 hi group
+set statusline+=\ %{SL_file()}%*           " buffer number or special ft
+set statusline+=\ %#SLWarn#%{SL_mod()}%*   " modified/nomodifiable flag
+set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
 set statusline+=%=                           " end of left side
 set statusline+=\ \ \ %<%{ShPath(0)}         " shortened path
 set statusline+=%6L,%v                       " total lines in file, cursor column
 
-" Titlestring, tabline
-"----------------------
+" Titlestring
+"------------
 
-" Show cwd in titlestring (windowed) and tabline (fullscreen)
+" Show cwd in titlestring
 set titlestring=%{ShPath(1)}
-set tabline=%=%{ShPath(1)}\ 
-
 
 " Files, sessions
 "-----------------
@@ -375,39 +371,55 @@ func! GetFoldText()
   return (' ' . repeat('- ', 38) . l:num_lines)
 endf
 
-func! SLModified()
-  return getbufvar('%', '&modified') ? '[+]' : ''
+func! s:ft_is_special(ft)
+  return (a:ft == 'help') || (a:ft == 'netrw')
 endf
 
-func! SLModifiable()
-  if getbufvar('%', 'current_syntax') == 'help'
-    return ' [help]'
+func! SL_file()
+  let l:ft = getbufvar('%', '&filetype')
+  let l:result = s:ft_is_special(l:ft) ? '[' . l:ft . ']' : bufnr('%')
+  let l:result .= ' '
+  if l:ft == 'netrw'
+    let l:result .= expand('%')
+  else
+   let l:result .= expand('%:t')
   endif
-  return getbufvar('%', '&modifiable') ? '' : ' [-]'
+  return l:result
 endf
 
-func! IndentDisplay()
+func! SL_mod()
+  if s:ft_is_special(getbufvar('%', '&filetype'))
+    return ''
+  elseif getbufvar('%', '&modified')
+    return '[+]'
+  elseif getbufvar('%', '&modifiable') == 0
+    return '[-]'
+  endif
+   return ''
+endf
+
+func! SL_branch_indent()
+  if s:ft_is_special(getbufvar('%', '&filetype'))
+    return ''
+  endif
+
+  let l:branch = fugitive#statusline()
+  let l:branch = substitute(branch, '[Git', '', '')
+  let l:branch = substitute(branch, ']', '', '')
+
   let l:width = &tabstop
   if (&expandtab == 'noexpandtab')
     let l:width .= 't'
   endif
-  return l:width
-endf
 
-" Get rid of excess chars in default [Git(branch)] format
-func! ShortBranch()
-  if getbufvar('%', 'current_syntax') == 'help'
-    return ''
-  else
-    let l:branch = fugitive#statusline()
-    let l:branch = substitute(branch, '[Git', '', '')
-    let l:branch = substitute(branch, ']', '', '')
-    return l:branch
-  endif
+  return l:branch . ' ' . l:width
 endf
 
 " Shortened path. Defaults to path of current buffer, optionally use cwd instead
 func! ShPath(use_cwd)
+  if !a:use_cwd && (getbufvar('%', '&filetype') == 'netrw')
+    return ''
+  endif
   let l:path = a:use_cwd ? getcwd() : expand('%:h')
   let l:path = substitute(path, $HOME, '~', '')
   let l:path = substitute(path, 'Projects', 'P', '')
