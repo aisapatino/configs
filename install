@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Creates needed directiories and symbolic links for config files.
+# Symlink config files, overwriting and creating directories as needed.
 #
 # Execute with an argument to specify install type: ./install work|linux
-# Otherwise will default to base install.
+# Otherwise it will default to base install.
 
 run_setup() {
   local header="\n*** %s ***\n"
@@ -23,9 +23,9 @@ run_setup() {
 
   printf "$header" "git"
 
-  ln -s -f -v "$configs/git/.gitignore" ~/.gitignore
-  ln -s -f -v "$configs/git/.gitconfig" ~/.gitconfig
-  ln -s -f -v "$configs/git/.gitk" ~/.gitk
+  ln -fsv "$configs/git/.gitignore" ~
+  ln -fsv "$configs/git/.gitconfig" ~
+  ln -fsv "$configs/git/.gitk"      ~
 
   if [ ! -f ~/.git-completion.bash ]; then
     echo "Getting git-completion.bash"
@@ -35,28 +35,32 @@ run_setup() {
 
   printf "$header" "shell/terminal"
 
+  ln -fsv "$configs/terminal/.inputrc"            ~
+  ln -fsv "$configs/terminal/.bash_profile"       ~
   if [ $work ] ; then
-    ln -s -f -v "$configs/terminal/.bashrc-work" ~/.bashrc
+    ln -fsv "$configs/terminal/.bashrc-work"      ~/.bashrc
   elif [ $linux ] ; then
-    ln -s -f -v "$configs/terminal/.bashrc-linux" ~/.bashrc
-    mkdir -v -p ~/.config/terminator
-    ln -s -f -v "$configs/terminal/terminator-config" ~/.config/terminator/config
+    mkdir -pv ~/.config/terminator
+    ln -fsv "$configs/terminal/.bashrc-linux"     ~/.bashrc
+    ln -fsv "$configs/terminal/terminator-config" ~/.config/terminator/config
   else
-    ln -s -f -v "$configs/terminal/.bashrc-base" ~/.bashrc
+    ln -fsv "$configs/terminal/.bashrc-base"      ~/.bashrc
   fi
-  ln -s -f -v "$configs/.agignore" ~/.agignore
 
   if [ $linux ] ; then
     printf "$HEADER" "lint"
-    ln -s -f -v "$configs/linters/.pylintrc" ~/.pylintrc
-    ln -s -f -v "$configs/linters/.eslintrc" ~/.eslintrc
+    ln -fsv "$configs/linters/.pylintrc" ~
+    ln -fsv "$configs/linters/.eslintrc" ~
   fi
+
+  printf "$header" "misc"
+
+  ln -fsv "$configs/.agignore" ~
 
   printf "$header" "vim"
 
-  ln -s -f -v "$configs/vim/.vimrc" ~/.vimrc
-  ln -s -f -v "$configs/vim/.gvimrc" ~/.gvimrc
-  ln -s -f -v "$configs/vim/colors" ~/.vim/colors
+  ln -fsv "$configs/vim/.vimrc"  ~
+  ln -fsv "$configs/vim/.gvimrc" ~
 
   if [ ! -f ~/.vim/autoload/plug.vim ] ; then
     echo "Downloading vim-plug"
@@ -64,10 +68,12 @@ run_setup() {
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
 
-  ln -s -f -v "$configs/vim/custom-after" ~/.vim/
-  ln -s -f -v "$configs/vim/custom-snippets" ~/.vim/
-  ln -s -f -v "$configs/vim/CustomGrepFileAssoc" ~/.vim/
-  ln -s -f -v "$configs/vim/filetype.vim" ~/.vim/
+  mkdir -pv ~/.vim
+  ln -fsv "$configs/vim/colors"              ~/.vim
+  ln -fsv "$configs/vim/custom-after"        ~/.vim
+  ln -fsv "$configs/vim/custom-snippets"     ~/.vim
+  ln -fsv "$configs/vim/CustomGrepFileAssoc" ~/.vim
+  ln -fsv "$configs/vim/filetype.vim"        ~/.vim
 
   echo -e "\n====> Make sure to run :PlugInstall once you open vim\n"
 }
