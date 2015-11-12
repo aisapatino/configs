@@ -55,7 +55,10 @@
   # history
   l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
   lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
-  # pull, rebase
+  bi = bisect
+  # fetch, pull, rebase
+  f = fetch
+  p = pull
   pr = pull --rebase
   r = rebase
   ri = rebase -i
