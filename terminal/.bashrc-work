@@ -1,3 +1,5 @@
+# Work/mac-specific bash config
+
 # Base
 #------
 
@@ -6,19 +8,24 @@ source ~/Projects/configs/terminal/.bashrc-base
 # Colors
 #--------
 
-# see man ls for more info
+# Differs from linux. See man ls for more info
 export LSCOLORS=ExGxBxDxCxEgEdxbxgExEx
 
 # Autocomplete
 #--------------
 
+# Enhanced bash autocomplete. See http://superuser.com/a/288491
 if [ -f `brew --prefix`/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
+  source `brew --prefix`/etc/bash_completion
 fi
 
-# Local .bashrc
-#---------------
+# Untracked .bashrc (for passwords, etc.)
+#-----------------------------------------
 
 if [ -f ~/Projects/flabs/.bashrc ] ; then
   source ~/Projects/flabs/.bashrc
 fi
+
+
+# django (for pylint)
+export PYTHONPATH=$PYTHONPATH:~/Projects/personal/sjfnw/libs

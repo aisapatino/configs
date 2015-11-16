@@ -1,3 +1,5 @@
+# Linux & SJF dev bash config
+
 # Base
 #------
 
@@ -23,7 +25,7 @@ export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine
 export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine/lib/webob-1.2.3
 # misc installed tools
 export PYTHONPATH=$PYTHONPATH:~/Devel
-# django for pylint
+# django (for pylint)
 export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
 
 # Aliases

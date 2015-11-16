@@ -1,13 +1,17 @@
+# Base config - common to linux & osx. Sourced by computer-specific bashrc
+
 # Settings
 #----------
+
+set -o vi
 
 export EDITOR=vim
 export VISUAL=$EDITOR
 
-HISTCONTROL=ignoreboth     # ignore duplicates & commands starting with space
-HISTIGNORE="ls:ll:cd *"    # ignore frequent short commands
-HISTSIZE=1000              # double the default
-shopt -s histappend        # add to existing history instead of overwriting
+HISTCONTROL=ignoreboth       # ignore duplicates & commands starting with space
+HISTIGNORE="ls:ll:cd *"      # ignore frequent short commands
+HISTSIZE=1000                # double the default
+shopt -s histappend          # add to existing history instead of overwriting
 
 # Colors
 #--------
@@ -21,12 +25,12 @@ reset='\[\e[m\]'
 # Prompt
 #--------
 
-GIT_PS1_SHOWUPSTREAM=1     # indicate ahead/behind upstream
-GIT_PS1_SHOWCOLORHINTS=1   # color like git status for untracked/modified
+GIT_PS1_SHOWUPSTREAM=1        # indicate ahead/behind upstream
+GIT_PS1_SHOWCOLORHINTS=1      # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
-PROMPT_COMMAND='__git_ps1 "$blue\w$reset" " $blue\$$reset "'
+PROMPT_COMMAND='__git_ps1 "$blue\w$reset" " \m "'
 
 # Autocomplete
 #--------------
@@ -56,21 +60,33 @@ base_tree="tree -a -C -I 'node_modules|.git|*bower_components|.DS_Store|*.pyc'"
 alias t="$base_tree --dirsfirst -L "
 alias trd="$base_tree -d"
 
+# Usage: `vstartup file-to-open`
+# alias vstartup="vim --startuptime ~/Downloads/vim-startup.log"
+
 # Custom functions
 #------------------
 
+# Replace across files. Usage: sr pattern replacement filepattern
 sr() {
   echo "replacing $1 with $2 in files matching $3"
   echo "(if the match looks wrong, make sure you put quotes around it)"
   find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
 }
 
+# Usage: ff ../frontend "*.png"
 ff() {
   find "$1" -iname "$2"
 }
 
+# list all local branches, with corresponding remote and status compared to it
+# based on git branch -vv output. example:
+#   master           [origin/master]
+#   webpack-tests
+# * wp-common-tests  [origin/wp-common-tests: ahead 12]
+#   feature-branch   [origin/feature-branch: GONE]
+#   forgotten        [origin/forgotten: behind 138]
 br() {
-  git br -vv | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
+  git branch -vv | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
 }
 
 # Initialize Ruby
