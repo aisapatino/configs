@@ -11,6 +11,7 @@ if !exists('*Alpw_Jump')
 endif
 
 " Move between headers
-let b:header = '=\{78}\n'
-nmap <silent> <buffer> <Leader>h ;call Alpw_Jump(b:header, 'e')<CR>
-nmap <silent> <buffer> <Leader>H ;call Alpw_Jump(b:header, 'be')<CR>
+let b:header = '^\(===\|---\).*\(===\|---\)$'
+" let b:something = '^[-A-Z .][-A-Z0-9 .()]*[ \t]\+\*'
+nnoremap <buffer> <Leader>h :call Alpw_Jump(b:header, 'e')<CR>j
+nnoremap <buffer> <Leader>H :call Alpw_Jump(b:header, 'be')<CR>j

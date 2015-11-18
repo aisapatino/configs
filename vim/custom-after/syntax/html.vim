@@ -1,20 +1,16 @@
-" Modify default html highlighting
+" Add html5 and custom highlights
 
-" don't highlight all js - let js syntax do the highlighting
+" Don't highlight js - let js syntax do the highlighting
 hi link javaScript Normal
 hi link javaScriptBraces Normal
 
-" don't bold <> themselves
-hi! link htmlTag Operator
+" Don't bold <> themselves
+hi! link htmlTag Comment
 
-" de-emphasize closing tags
+" De-emphasize closing tags
 syn clear htmlEndTag
-syn region htmlEndTag start=+</+      end=+>+ contains=htmlTagError
+syn region htmlEndTag start=+</+ end=+>+ contains=htmlTagError
 hi link htmlEndTag Operator
-
-" Emphatic comments
-syn region htmlCommentHeader start=+<!---+ end=+-->+
-hi link htmlCommentHeader CommentHeader
 
 " Language:	HTML (version 5)
 " Maintainer:	Rodrigo Machado &lt;rcmachado@gmail.com&gt;

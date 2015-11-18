@@ -1,4 +1,4 @@
-" Used for diff files from Gitv
+" Git ft is used with diff files from Gitv
 
 " keyword = tree, parent, commit, tag, etc.
 hi! link gitKeyword   Statement
