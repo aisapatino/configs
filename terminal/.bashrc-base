@@ -13,6 +13,8 @@ HISTIGNORE="ls:ll:cd *"      # ignore frequent short commands
 HISTSIZE=1000                # double the default
 shopt -s histappend          # add to existing history instead of overwriting
 
+shopt -s cdable_vars         # cd using vars without having to include $
+
 # Colors
 #--------
 
@@ -60,26 +62,25 @@ base_tree="tree -a -C -I 'node_modules|.git|*bower_components|.DS_Store|*.pyc'"
 alias t="$base_tree --dirsfirst -L "
 alias trd="$base_tree -d"
 
-# Usage: `vstartup file-to-open`
-# alias vstartup="vim --startuptime ~/Downloads/vim-startup.log"
-
 # Custom functions
 #------------------
 
-# Replace across files. Usage: sr pattern replacement filepattern
+# Replace across files
+# Usage: sr <pattern> <replacement> "<filepattern>"
 sr() {
   echo "replacing $1 with $2 in files matching $3"
-  echo "(if the match looks wrong, make sure you put quotes around it)"
+  echo "(if the file match looks wrong, make sure you put quotes around it)"
   find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
 }
 
-# Usage: ff ../frontend "*.png"
+# Find file in specified dir
+# Usage: ff <pathtosearch> "<pattern>" (example: ff ../frontend "*.png")
 ff() {
   find "$1" -iname "$2"
 }
 
-# list all local branches, with corresponding remote and status compared to it
-# based on git branch -vv output. example:
+# List local branches with corresponding remotes and status
+# Uses git branch -vv and modifies the format/info shown. Example output:
 #   master           [origin/master]
 #   webpack-tests
 # * wp-common-tests  [origin/wp-common-tests: ahead 12]
