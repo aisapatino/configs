@@ -75,7 +75,7 @@ hi Folded         guifg=#a0b0c0  guibg=NONE     gui=italic
 hi Search         guifg=NONE     guibg=#f8f3a9
 
 hi DiffAdd                       guibg=#d6f4d6
-hi DiffDelete                    guibg=#f8d6d6
+hi DiffDelete     guifg=NONE     guibg=#f8d6d6  gui=NONE
 hi DiffChange     guifg=NONE     guibg=NONE
 hi! link DiffText DiffAdd
 
@@ -94,12 +94,9 @@ hi! link TabLineFill StatusLine
 " Other components
 "------------------------------------------------------------------------------
 
-" Location list / quickfix
+" Netrw / location list / quickfix
 
-hi Directory      guifg=#1158a1
-
-hi! link qfLineNr    Comment
-hi! link qfSeparator Ignore
+hi! link Directory Statement
 
 " Popup menu
 
@@ -120,5 +117,5 @@ hi WildMenu       guifg=#ffffff  guibg=#3a9281
 " Plugins
 "------------------------------------------------------------------------------
 
-hi SyntasticWarningSign       guifg=#ff8800  guibg=#ff8800
-hi SyntasticErrorSign         guifg=#a70035  guibg=#a70035
+hi SyntasticWarningSign  guifg=#ff8800  guibg=#ff8800
+hi SyntasticErrorSign    guifg=#a70035  guibg=#a70035
