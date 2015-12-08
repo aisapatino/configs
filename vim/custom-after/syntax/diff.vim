@@ -1,18 +1,33 @@
+" See $VIMRUNTIME/syntax/diff.vim
 " Used for diff sections in git diffs via :Gitv
 
-" style added/removed lines the same as in vimdiffs
+" Syntax
+"--------
+
+" Default doesn't match git diff output. Clear and start over
+syn clear diffFile
+syn clear diffOldFile
+syn clear diffNewFile
+
+syn match diffFileInfo "^index .*"
+syn match diffFileInfo "^deleted file mode .*"
+syn match diffFileInfo "^new file mode .*"
+syn match diffFileInfo "^diff .*" contains=diffHide
+syn match diffHide "^diff --git " contained conceal
+syn match diffFile "^--- .*"
+syn match diffFile "^+++ .*"
+
+" Highlight
+"-----------
+
+" link diff ft-specific to the common global groups
 hi! link diffAdded DiffAdd
 hi! link diffRemoved DiffDelete
 
-" --- a/file.js ("diffNewFile")
-" +++ b/file.js ("diffOldFile")
-hi! link diffNewFile Normal
-hi! link diffOldFile ClassName
+hi! link diffFile      Statement
+hi! link diffFileInfo  Folded
 
-" diff a/file.js b/file.js
-hi! link diffFile Function
-
-" @@ -22,9 +22,8 @@
+" diffLine = @@ -22,9 +22,8 @@
+" diffSubname = text before diff starts, right after diffLine
 hi! link diffLine Comment
-" text before diff starts, right after diffline
 hi! link diffSubname Comment
