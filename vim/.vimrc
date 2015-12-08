@@ -7,8 +7,8 @@ cd ~/Projects
 " General {{{1
 "---------
 
-colorscheme aisadark             " may be overridden in .gvimrc
-set t_Co=256                     " 256-color if running in terminal
+colorscheme aisadark             " note: may be overridden for gui in .gvimrc
+set t_Co=256                     " 256-color terminal
 
 set vb t_vb=
 set shell=bash                   " default to bash instead of sh for !commands
@@ -23,10 +23,10 @@ set concealcursor=nc             " conceal in cursor line except in insert & vis
 
 set wildmenu wildchar=<tab>      " autocomplete for commands
 set showcmd                      " show commands as you type
-set shortmess=ilmnrxOI           " shorter messages
+set shortmess=ilmnxOI            " shorter messages, don't show intro screen
 
 set formatoptions+=j             " remove comment chars when joining
-set list                         " display things like tabs, spaces, eol, etc
+set list                         " display things like tabs, spaces, eol, etc.
 set listchars=trail:▫︎,tab:▷-,extends:›,precedes:‹
 set fillchars=fold:\ ,diff:\ ,vert:\ 
 set diffopt=filler,context:0,vertical,foldcolumn:1
@@ -34,12 +34,10 @@ set diffopt=filler,context:0,vertical,foldcolumn:1
 " Indent & wrap {{{1
 "---------------
 
-set expandtab        " use spaces instead of tabs
+set expandtab        " insert spaces instead of tabs
 set tabstop=2        " how many columns wide a tab is visually
 set shiftwidth=2     " how many columns to indent with >>
-set smarttab         " use shiftwidth # spaces when inserting <tab> at start of line
 set autoindent       " take indent for new line from previous line
-set smartindent      " more intelligent indent for new lines
 
 set nowrap                       " don't wrap lines by default
 if exists('+breakindent')
@@ -60,7 +58,7 @@ set sidescrolloff=3       " minimum columns between cursor and edge
 " Search {{{1
 "--------
 
-set gdefault               " add g flag to searches by default
+set gdefault               " default global (multiple matches per line)
 set ignorecase             " case-insensitive search by default
 set smartcase              " case-sensitive if pattern has uppercase letter
 set incsearch              " show matches as you type
@@ -96,18 +94,22 @@ set titlestring=%{ShPath(1)}
 set encoding=utf-8
 set fileformats=unix
 set wildignore+=*.pyc,.DS_Store
-set sessionoptions=buffers,curdir,folds,resize,winsize
+set sessionoptions-=blank,help,options,tabpages
 
 set autoread                " auto-update when file is changed from the outside
 set nowritebackup nobackup  " no backup file when overwriting something
 set noswapfile              " no temp file to store changes since save
+
+" Persist undo history even after buffer is unloaded
+set undofile undodir=~/tmp/vim-undo
 "}}}
+
 "------------------------------------------------------------------------------
 " Plugins & runtime path
 "------------------------------------------------------------------------------
 
 " Custom syntax & ftplugins
-set rtp+=~/.vim/custom-after/
+set runtimepath+=~/.vim/custom-after/
 
 " Plugins via vim-plug {{{1
 "----------------------
@@ -129,7 +131,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'aisapatino/hex-highlight'
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-sneak'
-Plug 'lambdalisue/vim-gista'
+Plug 'jeetsukumaran/vim-indentwise'
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -144,9 +146,11 @@ call plug#end()
 " Plugin config {{{1
 "---------------
 
-call ctrlp_bdelete#init()      " enable CtrlPDelete plugin for deleting buffers
+if exists('ctrlp_bdelete#init')
+  call ctrlp_bdelete#init()                " enable plugin for deleting buffers
+endif
 
-let g:ctrlp_working_path_mode = 'rw'       " search within repo, or cwd
+let g:ctrlp_working_path_mode = 'rw'       " search within repo/cwd (not current file's dir)
 let g:ctrlp_show_hidden = 1                " show hidden files by default
 let g:ctrlp_follow_symlinks = 1            " follow symlinks unless they loop
 let g:ctrlp_switch_buffer = 0              " open buffer in current window even if it's open elsewhere
@@ -159,55 +163,45 @@ let g:ctrlp_custom_ignore = {
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
 \}
 
-let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']
+let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbrowse
 
-let g:gista#update_on_write = 2      " update on :w
-let g:gista#post_private = 1         " default to private
-com! Gistl Gista -l
-
-let g:Gitv_CommitStep = 30           " Less commits at a time to make it faster
-let g:Gitv_WipeAllOnClose = 1        " Wipe buffers after use
-let g:Gitv_DoNotMapCtrlKey = 1       " Don't set ctrl mappings
-
-nnoremap <Leader>gk :Gitv --all<CR>
+let g:Gitv_CommitStep = 30           " less commits at a time, faster
+let g:Gitv_WipeAllOnClose = 1        " wipe buffers after use
+let g:Gitv_DoNotMapCtrlKey = 1       " don't set ctrl mappings
 
 let g:gutentags_tagfile = '.tags'
 
 let g:javascript_conceal_function = 'ƒ'
 
-let g:sneak#s_next = 1        " let 's' go to next match
-let g:sneak#use_ic_scs = 1    " use ignorecase/smartcase settings
-
 let g:SuperTabMappingBackward = '<c-tab>'
 
-" let g:syntastic_debug = 3
-let g:syntastic_debug_file = '~/.syntastic.log'
 let g:syntastic_always_populate_loc_list = 1 " show errors in location list
 let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
 let g:syntastic_enable_balloons = 0          " no mouseover balloons
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cursor_column = 0         " mult err on line: echo first (perf)
-let g:syntastic_loc_list_height = 5
+let g:syntastic_enable_highlighting = 0      " no ~~~ under errors
+let g:syntastic_check_on_wq = 0              " ignore save check when quitting
+let g:syntastic_cursor_column = 0            " perf: only echo first err on line
+let g:syntastic_loc_list_height = 5          " keep location list short
 let g:syntastic_error_symbol = '»'
 let g:syntastic_warning_symbol = '›'
+let g:syntastic_debug_file = '~/.syntastic.log'
+" let g:syntastic_debug = 3
 
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_mode_map = {
+\ 'mode': 'active',
+\ 'passive_filetypes': ['html']
+\}
 
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--rcfile=~/Projects/personal/sjfnw/.pylintrc'
-let g:syntastic_python_pep8_args = '--max-line-length=100'
 
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_html_checkers = []
-
-com! UpdateJavascriptCheckers call s:UpdateSyntasticJavascriptCheckers()
 
 let g:UltiSnipsExpandTrigger = '<s-tab>'
 let g:UltiSnipsJumpForwardTrigger = '<s-tab>'
-let g:UltiSnipsListSnippets = '<c-u>'
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " for :UltiSnipsEdit
 let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
@@ -229,20 +223,21 @@ noremap : ;
 "----------
 
 " Navigate window splits
-noremap <C-h> <C-w>h
-noremap <C-l> <C-w>l
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
+noremap <Leader>h <C-w>h
+noremap <Leader>l <C-w>l
+noremap <Leader>j <C-w>j
+noremap <Leader>k <C-w>k
 
 " Easier keybinding for first non-whitespace char
 nnoremap 0 ^
 nnoremap ^ 0
 
+" TODO: New maps for this.
 " Navigate location list & quickfix
-nnoremap <Leader>l :lnext<CR>
-nnoremap <Leader>L :lprev<CR>
-nnoremap <Leader>q :cnext<CR>
-nnoremap <Leader>Q :cprev<CR>
+"nnoremap <Leader>l :lnext<CR>
+"nnoremap <Leader>L :lprev<CR>
+"nnoremap <Leader>q :cnext<CR>
+"nnoremap <Leader>Q :cprev<CR>
 
 " Jump to conflict markers
 nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
@@ -259,6 +254,9 @@ nnoremap <Leader>ff :CtrlP<CR>
 nnoremap <Leader>fr :CtrlPMRU<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 
+" Easy access to ~/Drive/Notes md files
+com! -nargs=? Note call Alpw_note(<q-args>)
+
 " Misc {{{1
 "------
 
@@ -266,6 +264,9 @@ cabbrev ag    Ag!
 cabbrev blame Gblame
 cabbrev hc    helpclose
 cabbrev vres  vertical resize
+cabbrev dg    diffget
+cabbrev dp    diffput
+cabbrev gk    Gitv --all
 
 " Print working directory
 nnoremap <Leader>p :pwd<CR>
@@ -276,8 +277,6 @@ nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
 " Copy all to global register
 noremap <C-a> :%y+<CR>
 
-com! UseTabs call UseTabs()
-
 " Change working dir to current file's dir
 com! Current cd %:h
 
@@ -287,6 +286,10 @@ com! Trail %s/\s\+$
 com! PrettyJson %!python -m json.tool
 
 com! DeleteAnsiCodes :%s/\e.\{-}m//c
+
+" Command shortcuts for functions
+com! UseTabs call UseTabs()
+com! UpdateJavascriptCheckers call s:UpdateSyntasticJavascriptCheckers()
 
 " Debugging {{{1
 "-----------
@@ -299,6 +302,7 @@ com! ShowHighlightGroup echo s:ShowHighlightGroup()
 " Show test highlight page with current colors
 com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 "}}}
+
 "------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
@@ -337,7 +341,7 @@ func! SL_mod()
   elseif getbufvar('%', '&modifiable') == 0
     return '[-]'
   endif
-   return ''
+  return ''
 endf
 
 func! SL_branch_indent()
@@ -380,14 +384,16 @@ func! UseTabs()
   setlocal nolist
 endf
 
-" Reload vim configs and retain working directory
+" Reload vim config(s) and retain working directory
 " Wrapped because otherwise it will try to redefine the function while it's being executed
 if !exists('*ReloadVimrc')
   func ReloadVimrc()
     let l:cwd = getcwd()
     source ~/.vimrc
-    source ~/.gvimrc
-    exec 'cd ' .l:cwd
+    if has('gui') == 1
+      source ~/.gvimrc
+    endif
+    exec 'cd ' . l:cwd
   endfunc
 endif
 
@@ -528,5 +534,16 @@ func! s:UpdateSyntasticJavascriptCheckers()
   echom 'checkers: ' . join(checkers, ', ')
   let b:syntastic_javascript_checkers = checkers
 endf
+
+let s:notes_dir = '~/Drive/Notes/'
+
+" Edit an existing md file or create a new one
+func! Alpw_note(title) abort
+  if a:title == ''
+    echoerr 'Filename required.'
+  else
+    execute 'edit ' . s:notes_dir . fnameescape(a:title) . '.md'
+  endif
+endfunction
 
 " vim: foldenable foldmethod=marker
