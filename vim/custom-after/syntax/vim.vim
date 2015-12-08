@@ -1,6 +1,7 @@
 " Syntax highlighting
 syn keyword vimLink  link def containedin=@vimHighlightCluster,vimHiLink
-hi! link vimFunction   Keyword
+hi! link vimFunction   Function
+hi! link vimFuncName   Keyword
 hi! link vimLink       Statement
 hi! link vimGroup      Identifier
 hi! link vimHiGroup    Identifier
