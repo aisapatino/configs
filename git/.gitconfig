@@ -29,6 +29,8 @@
   cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
 [push]
   default = simple
+[rebase]
+  missingCommitsCheck = warn
 [rerere]
   enabled = true
 [sequence]
