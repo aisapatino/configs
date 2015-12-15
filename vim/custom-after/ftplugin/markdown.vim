@@ -1,14 +1,22 @@
 setlocal wrap
-let g:markdown_fenced_languages = ['python', 'javascript'] " 'py=python', 'js=javascript']
+
+" I never use markdown inside another ft. This makes fenced languages work
+" even if main_syntax had been set by another file
+let main_syntax = 'markdown'
+
+let g:markdown_fenced_languages = [
+  \ 'py=python', 'python',
+  \ 'js=javascript', 'javascript',
+  \ 'bash=sh', 'sh'
+\]
 
 func! MarkdownFold()
-  let l:default = (v:lnum == 1) ? '0' : '='
+  let l:level = (v:lnum == 1) ? '0' : '='
   let l:match = matchstr(getline(v:lnum), '^#\+')
-  let l:res = l:default
   if (l:match != '')
-    let l:res = '>' . string(strlen(l:match))
+    let l:level = '>' . string(strlen(l:match))
   endif
-  return l:res
+  return l:level
 endf
 
 setlocal foldmethod=expr
