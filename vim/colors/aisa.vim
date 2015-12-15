@@ -79,6 +79,8 @@ hi DiffDelete     guifg=NONE     guibg=#f8d6d6  gui=NONE
 hi DiffChange     guifg=NONE     guibg=NONE
 hi! link DiffText DiffAdd
 
+hi! SpellLocal    gui=underline  guisp=#ff8800
+hi! SpellCap      gui=underline
 "------------------------------------------------------------------------------
 " Statusline / Tabline
 "------------------------------------------------------------------------------
