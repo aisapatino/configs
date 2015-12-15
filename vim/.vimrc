@@ -168,6 +168,7 @@ let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbro
 let g:Gitv_CommitStep = 30           " less commits at a time, faster
 let g:Gitv_WipeAllOnClose = 1        " wipe buffers after use
 let g:Gitv_DoNotMapCtrlKey = 1       " don't set ctrl mappings
+let g:Gitv_TruncateCommitSubjects = 1
 
 let g:gutentags_tagfile = '.tags'
 
@@ -223,10 +224,10 @@ noremap : ;
 "----------
 
 " Navigate window splits
-noremap <Leader>h <C-w>h
-noremap <Leader>l <C-w>l
-noremap <Leader>j <C-w>j
-noremap <Leader>k <C-w>k
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
 
 " Easier keybinding for first non-whitespace char
 nnoremap 0 ^
@@ -302,7 +303,6 @@ com! ShowHighlightGroup echo s:ShowHighlightGroup()
 " Show test highlight page with current colors
 com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 "}}}
-
 "------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
