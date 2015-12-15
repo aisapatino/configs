@@ -1,3 +1,6 @@
+" Highlight vim vars when they're inside parens
+syn cluster vimOperGroup add=vimVar
+
 " Syntax highlighting
 syn keyword vimLink  link def containedin=@vimHighlightCluster,vimHiLink
 hi! link vimFunction   Function
