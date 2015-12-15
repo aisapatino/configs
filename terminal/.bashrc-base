@@ -8,12 +8,12 @@ set -o vi
 export EDITOR=vim
 export VISUAL=$EDITOR
 
-HISTCONTROL=ignoreboth       # ignore duplicates & commands starting with space
-HISTIGNORE="ls:ll:cd *"      # ignore frequent short commands
-HISTSIZE=1000                # double the default
-shopt -s histappend          # add to existing history instead of overwriting
+HISTCONTROL=ignoreboth          # ignore duplicates & commands starting with space
+HISTIGNORE="ls:ll:gs:gd:cd *"   # ignore frequent short commands
+HISTSIZE=1000                   # double the default
+shopt -s histappend             # add to existing history instead of overwriting
 
-shopt -s cdable_vars         # cd using vars without having to include $
+shopt -s cdable_vars            # cd using vars without having to include $
 
 # Colors
 #--------
