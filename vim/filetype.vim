@@ -1,6 +1,7 @@
 " Custom filetype detection. Loads before defaults.
 
-au BufRead,BufNewFile *.es.txt set filetype=spanish
+au BufRead,BufNewFile *.es.txt set filetype=lang
+au BufRead,BufNewFile *.en.txt set filetype=lang
 au BufRead,BufNewFile *.md set filetype=markdown
 
 " Better detection for django templates. Checks for tag in first ten lines.
