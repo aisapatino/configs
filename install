@@ -72,7 +72,6 @@ run_setup() {
   ln -fsv "$configs/vim/colors"              ~/.vim
   ln -fsv "$configs/vim/custom-after"        ~/.vim
   ln -fsv "$configs/vim/custom-snippets"     ~/.vim
-  ln -fsv "$configs/vim/CustomGrepFileAssoc" ~/.vim
   ln -fsv "$configs/vim/filetype.vim"        ~/.vim
 
   echo -e "\n====> Make sure to run :PlugInstall once you open vim\n"
