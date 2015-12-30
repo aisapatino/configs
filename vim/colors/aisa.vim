@@ -10,7 +10,7 @@ let colors_name = "aisa"
 "------------------------------------------------------------------------------
 
 hi Normal         guifg=#404850  guibg=#f0f0f0
-hi NonText        guifg=#a0b0c0                 gui=italic
+hi NonText        guifg=#a0b0c0
 
 hi VertSplit      guifg=#3f5472  guibg=#3f5472
 hi SignColumn     guifg=#ffffff  guibg=#3f5472
@@ -37,7 +37,7 @@ hi Number         guifg=#44047e
 hi Boolean        guifg=#44047e
 
 hi Identifier     guifg=#3a9281
-hi Function       guifg=#c600bd  gui=bold
+hi Function       guifg=#44047e  gui=bold
 
 hi Statement      guifg=#06287e  gui=bold
 hi Operator       guifg=#06287e
@@ -54,7 +54,9 @@ hi Debug          guifg=#44047e  gui=italic
 hi! link SpecialChar NONE
 hi! link SpecialKey  Comment
 
+hi BoldUnderlined guifg=NONE     gui=bold,underline
 hi Underlined     guifg=NONE     gui=underline
+
 hi Error          guifg=#a70035  guibg=NONE     gui=bold
 hi Todo           guifg=NONE     guibg=NONE     gui=italic,bold
 
@@ -63,6 +65,7 @@ hi Todo           guifg=NONE     guibg=NONE     gui=italic,bold
 
 hi ClassName      guifg=#c600bd                 gui=bold
 hi Code           guifg=#44047e  guibg=#ffffff
+hi WebLink        guifg=#1158a1                 gui=underline
 
 "------------------------------------------------------------------------------
 " Text states (dynamic highlights)
