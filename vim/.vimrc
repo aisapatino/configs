@@ -130,7 +130,6 @@ Plug 'tpope/vim-vinegar'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'aisapatino/hex-highlight'
 Plug 'tpope/vim-surround'
-Plug 'justinmk/vim-sneak'
 Plug 'jeetsukumaran/vim-indentwise'
 
 Plug 'pangloss/vim-javascript'
@@ -146,9 +145,11 @@ call plug#end()
 " Plugin config {{{1
 "---------------
 
-if exists('ctrlp_bdelete#init')
+if exists('*ctrlp_bdelete#init')
   call ctrlp_bdelete#init()                " enable plugin for deleting buffers
-endif
+else
+  echom 'ctrlp_delete not found; not initializing'
+end
 
 let g:ctrlp_working_path_mode = 'rw'       " search within repo/cwd (not current file's dir)
 let g:ctrlp_show_hidden = 1                " show hidden files by default
@@ -400,11 +401,9 @@ endif
 " Base jump function based on Python_jump. Can be used for ft-specific jumps
 func! Alpw_Jump(pattern, flags) range
   let l:count = v:count1        " if triggered with number in front
-  echom "count: " . l:count
   let l:save = @/               " save last search pattern for restoring later
   mark '                        " mark starting spot so you can go back
   while l:count > 0
-    echom "searching for " . a:pattern
     exe search(a:pattern, a:flags)
     let l:count -= 1
   endw
@@ -429,6 +428,19 @@ func! s:ShowHighlightGroup()
   let l:syntrans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
   return 'name: ' . l:synname . ', hi: ' . l:synlinked . ', trans: ' . l:syntrans
 endf
+
+func! AlignRight() abort
+	let line = getline('.')
+	let startpos = match(line, '\S\+$')
+	if startpos == -1
+		echom "No match found"
+		return
+	endif
+	let endpos = matchend(line, '\S\+$')
+	call cursor(0, startpos)
+	exec "normal " . (79 - endpos) . "i "
+endf
+com! AlignRight call AlignRight()
 
 " CtrlP {{{1
 "---------
