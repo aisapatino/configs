@@ -53,6 +53,7 @@ alias g="git"
 alias gs="git status"
 alias gf="git fetch"
 alias gd="git diff"
+alias gdc="git diff --cached"
 alias gk="gitk --all"
 alias gkb="gitk --branches"    # only show local branches (useful for big/active repos)
 
