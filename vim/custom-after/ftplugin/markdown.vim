@@ -1,23 +1,45 @@
-setlocal wrap
-
-" I never use markdown inside another ft. This makes fenced languages work
-" even if main_syntax had been set by another file
+" Makes fenced languages work even if main_syntax had been set by another file
+" Ok to do because I never use markdown inside another filetype
 let main_syntax = 'markdown'
 
 let g:markdown_fenced_languages = [
-  \ 'py=python', 'python',
-  \ 'js=javascript', 'javascript',
-  \ 'bash=sh', 'sh'
+\  'py=python', 'python',
+\  'js=javascript', 'javascript',
+\  'bash=sh', 'sh'
 \]
 
-func! MarkdownFold()
-  let l:level = (v:lnum == 1) ? '0' : '='
-  let l:match = matchstr(getline(v:lnum), '^#\+')
-  if (l:match != '')
-    let l:level = '>' . string(strlen(l:match))
+" Jump between headers
+nnoremap ]] :call Alpw_Jump('^#', 'W')<CR>
+nnoremap [[ :call Alpw_Jump('^#', 'bW')<CR>
+
+let b:prev = 0
+
+func! Alpw_MarkdownFold()
+  let line = getline(v:lnum)
+
+  " Header always starts a fold
+  let header = matchstr(line, '^#\+')
+  if (header != '')
+    let b:prev = strlen(header)
+    return '>' . b:prev
   endif
-  return l:level
+
+  " Blank line before a header ends a fold unless the upcoming header
+  " should be nested inside the current fold
+  if (line == '')
+    let header_next = strlen(matchstr(getline(v:lnum + 1), '^#\+'))
+    if (header_next > 0)
+      if (header_next == b:prev)
+        return '<' . b:prev
+      elseif (header_next < b:prev)
+        let b:prev = header_next - 1
+        return header_next
+      endif
+    endif
+  endif
+
+  return b:prev
 endf
 
 setlocal foldmethod=expr
-setlocal foldexpr=MarkdownFold()
+setlocal foldexpr=Alpw_MarkdownFold()
