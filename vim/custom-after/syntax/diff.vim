@@ -20,12 +20,12 @@ syn match diffFile "^+++ .*"
 " Highlight
 "-----------
 
-" link diff ft-specific to the common global groups
-hi! link diffAdded DiffAdd
-hi! link diffRemoved DiffDelete
-
 hi! link diffFile      Statement
 hi! link diffFileInfo  Folded
+
+" Link diff filetype groups to the common global groups
+hi! link diffAdded   DiffAdd
+hi! link diffRemoved DiffDelete
 
 " diffLine = @@ -22,9 +22,8 @@
 " diffSubname = text before diff starts, right after diffLine

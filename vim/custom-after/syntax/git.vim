@@ -1,6 +1,5 @@
-" Git ft is used with diff files from Gitv
+" Git filetype is used with diff files from Gitv
 
-" keyword = tree, parent, commit, tag, etc.
 hi! link gitKeyword   Statement
 hi! link gitHash      Normal
 hi! link gitDate      Normal
