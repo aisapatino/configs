@@ -7,7 +7,9 @@ cd ~/Projects
 " General {{{1
 "---------
 
-colorscheme aisadark             " note: may be overridden for gui in .gvimrc
+if !has('gui')
+  colorscheme aisadark           " gui scheme will be set in .gvimrc
+endif
 set t_Co=256                     " 256-color terminal
 
 set vb t_vb=
@@ -145,11 +147,7 @@ call plug#end()
 " Plugin config {{{1
 "---------------
 
-if exists('*ctrlp_bdelete#init')
-  call ctrlp_bdelete#init()                " enable plugin for deleting buffers
-else
-  echom 'ctrlp_delete not found; not initializing'
-end
+call ctrlp_bdelete#init()                  " enable plugin for deleting buffers
 
 let g:ctrlp_working_path_mode = 'rw'       " search within repo/cwd (not current file's dir)
 let g:ctrlp_show_hidden = 1                " show hidden files by default
