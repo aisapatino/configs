@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-# Symlink config files, overwriting and creating directories as needed.
+# Set up config files using symlinks, overwriting/creating directories as needed.
 #
 # Execute with an argument to specify install type: ./install work|linux
 # Otherwise it will default to base install.
 
 run_setup() {
-  local header="\n*** %s ***\n"
+  local header="\n===== %s =====\n"
   local configs=~/Projects/configs
+
+  # Parse install type
+  #====================
 
   if [[ $1 == m* ]] || [[ $1 == w* ]] ; then # "mac" or "work"
     local install_type='work'
@@ -21,6 +24,9 @@ run_setup() {
 
   echo "Running $install_type setup"
 
+  # Git
+  #=====
+
   printf "$header" "git"
 
   ln -fsv "$configs/git/.gitignore" ~
@@ -33,6 +39,9 @@ run_setup() {
       https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
   fi
 
+  # Terminal
+  #==========
+
   printf "$header" "shell/terminal"
 
   ln -fsv "$configs/terminal/.inputrc"            ~
@@ -41,21 +50,28 @@ run_setup() {
     ln -fsv "$configs/terminal/.bashrc-work"      ~/.bashrc
   elif [ $linux ] ; then
     mkdir -pv ~/.config/terminator
-    ln -fsv "$configs/terminal/.bashrc-linux"     ~/.bashrc
     ln -fsv "$configs/terminal/terminator-config" ~/.config/terminator/config
+    ln -fsv "$configs/terminal/.bashrc-linux"     ~/.bashrc
   else
     ln -fsv "$configs/terminal/.bashrc-base"      ~/.bashrc
   fi
 
+  # Other
+  #=======
+
   if [ $linux ] ; then
     printf "$HEADER" "lint"
-    ln -fsv "$configs/linters/.pylintrc" ~
-    ln -fsv "$configs/linters/.eslintrc" ~
+    ln -fsv "$configs/other/.pylintrc" ~
+    ln -fsv "$configs/other/.eslintrc" ~
   fi
 
-  printf "$header" "misc"
+  printf "$header" "ag and ctags"
 
-  ln -fsv "$configs/.agignore" ~
+  ln -fsv "$configs/other/.agignore" ~
+  ln -fsv "$configs/other/.ctags"    ~
+
+  # Vim
+  #=====
 
   printf "$header" "vim"
 

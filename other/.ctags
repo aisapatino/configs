@@ -1,0 +1,8 @@
+-f .tags
+--format=1
+--recurse=yes
+--totals=yes
+
+--langdef=markdown
+--langmap=markdown:.md
+--regex-markdown=/\ \*([a-zA-Z0-9_]+)\*$/\1/
