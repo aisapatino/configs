@@ -105,6 +105,7 @@ set noswapfile              " no temp file to store changes since save
 " Persist undo history even after buffer is unloaded
 set undofile undodir=~/tmp/vim-undo
 "}}}
+set tags+=~/Drive/Notes/.tags
 
 "------------------------------------------------------------------------------
 " Plugins & runtime path
@@ -157,6 +158,7 @@ let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not 
 let g:ctrlp_lazy_update = 50               " wait after typing to start search
 let g:ctrlp_open_multiple_files = '1vjr'   " open 1st in current window, rest hidden
 let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
+let g:ctrlp_extensions = ['tag']           " enable searching of tags
 let g:ctrlp_custom_ignore = {
 \  'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|dist-.*|gen)$',
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
@@ -232,12 +234,11 @@ noremap <C-k> <C-w>k
 nnoremap 0 ^
 nnoremap ^ 0
 
-" TODO: New maps for this.
 " Navigate location list & quickfix
-"nnoremap <Leader>l :lnext<CR>
-"nnoremap <Leader>L :lprev<CR>
-"nnoremap <Leader>q :cnext<CR>
-"nnoremap <Leader>Q :cprev<CR>
+nnoremap ]l :lnext<CR>
+nnoremap [l :lprev<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprev<CR>
 
 " Jump to conflict markers
 nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
@@ -248,11 +249,12 @@ nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 " Open netrw in vsplit
 cabbrev ve Vexplore
 
-" Quick shortcuts: find all, files, recent, buffers
+" Quick shortcuts: find all, files, recent, buffers, tags
 nnoremap <Leader>fa :CtrlPMixed<CR>
 nnoremap <Leader>ff :CtrlP<CR>
 nnoremap <Leader>fr :CtrlPMRU<CR>
-nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <Leader>b  :CtrlPBuffer<CR>
+nnoremap <Leader>ft :CtrlPTag<CR>
 
 " Easy access to ~/Drive/Notes md files
 com! -nargs=? Note call Alpw_note(<q-args>)
@@ -310,6 +312,7 @@ com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 "--------------------
 
 func! GetFoldText()
+  " Get fold text: text of next line, fold markers removed + fold line count
   let l:num_lines = v:foldend - v:foldstart + 1
   let l:line = substitute(getline(v:foldstart), '\({{{\|}}}\)\d\?', '', '')
   let l:pad_right = 75 - strlen(l:line)
@@ -321,10 +324,13 @@ func! GetFoldText()
 endf
 
 func! s:expect_readonly(ft)
+  " Return true if given filetype is expected to be readonly; else false
   return (a:ft == 'help') || (a:ft == 'netrw') || (a:ft == 'fugitiveblame')
 endf
 
 func! SL_file()
+  " Return file identifier for status line.
+  " Depending on filetype, may be buffer number, filetype, directory and/or filename.
   let l:ft = getbufvar('%', '&filetype')
   let l:result = s:expect_readonly(l:ft) ? '[' . l:ft . ']' : bufnr('%')
   let l:result .= ' '
@@ -333,6 +339,7 @@ func! SL_file()
 endf
 
 func! SL_mod()
+  " Return modified/nomodifiable indicator for statusline
   if s:expect_readonly(getbufvar('%', '&filetype'))
     return ''
   elseif getbufvar('%', '&modified')
@@ -344,6 +351,7 @@ func! SL_mod()
 endf
 
 func! SL_branch_indent()
+  " Return indent level and branch name display for statusline
   if s:expect_readonly(getbufvar('%', '&filetype'))
     return ''
   endif
@@ -362,8 +370,9 @@ func! SL_branch_indent()
   return l:branch . ' ' . l:width
 endf
 
-" Shortened path. Defaults to path of current buffer, optionally use cwd instead
 func! ShPath(use_cwd)
+  " Return shortened path for current buffer or cwd.
+  " Defaults to path of current buffer unless `use_cwd` is true
   if !a:use_cwd && (getbufvar('%', '&filetype') == 'netrw')
     return ''
   endif
@@ -428,15 +437,20 @@ func! s:ShowHighlightGroup()
 endf
 
 func! AlignRight() abort
-	let line = getline('.')
-	let startpos = match(line, '\S\+$')
-	if startpos == -1
-		echom "No match found"
-		return
-	endif
-	let endpos = matchend(line, '\S\+$')
-	call cursor(0, startpos)
-	exec "normal " . (79 - endpos) . "i "
+  let line = getline('.')
+  let startpos = match(line, '\S\+$')
+  if startpos == -1
+    echom 'No match found'
+    return
+  endif
+  let endpos = matchend(line, '\S\+$')
+  if endpos >= 79
+    echom 'Text found at max column'
+    return
+  endif
+  echom startpos . ', ' . endpos
+  call cursor(0, startpos)
+  exec "normal " . (79 - endpos) . "i "
 endf
 com! AlignRight call AlignRight()
 
