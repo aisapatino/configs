@@ -38,35 +38,40 @@ hi User1           ctermfg=75   ctermbg=235  cterm=bold
 " Syntax groups                                              see :h group-name
 "------------------------------------------------------------------------------
 
-hi Comment         ctermfg=240
-hi CommentSpecial  ctermfg=25
-hi CommentHeader   ctermfg=240  cterm=bold
+hi Comment         ctermfg=8
+hi CommentSpecial  ctermfg=26
+hi CommentHeader   ctermfg=8    cterm=bold
 
 hi! link Constant  Normal
 hi String          ctermfg=246
-hi Number          ctermfg=62
+hi Number          ctermfg=61
 hi Boolean         ctermfg=97
 
 hi Identifier      ctermfg=79   cterm=NONE
-hi Function        ctermfg=55   cterm=bold
+hi Function        ctermfg=93   cterm=bold
 
-hi Statement       ctermfg=24   cterm=bold
-hi Operator        ctermfg=19
+hi Statement       ctermfg=75   cterm=bold
+hi Operator        ctermfg=75
 hi Keyword         ctermfg=97
 
-hi Type            ctermfg=57
+hi Type            ctermfg=62
 
 hi PreProc         ctermfg=25
 
 hi Special         ctermfg=25
 hi Tag             ctermfg=162
-hi Debug           ctermfg=63
+hi Debug           ctermfg=248
+
+hi Todo            ctermfg=fg   cterm=bold
 
 hi! link Title Function
+hi! link htmlItalic Comment
 
 " Custom syntax groups
 "----------------------
 
+hi BoldUnderlined  ctermfg=231               cterm=bold,underline
+hi Code            ctermfg=81   ctermbg=235
 hi ClassName       ctermfg=162               cterm=bold
 
 "------------------------------------------------------------------------------
@@ -75,12 +80,12 @@ hi ClassName       ctermfg=162               cterm=bold
 
 hi! link Conceal Statement
 hi MatchParen      ctermfg=162
-hi Folded          ctermfg=8    ctermbg=16
+hi Folded          ctermfg=240  ctermbg=bg
 hi Search                       ctermbg=230
 
-hi DiffAdd                       ctermbg=22
-hi DiffDelete     ctermfg=fg     ctermbg=88  cterm=NONE
-hi DiffChange     ctermfg=NONE     ctermbg=NONE
+hi DiffAdd                      ctermbg=22
+hi DiffDelete     ctermfg=fg    ctermbg=88   cterm=NONE
+hi DiffChange     ctermfg=NONE  ctermbg=NONE
 hi! link DiffText DiffAdd
 
 "------------------------------------------------------------------------------
@@ -91,12 +96,8 @@ hi! link DiffText DiffAdd
 
 hi! link Directory Statement
 
-" Popup menu
-
 " Command line
 
 hi Error           ctermfg=88   ctermbg=bg   cterm=bold
 hi WarningMsg      ctermfg=208  ctermbg=bg   cterm=bold
-hi Todo            ctermfg=fg   ctermbg=bg   cterm=bold
-
 hi WildMenu        ctermfg=bg   ctermbg=36
