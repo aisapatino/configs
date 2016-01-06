@@ -10,12 +10,12 @@
 # GENERAL
 #------------------------------------------------------------------------------
 
+snippet str "use strict statement" b
+"use strict";
+endsnippet
+
 # functions
 # ---------
-
-snippet str "use strict statement" b
-'use strict';
-endsnippet
 
 snippet pf "prototype function" ws
 prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
@@ -31,21 +31,21 @@ ${1:FUNC_NAME} = function $1(${2:PARAMS}) {
 
 endsnippet
 
-snippet fa "function with args" ws
-function(${1}) {
+snippet f "anon function no args" ws
+function () {
+	${1}
+});
+endsnippet
+
+snippet fa "anon function with args" ws
+function (${1}) {
 	${2}
 })
 endsnippet
 
-snippet fas "function with args & semicolon" ws
-function(${1}) {
+snippet fas "anon function with args & semicolon" ws
+function (${1}) {
 	${2}
-});
-endsnippet
-
-snippet f "anonymous function no args" ws
-function() {
-	${1}
 });
 endsnippet
 
@@ -57,12 +57,20 @@ console.log(${1});
 endsnippet
 
 snippet con "console.log with quotes" w
-console.log('${1}'${2});
+console.log("${1}"${2});
 endsnippet
 
 #------------------------------------------------------------------------------
 # NODE
 #------------------------------------------------------------------------------
+
+snippet cr "es6 matching require" b
+const ${1} = require("$1");
+endsnippet
+
+snippet cre "es6 non-matching require" b
+const ${1} = require("$2");
+endsnippet
 
 snippet req "generic matching require" b
 var ${1} = require('$1');
@@ -80,40 +88,40 @@ endsnippet
 # ------
 
 snippet desc "skeleton for describe wrapper" s
-describe('${1:SUITE DESC}', function() {
+describe("${1:SUITE DESC}", function () {
 	${2}
 });
 endsnippet
 
 snippet be "beforeEach"
-beforeEach(function() {
+beforeEach(function () {
 	${1}
 });
 
 endsnippet
 
 snippet it "skeleton for single it (with done cb)" s
-it('should ${1:TEST DESC}', function(done) {
+it("should ${1:TEST DESC}", function (done) {
 	${2}
 });
 
 endsnippet
 
 snippet iti "skeleton for single skipped it (with done cb)" s
-it.skip('should ${1:TEST DESC}', function(done) {
+it.skip("should ${1:TEST DESC}", function (done) {
 });
 
 endsnippet
 
 snippet its "skeleton for single sync it (without done cb)" s
-it('should ${1:TEST DESC}', function() {
+it("should ${1:TEST DESC}", function () {
 	${2}
 });
 
 endsnippet
 
 snippet tt "test then (with catch done)" ws
-then(function(${1:results}) {
+then(function (${1:results}) {
 	${2}
 	done();
 })
@@ -126,7 +134,7 @@ endsnippet
 snippet tget "test request" s
 request.${1:get}('${2:URL}')
 	.expect(${3:200})
-	.then(function(res) {
+	.then(function (res) {
 		${4}
 		done();
 	})
@@ -149,15 +157,15 @@ expect(${1:VAR}).to.${2:ETC};
 endsnippet
 
 snippet ep "expect property"
-expect(${1}).to.have.property('${2}'${3});
+expect(${1}).to.have.property("${2}"${3});
 endsnippet
 
 snippet epp "expect property that is a..."
-expect(${1}).to.have.property('${2}').that.is.a${3}('${4}');
+expect(${1}).to.have.property("${2}").that.is.a${3}("${4}");
 endsnippet
 
 snippet et "expect type" s
-expect(${1}).to.be.a${2}('${3}')${4};
+expect(${1}).to.be.a${2}("${3}")${4};
 endsnippet
 
 # nock
@@ -194,7 +202,7 @@ var config = require('../config');
 
 module.exports = Collection.extend({
 
-	url: function() {
+	url: function () {
 		return config.server + ${1:''};
 	},
 
