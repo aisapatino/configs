@@ -130,7 +130,6 @@ Plug 'gregsexton/gitv'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-vinegar'
 
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'aisapatino/hex-highlight'
 Plug 'tpope/vim-surround'
 Plug 'jeetsukumaran/vim-indentwise'
@@ -170,8 +169,6 @@ let g:Gitv_CommitStep = 30           " less commits at a time, faster
 let g:Gitv_WipeAllOnClose = 1        " wipe buffers after use
 let g:Gitv_DoNotMapCtrlKey = 1       " don't set ctrl mappings
 let g:Gitv_TruncateCommitSubjects = 1
-
-let g:gutentags_tagfile = '.tags'
 
 let g:javascript_conceal_function = 'ƒ'
 

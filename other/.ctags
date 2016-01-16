@@ -1,7 +1,15 @@
+--exclude=.git
+--exclude=log
+--exclude=tmp
+--exclude=coverage
+--exclude=.coverage
+--exclude=node_modules
+
 -f .tags
---format=1
 --recurse=yes
 --totals=yes
+
+--python-kinds=-i
 
 --langdef=markdown
 --langmap=markdown:.md
