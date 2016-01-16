@@ -156,15 +156,16 @@ call plug#end()
 
 call ctrlp_bdelete#init()                  " enable plugin for deleting buffers
 
-let g:ctrlp_working_path_mode = 'rw'       " search within repo/cwd (not current file's dir)
-let g:ctrlp_show_hidden = 1                " show hidden files by default
+let g:ctrlp_extensions = ['tag']           " enable searching of tags
 let g:ctrlp_follow_symlinks = 1            " follow symlinks unless they loop
-let g:ctrlp_switch_buffer = 0              " open buffer in current window even if it's open elsewhere
-let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not qf)
 let g:ctrlp_lazy_update = 50               " wait after typing to start search
 let g:ctrlp_open_multiple_files = '1vjr'   " open 1st in current window, rest hidden
+let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not qf)
+let g:ctrlp_show_hidden = 1                " show hidden files by default
+let g:ctrlp_switch_buffer = 0              " open buffer in current window even if it's open elsewhere
+let g:ctrlp_tilde_homedir = 1              " save mru paths with ~ for $HOME
+let g:ctrlp_working_path_mode = 'rw'       " search within repo/cwd (not current file's dir)
 let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
-let g:ctrlp_extensions = ['tag']           " enable searching of tags
 let g:ctrlp_custom_ignore = {
 \  'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|dist-.*|gen)$',
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
@@ -295,7 +296,10 @@ com! DeleteAnsiCodes :%s/\e.\{-}m//c
 
 " Command shortcuts for functions
 com! AlignRight       call AlignRight()
-com! UpdateJavascriptCheckers call s:UpdateSyntasticJavascriptCheckers()
+com! UpdateJSCheckers call s:UpdateSyntasticJavascriptCheckers()
+com! UseTabs          call UseTabs()
+com! WMSetEslint      call s:WMSetEslint()
+com! ListWindows      call ListWindows()
 
 " Debugging {{{1
 "-----------
@@ -391,16 +395,11 @@ func! ShPath(use_cwd)
   return l:path
 endf
 
-" Commands {{{1
-"----------
-
-func! UseTabs()
-  setlocal noexpandtab
-  setlocal nolist
-endf
+" Misc utility {{{1
+"--------------
 
 " Reload vim config(s) and retain working directory
-" Wrapped because otherwise it will try to redefine the function while it's being executed
+" Wrapped to avoid trying to redefine function as it's being executed
 if !exists('*ReloadVimrc')
   func ReloadVimrc()
     let l:cwd = getcwd()
@@ -436,22 +435,15 @@ func! Alpw_Jump(pattern, flags) range
   let @/ = l:save               " restore last search pattern
 endf
 
-" Set fallback jump if nothing language-specific is defined
-" Maps [[ ]] to go to non-whitespace at col 0
-func! Jump()
-  nnoremap <silent> [[ :call Alpw_Jump('^\S', 'bW')<CR>
-  nnoremap <silent> ]] :call Alpw_Jump('^\S', 'W')<CR>
-endf
-
 " Show highlight group for item at cursor
 func! s:ShowHighlightGroup()
-  let l:synid = synID(line('.'), col('.'), 1)
-  let l:synname = synIDattr(l:synid, 'name')
-  " what syn group is actually highlighting this item (follows links)
-  let l:synlinked = synIDattr(synIDtrans(l:synid), 'name')
+  let l:id = synID(line('.'), col('.'), 1)
+  let l:name = synIDattr(l:id, 'name')
+  " follow links to get syn group that is actually highlighting this item
+  let l:linked = synIDattr(synIDtrans(l:id), 'name')
   " transparent item
-  let l:syntrans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
-  return 'name: ' . l:synname . ', hi: ' . l:synlinked . ', trans: ' . l:syntrans
+  let l:trans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
+  return 'name: ' . l:name . ', hi: ' . l:linked . ', trans: ' . l:trans
 endf
 
 " Align the right-most word of current line against 80-char column
@@ -472,13 +464,39 @@ func! AlignRight() abort
   exec 'normal ' . (79 - endpos) . 'i '
 endf
 
+" List windows with corresponding buffer number & file
+" (For buggy cases where you need to :close a window)
+func! ListWindows()
+  echom 'Window    Buffer'
+  for wi in range(1, winnr('$'))
+    let l:buf = winbufnr(wi)
+    echom wi . '         ' . l:buf . '  ' . bufname(l:buf)
+  endfor
+endf
+
 func! Alpw_SearchHelp()
   exec "help " . expand('<cword>')
 endf
 
-" CtrlP {{{1
-"---------
+" Modify settings/mappings {{{1
+"--------------------------
 
+func! UseTabs()
+  setlocal noexpandtab
+  setlocal nolist
+endf
+
+" Set basic jump mappings - useful if nothing language-specific is defined
+" Maps [[ ]] to go to non-whitespace at col 0
+func! Jump()
+  nnoremap [[ :call Alpw_Jump('^\S', 'bW')<CR>
+  nnoremap ]] :call Alpw_Jump('^\S', 'W')<CR>
+endf
+
+" CtrlP {{{1
+"-------
+
+" See :h g:ctrlp_status_func
 func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   let statustext = ' ' . a:item . '        ' . a:byfname
   let statustext .= '     ' . substitute(a:marked, '\(<\|>\|-\)', '', 'g')
@@ -494,71 +512,6 @@ endf
 
 " Syntastic {{{1
 "-----------
-" attempts to work with varying checkers/configs within a filetype
-
-let s:cxo_base_path = '~/Projects/flabs/wm/cart-checkout/'
-let s:eslint_locations = {
-\  'atlas-common/infra/webpack/test': {
-\    'checker': 'eslint',
-\    'config': 'atlas-common/infra/webpack/node_modules/repo-standards/configs/lint/eslintrc.test-browser',
-\    'exec': 'atlas-common/infra/webpack/node_modules/.bin/eslint'
-\  },
-\  'atlas-common/infra/webpack/lib/client': {
-\    'checker': 'eslint',
-\    'config': 'atlas-common/infra/webpack/node_modules/repo-standards/configs/lint/eslintrc.react',
-\    'exec': 'atlas-common/infra/webpack/node_modules/.bin/eslint'
-\  },
-\  'atlas-common/infra/webpack': {
-\    'checker': 'eslint',
-\    'config': 'atlas-common/infra/webpack/node_modules/repo-standards/configs/lint/eslintrc.node',
-\    'exec': 'atlas-common/infra/webpack/node_modules/.bin/eslint'
-\  },
-\  'webpack': {
-\    'checker': 'eslint',
-\    'config': 'webpack/.eslintrc-server',
-\    'exec': 'webpack/node_modules/.bin/eslint'
-\  },
-\  'webpack/client': {
-\    'checker': 'eslint',
-\    'config': 'webpack/.eslintrc-client',
-\    'exec': 'webpack/node_modules/.bin/eslint'
-\  },
-\  'webpack/test/client': {
-\    'checker': 'eslint',
-\    'config': 'webpack/.eslintrc-test-client',
-\    'exec': 'webpack/node_modules/.bin/eslint'
-\  },
-\  'atlas-common/frontend': {
-\    'checker': 'jshint',
-\    'config': 'atlas-common/frontend/.jshintrc.json',
-\    'exec': 'atlas-common/frontend/node_modules/grunt-contrib-jshint/node_modules/.bin/jshint'
-\  }
-\}
-
-func! s:WMSetEslint()
-  let l:filepath = expand('%:p')
-  let l:match = ''
-  for l:path in keys(s:eslint_locations)
-    if (l:filepath =~ l:path) && (strlen(l:path) > strlen(l:match))
-      let l:match = l:path
-    endif
-  endfor
-  if l:match != ''
-    let l:result = s:eslint_locations[l:match]
-    echom l:result['config']
-    let b:syntastic_javascript_checkers = [l:result['checker']]
-    let l:cmd = "let b:syntastic_javascript_" . l:result['checker'] . "_args = '--config " . s:cxo_base_path . l:result['config'] . "'"
-    echom l:cmd
-    exec l:cmd
-    let l:cmd = "let b:syntastic_javascript_" . l:result['checker'] . "_eslint_exec = '" . s:cxo_base_path . l:result['exec'] . "'"
-    echom l:cmd
-    exec l:cmd
-    echom 'Config updated.'
-  else
-    echom 'no eslint match found'
-  endif
-endf
-com! WMSetEslint call s:WMSetEslint()
 
 " Get checkers based on configs present in working directory
 func! s:UpdateSyntasticJavascriptCheckers()
