@@ -73,8 +73,8 @@ set nofoldenable           " start with all folds open
 set foldmethod=indent
 set foldtext=GetFoldText()
 
-" Statusline {{{1
-"------------
+" Statusline, tabline, title {{{1
+"----------------------------
 
 set laststatus=2                           " always show status line
 
@@ -85,7 +85,12 @@ set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
 set statusline+=%=                         " end of left side
 set statusline+=\ \ \ %<%{ShPath(0)}       " shortened path
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
-set statusline+=\ \|\ %{winnr()}\          " window number
+
+set showtabline=2                          " always show tabline
+
+set tabline=%=                             " align right
+set tabline+=%#StatusLineNC#cwd:\ %*       " de-emphasized label
+set tabline+=%{ShPath(1)}\                 " short form current working directory
 
 " Show cwd in titlestring
 set titlestring=%{ShPath(1)}
@@ -376,7 +381,6 @@ func! ShPath(use_cwd)
   let l:path = a:use_cwd ? getcwd() : expand('%:h')
   let l:path = substitute(path, $HOME, '~', '')
   let l:path = substitute(path, 'Projects', 'P', '')
-  let l:path = substitute(path, 'flabs', 'f', '')
   let l:path = substitute(path, $VIMRUNTIME, 'VIMRUNTIME', '')
   return l:path
 endf
