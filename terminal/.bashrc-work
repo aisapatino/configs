@@ -5,6 +5,17 @@
 
 source ~/Projects/configs/terminal/.bashrc-base
 
+# Node version manager
+#----------------------
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+# Shortcuts
+#----------
+
+export cellar=/usr/local/Cellar
+
 # Colors
 #--------
 
@@ -22,10 +33,6 @@ fi
 # Untracked .bashrc (for passwords, etc.)
 #-----------------------------------------
 
-if [ -f ~/Projects/flabs/.bashrc ] ; then
-  source ~/Projects/flabs/.bashrc
+if [ -f ~/Projects/.bashrc ] ; then
+  source ~/Projects/.bashrc
 fi
-
-
-# django (for pylint)
-export PYTHONPATH=$PYTHONPATH:~/Projects/personal/sjfnw/libs
