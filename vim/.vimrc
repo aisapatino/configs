@@ -109,8 +109,10 @@ set noswapfile              " no temp file to store changes since save
 
 " Persist undo history even after buffer is unloaded
 set undofile undodir=~/tmp/vim-undo
-"}}}
+
+" Always include tags from Notes
 set tags+=~/Drive/Notes/.tags
+"}}}
 
 "------------------------------------------------------------------------------
 " Plugins & runtime path
@@ -292,11 +294,14 @@ com! PrettyJson %!python -m json.tool
 com! DeleteAnsiCodes :%s/\e.\{-}m//c
 
 " Command shortcuts for functions
-com! UseTabs call UseTabs()
+com! AlignRight       call AlignRight()
 com! UpdateJavascriptCheckers call s:UpdateSyntasticJavascriptCheckers()
 
 " Debugging {{{1
 "-----------
+
+" Go to help for word under cursor
+nnoremap gh :call Alpw_SearchHelp()<CR>
 
 " Reload vimrc/gvimrc without losing working directory
 nnoremap <Leader>re :call ReloadVimrc()<CR>
@@ -306,6 +311,7 @@ com! ShowHighlightGroup echo s:ShowHighlightGroup()
 " Show test highlight page with current colors
 com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 "}}}
+
 "------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
@@ -406,6 +412,17 @@ if !exists('*ReloadVimrc')
   endfunc
 endif
 
+let s:notes_dir = '~/Drive/Notes/'
+
+" Browse notes dir, edit existing file or create a new one
+func! Alpw_note(title) abort
+  if a:title == ''
+    Vexplore ~/Drive/Notes
+  else
+    exec 'edit ' . s:notes_dir . fnameescape(a:title) . '.md'
+  endif
+endf
+
 " Base jump function based on Python_jump. Can be used for ft-specific jumps
 func! Alpw_Jump(pattern, flags) range
   let l:count = v:count1        " if triggered with number in front
@@ -437,6 +454,7 @@ func! s:ShowHighlightGroup()
   return 'name: ' . l:synname . ', hi: ' . l:synlinked . ', trans: ' . l:syntrans
 endf
 
+" Align the right-most word of current line against 80-char column
 func! AlignRight() abort
   let line = getline('.')
   let startpos = match(line, '\S\+$')
@@ -451,9 +469,12 @@ func! AlignRight() abort
   endif
   echom startpos . ', ' . endpos
   call cursor(0, startpos)
-  exec "normal " . (79 - endpos) . "i "
+  exec 'normal ' . (79 - endpos) . 'i '
 endf
-com! AlignRight call AlignRight()
+
+func! Alpw_SearchHelp()
+  exec "help " . expand('<cword>')
+endf
 
 " CtrlP {{{1
 "---------
@@ -559,16 +580,5 @@ func! s:UpdateSyntasticJavascriptCheckers()
   echom 'checkers: ' . join(checkers, ', ')
   let b:syntastic_javascript_checkers = checkers
 endf
-
-let s:notes_dir = '~/Drive/Notes/'
-
-" Edit an existing md file or create a new one
-func! Alpw_note(title) abort
-  if a:title == ''
-    echoerr 'Filename required.'
-  else
-    execute 'edit ' . s:notes_dir . fnameescape(a:title) . '.md'
-  endif
-endfunction
 
 " vim: foldenable foldmethod=marker
