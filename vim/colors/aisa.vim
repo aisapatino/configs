@@ -93,6 +93,7 @@ hi StatusLineNC   guifg=#a0b0c0  guibg=#3f5472  gui=NONE
 hi User1          guifg=#ffffff  guibg=#3f5472  gui=bold
 hi SLWarn         guifg=#a70035
 
+hi! link TabLine TablineFill
 hi! link TabLineFill StatusLine
 
 "------------------------------------------------------------------------------

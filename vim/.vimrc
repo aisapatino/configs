@@ -131,7 +131,7 @@ Plug 'sirver/ultisnips'
 Plug 'scrooloose/syntastic'
 Plug 'rking/ag.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv'
+Plug 'junegunn/gv.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-vinegar'
 
@@ -170,11 +170,6 @@ let g:ctrlp_custom_ignore = {
 \}
 
 let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbrowse
-
-let g:Gitv_CommitStep = 30           " less commits at a time, faster
-let g:Gitv_WipeAllOnClose = 1        " wipe buffers after use
-let g:Gitv_DoNotMapCtrlKey = 1       " don't set ctrl mappings
-let g:Gitv_TruncateCommitSubjects = 1
 
 let g:javascript_conceal_function = 'ƒ'
 
@@ -275,7 +270,7 @@ cabbrev hc    helpclose
 cabbrev vres  vertical resize
 cabbrev dg    diffget
 cabbrev dp    diffput
-cabbrev gk    Gitv --all
+cabbrev gk    GV
 
 " Print working directory
 nnoremap <Leader>p :pwd<CR>
