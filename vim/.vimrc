@@ -88,9 +88,7 @@ set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
 
-set tabline=%=                             " align right
-set tabline+=%#StatusLineNC#cwd:\ %*       " de-emphasized label
-set tabline+=%{ShPath(1)}\                 " short form current working directory
+set tabline=%!Alpw_Tabline()
 
 " Show cwd in titlestring
 set titlestring=%{ShPath(1)}
@@ -234,6 +232,10 @@ noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
+
+" Navigate tabs
+nnoremap <Leader>t :tabnext<CR>
+cabbrev tc tabclose
 
 " Easier keybinding for first non-whitespace char
 nnoremap 0 ^
@@ -393,6 +395,27 @@ func! ShPath(use_cwd)
   let l:path = substitute(path, 'Projects', 'P', '')
   let l:path = substitute(path, $VIMRUNTIME, 'VIMRUNTIME', '')
   return l:path
+endf
+
+" Tabline {{{1
+"---------
+
+func! Alpw_Tabline()
+  " Simple display of tab numbers, cwd on right
+  let s = ''
+  if tabpagenr('$') > 1
+    for i in range(1, tabpagenr('$'))
+      if i == tabpagenr()
+        let s .= '%#TabLineSel#'
+      else
+        let s .= '%#TabLine#'
+      endif
+      let s .= ' ' . i . ' '
+    endfor
+    let s .= '%#TabLineFill#'
+  endif
+  let s .= '%=%#StatusLineNC#cwd: %*%{ShPath(1)} '
+  return s
 endf
 
 " Misc utility {{{1
