@@ -7,28 +7,28 @@ cd ~/Projects
 " General {{{1
 "---------
 
+set t_Co=256                   " 256-color terminal
 if !has('gui')
-  colorscheme aisadark           " gui scheme will be set in .gvimrc
+  colorscheme aisadark         " gui scheme will be set in .gvimrc
 endif
-set t_Co=256                     " 256-color terminal
 
-set vb t_vb=
-set shell=bash                   " default to bash instead of sh for !commands
-set lazyredraw                   " don't redraw during background/auto commands
+set vb t_vb=                   " no beeping or flashing on error
+set shell=bash                 " default to bash instead of sh for !commands
+set lazyredraw                 " don't redraw during background/auto commands
 
-set number                       " show line numbers
-set relativenumber               " show line numbers relative to cursor
-set colorcolumn=80               " vertical line to show where the 80th col is
+set number                     " show line numbers
+set relativenumber             " show line numbers relative to cursor
+set colorcolumn=80             " vertical line to show where the 80th col is
 
-set conceallevel=2               " by default allow conceal & conceal chars
-set concealcursor=nc             " conceal in cursor line except in insert & visual
+set conceallevel=2             " by default allow conceal & conceal chars
+set concealcursor=nc           " conceal in cursor line too, in normal or cmd
 
-set wildmenu wildchar=<tab>      " autocomplete for commands
-set showcmd                      " show commands as you type
-set shortmess=ilmnxOI            " shorter messages, don't show intro screen
+set wildmenu wildchar=<tab>    " autocomplete for commands
+set showcmd                    " show commands as you type
+set shortmess=ilmnxOI          " shorter messages, don't show intro screen
 
-set formatoptions+=j             " remove comment chars when joining
-set list                         " display things like tabs, spaces, eol, etc.
+set formatoptions+=j           " remove comment chars when joining
+set list                       " display things like tabs, spaces, eol, etc.
 set listchars=trail:▫︎,tab:▷-,extends:›,precedes:‹
 set fillchars=fold:\ ,diff:\ ,vert:\ 
 set diffopt=filler,context:0,vertical,foldcolumn:1
@@ -36,17 +36,17 @@ set diffopt=filler,context:0,vertical,foldcolumn:1
 " Indent & wrap {{{1
 "---------------
 
-set expandtab        " insert spaces instead of tabs
-set tabstop=2        " how many columns wide a tab is visually
-set shiftwidth=2     " how many columns to indent with >>
-set autoindent       " take indent for new line from previous line
+set expandtab                  " insert spaces instead of tabs
+set tabstop=2                  " how many columns wide a tab is visually
+set shiftwidth=2               " how many columns to indent with >>
+set autoindent                 " take indent for new line from previous line
 
-set nowrap                       " don't wrap lines by default
+set nowrap                     " don't wrap lines by default
 if exists('+breakindent')
-  set breakindent                " maintain indent when wrapping
+  set breakindent              " maintain indent when wrapping
 endif
-set linebreak                    " only break between words when wrapping
-set showbreak=↳                  " indicate start of wrapped lines
+set linebreak                  " only break between words when wrapping
+set showbreak=↳                " indicate start of wrapped lines
 
 " Movement {{{1
 "----------
@@ -87,7 +87,6 @@ set statusline+=\ \ \ %<%{ShPath(0)}       " shortened path
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
-
 set tabline=%!Alpw_Tabline()
 
 " Show cwd in titlestring
@@ -152,6 +151,8 @@ call plug#end()
 " Plugin config {{{1
 "---------------
 
+cabbrev ag Ag!
+
 call ctrlp_bdelete#init()                  " enable plugin for deleting buffers
 
 let g:ctrlp_extensions = ['tag']           " enable searching of tags
@@ -169,7 +170,19 @@ let g:ctrlp_custom_ignore = {
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
 \}
 
+" Quick shortcuts: find all, files, recent, buffers, tags
+nnoremap <Leader>fa :CtrlPMixed<CR>
+nnoremap <Leader>ff :CtrlP<CR>
+nnoremap <Leader>fr :CtrlPMRU<CR>
+nnoremap <Leader>b  :CtrlPBuffer<CR>
+nnoremap <Leader>ft :CtrlPTag<CR>
+
 let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbrowse
+
+cabbrev blame Gblame
+cabbrev gs    Gstatus
+cabbrev gf    Gfetch
+cabbrev gk    GV
 
 let g:javascript_conceal_function = 'ƒ'
 
@@ -251,29 +264,16 @@ nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 " Open netrw in vsplit
 cabbrev ve Vexplore
 
-" Quick shortcuts: find all, files, recent, buffers, tags
-nnoremap <Leader>fa :CtrlPMixed<CR>
-nnoremap <Leader>ff :CtrlP<CR>
-nnoremap <Leader>fr :CtrlPMRU<CR>
-nnoremap <Leader>b  :CtrlPBuffer<CR>
-nnoremap <Leader>ft :CtrlPTag<CR>
-
 " Easy access to ~/Drive/Notes md files
 com! -nargs=? Note call Alpw_note(<q-args>)
 
 " Misc {{{1
 "------
 
-cabbrev ag    Ag!
-cabbrev blame Gblame
 cabbrev hc    helpclose
 cabbrev vres  vertical resize
 cabbrev dg    diffget
 cabbrev dp    diffput
-cabbrev gk    GV
-
-" Print working directory
-nnoremap <Leader>p :pwd<CR>
 
 " Clear search highlighting
 nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
@@ -289,7 +289,7 @@ com! Trail %s/\s\+$
 
 com! PrettyJson %!python -m json.tool
 
-com! DeleteAnsiCodes :%s/\e.\{-}m//c
+com! DeleteAnsiCodes :%s/\e.\{-}m//
 
 " Command shortcuts for functions
 com! AlignRight       call AlignRight()
