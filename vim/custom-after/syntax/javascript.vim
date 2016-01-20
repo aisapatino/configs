@@ -3,10 +3,15 @@
 " Syntax
 "--------
 
+syn match jsClassName "\(class\ \)\@<=\S\+"
+syn match jsClassMethod "^\s*\zs\w\+\ze(.*)\s\?{$" containedin=jsBlock
+
+" Identify properties on the exports object
 syn clear jsExportContainer
+syn keyword jsModule exports module
+syn match jsExports "\(exports\.\)\@<=\S\+"
 
-syn match jsExports "^exports\zs\S\+"
-
+" Add common 'this' aliases
 syn keyword jsThis self _this
 
 syn keyword mochaChai     suite describe it before after beforeEach afterEach containedin=jsFuncCall,jsFuncBlock
@@ -32,3 +37,7 @@ hi! link chaiAssert      Keyword
 hi! link mochaChaiDone   Keyword
 hi! link mochaChai       Statement
 hi! link mochaWarn       WarningMsg
+
+hi link jsClassName      ClassName
+hi link jsClassMethod    Function
+hi link jsModule         Keyword

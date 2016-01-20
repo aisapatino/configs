@@ -31,10 +31,10 @@ ${1:FUNC_NAME} = function $1(${2:PARAMS}) {
 
 endsnippet
 
-snippet f "anon function no args" ws
-function () {
-	${1}
-});
+snippet fn "anon callback function es6" ws
+(${1}) => {
+	${2}
+});${3}
 endsnippet
 
 snippet fa "anon function with args" ws
@@ -87,21 +87,21 @@ endsnippet
 # mocha
 # ------
 
-snippet desc "skeleton for describe wrapper" s
-describe("${1:SUITE DESC}", function () {
+snippet desc "skeleton for describe wrapper es6" s
+describe("${1:SUITE DESC}", () => {
 	${2}
 });
 endsnippet
 
-snippet be "beforeEach"
-beforeEach(function () {
-	${1}
+snippet be "beforeEach es6"
+beforeEach((${1}) => {
+	${2}
 });
 
 endsnippet
 
-snippet it "skeleton for single it (with done cb)" s
-it("should ${1:TEST DESC}", function (done) {
+snippet it "skeleton for single it (with done cb) es6" s
+it("should ${1:TEST DESC}", (done) => {
 	${2}
 });
 
