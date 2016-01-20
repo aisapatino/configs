@@ -12,5 +12,5 @@ endif
 
 " Move between headers
 let b:header = '^\(===\|---\).*\(===\|---\)$'
-nnoremap <buffer> <Leader>h :call Alpw_Jump(b:header, 'e')<CR>j
-nnoremap <buffer> <Leader>H :call Alpw_Jump(b:header, 'be')<CR>j
+nnoremap <buffer> [[ :call Alpw_Jump(b:header, 'e')<CR>j
+nnoremap <buffer> ]] :call Alpw_Jump(b:header, 'be')<CR>j
