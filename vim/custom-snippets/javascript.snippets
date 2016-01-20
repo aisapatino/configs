@@ -49,6 +49,12 @@ function (${1}) {
 });
 endsnippet
 
+snippet af "arrow function" ws
+(${1}) => {
+	${2}
+});${3}
+endsnippet
+
 # console logging
 # ---------------
 
@@ -100,8 +106,8 @@ beforeEach((${1}) => {
 
 endsnippet
 
-snippet it "skeleton for single it (with done cb) es6" s
-it("should ${1:TEST DESC}", (done) => {
+snippet it "skeleton for single it, sync es6" s
+it("should ${1:TEST DESC}", () => {
 	${2}
 });
 
@@ -113,7 +119,7 @@ it.skip("should ${1:TEST DESC}", function (done) {
 
 endsnippet
 
-snippet its "skeleton for single sync it (without done cb)" s
+snippet ita "skeleton for single sync it async" s
 it("should ${1:TEST DESC}", function () {
 	${2}
 });

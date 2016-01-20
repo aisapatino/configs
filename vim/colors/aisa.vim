@@ -5,7 +5,6 @@ if exists("syntax_on")
 endif
 let colors_name = "aisa"
 
-"------------------------------------------------------------------------------
 " Basic screen components                               see :h highlight-groups
 "------------------------------------------------------------------------------
 
@@ -23,7 +22,6 @@ hi CursorLineNr   guifg=#3f5472  guibg=#f6f6f6
 
 hi ColorColumn                   guibg=#f6f6f6
 
-"------------------------------------------------------------------------------
 " Syntax groups                                               see :h group-name
 "------------------------------------------------------------------------------
 
@@ -54,7 +52,6 @@ hi Debug          guifg=#44047e  gui=italic
 hi! link SpecialChar NONE
 hi! link SpecialKey  Comment
 
-hi BoldUnderlined guifg=NONE     gui=bold,underline
 hi Underlined     guifg=NONE     gui=underline
 
 hi Error          guifg=#a70035  guibg=NONE     gui=bold
@@ -63,11 +60,11 @@ hi Todo           guifg=NONE     guibg=NONE     gui=italic,bold
 " Custom syntax groups
 "---------------------
 
+hi BoldUnderlined guifg=NONE     gui=bold,underline
 hi ClassName      guifg=#c600bd                 gui=bold
 hi Code           guifg=#44047e  guibg=#ffffff
 hi WebLink        guifg=#1158a1                 gui=underline
 
-"------------------------------------------------------------------------------
 " Text states (dynamic highlights)
 "------------------------------------------------------------------------------
 
@@ -84,7 +81,7 @@ hi! link DiffText DiffAdd
 
 hi! SpellLocal    gui=underline  guisp=#ff8800
 hi! SpellCap      gui=underline
-"------------------------------------------------------------------------------
+
 " Statusline / Tabline
 "------------------------------------------------------------------------------
 
@@ -96,7 +93,6 @@ hi SLWarn         guifg=#a70035
 hi! link TabLine TablineFill
 hi! link TabLineFill StatusLine
 
-"------------------------------------------------------------------------------
 " Other components
 "------------------------------------------------------------------------------
 
@@ -119,7 +115,6 @@ hi Title          guifg=NONE                    gui=bold
 
 hi WildMenu       guifg=#ffffff  guibg=#3a9281
 
-"------------------------------------------------------------------------------
 " Plugins
 "------------------------------------------------------------------------------
 
