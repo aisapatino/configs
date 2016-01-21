@@ -83,14 +83,14 @@ set statusline+=\ %{SL_file()}%*           " buffer number or special ft
 set statusline+=\ %#SLWarn#%{SL_mod()}%*   " modified/nomodifiable flag
 set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{ShPath(0)}       " shortened path
+set statusline+=\ \ \ %<%{SL_dir()}       " shortened path
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
 set tabline=%!Alpw_Tabline()
 
 " Show cwd in titlestring
-set titlestring=%{ShPath(1)}
+set titlestring=%{Alpw_CWD()}
 
 " Files, sessions {{{1
 "-----------------
@@ -317,6 +317,26 @@ com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 " Functions
 "------------------------------------------------------------------------------
 
+" Helpers {{{1
+"---------
+
+func! s:expect_readonly(ft)
+  " Return true if given filetype is expected to be readonly; else false
+  return (a:ft == 'help') || (a:ft == 'netrw') || (a:ft == 'fugitiveblame')
+endf
+
+func! s:ShortPath(p)
+  let l:path = substitute(a:p, $HOME, '~', '')
+  let l:path = substitute(l:path, 'Projects', 'P', '')
+  let l:path = substitute(l:path, $VIMRUNTIME, 'VIMRUNTIME', '')
+  return l:path
+endf
+
+func! Alpw_CWD()
+  " Get shortened format CWD
+  return s:ShortPath(getcwd())
+endf
+
 " Folds & statusline {{{1
 "--------------------
 
@@ -332,18 +352,13 @@ func! GetFoldText()
   return l:line . printf('%4d', l:num_lines)
 endf
 
-func! s:expect_readonly(ft)
-  " Return true if given filetype is expected to be readonly; else false
-  return (a:ft == 'help') || (a:ft == 'netrw') || (a:ft == 'fugitiveblame')
-endf
-
 func! SL_file()
   " Return file identifier for status line.
   " Depending on filetype, may be buffer number, filetype, directory and/or filename.
   let l:ft = getbufvar('%', '&filetype')
   let l:result = s:expect_readonly(l:ft) ? '[' . l:ft . ']' : bufnr('%')
   let l:result .= ' '
-  let l:result .= (l:ft == 'netrw') ? expand('%') : expand('%:t')
+  let l:result .= (l:ft == 'netrw') ? s:ShortPath(getbufvar('%', 'netrw_curdir')) : expand('%:t')
   return l:result
 endf
 
@@ -379,17 +394,13 @@ func! SL_branch_indent()
   return l:branch . ' ' . l:width
 endf
 
-func! ShPath(use_cwd)
-  " Return shortened path for current buffer or cwd.
-  " Defaults to path of current buffer unless `use_cwd` is true
-  if !a:use_cwd && (getbufvar('%', '&filetype') == 'netrw')
+func! SL_dir()
+  " Return shortened path for current buffer
+  " Skip netrw since it displays path in file spot
+  if getbufvar('%', '&filetype') == 'netrw'
     return ''
   endif
-  let l:path = a:use_cwd ? getcwd() : expand('%:h')
-  let l:path = substitute(path, $HOME, '~', '')
-  let l:path = substitute(path, 'Projects', 'P', '')
-  let l:path = substitute(path, $VIMRUNTIME, 'VIMRUNTIME', '')
-  return l:path
+  return s:ShortPath(expand('%:h'))
 endf
 
 " Tabline {{{1
@@ -409,7 +420,7 @@ func! Alpw_Tabline()
     endfor
     let s .= '%#TabLineFill#'
   endif
-  let s .= '%=%#StatusLineNC#cwd: %*%{ShPath(1)} '
+  let s .= '%=%#StatusLineNC#cwd: %*%{Alpw_CWD()} '
   return s
 endf
 
