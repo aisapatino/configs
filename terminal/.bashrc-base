@@ -48,7 +48,8 @@ complete -o default -o nospace -F _git g
 #---------
 
 alias ll="ls -la"
-alias f="find . -iname"       # see function ff() for specifying dir
+alias fa="find . -iname"       # see function ff() for specifying dir
+alias f="find . -not -path *node_modules* -iname"
 alias g="git"
 alias gs="git status"
 alias gf="git fetch"

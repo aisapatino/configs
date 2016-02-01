@@ -18,8 +18,7 @@
 [fetch]
   prune = true
 [http]
-  # prevent failures if repo is large
-  postBuffer = 524288000
+  postBuffer = 524288000    # prevent failures if repo is large
 [merge]
   tool = fugitive
 [mergetool]
@@ -50,7 +49,7 @@
   com = commit
   ca = commit --amend
   can = commit --amend -C HEAD
-  # diffs
+  # diff
   d = diff
   dc = diff --cached
   ds = diff --stat
