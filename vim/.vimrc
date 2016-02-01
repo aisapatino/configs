@@ -112,6 +112,100 @@ set tags+=~/Drive/Notes/.tags
 "}}}
 
 "------------------------------------------------------------------------------
+" Custom maps, commands, abbreviations
+"------------------------------------------------------------------------------
+
+" Basics {{{1
+"--------
+
+let mapleader=' '
+
+noremap ; :
+noremap : ;
+
+" Movement {{{1
+"----------
+
+" Navigate window splits
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+
+" Navigate tabs
+nnoremap <Leader>t :tabnext<CR>
+cabbrev tc tabclose
+
+" Easier keybinding for first non-whitespace char
+nnoremap 0 ^
+nnoremap ^ 0
+
+" Navigate location list & quickfix
+nnoremap ]l :lnext<CR>
+nnoremap [l :lprev<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprev<CR>
+
+" Jump to conflict markers
+nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
+
+" File navigation {{{1
+"-----------------
+
+" Open netrw in vsplit
+cabbrev ve Vexplore
+
+" Easy access to ~/Drive/Notes md files
+com! -nargs=? Note call Alpw_note(<q-args>)
+
+" Misc {{{1
+"------
+
+cabbrev hc    helpclose
+cabbrev vres  vertical resize
+cabbrev dg    diffget
+cabbrev dp    diffput
+
+" Clear search highlighting
+nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
+
+" Copy all to global register
+noremap <C-a> :%y+<CR>
+
+" Change working dir to current file's dir
+com! Current cd %:h
+
+" Trim trailing spaces
+com! Trail %s/\s\+$
+
+com! PrettyJson %!python -m json.tool
+
+com! DeleteAnsiCodes :%s/\e.\{-}m//
+
+" Command shortcuts for functions
+com! AlignRight       call AlignRight()
+com! UpdateJSCheckers call s:UpdateSyntasticJavascriptCheckers()
+com! UseTabs          call UseTabs()
+com! WMSetEslint      call s:WMSetEslint()
+com! ListWindows      call ListWindows()
+
+" Debugging {{{1
+"-----------
+
+" Go to help for word under cursor
+nnoremap gh :call Alpw_SearchHelp()<CR>
+
+" Reload vimrc/gvimrc without losing working directory
+nnoremap <Leader>re :call ReloadVimrc()<CR>
+
+com! ShowHighlightGroup echo s:ShowHighlightGroup()
+
+" Show test highlight page with current colors
+com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
+"}}}
+
+
+"------------------------------------------------------------------------------
 " Plugins & runtime path
 "------------------------------------------------------------------------------
 
@@ -219,100 +313,6 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " for :UltiSnipsEdit
 let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 "}}}
-
-"------------------------------------------------------------------------------
-" Custom maps, commands, abbreviations
-"------------------------------------------------------------------------------
-
-" Basics {{{1
-"--------
-
-let mapleader=' '
-
-noremap ; :
-noremap : ;
-
-" Movement {{{1
-"----------
-
-" Navigate window splits
-noremap <C-h> <C-w>h
-noremap <C-l> <C-w>l
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-
-" Navigate tabs
-nnoremap <Leader>t :tabnext<CR>
-cabbrev tc tabclose
-
-" Easier keybinding for first non-whitespace char
-nnoremap 0 ^
-nnoremap ^ 0
-
-" Navigate location list & quickfix
-nnoremap ]l :lnext<CR>
-nnoremap [l :lprev<CR>
-nnoremap ]q :cnext<CR>
-nnoremap [q :cprev<CR>
-
-" Jump to conflict markers
-nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
-
-" File navigation {{{1
-"-----------------
-
-" Open netrw in vsplit
-cabbrev ve Vexplore
-
-" Easy access to ~/Drive/Notes md files
-com! -nargs=? Note call Alpw_note(<q-args>)
-
-" Misc {{{1
-"------
-
-cabbrev hc    helpclose
-cabbrev vres  vertical resize
-cabbrev dg    diffget
-cabbrev dp    diffput
-
-" Clear search highlighting
-nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
-
-" Copy all to global register
-noremap <C-a> :%y+<CR>
-
-" Change working dir to current file's dir
-com! Current cd %:h
-
-" Trim trailing spaces
-com! Trail %s/\s\+$
-
-com! PrettyJson %!python -m json.tool
-
-com! DeleteAnsiCodes :%s/\e.\{-}m//
-
-" Command shortcuts for functions
-com! AlignRight       call AlignRight()
-com! UpdateJSCheckers call s:UpdateSyntasticJavascriptCheckers()
-com! UseTabs          call UseTabs()
-com! WMSetEslint      call s:WMSetEslint()
-com! ListWindows      call ListWindows()
-
-" Debugging {{{1
-"-----------
-
-" Go to help for word under cursor
-nnoremap gh :call Alpw_SearchHelp()<CR>
-
-" Reload vimrc/gvimrc without losing working directory
-nnoremap <Leader>re :call ReloadVimrc()<CR>
-
-com! ShowHighlightGroup echo s:ShowHighlightGroup()
-
-" Show test highlight page with current colors
-com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
-"}}}
-
 "------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
