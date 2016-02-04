@@ -9,8 +9,8 @@ run_setup() {
   local header="\n===== %s =====\n"
   local configs=~/Projects/configs
 
-  # Parse install type
-  #====================
+  # Determine install type
+  #------------------------
 
   if [[ $1 == m* ]] || [[ $1 == w* ]] ; then # "mac" or "work"
     local install_type='work'
@@ -25,7 +25,7 @@ run_setup() {
   echo "Running $install_type setup"
 
   # Git
-  #=====
+  #-----
 
   printf "$header" "git"
 
@@ -38,9 +38,14 @@ run_setup() {
     curl -o ~/.git-completion.bash \
       https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
   fi
+  if [ ! -f ~/.git-prompt.sh ]; then
+    echo "Getting git-prompt.sh"
+    curl -o ~/.git-prompt.sh \
+      https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+  fi
 
   # Terminal
-  #==========
+  #----------
 
   printf "$header" "shell/terminal"
 
@@ -57,7 +62,7 @@ run_setup() {
   fi
 
   # Other
-  #=======
+  #-------
 
   if [ $linux ] ; then
     printf "$HEADER" "lint"
@@ -71,7 +76,7 @@ run_setup() {
   ln -fsv "$configs/other/.ctags"    ~
 
   # Vim
-  #=====
+  #-----
 
   printf "$header" "vim"
 
