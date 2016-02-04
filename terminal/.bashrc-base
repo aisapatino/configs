@@ -1,19 +1,19 @@
-# Base config - common to linux & osx. Sourced by computer-specific bashrc
+# Base config - common to linux & osx. Sourced by the other specific bashrc files
 
 # Settings
 #----------
 
-set -o vi
+HISTCONTROL=ignoreboth         # ignore duplicates & commands starting with space
+HISTIGNORE="ls:ll:gs:gd:cd *"  # ignore frequent short commands
+HISTSIZE=1000                  # double the default
+shopt -s histappend            # add to existing history instead of overwriting
+
+shopt -s cdable_vars           # cd using vars without having to include $
 
 export EDITOR=vim
 export VISUAL=$EDITOR
 
-HISTCONTROL=ignoreboth          # ignore duplicates & commands starting with space
-HISTIGNORE="ls:ll:gs:gd:cd *"   # ignore frequent short commands
-HISTSIZE=1000                   # double the default
-shopt -s histappend             # add to existing history instead of overwriting
-
-shopt -s cdable_vars            # cd using vars without having to include $
+set -o vi
 
 # Colors
 #--------
@@ -44,19 +44,24 @@ fi
 # Autocomplete for 'g' as well
 complete -o default -o nospace -F _git g
 
+# Initialize Ruby
+#-----------------
+
+if [ -d ~/.rbenv ] ; then
+  eval "$(rbenv init -)"
+fi
+
 # Aliases
 #---------
 
 alias ll="ls -la"
-alias fa="find . -iname"       # see function ff() for specifying dir
-alias f="find . -not -path *node_modules* -iname"
+alias f="find . -not -path \"*node_modules*\" -iname"
+alias fa="find . -iname"                 # see function ff() for specifying dir
+
 alias g="git"
 alias gs="git status"
-alias gf="git fetch"
-alias gd="git diff"
-alias gdc="git diff --cached"
 alias gk="gitk --all"
-alias gkb="gitk --branches"    # only show local branches (useful for big/active repos)
+alias gkb="gitk --branches"        # only local branches (useful for big repos)
 
 alias npmlist="npm ls --depth=0"
 
@@ -67,22 +72,20 @@ alias trd="$base_tree -d"
 # Custom functions
 #------------------
 
-# Replace across files
-# Usage: sr <pattern> <replacement> "<filepattern>"
+# Replace across files. Usage: sr <pattern> <replacement> "<filepattern>"
 sr() {
   echo "replacing $1 with $2 in files matching $3"
   echo "(if the file match looks wrong, make sure you put quotes around it)"
   find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
 }
 
-# Find file in specified dir
-# Usage: ff <pathtosearch> "<pattern>" (example: ff ../frontend "*.png")
+# Find file in specified dir. Usage: ff <pathtosearch> "<pattern>" 
+# Example: ff ../frontend "*.png"
 ff() {
   find "$1" -iname "$2"
 }
 
-# List local branches with corresponding remotes and status
-# Uses git branch -vv and modifies the format/info shown. Example output:
+# List local git branches with corresponding remotes and status. Example output:
 #   master           [origin/master]
 #   webpack-tests
 # * wp-common-tests  [origin/wp-common-tests: ahead 12]
@@ -91,10 +94,3 @@ ff() {
 br() {
   git branch -vv | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
 }
-
-# Initialize Ruby
-#-----------------
-
-if [ -d ~/.rbenv ] ; then
-  eval "$(rbenv init -)"
-fi

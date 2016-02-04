@@ -5,20 +5,20 @@
 [color]
   ui = always
 [core]
-  autocrlf = false    # don't handle line endings, leave it to vim/editorconfig
+  autocrlf = false
   excludesfile = ~/.gitignore
   editor = vim
 [credential]
   helper = cache --timeout=3600
 [diff]
-  renames = "copies"
+  renames = true
   tool = gvimdiff
 [difftool]
   prompt = false
 [fetch]
   prune = true
-[http]
-  postBuffer = 524288000    # prevent failures if repo is large
+[hub]
+  host = gecgithub01.walmart.com
 [merge]
   tool = fugitive
 [mergetool]
@@ -28,8 +28,6 @@
   cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
 [push]
   default = simple
-[rebase]
-  missingCommitsCheck = warn
 [rerere]
   enabled = true
 [sequence]
@@ -38,14 +36,14 @@
   email = anna.luisa.west@formidablelabs.com
   name = "Anna Luisa Patiño West"
 [alias]
-  # basics
   s = status
-  st = status
+  # branches
   ch = checkout
-  a = add
   br = branch
   bra = branch --all
-  # commit
+  # staging & commits
+  a = add
+  re = reset
   com = commit
   ca = commit --amend
   can = commit --amend -C HEAD
@@ -54,9 +52,8 @@
   dc = diff --cached
   ds = diff --stat
   # history
-  l = log --format=\"%Cblue%h%Creset %C(bold green)%s% %Cred%d%Creset%n  %ad %an %n\" --date=relative
-  lf = log --format=\"%n%Cblue%h%Creset %C(bold green)%s%Creset %Cred%d%Creset %n  %ad %an\" --date=relative --stat --name-status
-  bi = bisect
+  l = log --format=\"%C(blue)%h%Creset %C(green)%s% %C(yellow)%d%Creset%n  %ad %an %n\" --date=relative
+  lf = log --format=\"%n%C(blue)%h%Creset %C(green)%s%Creset %C(yellow)%d%Creset %n  %ad %an\" --date=relative --stat --name-status
   # fetch, pull, rebase
   f = fetch
   p = pull
@@ -64,14 +61,14 @@
   r = rebase
   ri = rebase -i
   rc = rebase --continue
-  cp = cherry-pick
   # stash
-  shows = stash show -p
-  ss = stash save
-  sp = stash pop
-  sl = stash list --format=\"\n%C(bold)%gd%Creset %C(green)%s%Creset %ar\" --stat --name-status
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
-  # submodules
+  sl = stash list --format=\"\n%C(yellow)%gd%Creset %C(green)%s%Creset %ar\" --stat --name-status
+  ss = stash save
+  sp = stash pop
+  shows = stash show -p
+  # infrequently used
+  bi = bisect
+  cp = cherry-pick
   sup = submodule update
-  subst = submodule status
