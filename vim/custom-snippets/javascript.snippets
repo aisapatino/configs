@@ -1,68 +1,36 @@
-# by default, only expands if at beginning of line or after whitespace
+# default - only expands at beginning of line or after whitespace
 # options:
-#	 b  beginning of line only (not after whitespace)
+#	 b  beginning of line only (whitespace ok)
 #	 w  word boundary (can be adjacent to non-word, non-whitespace chars)
-#	 i  in-word expansion allowed
 #	 s  trim trailing whitespace before going to next line
-# 	  (useful when there are optional params after a tab)
+# 	  (use if there are optional params after a tab)
+# see UltiSnips-snippet-options for more
 
 #------------------------------------------------------------------------------
-# GENERAL
+# GENERAL JAVASCRIPT
 #------------------------------------------------------------------------------
 
 snippet str "use strict statement" b
 "use strict";
 endsnippet
 
-# functions
-# ---------
-
-snippet pf "prototype function" ws
-prototype.${1:FUNC_NAME} = function $1(${2:PARAMS}) {
-	${3}
-};
-
-endsnippet
-
-snippet of "object function" ws
-${1:FUNC_NAME} = function $1(${2:PARAMS}) {
-	${3}
-};
-
-endsnippet
-
-snippet fn "anon callback function es6" ws
-(${1}) => {
-	${2}
-});${3}
-endsnippet
-
-snippet fa "anon function with args" ws
-function (${1}) {
-	${2}
-})
-endsnippet
-
-snippet fas "anon function with args & semicolon" ws
+snippet cb "callback (anon func with closing parens)" ws
 function (${1}) {
 	${2}
 });
 endsnippet
 
-snippet af "arrow function" ws
+snippet af "arrow function (as callback)" ws
 (${1}) => {
 	${2}
 });${3}
 endsnippet
 
-# console logging
-# ---------------
-
-snippet co "console.log" w
+snippet co "console.log" b
 console.log(${1});
 endsnippet
 
-snippet con "console.log with quotes" w
+snippet con "console.log with quotes" b
 console.log("${1}"${2});
 endsnippet
 
@@ -70,19 +38,19 @@ endsnippet
 # NODE
 #------------------------------------------------------------------------------
 
-snippet cr "es6 matching require" b
+snippet crm "const require, matching" b
 const ${1} = require("$1");
 endsnippet
 
-snippet cre "es6 non-matching require" b
+snippet cr "const require (non-matching)" b
 const ${1} = require("$2");
 endsnippet
 
-snippet req "generic matching require" b
+snippet req "matching require (var)" b
 var ${1} = require('$1');
 endsnippet
 
-snippet re "generic non-matching require" b
+snippet re "non-matching require (var)" b
 var ${1} = require('${2}');
 endsnippet
 
@@ -93,35 +61,43 @@ endsnippet
 # mocha
 # ------
 
-snippet desc "skeleton for describe wrapper es6" s
+snippet desc "describe wrapper" bs
 describe("${1:SUITE DESC}", () => {
 	${2}
 });
 endsnippet
 
-snippet be "beforeEach es6"
+snippet be "beforeEach" b
 beforeEach((${1}) => {
 	${2}
 });
 
 endsnippet
 
-snippet it "skeleton for single it, sync es6" s
+snippet ae "afterEach" b
+afterEach((${1}) => {
+	${2}
+});
+
+endsnippet
+
+snippet it "it wrapper, sync" bs
 it("should ${1:TEST DESC}", () => {
 	${2}
 });
 
 endsnippet
 
-snippet iti "skeleton for single skipped it (with done cb)" s
-it.skip("should ${1:TEST DESC}", function (done) {
+snippet ita "it wrapper, async" bs
+it("should ${1:TEST DESC}", function (done) {
+	${2}
+	done();
 });
 
 endsnippet
 
-snippet ita "skeleton for single sync it async" s
-it("should ${1:TEST DESC}", function () {
-	${2}
+snippet its "it.skip" bs
+it.skip("should ${1:TEST DESC}", function () {
 });
 
 endsnippet
@@ -134,172 +110,31 @@ then(function (${1:results}) {
 .catch(done);
 endsnippet
 
-# supertest-as-promised
-# ---------------------
-
-snippet tget "test request" s
-request.${1:get}('${2:URL}')
-	.expect(${3:200})
-	.then(function (res) {
-		${4}
-		done();
-	})
-	.catch(done);
-endsnippet
-
 # chai bdd
 # --------
 
-snippet tf "test file - require expect" b
-'use strict';
-
-var expect = require('chai').expect;
-
-${1}
-endsnippet
-
-snippet exp "expect" s
+snippet exp "expect, generic" b
 expect(${1:VAR}).to.${2:ETC};
 endsnippet
 
-snippet ep "expect property"
+snippet ep "expect property" b
 expect(${1}).to.have.property("${2}"${3});
 endsnippet
 
-snippet epp "expect property that is a..."
-expect(${1}).to.have.property("${2}").that.is.a${3}("${4}");
+snippet en "expect not (property)" b
+expect(${1}).to.not.have.${3}property("${2}");
 endsnippet
 
-snippet et "expect type" s
+snippet epd "expect deep property" b
+expect(${1}).to.have.deep.property("${2}"${3});
+endsnippet
+
+snippet ept "expect property + type" b
+expect(${1}).to.have.${5}property("${2}").that.is.a${3}("${4}");
+endsnippet
+
+snippet et "expect type" b
 expect(${1}).to.be.a${2}("${3}")${4};
-endsnippet
-
-# nock
-# -----
-
-snippet nock "nock outline" sw
-nock
-	.${1:METHOD}('/${2:URL}')
-	.reply(${3:200}, ${4:DATA});
-endsnippet
-
-#------------------------------------------------------------------------------
-# BACKBONE & MARIONETTE
-#------------------------------------------------------------------------------
-
-snippet model "outline for Backbone Model"
-'use strict';
-
-var Model = require('backbone').Model;
-
-module.exports = Model.extend({
-
-});
-endsnippet
-
-# specific to project
-snippet coll "outline of Backbone Collection"
-'use strict';
-
-var assert = require('assert');
-var Collection = require('backbone').Collection;
-
-var config = require('../config');
-
-module.exports = Collection.extend({
-
-	url: function () {
-		return config.server + ${1:''};
-	},
-
-	initialize: function initialize(options) {
-		assert(options.${2:prop}, 'options.$2 is required');
-	}
-});
-endsnippet
-
-snippet layout "LayoutView"
-'use strict';
-
-var assert = require('assert');
-var LayoutView = require('marionette').LayoutView;
-
-var template = require('templates/${1:TEMPLATE}.jade');
-
-module.exports = LayoutView.extend({
-
-	template: template,
-
-	regions: {${2}},
-
-	// Initialization
-	// ---------------
-
-	initialize: function initialize(options) {
-		// assert required options
-		// create models and collections
-
-		// create child views, call listener setup (or in onAttach)
-	},
-
-	onAttach: function onAttach() {
-		// this.showChildView('region', view);
-	},
-
-	// View events
-	// -----------
-
-	addViewListeners: function addViewListeners() {
-	},
-
-	// Collection events
-	// -----------------
-
-	addCollectionListeners: function addCollectionListeners() {
-	},
-
-	// Private methods
-	// ---------------
-});
-endsnippet
-
-snippet iview "Marionette ItemView" bs
-'use strict';
-
-var assert = require('assert');
-var Marionette = require('marionette');
-
-var template = require('templates/${1:TEMPLATE}.jade');
-
-module.exports = Marionette.ItemView.extend({
-	template: template,
-
-	initialize: function initialize(options) {
-		assert(options.${2:model}, 'options.$2 is required');
-		this.listenTo(this.$2, 'sync', this.render);
-		this.$2.fetch();
-	},
-
-	// View events
-	// -----------
-	events: {
-	},
-
-	// Template helpers
-	// ----------------
-
-	templateHelpers: function templateHelpers() {
-		return {};
-	}
-});
-endsnippet
-
-#-----------------------------------------------------------------------------
-# JSDOC
-#-----------------------------------------------------------------------------
-
-snippet param "@param" ws
-@param {${1:TYPE}} ${2:NAME} - ${3:DESC}
 endsnippet
 
 #-----------------------------------------------------------------------------
@@ -310,10 +145,10 @@ snippet dl "disable line" ws
 // eslint-disable-line ${1}
 endsnippet
 
-snippet dis "eslint disable"
+snippet dis "eslint disable" b
 /* eslint-disable ${1} */
 endsnippet
 
-snippet en "eslint enable"
+snippet een "eslint enable" b
 /* eslint-enable ${1} */
 endsnippet
