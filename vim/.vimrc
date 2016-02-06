@@ -204,7 +204,6 @@ com! ShowHighlightGroup echo s:ShowHighlightGroup()
 com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 "}}}
 
-
 "------------------------------------------------------------------------------
 " Plugins & runtime path
 "------------------------------------------------------------------------------
@@ -237,7 +236,7 @@ Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
 Plug 'digitaltoad/vim-jade'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'tpope/vim-markdown'
+Plug 'aisapatino/vim-markdown'
 Plug 'aisapatino/vim-stylus'
 
 call plug#end()
