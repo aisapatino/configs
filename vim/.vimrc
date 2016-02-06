@@ -308,6 +308,7 @@ let g:syntastic_lua_checkers = ['luac']
 
 let g:UltiSnipsExpandTrigger = '<s-tab>'
 let g:UltiSnipsJumpForwardTrigger = '<s-tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-tab>'
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " for :UltiSnipsEdit
 let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
@@ -503,7 +504,7 @@ func! ListWindows()
 endf
 
 func! Alpw_SearchHelp()
-  exec "help " . expand('<cword>')
+  exec "help " . expand('<cWORD>')
 endf
 
 " Modify settings/mappings {{{1
