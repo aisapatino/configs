@@ -12,7 +12,7 @@ if !has('gui')
   colorscheme aisadark         " gui scheme will be set in .gvimrc
 endif
 
-set vb t_vb=                   " no beeping or flashing on error
+set vb t_vb=                   " don't beep or flash on error
 set shell=bash                 " default to bash instead of sh for !commands
 set lazyredraw                 " don't redraw during background/auto commands
 
@@ -83,14 +83,13 @@ set statusline+=\ %{SL_file()}%*           " buffer number or special ft
 set statusline+=\ %#SLWarn#%{SL_mod()}%*   " modified/nomodifiable flag
 set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{SL_dir()}       " shortened path
+set statusline+=\ \ \ %<%{SL_dir()}        " shortened path
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
 set tabline=%!Alpw_Tabline()
 
-" Show cwd in titlestring
-set titlestring=%{Alpw_CWD()}
+set titlestring=%{Alpw_CWD()}              " show cwd in titlestring
 
 " Files, sessions {{{1
 "-----------------
@@ -123,7 +122,7 @@ let g:netrw_timefmt = '%Y %b %d %H:%M'
 " Basics {{{1
 "--------
 
-let mapleader=' '
+let mapleader = ' '
 
 noremap ; :
 noremap : ;
@@ -137,7 +136,7 @@ noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 
-" Navigate tabs
+" Cycle through tabs
 nnoremap <Leader>t :tabnext<CR>
 cabbrev tc tabclose
 
@@ -320,6 +319,7 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " for :UltiSnipsEdit
 let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 "}}}
+
 "------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
@@ -564,7 +564,7 @@ func! s:UpdateSyntasticJavascriptCheckers()
     call add(checkers, 'eslint')
   elseif filereadable(cwd . '/.eslintrc-client')
     call add(checkers, 'eslint')
-    let b:syntastic_javascript_eslint_args='--config .eslintrc-client'
+    let b:syntastic_javascript_eslint_args = '--config .eslintrc-client'
   endif
   echom 'checkers: ' . join(checkers, ', ')
   let b:syntastic_javascript_checkers = checkers

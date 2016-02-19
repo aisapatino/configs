@@ -4,16 +4,16 @@
 "------------------------------------------------------------------------------
 set encoding=utf-8
 
-set vb t_vb=
+set vb t_vb=                     " don't beep or flash on error
 set t_Co=256                     " 256-color terminal
 set shell=bash                   " default to bash instead of sh for !commands
 set lazyredraw                   " don't redraw during background/auto commands
 
 set number                       " show line numbers
-set wildmenu wildchar=<tab>      " autocomplete for commands
 set showcmd                      " show commands as you type
+set wildmenu wildchar=<tab>      " autocomplete for commands
 
-set expandtab                    " use spaces instead of tabs
+set expandtab                    " insert spaces instead of tabs
 set tabstop=2                    " how many columns wide a tab is visually
 set shiftwidth=2                 " how many columns to indent with >>
 set autoindent                   " take indent for new line from previous line
@@ -31,6 +31,7 @@ set backspace=indent,eol,start
 " Keybindings
 "------------------------------------------------------------------------------
 
+" Set <Leader> key to space bar
 let mapleader=' '
 
 " Clear search highlighting
@@ -39,7 +40,7 @@ nnoremap <silent> <Leader><Leader> :nohl<CR>
 nnoremap ; :
 nnoremap : ;
 
-" Navigate window splits
+" Navigate window splits with Ctrl + movement key
 noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
