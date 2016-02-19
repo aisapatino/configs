@@ -4,7 +4,7 @@
 "--------
 
 syn match jsClassName "\(class\ \)\@<=\S\+"
-syn match jsClassMethod "^\s*\zs\w\+\ze(.*)\s\?{$" containedin=jsBlock
+syn match jsClassMethod "\zs\w\+\ze(.*)\s\?{$" containedin=jsBlock
 
 " Identify properties on the exports object
 syn clear jsExportContainer
@@ -14,10 +14,11 @@ syn match jsExports "\(exports\.\)\@<=\S\+"
 " Add common 'this' aliases
 syn keyword jsThis self _this
 
-syn keyword mochaChai     suite describe it before after beforeEach afterEach containedin=jsFuncCall,jsFuncBlock
-syn keyword mochaChaiDone done      containedin=jsFuncCall,jsFuncArgs,jsParen
+syn keyword mocha         it before after beforeEach afterEach containedin=jsFuncCall,jsFuncBlock
+syn keyword mochaSuite    suite describe containedin=jsFuncCall
+syn keyword mochaDone     done      containedin=jsFuncCall,jsFuncArgs,jsParen
 syn keyword mochaWarn     skip only containedin=jsFuncCall
-syn keyword chaiAssert    expect    containedin=jsFuncCall
+syn keyword chaiExpect    expect    containedin=jsFuncCall
 
 " Highlight
 "-----------
@@ -33,11 +34,13 @@ hi! link jsBraces        Operator
 hi! link jsUndefined     Constant
 hi! link jsGlobalObjects Keyword
 
-hi! link chaiAssert      Keyword
-hi! link mochaChaiDone   Keyword
-hi! link mochaChai       Statement
+hi! link mochaSuite      Function
+hi! link mocha           Statement
+hi! link mochaDone       Keyword
 hi! link mochaWarn       WarningMsg
+hi! link chaiExpect      Keyword
 
 hi link jsClassName      ClassName
 hi link jsClassMethod    Function
 hi link jsModule         Keyword
+hi! link jsObjectKey     Number
