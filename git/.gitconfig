@@ -2,8 +2,6 @@
   statusHints = false
 [blame]
   date = short
-[color]
-  ui = always
 [core]
   autocrlf = false
   excludesfile = ~/.gitignore
@@ -52,8 +50,9 @@
   dc = diff --cached
   ds = diff --stat
   # history
-  l = log --format=\"%C(blue)%h%Creset %C(green)%s% %C(yellow)%d%Creset%n  %ad %an %n\" --date=relative
-  lf = log --format=\"%n%C(blue)%h%Creset %C(green)%s%Creset %C(yellow)%d%Creset %n  %ad %an\" --date=relative --stat --name-status
+  l = log --format=\"%C(blue)%h %Creset%cd %C(green)%s%C(yellow)%d%Creset\" --date=format:%m-%d
+  ll = log --format=\"%C(blue)%h %C(green)%s%C(yellow)%d%Creset%n%cd  %an%n\" --date=\"format:%b %d\"
+  lf = log --format=\"%n%C(blue)%h %C(green)%s%C(yellow)%d%Creset%n%cd  %an\" --date=\"format:%b %d\" --name-status
   # fetch, pull, rebase
   f = fetch
   p = pull
@@ -64,7 +63,7 @@
   # stash
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
-  sl = stash list --format=\"\n%C(yellow)%gd%Creset %C(green)%s%Creset %ar\" --stat --name-status
+  sl = stash list --format=\"\n%C(yellow)%gd %C(green)%s%Creset %ar\" --name-status
   ss = stash save
   sp = stash pop
   shows = stash show -p
