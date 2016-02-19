@@ -24,43 +24,43 @@ hi VertSplit                    ctermbg=235  cterm=NONE
 hi SignColumn      ctermfg=255  ctermbg=235
 hi! link FoldColumn SignColumn
 
-hi LineNr          ctermfg=8    ctermbg=bg
+hi LineNr          ctermfg=008  ctermbg=bg
 hi Cursor          ctermfg=bg   ctermbg=195
-hi CursorLine                   ctermbg=16   cterm=NONE
-hi CursorLineNr    ctermfg=252               cterm=bold
+hi CursorLine                   ctermbg=016   cterm=NONE
+hi CursorLineNr    ctermfg=252                cterm=bold
 
 hi ColorColumn                  ctermbg=NONE
 
 " Syntax groups                                              see :h group-name
 "------------------------------------------------------------------------------
 
-hi Comment         ctermfg=245
-hi CommentSpecial  ctermfg=26
-hi CommentHeader   ctermfg=8    cterm=bold
+hi Comment         ctermfg=067
+hi CommentSpecial  ctermfg=026
+hi CommentHeader   ctermfg=008    cterm=bold
 
 hi! link Constant  Normal
-hi String          ctermfg=246
-hi Number          ctermfg=61
-hi Boolean         ctermfg=97
+hi String          ctermfg=248
+hi Number          ctermfg=061
+hi Boolean         ctermfg=097
 
-hi Identifier      ctermfg=79   cterm=NONE
-hi Function        ctermfg=93   cterm=bold
+hi Identifier      ctermfg=079   cterm=NONE
+hi Function        ctermfg=093   cterm=bold
 
-hi Statement       ctermfg=75   cterm=bold
-hi Operator        ctermfg=75
+hi Statement       ctermfg=075   cterm=bold
+hi Operator        ctermfg=246
 hi Keyword         ctermfg=103
 
-hi PreProc         ctermfg=25
+hi PreProc         ctermfg=025
 
-hi Type            ctermfg=79
+hi Type            ctermfg=079
 
-hi Special         ctermfg=25
+hi Special         ctermfg=025
 hi Tag             ctermfg=162
 hi Debug           ctermfg=248
 
 hi Underlined      ctermfg=NONE  cterm=underline
 
-hi Error           ctermfg=88    ctermbg=bg   cterm=bold
+hi Error           ctermfg=088    ctermbg=bg   cterm=bold
 hi Todo            ctermfg=NONE  ctermbg=NONE cterm=bold
 
 hi! link htmlItalic Comment
@@ -69,30 +69,30 @@ hi! link htmlItalic Comment
 "----------------------
 
 hi BoldUnderlined  ctermfg=231               cterm=bold,underline
-hi Code            ctermfg=81   ctermbg=235
+hi Code            ctermfg=081   ctermbg=235
 hi ClassName       ctermfg=162               cterm=bold
-hi WebLink         ctermfg=25                cterm=underline
+hi WebLink         ctermfg=025                cterm=underline
 
 " Text states (dynamic highlights)
 "------------------------------------------------------------------------------
 
 hi! link Conceal   Statement
 
-hi MatchParen      ctermfg=162
+hi MatchParen      ctermfg=162  ctermbg=NONE
 hi Folded          ctermfg=240  ctermbg=bg
-hi Search          ctermfg=NONE ctermbg=094
+hi Search          ctermfg=NONE ctermbg=162
 
-hi DiffAdd                      ctermbg=22
-hi DiffDelete      ctermfg=NONE ctermbg=88   cterm=NONE
+hi DiffAdd         ctermfg=029  ctermbg=NONE  cterm=inverse
+hi DiffDelete      ctermfg=NONE ctermbg=052   cterm=NONE
 hi DiffChange      ctermfg=NONE ctermbg=NONE
 hi! link DiffText  DiffAdd
 
 " Statusline / Tabline
 "------------------------------------------------------------------------------
 
-hi StatusLine      ctermfg=75   ctermbg=235  cterm=NONE
+hi StatusLine      ctermfg=075  ctermbg=235  cterm=NONE
 hi StatusLineNC    ctermfg=252  ctermbg=235  cterm=NONE
-hi User1           ctermfg=75   ctermbg=235  cterm=bold
+hi User1           ctermfg=075  ctermbg=235  cterm=bold
 
 hi! link TabLineFill StatusLine
 hi! link TabLine     TablineFill
@@ -107,5 +107,5 @@ hi! link Directory Statement
 " Command line
 
 hi WarningMsg      ctermfg=208  ctermbg=bg   cterm=bold
-hi WildMenu        ctermfg=bg   ctermbg=36
+hi WildMenu        ctermfg=bg   ctermbg=036
 hi! link Title     Function
