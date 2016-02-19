@@ -109,6 +109,11 @@ set undofile undodir=~/tmp/vim-undo
 
 " Always include tags from Notes
 set tags+=~/Drive/Notes/.tags
+
+" Netrw {{{1
+"-------
+
+let g:netrw_timefmt = '%Y %b %d %H:%M'
 "}}}
 
 "------------------------------------------------------------------------------
@@ -163,8 +168,10 @@ com! -nargs=? Note call Alpw_note(<q-args>)
 
 cabbrev hc    helpclose
 cabbrev vres  vertical resize
+cabbrev dt    diffthis
 cabbrev dg    diffget
 cabbrev dp    diffput
+cabbrev doff  diffoff
 
 " Clear search highlighting
 nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
