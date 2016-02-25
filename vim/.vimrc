@@ -8,7 +8,7 @@ cd ~/Projects
 "---------
 
 set t_Co=256                   " 256-color terminal
-if !has('gui')
+if !has('gui_running')
   colorscheme aisadark         " gui scheme will be set in .gvimrc
 endif
 
@@ -440,7 +440,7 @@ if !exists('*ReloadVimrc')
   func ReloadVimrc()
     let l:cwd = getcwd()
     source ~/.vimrc
-    if has('gui') == 1
+    if has('gui_running') == 1
       source ~/.gvimrc
     endif
     exec 'cd ' . l:cwd
