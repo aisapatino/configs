@@ -1,8 +1,5 @@
 # Work/mac-specific bash config
 
-# Base
-#------
-
 source ~/Projects/configs/terminal/.bashrc-base
 
 # Node version manager
@@ -36,3 +33,5 @@ fi
 if [ -f ~/Projects/.bashrc ] ; then
   source ~/Projects/.bashrc
 fi
+
+# vim: syntax=sh

@@ -1,8 +1,5 @@
 # Linux & SJF dev bash config
 
-# Base
-#------
-
 source ~/Projects/configs/terminal/.bashrc-base
 
 # Path
@@ -46,3 +43,5 @@ fi
 
 # selenium
 export CHROMEDRIVER="$HOME/Devel/chromedriver"
+
+# vim: syntax=sh

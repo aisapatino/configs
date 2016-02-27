@@ -1,4 +1,4 @@
-" Subset of vimrc for remote machine usage
+" Subset of vimrc for remote machine usage. No plugins
 
 " Vim settings
 "------------------------------------------------------------------------------
@@ -46,12 +46,4 @@ noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 
-" Plugins
-"------------------------------------------------------------------------------
-"
-" (See install.sh for command to download vim-plug)
-"
-" call plug#begin('~/.vim/plugged')
-" Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'tpope/vim-vinegar'
-" call plug#end()
+" vim: ft=vim

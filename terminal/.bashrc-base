@@ -12,7 +12,6 @@ shopt -s cdable_vars           # cd using vars without having to include $
 
 export EDITOR=vim
 export VISUAL=$EDITOR
-
 set -o vi
 
 # Colors
@@ -20,9 +19,6 @@ set -o vi
 
 export TERM=xterm-256color
 export CLICOLOR=1
-
-blue='\[\e[1;34m\]'
-reset='\[\e[m\]'
 
 # Prompt
 #--------
@@ -32,7 +28,8 @@ GIT_PS1_SHOWCOLORHINTS=1      # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
-PROMPT_COMMAND='__git_ps1 "$blue\w$reset" " \m "'
+# blue short-form cwd, then git string, then vim mode string (see .inputrc)
+PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \m "'
 
 # Autocomplete
 #--------------
@@ -80,16 +77,18 @@ sr() {
   find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
 }
 
-# Find file in specified dir. Usage: ff <pathtosearch> "<pattern>" 
+# Find file in specified dir. Usage: ff <pathtosearch> "<pattern>"
 # Example: ff ../frontend "*.png"
 ff() {
   find "$1" -iname "$2"
 }
 
 # List local git branches with corresponding remotes and status.
-# Strips sha and commit subject
-# Example input:  * master              bbea826 [origin/master: ahead 12] update res serializer test
-# Example output: * master      [origin/master: ahead 12]
+# Strips sha and commit subject from git branch -vv
+# Example input: * master      bbea826 [origin/master: ahead 12] update res serializer test
+#        output: * master      [origin/master: ahead 12]
 br() {
   git branch -vv --color | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
 }
+
+# vim: syntax=sh
