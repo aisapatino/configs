@@ -1,11 +1,10 @@
 cd ~/Projects
 
-"------------------------------------------------------------------------------
 " Vim settings
 "------------------------------------------------------------------------------
 
-" General {{{1
-"---------
+"- General
+"----------
 
 set t_Co=256                   " 256-color terminal
 if !has('gui_running')
@@ -33,8 +32,8 @@ set listchars=trail:▫︎,tab:▷-,extends:›,precedes:‹
 set fillchars=fold:\ ,diff:\ ,vert:\ 
 set diffopt=filler,context:0,vertical,foldcolumn:1
 
-" Indent & wrap {{{1
-"---------------
+"- Indent & wrap
+"----------------
 
 set expandtab                  " insert spaces instead of tabs
 set tabstop=2                  " how many columns wide a tab is visually
@@ -48,42 +47,41 @@ endif
 set linebreak                  " only break between words when wrapping
 set showbreak=↳                " indicate start of wrapped lines
 
-" Movement {{{1
-"----------
+"- Movement
+"-----------
 
-" Typical backspace behavior (not default on windows or in terminal)
+" typical backspace behavior (not default on windows or in terminal)
 set backspace=indent,eol,start
+set scrolloff=3                " minimum lines above/below cursor
+set sidescrolloff=3            " minimum columns between cursor and edge
 
-set scrolloff=3           " minimum lines above/below cursor
-set sidescrolloff=3       " minimum columns between cursor and edge
+"- Search
+"---------
 
-" Search {{{1
+set gdefault                   " default global (multiple matches per line)
+set ignorecase                 " case-insensitive search by default
+set smartcase                  " case-sensitive if pattern has uppercase letter
+set incsearch                  " show matches as you type
+set hlsearch                   " highlight search matches
+
+"- Folds
 "--------
 
-set gdefault               " default global (multiple matches per line)
-set ignorecase             " case-insensitive search by default
-set smartcase              " case-sensitive if pattern has uppercase letter
-set incsearch              " show matches as you type
-set hlsearch               " highlight search matches
-
-" Folds {{{1
-"-------
-
-set nofoldenable           " start with all folds open
+set nofoldenable               " start with all folds open
 set foldmethod=indent
 set foldtext=GetFoldText()
 
-" Statusline, tabline, title {{{1
-"----------------------------
+"- Statusline, tabline, title
+"-----------------------------
 
 set laststatus=2                           " always show status line
 
-set statusline=%1*                         " minwidth 1 & use User1 hi group
+set statusline=%1*                         " use User1 highlight group
 set statusline+=\ %{SL_file()}%*           " buffer number or special ft
 set statusline+=\ %#SLWarn#%{SL_mod()}%*   " modified/nomodifiable flag
 set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{SL_dir()}        " shortened path
+set statusline+=\ \ \ %<%{SL_dir()}        " short-format path relative to cwd
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
@@ -91,8 +89,8 @@ set tabline=%!Alpw_Tabline()
 
 set titlestring=%{Alpw_CWD()}              " show cwd in titlestring
 
-" Files, sessions {{{1
-"-----------------
+"- Files, sessions
+"------------------
 
 set encoding=utf-8
 set fileformats=unix
@@ -103,67 +101,61 @@ set autoread                " auto-update when file is changed from the outside
 set nowritebackup nobackup  " no backup file when overwriting something
 set noswapfile              " no temp file to store changes since save
 
-" Persist undo history even after buffer is unloaded
-set undofile undodir=~/tmp/vim-undo
-
-" Always include tags from Notes
+" always include tags from Notes
 set tags+=~/Drive/Notes/.tags
 
-" Netrw {{{1
-"-------
+"- Netrw
+"--------
 
 let g:netrw_timefmt = '%Y %b %d %H:%M'
-"}}}
 
-"------------------------------------------------------------------------------
 " Custom maps, commands, abbreviations
 "------------------------------------------------------------------------------
 
-" Basics {{{1
-"--------
+"- Basics
+"---------
 
 let mapleader = ' '
 
 noremap ; :
 noremap : ;
 
-" Movement {{{1
-"----------
+"- Movement
+"-----------
 
-" Navigate window splits
+" navigate window splits with less keypresses
 noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 
-" Cycle through tabs
 nnoremap <Leader>t :tabnext<CR>
 cabbrev tc tabclose
 
-" Easier keybinding for first non-whitespace char
+" easier keybinding for first non-whitespace char
 nnoremap 0 ^
 nnoremap ^ 0
 
-" Navigate location list & quickfix
+" navigate location list & quickfix
 nnoremap ]l :lnext<CR>
 nnoremap [l :lprev<CR>
 nnoremap ]q :cnext<CR>
 nnoremap [q :cprev<CR>
 
-" Jump to conflict markers
+" jump to conflict markers
 nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 
-" File navigation {{{1
-"-----------------
+"- File navigation
+"------------------
 
-" Open netrw in vsplit
+" open netrw in vsplit
 cabbrev ve Vexplore
 
-" Easy access to ~/Drive/Notes md files
+" easy access to ~/Drive/Notes md files
 com! -nargs=? Note call Alpw_note(<q-args>)
 
-" Misc {{{1
-"------
+"- Misc
+"-------
 
 cabbrev hc    helpclose
 cabbrev vres  vertical resize
@@ -172,53 +164,51 @@ cabbrev dg    diffget
 cabbrev dp    diffput
 cabbrev doff  diffoff
 
-" Clear search highlighting
+" clear search highlighting
 nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
 
-" Copy all to global register
+" copy all to global register
 noremap <C-a> :%y+<CR>
 
-" Change working dir to current file's dir
+" change working dir to current file's dir
 com! Current cd %:h
 
-" Trim trailing spaces
+" trim trailing spaces
 com! Trail %s/\s\+$
 
 com! PrettyJson %!python -m json.tool
 
 com! DeleteAnsiCodes :%s/\e.\{-}m//
 
-" Command shortcuts for functions
+" command shortcuts for functions
 com! AlignRight       call AlignRight()
 com! UpdateJSCheckers call s:UpdateSyntasticJavascriptCheckers()
 com! UseTabs          call UseTabs()
 com! WMSetEslint      call s:WMSetEslint()
 com! ListWindows      call ListWindows()
 
-" Debugging {{{1
-"-----------
+"- Debugging
+"------------
 
-" Go to help for word under cursor
+" go to help for word under cursor
 nnoremap gh :call Alpw_SearchHelp()<CR>
 
-" Reload vimrc/gvimrc without losing working directory
+" reload vimrc/gvimrc without losing working directory
 nnoremap <Leader>re :call ReloadVimrc()<CR>
 
 com! ShowHighlightGroup echo s:ShowHighlightGroup()
 
-" Show test highlight page with current colors
+" show test highlight page with current colors
 com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
-"}}}
 
-"------------------------------------------------------------------------------
 " Plugins & runtime path
 "------------------------------------------------------------------------------
 
-" Custom syntax & ftplugins
+" custom syntax & ftplugins
 set runtimepath+=~/.vim/custom-after/
 
-" Plugins via vim-plug {{{1
-"----------------------
+"- Plugins via vim-plug
+"-----------------------
 
 call plug#begin('~/.vim/plugged')
 
@@ -247,8 +237,8 @@ Plug 'aisapatino/vim-stylus'
 
 call plug#end()
 
-" Plugin config {{{1
-"---------------
+"- Plugin config
+"----------------
 
 cabbrev ag Ag!
 
@@ -269,7 +259,7 @@ let g:ctrlp_custom_ignore = {
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
 \}
 
-" Quick shortcuts: find all, files, recent, buffers, tags
+" quick shortcuts: find all, files, recent, buffers, tags
 nnoremap <Leader>fa :CtrlPMixed<CR>
 nnoremap <Leader>ff :CtrlP<CR>
 nnoremap <Leader>fr :CtrlPMRU<CR>
@@ -318,17 +308,15 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-tab>'
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " for :UltiSnipsEdit
 let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
-"}}}
 
-"------------------------------------------------------------------------------
 " Functions
 "------------------------------------------------------------------------------
 
-" Helpers {{{1
-"---------
+"- Helpers
+"----------
 
 func! s:expect_readonly(ft)
-  " Return true if given filetype is expected to be readonly; else false
+  " return true if given filetype is expected to be readonly; else false
   return (a:ft == 'help') || (a:ft == 'netrw') || (a:ft == 'fugitiveblame')
 endf
 
@@ -340,17 +328,17 @@ func! s:ShortPath(p)
 endf
 
 func! Alpw_CWD()
-  " Get shortened format CWD
+  " get shortened format CWD
   return s:ShortPath(getcwd())
 endf
 
-" Folds & statusline {{{1
-"--------------------
+"- Folds & statusline
+"---------------------
 
 func! GetFoldText()
-  " Get fold text: text of next line, fold markers removed + fold line count
+  " get fold text: text of next line + fold line count
   let l:num_lines = v:foldend - v:foldstart + 1
-  let l:line = substitute(getline(v:foldstart), '\({{{\|}}}\)\d\?', '', '')
+  let l:line = getline(v:foldstart)
   let l:pad_right = 75 - strlen(l:line)
   if l:pad_right % 2
     let l:line .= ' '
@@ -360,8 +348,8 @@ func! GetFoldText()
 endf
 
 func! SL_file()
-  " Return file identifier for status line.
-  " Depending on filetype, may be buffer number, filetype, directory and/or filename.
+  " return file identifier for status line
+  " depending on filetype, may be buffer number, filetype, directory and/or filename
   let l:ft = getbufvar('%', '&filetype')
   let l:result = s:expect_readonly(l:ft) ? '[' . l:ft . ']' : bufnr('%')
   let l:result .= ' '
@@ -370,7 +358,7 @@ func! SL_file()
 endf
 
 func! SL_mod()
-  " Return modified/nomodifiable indicator for statusline
+  " return modified/nomodifiable indicator for statusline
   if s:expect_readonly(getbufvar('%', '&filetype'))
     return ''
   elseif getbufvar('%', '&modified')
@@ -382,7 +370,7 @@ func! SL_mod()
 endf
 
 func! SL_branch_indent()
-  " Return indent level and branch name display for statusline
+  " return indent level and branch name display for statusline
   if s:expect_readonly(getbufvar('%', '&filetype'))
     return ''
   endif
@@ -402,19 +390,19 @@ func! SL_branch_indent()
 endf
 
 func! SL_dir()
-  " Return shortened path for current buffer
-  " Skip netrw since it displays path in file spot
+  " return shortened path for current buffer
+  " skip netrw since it displays path in file spot
   if getbufvar('%', '&filetype') == 'netrw'
     return ''
   endif
   return s:ShortPath(expand('%:h'))
 endf
 
-" Tabline {{{1
-"---------
+"- Tabline
+"----------
 
 func! Alpw_Tabline()
-  " Simple display of tab numbers, cwd on right
+  " tab numbers on left, cwd on right
   let s = ''
   if tabpagenr('$') > 1
     for i in range(1, tabpagenr('$'))
@@ -431,11 +419,11 @@ func! Alpw_Tabline()
   return s
 endf
 
-" Misc utility {{{1
-"--------------
+"- Misc utility
+"---------------
 
-" Reload vim config(s) and retain working directory
-" Wrapped to avoid trying to redefine function as it's being executed
+" reload vim config(s) and retain working directory
+" wrapped to avoid trying to redefine function as it's being executed
 if !exists('*ReloadVimrc')
   func ReloadVimrc()
     let l:cwd = getcwd()
@@ -449,7 +437,7 @@ endif
 
 let s:notes_dir = '~/Drive/Notes/'
 
-" Browse notes dir, edit existing file or create a new one
+" browse notes dir, edit existing file or create a new one
 func! Alpw_note(title) abort
   if a:title == ''
     Vexplore ~/Drive/Notes
@@ -458,7 +446,7 @@ func! Alpw_note(title) abort
   endif
 endf
 
-" Base jump function based on Python_jump. Can be used for ft-specific jumps
+" base jump function based on Python_jump. can be used for ft-specific jumps
 func! Alpw_Jump(pattern, flags) range
   let l:count = v:count1        " if triggered with number in front
   let l:save = @/               " save last search pattern for restoring later
@@ -471,7 +459,7 @@ func! Alpw_Jump(pattern, flags) range
   let @/ = l:save               " restore last search pattern
 endf
 
-" Show highlight group for item at cursor
+" show highlight group for item at cursor
 func! s:ShowHighlightGroup()
   let l:id = synID(line('.'), col('.'), 1)
   let l:name = synIDattr(l:id, 'name')
@@ -482,7 +470,7 @@ func! s:ShowHighlightGroup()
   return 'name: ' . l:name . ', hi: ' . l:linked . ', trans: ' . l:trans
 endf
 
-" Align the right-most word of current line against 80-char column
+" align the right-most word of current line against 80-char column
 func! AlignRight() abort
   let line = getline('.')
   let startpos = match(line, '\S\+$')
@@ -500,8 +488,8 @@ func! AlignRight() abort
   exec 'normal ' . (79 - endpos) . 'i '
 endf
 
-" List windows with corresponding buffer number & file
-" (For buggy cases where you need to :close a window)
+" list windows with corresponding buffer number & file
+" (for buggy cases where you need to :close a window)
 func! ListWindows()
   echom 'Window    Buffer'
   for wi in range(1, winnr('$'))
@@ -514,25 +502,25 @@ func! Alpw_SearchHelp()
   exec "help " . expand('<cWORD>')
 endf
 
-" Modify settings/mappings {{{1
-"--------------------------
+"- Modify settings/mappings
+"---------------------------
 
 func! UseTabs()
   setlocal noexpandtab
   setlocal nolist
 endf
 
-" Set basic jump mappings - useful if nothing language-specific is defined
-" Maps [[ ]] to go to non-whitespace at col 0
+" set basic jump mappings - useful if nothing language-specific is defined
+" maps [[ ]] to go to non-whitespace at col 0
 func! Jump()
   nnoremap [[ :call Alpw_Jump('^\S', 'bW')<CR>
   nnoremap ]] :call Alpw_Jump('^\S', 'W')<CR>
 endf
 
-" CtrlP {{{1
-"-------
+"- CtrlP
+"--------
 
-" See :h g:ctrlp_status_func
+" see help for g:ctrlp_status_func
 func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   let statustext = ' ' . a:item . '        ' . a:byfname
   let statustext .= '     ' . substitute(a:marked, '\(<\|>\|-\)', '', 'g')
@@ -546,10 +534,10 @@ func! CtrlPProgress(str)
   return a:str . ' files scanned...'
 endf
 
-" Syntastic {{{1
-"-----------
+"- Syntastic
+"------------
 
-" Get checkers based on configs present in working directory
+" get checkers based on configs present in working directory
 func! s:UpdateSyntasticJavascriptCheckers()
   echom "getting js checkers"
   let cwd = getcwd()
@@ -569,5 +557,3 @@ func! s:UpdateSyntasticJavascriptCheckers()
   echom 'checkers: ' . join(checkers, ', ')
   let b:syntastic_javascript_checkers = checkers
 endf
-
-" vim: foldenable foldmethod=marker
