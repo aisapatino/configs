@@ -26,6 +26,8 @@
   cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
 [push]
   default = simple
+[rebase]
+  autoSquash = true
 [rerere]
   enabled = true
 [sequence]
@@ -45,6 +47,8 @@
   com = commit
   ca = commit --amend
   can = commit --amend -C HEAD
+  cs = "!sh -c 'git commit --squash=$1' -"
+  cf = "!sh -c 'git commit --fixup=$1' -"
   # diff
   d = diff
   dc = diff --cached
