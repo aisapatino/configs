@@ -37,14 +37,16 @@
   name = "Anna Luisa Patiño West"
 [alias]
   s = status
-  # branches
+  # branches/remotes
   ch = checkout
   br = branch
   bra = branch --all
+  mote = remote -v
   # staging & commits
   a = add
   re = reset
-  com = commit
+  cl = clean
+  com = commit --verbose
   ca = commit --amend
   can = commit --amend -C HEAD
   cs = "!sh -c 'git commit --squash=$1' -"
@@ -54,11 +56,11 @@
   dc = diff --cached
   ds = diff --stat
   # history
-  l = log --format=\"%C(blue)%h %Creset%cd %C(green)%s%C(yellow)%d%Creset\" --date=format:%m-%d
-  ll = log --format=\"%C(blue)%h %C(green)%s%C(yellow)%d%Creset%n%cd  %an%n\" --date=\"format:%b %d\"
-  lf = log --format=\"%n%C(blue)%h %C(green)%s%C(yellow)%d%Creset%n%cd  %an\" --date=\"format:%b %d\" --name-status
+  l = log --format=\"%C(blue)%h %Creset%cd %C(green)%s%C(yellow)%d%Creset\" --date=format:%m/%d
+  ll = log --format=\"%<(13,trunc)%an %C(blue)%h%Creset %cd %C(green)%s%C(yellow)%d\" --date=format:%m/%d
+  lf = log --format=\"%n%C(magenta)%cd %C(green)%s%C(yellow)%d%n      %C(blue)%h %an\" --date=format:%m/%d --name-only
   # fetch, pull, rebase
-  f = fetch
+  f = fetch --all
   p = pull
   pr = pull --rebase
   r = rebase
@@ -71,7 +73,6 @@
   ss = stash save
   sp = stash pop
   shows = stash show -p
-  # infrequently used
+  # misc
   bi = bisect
   cp = cherry-pick
-  sup = submodule update
