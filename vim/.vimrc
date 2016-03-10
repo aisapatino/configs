@@ -30,7 +30,7 @@ set formatoptions+=j           " remove comment chars when joining
 set list                       " display things like tabs, spaces, eol, etc.
 set listchars=trail:▫︎,tab:▷-,extends:›,precedes:‹
 set fillchars=fold:\ ,diff:\ ,vert:\ 
-set diffopt=filler,context:0,vertical,foldcolumn:1
+set diffopt=filler,context:3,vertical,foldcolumn:0
 
 "- Indent & wrap
 "----------------
@@ -212,8 +212,7 @@ set runtimepath+=~/.vim/custom-after/
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'aisapatino/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 Plug 'scrooloose/syntastic'
@@ -242,11 +241,8 @@ call plug#end()
 
 cabbrev ag Ag!
 
-call ctrlp_bdelete#init()                  " enable plugin for deleting buffers
-
 let g:ctrlp_extensions = ['tag']           " enable searching of tags
 let g:ctrlp_follow_symlinks = 1            " follow symlinks unless they loop
-let g:ctrlp_lazy_update = 50               " wait after typing to start search
 let g:ctrlp_open_multiple_files = '1vjr'   " open 1st in current window, rest hidden
 let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not qf)
 let g:ctrlp_show_hidden = 1                " show hidden files by default
@@ -257,6 +253,10 @@ let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
 let g:ctrlp_custom_ignore = {
 \  'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|dist-.*|gen)$',
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
+\}
+" replace F-key binding, which doesn't work well on mac keyboard
+let g:ctrlp_prompt_mappings = {
+\  'PrtDeleteEnt()':  ['<c-@>']
 \}
 
 " quick shortcuts: find all, files, recent, buffers, tags
@@ -297,6 +297,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_args = '--rcfile=~/Projects/personal/sjfnw/.pylintrc'
 
+" let g:syntastic_javascript_exec = './node_modules/.bin/eslint'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_json_checkers = ['jsonlint']
@@ -525,7 +526,7 @@ func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
   let statustext = ' ' . a:item . '        ' . a:byfname
   let statustext .= '     ' . substitute(a:marked, '\(<\|>\|-\)', '', 'g')
   if a:regex
-    let statustext .= '        (regex)'
+    let statustext .= '     (regex)'
   endif
   return statustext . '%=%{getcwd()}'
 endf
@@ -542,14 +543,10 @@ func! s:UpdateSyntasticJavascriptCheckers()
   echom "getting js checkers"
   let cwd = getcwd()
   let checkers = []
-  if filereadable(cwd . '/.jshintrc')
-    call add(checkers, 'jshint')
-  endif
-  if filereadable(cwd . '/.jscsrc')
-    call add(checkers, 'jscs')
-  endif
   if filereadable(cwd . '/.eslintrc')
     call add(checkers, 'eslint')
+    let b:syntastic_javascript_eslint_exec = cwd . '/node_modules/.bin/eslint'
+    echom 'syntastic_javascript_eslint_exec: ' . b:syntastic_javascript_eslint_exec
   elseif filereadable(cwd . '/.eslintrc-client')
     call add(checkers, 'eslint')
     let b:syntastic_javascript_eslint_args = '--config .eslintrc-client'
