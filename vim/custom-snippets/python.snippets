@@ -14,47 +14,6 @@ def __init__(self, *args, **kwargs):
 endsnippet
 
 #------------------------------------------------------------------------------
-# VIEWS
-#------------------------------------------------------------------------------
-
-snippet impv "common view imports" b
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
-
-from tracker import constants
-
-import logging
-logger = logging.getLogger('tracker')
-endsnippet
-
-snippet view "basic view outline" bs
-@login_required(login_url = constants.LOGIN_URL)
-def ${1:viewname}(request):
-
-	if request.method == 'POST':
-
-
-	return render(request, '', {})
-
-
-endsnippet
-
-snippet fdoc "docstring outline for a function" s
-""" ${1:SUMMARY}
-
-Args:
-
-Returns:
-
-Raises:
-
-"""
-
-endsnippet
-
-#------------------------------------------------------------------------------
 # MODELS/CLASSES
 #------------------------------------------------------------------------------
 
@@ -66,18 +25,6 @@ class ${1:CLASSNAME}(models.Model):
 		return self.${2:FIELDNAME}
 endsnippet
 
-snippet uni "unicode method" s
-def __unicode(self):
-	return self.${1:FIELDNAME}
-endsnippet
-
-snippet cdoc "docstring outline for a class" s
-""" ${1:SUMMARY}
-
-${2:LONGER_INFO}
-"""
-
-endsnippet
 
 snippet fk "foreignkey"
 	${1:FIELD} = models.ForeignKey(${2:MODEL})
@@ -101,28 +48,6 @@ endsnippet
 
 snippet datef "datetimefield"
 	${1:FIELD} = models.DateTimeField()
-
-endsnippet
-
-# resilience fields
-snippet resilf "insert resilience model fields"
-	physical = models.PositiveIntegerField(default=0)
-	emotional = models.PositiveIntegerField(default=0)
-	social = models.PositiveIntegerField(default=0)
-	mental = models.PositiveIntegerField(default=0)
-endsnippet
-
-#------------------------------------------------------------------------------
-# FORMS
-#------------------------------------------------------------------------------
-
-snippet mform "modelform outline" s
-class ${1:MODEL}Form(forms.ModelForm):
-
-	class Meta:
-		model = $1
-		exclude = []
-
 
 endsnippet
 
@@ -188,11 +113,11 @@ def test_${1:DESC}(self):
 endsnippet
 
 snippet tpost "test post"
-response = self.client.post(self.url, ${2:DATA}, follow=True)
+response = self.client.post(${1:self.url}, ${2:DATA}, follow=True)
 endsnippet
 
 snippet tget "test get"
-response = self.client.get(self.url, follow=True)
+response = self.client.get(${1:self.url}, follow=True)
 endsnippet
 
 snippet at "assertTemplateUsed"

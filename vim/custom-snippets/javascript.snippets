@@ -23,7 +23,7 @@ endsnippet
 snippet af "arrow function (as callback)" ws
 (${1}) => {
 	${2}
-});${3}
+})${3};
 endsnippet
 
 snippet co "console.log" b
@@ -38,7 +38,7 @@ endsnippet
 # LODASH
 #------------------------------------------------------------------------------
 
-snippet ea "_.each"
+snippet ea "_.each" bs
 _.each(${1:coll}, (${2:item}) => {
 	${3}
 });
@@ -48,20 +48,20 @@ endsnippet
 # NODE
 #------------------------------------------------------------------------------
 
-snippet crm "const require, matching" b
-const ${1} = require("$1");
+snippet cr "const require" b
+const ${1} = require("$2")$3;
 endsnippet
 
-snippet cr "const require (non-matching)" b
-const ${1} = require("$2");
+snippet crm "const require, matching" b
+const ${1} = require("$1")$2;
+endsnippet
+
+snippet re "require (var)" b
+var ${1} = require('${2}')$3;
 endsnippet
 
 snippet req "matching require (var)" b
-var ${1} = require('$1');
-endsnippet
-
-snippet re "non-matching require (var)" b
-var ${1} = require('${2}');
+var ${1} = require('$1')$2;
 endsnippet
 
 #------------------------------------------------------------------------------
@@ -72,19 +72,19 @@ endsnippet
 # ------
 
 snippet desc "describe wrapper" bs
-describe("${1:SUITE DESC}", () => {
+describe("${1}", () => {
 	${2}
 });
 endsnippet
 
-snippet be "beforeEach" b
+snippet be "beforeEach" bs
 beforeEach((${1}) => {
 	${2}
 });
 
 endsnippet
 
-snippet ae "afterEach" b
+snippet ae "afterEach" bs
 afterEach((${1}) => {
 	${2}
 });
@@ -92,24 +92,21 @@ afterEach((${1}) => {
 endsnippet
 
 snippet it "it wrapper, sync" bs
-it("should ${1:TEST DESC}", () => {
+it("should ${1}", () => {
 	${2}
-});
-
+});${3}
 endsnippet
 
 snippet ita "it wrapper, async" bs
-it("should ${1:TEST DESC}", function (done) {
+it("should ${1}", (done) => {
 	${2}
 	done();
-});
-
+});${3}
 endsnippet
 
 snippet its "it.skip" bs
-it.skip("should ${1:TEST DESC}", function () {
-});
-
+it.skip("should ${1}", () => {
+});${2}
 endsnippet
 
 snippet tt "test then (with catch done)" ws
@@ -118,6 +115,12 @@ then(function (${1:results}) {
 	done();
 })
 .catch(done);
+endsnippet
+
+snippet wrap "wrap with test util for assertions in cb" bs
+utils.wrapTryCatch(done, () => {
+	${VISUAL}
+});
 endsnippet
 
 # chai bdd
@@ -135,7 +138,7 @@ snippet en "expect not (property)" b
 expect(${1}).to.not.have.${3}property("${2}");
 endsnippet
 
-snippet epd "expect deep property" b
+snippet epd "expect property, deep" b
 expect(${1}).to.have.deep.property("${2}"${3});
 endsnippet
 
@@ -151,6 +154,18 @@ snippet ee "expect error" b
 expect(() => {
 	${1}
 }).to.throw(${3}"${2:msg}");
+endsnippet
+
+snippet eco "expect calledOnce"
+expect(${1}).to.have.been.calledOnce;
+endsnippet
+
+snippet ecn "expect not called"
+expect(${1}).to.have.not.been.called;
+endsnippet
+
+snippet ecc "expect call count"
+expect(${1}).to.have.callCount($2);
 endsnippet
 
 #-----------------------------------------------------------------------------
