@@ -63,7 +63,7 @@ alias gkb="gitk --branches"        # only local branches (useful for big repos)
 
 alias npmlist="npm ls --depth=0"
 
-base_tree="tree -a -C -I 'node_modules|.git|*bower_components|.DS_Store|*.pyc'"
+base_tree="tree -a -C -I 'node_modules|.git|bower_components|coverage|.DS_Store|*.pyc'"
 alias t="$base_tree --dirsfirst -L "
 alias trd="$base_tree -d"
 
