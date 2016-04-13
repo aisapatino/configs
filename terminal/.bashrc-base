@@ -91,4 +91,7 @@ br() {
   git branch -vv --color | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
 }
 
+# Load check_statuses function
+source "$HOME/Projects/configs/git/check_statuses.sh"
+
 # vim: syntax=sh

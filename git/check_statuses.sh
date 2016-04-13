@@ -1,82 +1,79 @@
-#!/bin/bash
-# Script to report the current branch & status of multiple repos
+#!/usr/bin/env bash
 
-red="\033[00;31m"
-green="\033[00;32m"
-yellow="\033[00;33m"
-blue="\033[00;34m"
-purple="\033[00;35m"
-cyan="\033[00;36m"
-reset="\033[00m"
+# Report the current branch & status of all repos inside of current directory
 
-# The $? holds the exit status of the previously executed command. 0 = success
+check_statuses() {
+  red="\033[31m"
+  green="\033[32m"
+  yellow="\033[33m"
+  cyan="\033[36m"
+  bold="\033[1m"
+  reset="\033[m"
 
-echo 'Checking git repos...'
-cd ~/Projects
+  echo -e "Checking git repos...\n"
 
-for d in 'sjfnw' 'configs' 'flamingloot' 'flamingloot-ml' 'anita' 'dlisa' ; do
-  printf "\033[1m%15s\033[0m  " "$d"
+  for d in */ ; do
+    if [ ! -d "$d" ] || [ ! -d "$d/.git" ] ; then
+      continue
+    fi
 
-  if [ ! -d "$d" ] ; then
-    printf "$red *not found* $reset"
-
-  else
+    printf "$bold%30s$reset  " "$d"
     cd $d
 
-    # fetch silently
-    git fetch -q
+    if [ -z "$1" ] || [ "$1" != "-s" ] ; then # -s = skip fetch
+      git fetch -q
+    fi
 
     # run git status & pull out relevant lines
-    RESULTS=$(git status | grep -E '^# (On branch|Untracked|Changes|Your branch)')
+    st=$(git status | grep -E '^(On branch|Untracked|Changes|Your branch)')
 
     # get branch name
-    SECTION=$(echo "$RESULTS" | grep -o "On branch \([a-z\-]\+\)")
-    SECTION=$(echo "$SECTION" | grep -o "[a-z_/\-]\+$")
-    if [ "$SECTION" = "master" ] ; then
-      printf "%-16s%s" "$SECTION"
+    branch=$(echo "$st" | grep -o "On branch \([a-z\-]\+\)")
+    branch=$(echo "$branch" | grep -o "[a-z_/\-]\+$")
+    if [ -z "$branch" ] ; then
+      echo -e "${red}could not find branch name$reset"
+      continue
+    elif [ "$branch" = "master" ] ; then
+      printf "%-18s" "$branch"
     else
-      printf "$cyan%-16s$reset" "$SECTION"
+      printf "$cyan%-18s$reset" "$branch"
     fi
-    SECTION=""
 
-    # get branch status
-    OUT=0
-    SECTION=$(echo "$RESULTS" | grep -e 'Untracked')
-    if [ "$SECTION" != "" ] ; then
-      printf "$red[New files]$reset"
-      OUT=1
+    details=""
+
+    # local changes
+    local_changes=0
+    if [ -n "$(echo "$st" | grep 'Untracked')" ] ; then
+      details="$red[New files]"
+      local_changes=1
     fi
-    SECTION=$(echo "$RESULTS" | grep -e 'Changes not staged for commit')
-    if [ "$SECTION" != "" ] ; then
-      printf "$red[Modified]$reset"
-      OUT=1
+    if [ -n "$(echo "$st" | grep 'Changes not staged for commit')" ] ; then
+      details="$details$red[Modified]"
+      local_changes=1
     fi
-    SECTION=$(echo "$RESULTS" | grep -e 'Changes to be committed')
-    if [ "$SECTION" != "" ] ; then
-      printf "$green[Staged]$reset"
-      OUT=1
+    if [ -n "$(echo "$st" | grep 'Changes to be committed')" ] ; then
+      details="$details$green[Staged]"
+      local_changes=1
     fi
-    SECTION=$(echo "$RESULTS" | grep -e 'Your branch is ahead')
-    if [ "$SECTION" != "" ] ; then
-      printf "$yellow[Ahead of remote]$reset"
-      OUT=1
-    fi
-    SECTION=$(echo "$RESULTS" | grep -e 'Your branch is behind')
-    if [ "$SECTION" != "" ] ; then
-      printf "$yellow[Behind remote]$reset"
-      if [ "$OUT" -eq 0 ] ; then # no local changes; ok to pull
-        SECTION=$(git pull --rebase -q)
-        printf "$green[Pulled]$reset"
+
+    # branch compared to remote
+    if [ -n "$(echo "$st" | grep 'Your branch is ahead')" ] ; then
+      details="$details$yellow[Ahead of remote]"
+    elif [ -n "$(echo "$st" | grep 'Your branch is behind')" ] ; then
+      details="$details$yellow[Behind remote]"
+      if [ $local_changes -eq 0 ] ; then
+        git pull -q --ff-only && details="$details$green[Pulled]"
       fi
-      OUT=1
+    elif [ -n "$(echo "$st" | grep 'diverged')" ] ; then
+      details="$red[Diverged]"
     fi
 
-    if [ "$OUT" -eq 0 ] ; then
-      printf "$green[Up to date]$reset"
+    if [ -z "$details" ] ; then
+      details="$green[Up to date]"
     fi
+
+    echo -e "$details$reset"
 
     cd ..
-  fi
-  printf "\n"
-done
-printf "\n"
+  done
+}
