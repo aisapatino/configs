@@ -30,6 +30,8 @@ syn match pythonDjangoField "[a-z0-9_]\+\%(\s=\s[a-zA-Z\.]*\%(Field\|Key\)\)\@="
 syn keyword pythonStatement class nextgroup=pythonClass skipwhite
 syn match pythonClass "\%(class\s\)\@<=[a-zA-Z]\+" contained
 
+syn match pyAssert "\%(self\.\)\@<=assert.\{-}\ze("
+
 " Highlight
 "-----------
 
@@ -46,3 +48,5 @@ hi link pythonLogging           Debug
 hi link pythonDjangoField       Include
 hi link pythonDocString         Comment
 hi link pythonDocKeywords       Special
+
+hi link pyAssert                Keyword
