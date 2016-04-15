@@ -1,5 +1,5 @@
 snippet super "super call" w
-super(${1:CLASS}, self).${2:method}(${3})
+super(${1:CLASS}, self).${2:METHOD}($3)
 endsnippet
 
 snippet log "logger defining"
@@ -19,12 +19,10 @@ endsnippet
 
 snippet model "basic model outline" bs
 class ${1:CLASSNAME}(models.Model):
-
-
+$3
 	def __unicode__(self):
 		return self.${2:FIELDNAME}
 endsnippet
-
 
 snippet fk "foreignkey"
 	${1:FIELD} = models.ForeignKey(${2:MODEL})
@@ -49,6 +47,12 @@ endsnippet
 snippet datef "datetimefield"
 	${1:FIELD} = models.DateTimeField()
 
+endsnippet
+
+# QUERYSETS
+
+snippet mget "model get" w
+models.${2:Model}.objects.get(${4:pk=}$3)
 endsnippet
 
 #------------------------------------------------------------------------------
@@ -88,85 +92,50 @@ class ${1:NAME}(${2:BASE}):
 
 endsnippet
 
-snippet ftc "fundraising test class"
-class ${1:NAME}(BaseFundTestCase):
-
-	url = reverse('sjfnw.fund.views.${2:VIEW}')
-
-	def setUp(self):
-		super($1, self).setUp()
-
-endsnippet
-
-snippet test "outline of a text func" s
-def test_${1:DESC}(self):
-	""" Verify ${2:WHAT} """
-
-endsnippet
-
-snippet tidea "placeholder for future test" s
-@unittest.skip('Incomplete')
-def test_${1:DESC}(self):
-	""" Verify ${2:DESC} """
-	pass
-
-endsnippet
-
 snippet tpost "test post"
-response = self.client.post(${1:self.url}, ${2:DATA}, follow=True)
+res = self.client.post(${1:self.url}, ${2:DATA})
 endsnippet
 
 snippet tget "test get"
-response = self.client.get(${1:self.url}, follow=True)
+res = self.client.get(${1:self.url})
+endsnippet
+
+snippet ae "assertEqual"
+self.assertEqual($1, $2)
+endsnippet
+
+snippet ane "assertNotEqual"
+self.assertNotEqual($1, $2)
+endsnippet
+
+snippet at "assertTrue"
+self.assertTrue($1)
+endsnippet
+
+snippet af "assertFalse"
+self.assertFalse($1)
+endsnippet
+
+snippet an "assertIsNone"
+self.assertIsNone($1)
+endsnippet
+
+snippet ann "assertIsNotNone"
+self.assertIsNotNone($1)
+endsnippet
+
+snippet ar "assertRegexpMatches"
+self.assertRegexpMatches($1, r'${2:pattern}')
 endsnippet
 
 snippet at "assertTemplateUsed"
-self.assertTemplateUsed(response, '${1:path}.html')
+self.assertTemplateUsed(res, '${1:path}.html')
 endsnippet
 
-snippet eq "assertEqual"
-self.assertEqual(${1}, ${2})
+snippet asc "assert status_code"
+self.assertEqual(${2:res.status_code}, ${1:200})
 endsnippet
 
 snippet ac "assertContains"
-self.assertContains(${2:response}, '${1}')
+self.assertContains(${2:res}, '$1')
 endsnippet
-
-snippet con "get response context"
-ctx = response.context
-endsnippet
-
-snippet var "specific response context variable" w
-response.context['${1}']
-endsnippet
-
-snippet formerr "get form errors"
-errors = response.context['form'].errors
-endsnippet
-
-# COMMANDS
-
-snippet command "imports and outline of command class"
-from django.core.management import call_command
-from django.core.management.base import BaseCommand
-from django.conf import settings
-
-from ${1:APP} import ${2:MODELS}
-
-class Command(BaseCommand):
-
-	help = ('${3:DESCRIPTION}')
-
-	def handle(self, *args, **kwargs):
-		pass
-
-endsnippet
-
-snippet wr "self.stdout.write"
-self.stdout.write('${1:CONTENT}')
-endsnippet
-
-snippet ewr "self.stderr.write"
-self.stderr.write('${1:CONTENT}')
-endsnippet
-

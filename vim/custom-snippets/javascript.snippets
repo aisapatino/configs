@@ -1,9 +1,11 @@
-# default - only expands at beginning of line or after whitespace
+# default only expands at beginning of line or after whitespace
+#
 # options:
 #	 b  beginning of line only (whitespace ok)
 #	 w  word boundary (can be adjacent to non-word, non-whitespace chars)
 #	 s  trim trailing whitespace before going to next line
 # 	  (use if there are optional params after a tab)
+#
 # see UltiSnips-snippet-options for more
 
 #------------------------------------------------------------------------------
@@ -15,23 +17,23 @@ snippet str "use strict statement" b
 endsnippet
 
 snippet cb "callback (anon func with closing parens)" ws
-function (${1}) {
-	${2}
+function ($1) {
+	$2
 });
 endsnippet
 
 snippet af "arrow function (as callback)" ws
-(${1}) => {
-	${2}
-})${3};
+($1) => {
+	$2
+})$3;
 endsnippet
 
 snippet co "console.log" b
-console.log(${1});
+console.log($1);
 endsnippet
 
 snippet con "console.log with quotes" b
-console.log("${1}"${2});
+console.log("$1"$2);
 endsnippet
 
 #------------------------------------------------------------------------------
@@ -40,7 +42,7 @@ endsnippet
 
 snippet ea "_.each" bs
 _.each(${1:coll}, (${2:item}) => {
-	${3}
+	$3
 });
 endsnippet
 
@@ -49,19 +51,19 @@ endsnippet
 #------------------------------------------------------------------------------
 
 snippet cr "const require" b
-const ${1} = require("$2")$3;
+const $1 = require("$2")$3;
 endsnippet
 
 snippet crm "const require, matching" b
-const ${1} = require("$1")$2;
+const $1 = require("$1")$2;
 endsnippet
 
 snippet re "require (var)" b
-var ${1} = require('${2}')$3;
+var $1 = require('$2')$3;
 endsnippet
 
 snippet req "matching require (var)" b
-var ${1} = require('$1')$2;
+var $1 = require('$1')$2;
 endsnippet
 
 #------------------------------------------------------------------------------
@@ -72,46 +74,46 @@ endsnippet
 # ------
 
 snippet desc "describe wrapper" bs
-describe("${1}", () => {
-	${2}
+describe("$1", () => {
+	$2
 });
 endsnippet
 
 snippet be "beforeEach" bs
-beforeEach((${1}) => {
-	${2}
+beforeEach(($1) => {
+	$2
 });
 
 endsnippet
 
 snippet ae "afterEach" bs
-afterEach((${1}) => {
-	${2}
+afterEach(($1) => {
+	$2
 });
 
 endsnippet
 
 snippet it "it wrapper, sync" bs
-it("should ${1}", () => {
-	${2}
-});${3}
+it("should $1", () => {
+	$2
+});$3
 endsnippet
 
 snippet ita "it wrapper, async" bs
-it("should ${1}", (done) => {
-	${2}
+it("should $1", (done) => {
+	$2
 	done();
-});${3}
+});$3
 endsnippet
 
 snippet its "it.skip" bs
-it.skip("should ${1}", () => {
-});${2}
+it.skip("should $1", () => {
+});$2
 endsnippet
 
 snippet tt "test then (with catch done)" ws
 then(function (${1:results}) {
-	${2}
+	$2
 	done();
 })
 .catch(done);
@@ -123,6 +125,21 @@ utils.wrapTryCatch(done, () => {
 });
 endsnippet
 
+# sinon
+#-------
+
+snippet spy "sandbox spy"
+sandbox.spy($1, "$2");
+endsnippet
+
+snippet stub "sandbox stub"
+sandbox.stub($1, "$2")$3;
+endsnippet
+
+snippet sargs "spy/stub args"
+const args = $1.firstCall.args;
+endsnippet
+
 # chai bdd
 # --------
 
@@ -131,41 +148,45 @@ expect(${1:VAR}).to.${2:ETC};
 endsnippet
 
 snippet ep "expect property" b
-expect(${1}).to.have.property("${2}"${3});
+expect($1).to.have.property("$2"$3);
 endsnippet
 
 snippet en "expect not (property)" b
-expect(${1}).to.not.have.${3}property("${2}");
+expect($1).to.not.have.$3property("$2");
 endsnippet
 
 snippet epd "expect property, deep" b
-expect(${1}).to.have.deep.property("${2}"${3});
+expect($1).to.have.deep.property("$2"$3);
 endsnippet
 
 snippet ept "expect property + type" b
-expect(${1}).to.have.${5}property("${2}").that.is.a${3}("${4}");
+expect($1).to.have.$5property("$2").that.is.a$3("$4");
 endsnippet
 
 snippet et "expect type" b
-expect(${1}).to.be.a${2}("${3}")${4};
+expect($1).to.be.a$2("$3")$4;
 endsnippet
 
 snippet ee "expect error" b
 expect(() => {
-	${1}
-}).to.throw(${3}"${2:msg}");
+	$1
+}).to.throw($3"${2:msg}");
 endsnippet
 
 snippet eco "expect calledOnce"
-expect(${1}).to.have.been.calledOnce;
+expect($1).to.have.been.calledOnce;
 endsnippet
 
 snippet ecn "expect not called"
-expect(${1}).to.have.not.been.called;
+expect($1).to.have.not.been.called;
 endsnippet
 
 snippet ecc "expect call count"
-expect(${1}).to.have.callCount($2);
+expect($1).to.have.callCount($2);
+endsnippet
+
+snippet ecw "expect called with"
+expect($1).to.have.$4been.calledWith$3($2);
 endsnippet
 
 #-----------------------------------------------------------------------------
@@ -173,13 +194,13 @@ endsnippet
 #-----------------------------------------------------------------------------
 
 snippet dl "disable line" ws
-// eslint-disable-line ${1}
+// eslint-disable-line $1
 endsnippet
 
 snippet dis "eslint disable" b
-/* eslint-disable ${1} */
+/* eslint-disable $1 */
 endsnippet
 
 snippet een "eslint enable" b
-/* eslint-enable ${1} */
+/* eslint-enable $1 */
 endsnippet
