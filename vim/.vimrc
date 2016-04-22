@@ -101,8 +101,8 @@ set autoread                " auto-update when file is changed from the outside
 set nowritebackup nobackup  " no backup file when overwriting something
 set noswapfile              " no temp file to store changes since save
 
-" always include tags from Notes
-set tags+=~/Drive/Notes/.tags
+" always include tags from cwd and Notes
+set tags+=.tags,~/Drive/Notes/.tags
 
 "- Netrw
 "--------
@@ -120,8 +120,8 @@ let mapleader = ' '
 noremap ; :
 noremap : ;
 
-"- Movement
-"-----------
+"- Movement/navigation
+"----------------------
 
 " navigate window splits with less keypresses
 noremap <C-h> <C-w>h
@@ -129,8 +129,8 @@ noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 
+" go to next tab
 nnoremap <Leader>t :tabnext<CR>
-cabbrev tc tabclose
 
 " easier keybinding for first non-whitespace char
 nnoremap 0 ^
@@ -145,14 +145,8 @@ nnoremap [q :cprev<CR>
 " jump to conflict markers
 nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
 
-"- File navigation
-"------------------
-
 " open netrw in vsplit
 cabbrev ve Vexplore
-
-" easy access to ~/Drive/Notes md files
-com! -nargs=? Note call Alpw_note(<q-args>)
 
 "- Misc
 "-------
@@ -162,6 +156,7 @@ cabbrev vres  vertical resize
 cabbrev dt    diffthis
 cabbrev dg    diffget
 cabbrev dp    diffput
+cabbrev dup   diffup
 cabbrev doff  diffoff
 
 " clear search highlighting
@@ -173,19 +168,16 @@ noremap <C-a> :%y+<CR>
 " change working dir to current file's dir
 com! Current cd %:h
 
-" trim trailing spaces
-com! Trail %s/\s\+$
-
+com! TrimTrailing %s/\s\+$
 com! PrettyJson %!python -m json.tool
 
-com! DeleteAnsiCodes :%s/\e.\{-}m//
-
 " command shortcuts for functions
-com! AlignRight       call AlignRight()
-com! UpdateJSCheckers call s:UpdateSyntasticJavascriptCheckers()
-com! UseTabs          call UseTabs()
-com! WMSetEslint      call s:WMSetEslint()
-com! ListWindows      call ListWindows()
+com! AlignRight           call s:AlignRight()
+com! UpdateJSCheckers     call s:UpdateSyntasticJavascriptCheckers()
+com! UseTabs              call s:UseTabs()
+com! WMSetEslint          call s:WMSetEslint()
+com! -nargs=? SetTabTitle call s:SetTabTitle(<q-args>)
+com! -nargs=? Note        call Alpw_note(<q-args>)
 
 "- Debugging
 "------------
@@ -248,7 +240,6 @@ let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not 
 let g:ctrlp_show_hidden = 1                " show hidden files by default
 let g:ctrlp_switch_buffer = 0              " open buffer in current window even if it's open elsewhere
 let g:ctrlp_tilde_homedir = 1              " save mru paths with ~ for $HOME
-let g:ctrlp_working_path_mode = 'rw'       " search within repo/cwd (not current file's dir)
 let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
 let g:ctrlp_custom_ignore = {
 \  'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|dist-.*|gen)$',
@@ -277,6 +268,11 @@ let g:javascript_conceal_function = 'ƒ'
 
 let g:SuperTabMappingBackward = '<c-tab>'
 
+cabbrev syc  SyntasticCheck
+cabbrev syre SyntasticReset
+cabbrev syt  SyntasticToggle
+cabbrev syi  SyntasticInfo
+
 let g:syntastic_always_populate_loc_list = 1 " show errors in location list
 let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
 let g:syntastic_enable_balloons = 0          " no mouseover balloons
@@ -286,22 +282,16 @@ let g:syntastic_cursor_column = 0            " perf: only echo first err on line
 let g:syntastic_loc_list_height = 5          " keep location list short
 let g:syntastic_error_symbol = '»'
 let g:syntastic_warning_symbol = '›'
-let g:syntastic_debug_file = '~/.syntastic.log'
-" let g:syntastic_debug = 3
-
 let g:syntastic_mode_map = {
 \ 'mode': 'active',
 \ 'passive_filetypes': ['html']
 \}
-
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pylint_args = '--rcfile=~/Projects/personal/sjfnw/.pylintrc'
-
-" let g:syntastic_javascript_exec = './node_modules/.bin/eslint'
-let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['csslint']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
+let g:syntastic_python_checkers = ['prospector']
+let g:syntastic_python_prospector_args = '--profile=/Users/aisa/Projects/personal/sjfnw/.landscape.yml'
 
 let g:UltiSnipsExpandTrigger = '<s-tab>'
 let g:UltiSnipsJumpForwardTrigger = '<s-tab>'
@@ -329,7 +319,6 @@ func! s:ShortPath(p)
 endf
 
 func! Alpw_CWD()
-  " get shortened format CWD
   return s:ShortPath(getcwd())
 endf
 
@@ -392,7 +381,7 @@ endf
 
 func! SL_dir()
   " return shortened path for current buffer
-  " skip netrw since it displays path in file spot
+  " skip for netrw since it displays path in file spot
   if getbufvar('%', '&filetype') == 'netrw'
     return ''
   endif
@@ -403,16 +392,16 @@ endf
 "----------
 
 func! Alpw_Tabline()
-  " tab numbers on left, cwd on right
+  " tab numbers/titles on left, cwd on right
   let s = ''
   if tabpagenr('$') > 1
     for i in range(1, tabpagenr('$'))
-      if i == tabpagenr()
-        let s .= '%#TabLineSel#'
-      else
-        let s .= '%#TabLine#'
-      endif
+      let s .= i == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
       let s .= ' ' . i . ' '
+      if exists('g:tabtitle_' . i)
+        let s .= ' ' . eval('g:tabtitle_' . i)
+      endif
+      let s .= ' '
     endfor
     let s .= '%#TabLineFill#'
   endif
@@ -420,12 +409,17 @@ func! Alpw_Tabline()
   return s
 endf
 
+func! s:SetTabTitle(title) abort
+  " set global variable used by Alpw_Tabline to display current tab's title
+  let g:['tabtitle_' . tabpagenr()] = a:title
+endfunc
+
 "- Misc utility
 "---------------
 
-" reload vim config(s) and retain working directory
-" wrapped to avoid trying to redefine function as it's being executed
 if !exists('*ReloadVimrc')
+  " reload vim config(s) and retain working directory
+  " wrapped to avoid trying to redefine function as it's being executed
   func ReloadVimrc()
     let l:cwd = getcwd()
     source ~/.vimrc
@@ -438,8 +432,8 @@ endif
 
 let s:notes_dir = '~/Drive/Notes/'
 
-" browse notes dir, edit existing file or create a new one
 func! Alpw_note(title) abort
+  " browse notes dir, edit existing file or create a new one
   if a:title == ''
     Vexplore ~/Drive/Notes
   else
@@ -447,8 +441,8 @@ func! Alpw_note(title) abort
   endif
 endf
 
-" base jump function based on Python_jump. can be used for ft-specific jumps
 func! Alpw_Jump(pattern, flags) range
+  " base jump function based on Python_jump. can be used for ft-specific jumps
   let l:count = v:count1        " if triggered with number in front
   let l:save = @/               " save last search pattern for restoring later
   mark '                        " mark starting spot so you can go back
@@ -460,8 +454,8 @@ func! Alpw_Jump(pattern, flags) range
   let @/ = l:save               " restore last search pattern
 endf
 
-" show highlight group for item at cursor
 func! s:ShowHighlightGroup()
+  " show highlight group for item at cursor
   let l:id = synID(line('.'), col('.'), 1)
   let l:name = synIDattr(l:id, 'name')
   " follow links to get syn group that is actually highlighting this item
@@ -471,8 +465,8 @@ func! s:ShowHighlightGroup()
   return 'name: ' . l:name . ', hi: ' . l:linked . ', trans: ' . l:trans
 endf
 
-" align the right-most word of current line against 80-char column
-func! AlignRight() abort
+func! s:AlignRight() abort
+  " align the right-most word of current line against 80-char column
   let line = getline('.')
   let startpos = match(line, '\S\+$')
   if startpos == -1
@@ -489,16 +483,6 @@ func! AlignRight() abort
   exec 'normal ' . (79 - endpos) . 'i '
 endf
 
-" list windows with corresponding buffer number & file
-" (for buggy cases where you need to :close a window)
-func! ListWindows()
-  echom 'Window    Buffer'
-  for wi in range(1, winnr('$'))
-    let l:buf = winbufnr(wi)
-    echom wi . '         ' . l:buf . '  ' . bufname(l:buf)
-  endfor
-endf
-
 func! Alpw_SearchHelp()
   exec "help " . expand('<cWORD>')
 endf
@@ -506,40 +490,37 @@ endf
 "- Modify settings/mappings
 "---------------------------
 
-func! UseTabs()
+func! s:UseTabs()
   setlocal noexpandtab
   setlocal nolist
 endf
 
-" set basic jump mappings - useful if nothing language-specific is defined
-" maps [[ ]] to go to non-whitespace at col 0
 func! Jump()
+  " set basic jump mappings - useful if nothing language-specific is defined
+  " maps [[ ]] to go to non-whitespace at col 0
   nnoremap [[ :call Alpw_Jump('^\S', 'bW')<CR>
   nnoremap ]] :call Alpw_Jump('^\S', 'W')<CR>
 endf
 
-"- CtrlP
-"--------
+"- Plugins
+"---------
 
-" see help for g:ctrlp_status_func
 func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
+  " see help for g:ctrlp_status_func
   let statustext = ' ' . a:item . '        ' . a:byfname
   let statustext .= '     ' . substitute(a:marked, '\(<\|>\|-\)', '', 'g')
   if a:regex
     let statustext .= '     (regex)'
   endif
-  return statustext . '%=%{getcwd()}'
+  return statustext . '%=%{Alpw_CWD()}'
 endf
 
 func! CtrlPProgress(str)
   return a:str . ' files scanned...'
 endf
 
-"- Syntastic
-"------------
-
-" get checkers based on configs present in working directory
 func! s:UpdateSyntasticJavascriptCheckers()
+  " get checkers based on configs present in working directory
   echom "getting js checkers"
   let cwd = getcwd()
   let checkers = []
