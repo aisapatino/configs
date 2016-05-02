@@ -17,6 +17,8 @@
   prune = true
 [hub]
   host = gecgithub01.walmart.com
+[mailmap]
+  file = ~/Projects/.mailmap
 [merge]
   tool = fugitive
 [mergetool]
@@ -47,7 +49,7 @@
   re = reset
   cl = clean
   com = commit --verbose
-  ca = commit --amend
+  ca = commit --amend --verbose
   can = commit --amend -C HEAD
   cs = "!sh -c 'git commit --squash=$1' -"
   cf = "!sh -c 'git commit --fixup=$1' -"
@@ -55,10 +57,11 @@
   d = diff
   dc = diff --cached
   ds = diff --stat
-  # history
-  l = log --format=\"%C(blue)%h %Creset%cd %C(green)%s%C(yellow)%d%Creset\" --date=format:%m/%d
-  ll = log --format=\"%<(13,trunc)%an %C(blue)%h%Creset %cd %C(green)%s%C(yellow)%d\" --date=format:%m/%d
-  lf = log --format=\"%n%C(magenta)%cd %C(green)%s%C(yellow)%d%n      %C(blue)%h %an\" --date=format:%m/%d --name-only
+  # log
+  l = log --format=\"%C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d
+  ll = log --format=\"%<(4,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d
+  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(green)%d%n%w(80,6,6)%-b\" --date=format:%m/%d
+  lf = log --format=\"%n%C(blue)%h %C(cyan)%cd %C(blue)%an%C(green)%d%n%n%s\" --date=format:%m/%d --name-only
   # fetch, pull, rebase
   f = fetch --all
   p = pull
@@ -74,5 +77,6 @@
   sp = stash pop
   shows = stash show -p
   # misc
+  tagl = tag --sort=-version:refname --format='%(creatordate:short)   %(color:green)%(align:width=10,position=left)%(refname:strip=2)%(end)%(color:reset)%(align:position=left,width=25)%(taggername)%(end)%(align:width=12,position=left)%(color:blue)%(*objectname:short)%(end)%(color:reset)%(contents:subject)'
   bi = bisect
   cp = cherry-pick
