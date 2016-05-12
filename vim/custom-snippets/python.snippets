@@ -52,7 +52,11 @@ endsnippet
 # QUERYSETS
 
 snippet mget "model get" w
-models.${2:Model}.objects.get(${4:pk=}$3)
+${5:models.}$2.objects.get(${4:pk=}$3)
+endsnippet
+
+snippet mfil "model filter" w
+${5:models.}$2.objects.filter($3)$4
 endsnippet
 
 #------------------------------------------------------------------------------
@@ -128,14 +132,22 @@ snippet ar "assertRegexpMatches"
 self.assertRegexpMatches($1, r'${2:pattern}')
 endsnippet
 
-snippet at "assertTemplateUsed"
+snippet atu "assertTemplateUsed"
 self.assertTemplateUsed(res, '${1:path}.html')
 endsnippet
 
-snippet asc "assert status_code"
-self.assertEqual(${2:res.status_code}, ${1:200})
+snippet asc "assertEqual status_code"
+self.assertEqual(res.status_code, ${1:200})
 endsnippet
 
 snippet ac "assertContains"
 self.assertContains(${2:res}, '$1')
+endsnippet
+
+snippet ain "assertIn"
+self.assert$3In(${1:item}, ${2:coll})
+endsnippet
+
+snippet ais "assertIsInstance"
+self.assertIs$3Instance(${1:obj}, ${2:cls})
 endsnippet

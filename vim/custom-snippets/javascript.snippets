@@ -128,6 +128,18 @@ endsnippet
 # sinon
 #-------
 
+snippet sand "set up sandbox" s
+let sandbox;
+
+before(() => {
+	sandbox = sinon.sandbox.create();
+});
+
+afterEach(() => {
+	sandbox.restore();
+});
+endsnippet
+
 snippet spy "sandbox spy"
 sandbox.spy($1, "$2");
 endsnippet
