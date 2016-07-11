@@ -52,7 +52,7 @@ check_statuses() {
       local_changes=1
     fi
     if [ -n "$(echo "$st" | grep 'Changes to be committed')" ] ; then
-      details="$details$green[Staged]"
+      details="$details$yellow[Staged]"
       local_changes=1
     fi
 

@@ -58,9 +58,9 @@
   dc = diff --cached
   ds = diff --stat
   # log
-  l = log --format=\"%C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d
-  ll = log --format=\"%<(4,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d
-  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(green)%d%n%w(80,6,6)%-b\" --date=format:%m/%d
+  l = log --format=\"%C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d --graph
+  ll = log --format=\"%<(4,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d --graph
+  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(green)%d%n%w(80,6,6)%-b\" --date=format:%m/%d --graph
   lf = log --format=\"%n%C(blue)%h %C(cyan)%cd %C(blue)%an%C(green)%d%n%n%s\" --date=format:%m/%d --name-only
   # fetch, pull, rebase
   f = fetch --all
@@ -73,10 +73,10 @@
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
   sl = stash list --format=\"\n%C(yellow)%gd %C(green)%s%Creset %ar\" --name-status
-  ss = stash save
+  ss = "!f() { if [ -z \"$1\" ]; then echo \"Failed - missing stash description\"; else git stash save $1; fi }; f"
   sp = stash pop
   shows = stash show -p
   # misc
-  tagl = tag --sort=-version:refname --format='%(creatordate:short)   %(color:green)%(align:width=10,position=left)%(refname:strip=2)%(end)%(color:reset)%(align:position=left,width=25)%(taggername)%(end)%(align:width=12,position=left)%(color:blue)%(*objectname:short)%(end)%(color:reset)%(contents:subject)'
+  tagl = tag --sort=-creatordate --format='%(creatordate:short)   %(color:green)%(align:width=10,position=left)%(refname:strip=2)%(end)%(color:reset)%(align:position=left,width=25)%(taggername)%(end)%(align:width=12,position=left)%(color:blue)%(*objectname:short)%(end)%(color:reset)%(contents:subject)'
   bi = bisect
   cp = cherry-pick
