@@ -1,11 +1,4 @@
-build
-coverage
-dist
+.git
 *.min.*
-gen
-*-dist
-*-dist-*
-*-release
 *bundle.js
 *.map
-libs
