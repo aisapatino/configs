@@ -101,8 +101,12 @@ set autoread                " auto-update when file is changed from the outside
 set nowritebackup nobackup  " no backup file when overwriting something
 set noswapfile              " no temp file to store changes since save
 
+" persist undo history even after buffer is unloaded
+set undofile undodir=~/tmp/vim-undo
+
 " always include tags from cwd and Notes
-set tags+=.tags,~/Drive/Notes/.tags
+set tags+=./.tags,~/Drive/Notes/.tags
+set cpoptions+=d  " make ./ in tags option relative to cwd, not current file
 
 "- Netrw
 "--------
@@ -157,13 +161,13 @@ cabbrev dt    diffthis
 cabbrev dg    diffget
 cabbrev dp    diffput
 cabbrev dup   diffup
-cabbrev doff  diffoff
+cabbrev doff  diffoff!
 
 " clear search highlighting
 nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
 
 " copy all to global register
-noremap <C-a> :%y+<CR>
+noremap <C-y> :%y+<CR>
 
 " change working dir to current file's dir
 com! Current cd %:h
@@ -174,6 +178,7 @@ com! PrettyJson %!python -m json.tool
 " command shortcuts for functions
 com! AlignRight           call s:AlignRight()
 com! UpdateJSCheckers     call s:UpdateSyntasticJavascriptCheckers()
+com! UseArchetypeEslint   call s:UseArchetypeEslint()
 com! UseTabs              call s:UseTabs()
 com! WMSetEslint          call s:WMSetEslint()
 com! -nargs=? SetTabTitle call s:SetTabTitle(<q-args>)
@@ -217,8 +222,9 @@ Plug 'tpope/vim-vinegar'
 Plug 'aisapatino/hex-highlight'
 Plug 'tpope/vim-surround'
 Plug 'jeetsukumaran/vim-indentwise'
+Plug 'shime/vim-livedown'
 
-Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript', {'branch': 'develop'}
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
 Plug 'digitaltoad/vim-jade'
@@ -226,11 +232,14 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'aisapatino/vim-markdown'
 Plug 'aisapatino/vim-stylus'
 
+Plug 'altercation/vim-colors-solarized'
+
 call plug#end()
 
 "- Plugin config
 "----------------
 
+let g:ag_highlight = 1                     " highlight matches in qf & windows
 cabbrev ag Ag!
 
 let g:ctrlp_extensions = ['tag']           " enable searching of tags
@@ -262,9 +271,12 @@ let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbro
 cabbrev blame Gblame
 cabbrev gs    Gstatus
 cabbrev gf    Gfetch
-cabbrev gk    GV
+cabbrev gk    GV --format=%cd\ %h%d\ %s
 
 let g:javascript_conceal_function = 'ƒ'
+let g:javascript_plugin_jsdoc = 1
+
+let g:livedown_browser = "'/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'"
 
 let g:SuperTabMappingBackward = '<c-tab>'
 
@@ -291,7 +303,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
 let g:syntastic_python_checkers = ['prospector']
-let g:syntastic_python_prospector_args = '--profile=/Users/aisa/Projects/personal/sjfnw/.landscape.yml'
+"let g:syntastic_python_prospector_args = '--profile=/Users/aisa/Projects/personal/sjfnw/.landscape.yml'
 
 let g:UltiSnipsExpandTrigger = '<s-tab>'
 let g:UltiSnipsJumpForwardTrigger = '<s-tab>'
@@ -484,7 +496,7 @@ func! s:AlignRight() abort
 endf
 
 func! Alpw_SearchHelp()
-  exec "help " . expand('<cWORD>')
+  exec "help " . expand('<cword>')
 endf
 
 "- Modify settings/mappings
@@ -495,11 +507,12 @@ func! s:UseTabs()
   setlocal nolist
 endf
 
-func! Jump()
+func! Alpw_SetJump(pattern)
+  let b:jump_pattern = a:pattern
   " set basic jump mappings - useful if nothing language-specific is defined
   " maps [[ ]] to go to non-whitespace at col 0
-  nnoremap [[ :call Alpw_Jump('^\S', 'bW')<CR>
-  nnoremap ]] :call Alpw_Jump('^\S', 'W')<CR>
+  nnoremap <Leader>k :call Alpw_Jump(b:jump_pattern, 'bW')<CR>
+  nnoremap <Leader>j :call Alpw_Jump(b:jump_pattern, 'W')<CR>
 endf
 
 "- Plugins
@@ -534,4 +547,80 @@ func! s:UpdateSyntasticJavascriptCheckers()
   endif
   echom 'checkers: ' . join(checkers, ', ')
   let b:syntastic_javascript_checkers = checkers
+endf
+
+
+" Syntastic
+"au BufReadPost *.js,*.jsx call s:SetupSyntastic()
+func! s:SetupSyntastic()
+  if !exists('b:git_dir')
+    echom "no git dir"
+  else
+    echom 'git_dir: ' . b:git_dir
+  endif
+endf
+
+" Use archetype-compatible eslint checking for cwd
+func! s:UseArchetypeEslint()
+  echom 'Setting up eslint config for buffer; checking for archetype'
+
+  let cwd = getcwd()
+  let mid_path = cwd . '/node_modules/@walmart/'
+  let arch_node =  'electrode-archetype-njs-module-dev'
+  let arch_hapi =  'electrode-archetype-hapi-plugin-dev'
+  let arch_react_app =  'electrode-archetype-react-app'
+
+  if isdirectory(mid_path . arch_node)
+
+    let g:syntastic_javascript_eslint_exec = cwd . '/node_modules/.bin/eslint'
+
+    let conf_path = '--config ' . mid_path . arch_node . '/config/eslint/'
+
+    if match(expand('%:'), '^test') > -1
+      let b:syntastic_javascript_eslint_args = conf_path . '.eslintrc-test'
+    else
+      let b:syntastic_javascript_eslint_args = conf_path . '.eslintrc-node'
+    endif
+    echom 'updated: ' . b:syntastic_javascript_eslint_args
+  else
+    echom arch_node . ' not found. make sure cwd is root of repo'
+  endif
+endf
+
+func! s:GetColors()
+  let s:pattern = '#\(\x\x\x\)\{1,2}'
+  let colors = {}
+  for i in range(0, line('$'))
+    let line = getline(i)
+    let match_count = 1 " start by checking for 1st match
+    let match = matchstr(line, s:pattern, 0, match_count)
+
+    while match != ''
+      let l:match_name = match
+
+      if has_key(colors, match)
+        " mark color done
+        let colors[match] += 1
+      else
+        let colors[match] = 1
+      endif
+
+      let match_count += 1
+      let match = matchstr(line, s:pattern, 0, match_count)
+    endwhile
+  endfor
+  for key in keys(colors)
+    echo key . '    ' . colors[key]
+  endfor
+endf
+
+com! GetColors call s:GetColors()
+
+func! s:FormatJS()
+  :%s/{\(.\+\)/{\r\1/e
+  :%s/\([^ ]\+\s*\)}/\1\r}/e
+  :%s/\[\s*{/[\r{/e
+  :%s/}\s*\]/}\r]/e
+  :%s/\s\+$/e
+  exec 'normal gg=G'
 endf
