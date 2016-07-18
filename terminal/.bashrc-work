@@ -3,33 +3,18 @@
 source ~/Projects/configs/terminal/.bashrc-base
 
 # Node version manager
-#----------------------
-
 export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+source /usr/local/opt/nvm/nvm.sh
 
-# Shortcuts
-#----------
-
-export cellar=/usr/local/Cellar
-
-# Colors
-#--------
-
-# Differs from linux. See man ls for more info
+# Colors for ls. Differs from linux - see man ls for more info
 export LSCOLORS=ExGxBxDxCxEgEdxbxgExEx
 
-# Autocomplete
-#--------------
-
 # Enhanced bash autocomplete. See http://superuser.com/a/288491
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-  source `brew --prefix`/etc/bash_completion
+if [ -f /usr/local/etc/bash_completion ]; then
+  source /usr/local/etc/bash_completion
 fi
 
 # Untracked .bashrc (for passwords, etc.)
-#-----------------------------------------
-
 if [ -f ~/Projects/.bashrc ] ; then
   source ~/Projects/.bashrc
 fi

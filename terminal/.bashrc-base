@@ -4,7 +4,7 @@
 #----------
 
 HISTCONTROL=ignoreboth         # ignore duplicates & commands starting with space
-HISTIGNORE="ls:ll:gs:gd:cd *"  # ignore frequent short commands
+HISTIGNORE="ls:ll:gs:gd:cd *:g s*"  # ignore frequent short commands
 HISTSIZE=1000                  # double the default
 shopt -s histappend            # add to existing history instead of overwriting
 
@@ -24,12 +24,19 @@ export CLICOLOR=1
 #--------
 
 GIT_PS1_SHOWUPSTREAM=1        # indicate ahead/behind upstream
+GIT_PS1_SHOWDIRTYSTATE=1      # indicate staged & unstaged changed
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_STATESEPARATOR=""     # prevent space between branch & status indicators
 GIT_PS1_SHOWCOLORHINTS=1      # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
-# blue short-form cwd, then git string, then vim mode string (see .inputrc)
-PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \m "'
+add_virtual_env() {
+  if [ "$VIRTUAL_ENV" ] ; then
+    export PS1="`basename \"$VIRTUAL_ENV\"` $PS1"
+  fi
+}
+PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \m " ; add_virtual_env'
 
 # Autocomplete
 #--------------
@@ -41,16 +48,10 @@ fi
 # Autocomplete for 'g' as well
 complete -o default -o nospace -F _git g
 
-# Initialize Ruby
-#-----------------
-
-if [ -d ~/.rbenv ] ; then
-  eval "$(rbenv init -)"
-fi
-
 # Aliases
 #---------
 
+alias ag="ag --hidden"
 alias ll="ls -la"
 alias f="find . -not -path \"*node_modules*\" -iname"
 alias fa="find . -iname"                 # see function ff() for specifying dir
@@ -59,7 +60,6 @@ alias g="git"
 alias gs="git status"
 alias gd="git diff"
 alias gk="gitk --all"
-alias gkb="gitk --branches"        # only local branches (useful for big repos)
 
 alias npmlist="npm ls --depth=0"
 
@@ -72,9 +72,13 @@ alias trd="$base_tree -d"
 
 # Replace across files. Usage: sr <pattern> <replacement> "<filepattern>"
 sr() {
-  echo "replacing $1 with $2 in files matching $3"
+  echo "replacing '$1' with '$2' in files matching '$3'"
   echo "(if the file match looks wrong, make sure you put quotes around it)"
-  find . -iname "$3" -print | xargs sed -i "s/$1/$2/g"
+  if [ "$1" ] && [ "$2" ] && [ "$3" ] ; then
+    find . -iname "$3" -print0 | xargs -0 gsed -i s/"$1"/"$2"/g
+  else
+    echo "missing arguments"
+  fi
 }
 
 # Find file in specified dir. Usage: ff <pathtosearch> "<pattern>"
