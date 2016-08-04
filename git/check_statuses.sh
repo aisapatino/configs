@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Report the current branch & status of all repos inside of current directory
+# Calls fetch from all repos unless -s option is passed
 
 check_statuses() {
   red="\033[31m"
@@ -10,17 +11,22 @@ check_statuses() {
   bold="\033[1m"
   reset="\033[m"
 
+  branch_width="%-13s"
+  remote_width="%-10s"
+
   echo -e "Checking git repos...\n"
 
   for d in */ ; do
+    # skip non-dir or non-repo
     if [ ! -d "$d" ] || [ ! -d "$d/.git" ] ; then
       continue
     fi
 
-    printf "$bold%30s$reset  " "$d"
+    printf "$bold%30s$reset  " $(echo "$d" | sed "s/\///" )
     cd $d
 
-    if [ -z "$1" ] || [ "$1" != "-s" ] ; then # -s = skip fetch
+    # $1 = first arg; -s = skip fetch
+    if [ -z "$1" ] || [ "$1" != "-s" ] ; then
       git fetch -q
     fi
 
@@ -34,9 +40,19 @@ check_statuses() {
       echo -e "${red}could not find branch name$reset"
       continue
     elif [ "$branch" = "master" ] ; then
-      printf "%-18s" "$branch"
+      printf $branch_width $branch
     else
-      printf "$cyan%-18s$reset" "$branch"
+      printf "$cyan$branch_width$reset" $branch
+    fi
+
+    # get remote
+    remote=$(echo "$st" | grep -o "'[a-zA-Z]\+\/" | grep -o "[^'\/]\+")
+    if [ -z "$remote" ] ; then
+      printf $remote_width "-"
+    elif [ "$remote" = "origin" ] ; then
+      printf $remote_width $remote
+    else
+      printf "$cyan$remote_width$reset" "$remote"
     fi
 
     details=""
