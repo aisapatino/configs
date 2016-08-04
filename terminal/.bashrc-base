@@ -75,7 +75,7 @@ sr() {
   echo "replacing '$1' with '$2' in files matching '$3'"
   echo "(if the file match looks wrong, make sure you put quotes around it)"
   if [ "$1" ] && [ "$2" ] && [ "$3" ] ; then
-    find . -iname "$3" -print0 | xargs -0 gsed -i s/"$1"/"$2"/g
+    find . -iname "$3" -print0 | xargs -0 sed -i s/"$1"/"$2"/g
   else
     echo "missing arguments"
   fi
@@ -89,10 +89,11 @@ ff() {
 
 # List local git branches with corresponding remotes and status.
 # Strips sha and commit subject from git branch -vv
+# For mac: brew install gnu-sed --with-default-names
 # Example input: * master      bbea826 [origin/master: ahead 12] update res serializer test
 #        output: * master      [origin/master: ahead 12]
 br() {
-  git branch -vv --color | gsed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
+  git branch -vv --color | sed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
 }
 
 # Load check_statuses function
