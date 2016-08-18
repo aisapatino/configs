@@ -2,6 +2,14 @@
   statusHints = false
 [blame]
   date = short
+[color "diff"]
+  # determines color of parens around tags/branches in log
+  commit = "magenta"
+[color "decorate"]
+  head = "magenta bold"
+  branch = "magenta"
+  remoteBranch = "magenta"
+  tag = "magenta"
 [core]
   autocrlf = false
   excludesfile = ~/.gitignore
@@ -58,10 +66,11 @@
   dc = diff --cached
   ds = diff --stat
   # log
-  l = log --format=\"%C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d --graph
-  ll = log --format=\"%<(4,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(green)%d\" --date=format:%m/%d --graph
-  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(green)%d%n%w(80,6,6)%-b\" --date=format:%m/%d --graph
-  lf = log --format=\"%n%C(blue)%h %C(cyan)%cd %C(blue)%an%C(green)%d%n%n%s\" --date=format:%m/%d --name-only
+  l = log --format=\"%C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --date=format:%m/%d --graph
+  lb = "!git l --branches"
+  la = log --format=\"%<(4,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --date=format:%m/%d --graph
+  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(auto)%d%n%w(80,6,6)%-b%n\" --date=format:%m/%d --graph
+  lf = log --format=\"%n%C(cyan)%cd %C(blue)%h - %C(blue)%an%C(auto)%d%n%s\" --date=format:%m/%d --name-status
   # fetch, pull, rebase
   f = fetch --all
   p = pull
@@ -77,6 +86,6 @@
   sp = stash pop
   shows = stash show -p
   # misc
-  tagl = tag --sort=-creatordate --format='%(creatordate:short)   %(color:green)%(align:width=10,position=left)%(refname:strip=2)%(end)%(color:reset)%(align:position=left,width=25)%(taggername)%(end)%(align:width=12,position=left)%(color:blue)%(*objectname:short)%(end)%(color:reset)%(contents:subject)'
+  tl = tag --sort=creatordate --format='%(creatordate:short)  %(color:green)%(align:12,left)%(refname:strip=2)%(end)%(color:reset)  %(align:23,left)%(taggername)%(end)  %(align:10,left)%(color:blue)%(*objectname:short)%(end)  %(color:reset)%(contents:subject)'
   bi = bisect
   cp = cherry-pick
