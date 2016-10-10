@@ -1,4 +1,4 @@
-# default only expands at beginning of line or after whitespace
+# by default, only expands at beginning of line or after whitespace
 #
 # options:
 #	 b  beginning of line only (whitespace ok)
@@ -25,7 +25,7 @@ endsnippet
 snippet af "arrow function (as callback)" ws
 ($1) => {
 	$2
-})$3;
+});$3
 endsnippet
 
 snippet co "console.log" b
@@ -112,7 +112,7 @@ it.skip("should $1", () => {
 endsnippet
 
 snippet tt "test then (with catch done)" ws
-then(function (${1:results}) {
+then((${1:results}) => {
 	$2
 	done();
 })
@@ -146,10 +146,6 @@ endsnippet
 
 snippet stub "sandbox stub"
 sandbox.stub($1, "$2")$3;
-endsnippet
-
-snippet sargs "spy/stub args"
-const args = $1.firstCall.args;
 endsnippet
 
 # chai bdd

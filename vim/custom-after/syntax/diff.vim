@@ -1,10 +1,10 @@
 " See $VIMRUNTIME/syntax/diff.vim
-" Used for diff sections in git diffs via :Gitv
+" used for diff sections in git diffs via :Gitv
 
 " Syntax
 "--------
 
-" Default doesn't match git diff output. Clear and start over
+" default doesn't match git diff output. Clear and start over
 syn clear diffFile
 syn clear diffOldFile
 syn clear diffNewFile
@@ -23,7 +23,7 @@ syn match diffFile "^+++ .*"
 hi! link diffFile      Statement
 hi! link diffFileInfo  Folded
 
-" Link diff filetype groups to the common global groups
+" link diff filetype groups to the common global groups
 hi! link diffAdded   DiffAdd
 hi! link diffRemoved DiffDelete
 

@@ -4,7 +4,7 @@
 "   http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
 "   https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 "
-" Note colors 0-15 are affected by terminal's setting for showing bold in bright
+" note colors 0-15 are affected by terminal's settings - may use bright
 " version of color
 
 set background=dark
@@ -60,7 +60,7 @@ hi Debug           ctermfg=248
 
 hi Underlined      ctermfg=NONE  cterm=underline
 
-hi Error           ctermfg=088    ctermbg=bg   cterm=bold
+hi Error           ctermfg=088   ctermbg=bg   cterm=bold
 hi Todo            ctermfg=NONE  ctermbg=NONE cterm=bold
 
 hi! link htmlItalic Comment
@@ -69,7 +69,7 @@ hi! link htmlItalic Comment
 "----------------------
 
 hi BoldUnderlined  ctermfg=231               cterm=bold,underline
-hi Code            ctermfg=081   ctermbg=235
+hi Code            ctermfg=255   ctermbg=235
 hi ClassName       ctermfg=162               cterm=bold
 hi WebLink         ctermfg=025                cterm=underline
 

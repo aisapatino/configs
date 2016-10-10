@@ -534,6 +534,7 @@ endf
 
 func! s:UpdateSyntasticJavascriptCheckers()
   " get checkers based on configs present in working directory
+  " for non-archetype projects
   echom "getting js checkers"
   let cwd = getcwd()
   let checkers = []
@@ -551,28 +552,19 @@ endf
 
 
 " Syntastic
-"au BufReadPost *.js,*.jsx call s:SetupSyntastic()
-func! s:SetupSyntastic()
-  if !exists('b:git_dir')
-    echom "no git dir"
-  else
-    echom 'git_dir: ' . b:git_dir
-  endif
-endf
 
-" Use archetype-compatible eslint checking for cwd
+" use archetype-compatible eslint checking for cwd
 func! s:UseArchetypeEslint()
   echom 'Setting up eslint config for buffer; checking for archetype'
 
   let cwd = getcwd()
   let mid_path = cwd . '/node_modules/@walmart/'
   let arch_node =  'electrode-archetype-njs-module-dev'
-  let arch_hapi =  'electrode-archetype-hapi-plugin-dev'
-  let arch_react_app =  'electrode-archetype-react-app'
 
   if isdirectory(mid_path . arch_node)
 
     let g:syntastic_javascript_eslint_exec = cwd . '/node_modules/.bin/eslint'
+    let b:syntastic_javascript_checkers = ['eslint']
 
     let conf_path = '--config ' . mid_path . arch_node . '/config/eslint/'
 
@@ -581,7 +573,8 @@ func! s:UseArchetypeEslint()
     else
       let b:syntastic_javascript_eslint_args = conf_path . '.eslintrc-node'
     endif
-    echom 'updated: ' . b:syntastic_javascript_eslint_args
+    echom 'Exec: ' . g:syntastic_javascript_eslint_exec
+    echom 'Args: ' . b:syntastic_javascript_eslint_args
   else
     echom arch_node . ' not found. make sure cwd is root of repo'
   endif

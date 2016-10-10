@@ -4,12 +4,9 @@
 "--------
 
 syn match jsClassName "\(class\ \)\@<=\S\+" containedin=jsClassDefinition
+syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s(.*=>\)\@=" containedin=jsVariableDef,jsIdentExpIdent,jsAssignmentExpr,jsBlock,jsFuncBlock
 
-" highlight function names for prototypes, functions defined in arrays
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\sfunction\)\@="
-syn match jsFuncName "\(function\s\)\@<=\([a-zA-Z0-9_]\+\)"
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(:\sfunction\)\@="
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s(.*=>\)\@=" containedin=jsIdentExpIdent,jsAssignmentExpr
+syn match testDesc +"should[^"]\+"+ containedin=jsParen
 
 syn keyword jsThis      self _this
 syn keyword jsModule    exports module
@@ -41,3 +38,4 @@ hi! link mocha           Statement
 hi! link mochaDone       Keyword
 hi! link mochaWarn       WarningMsg
 hi! link chaiExpect      Keyword
+hi! link testDesc        Underlined

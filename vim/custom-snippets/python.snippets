@@ -151,3 +151,19 @@ endsnippet
 snippet ais "assertIsInstance"
 self.assertIs$3Instance(${1:obj}, ${2:cls})
 endsnippet
+
+#-------------------------------------------------------------------------------
+# FACTORY BOY
+#-------------------------------------------------------------------------------
+
+snippet fn "lazy attr with random number" w
+factory.LazyAttribute(lambda o: random.randrange(${1:0}, $2)
+endsnippet
+
+snippet ff "basic faker" w
+factory.Faker('${1:text}')
+endsnippet
+
+snippet fr "random choice"
+factory.LazyAttribute(lambda o: random.choice($1)
+endsnippet
