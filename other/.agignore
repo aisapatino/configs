@@ -2,3 +2,7 @@
 *.min.*
 *bundle.js
 *.map
+
+# SJF specific
+_theme
+libs
