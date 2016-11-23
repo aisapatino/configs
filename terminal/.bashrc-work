@@ -2,9 +2,14 @@
 
 source ~/Projects/configs/terminal/.bashrc-base
 
+# Place brew installs before system
+export PATH=/usr/local/bin:$PATH
+
 # Node version manager
 export NVM_DIR=~/.nvm
-source /usr/local/opt/nvm/nvm.sh
+if [ -f /usr/local/opt/nvm/nvm.sh ] ; then
+  source /usr/local/opt/nvm/nvm.sh
+fi
 
 # Colors for ls. Differs from linux - see man ls for more info
 export LSCOLORS=ExGxBxDxCxEgEdxbxgExEx

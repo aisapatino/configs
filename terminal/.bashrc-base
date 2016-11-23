@@ -9,6 +9,7 @@ HISTSIZE=1000                  # double the default
 shopt -s histappend            # add to existing history instead of overwriting
 
 shopt -s cdable_vars           # cd using vars without having to include $
+shopt -u hostcomplete          # fix tabcomplete with @ in name
 
 export EDITOR=vim
 export VISUAL=$EDITOR
