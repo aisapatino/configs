@@ -5,8 +5,15 @@
 # Execute with an argument to specify install type: ./install work|linux
 # Otherwise it will default to base install.
 
+red="\033[31m"
+green="\033[32m"
+yellow="\033[33m"
+cyan="\033[36m"
+bold="\033[1m"
+reset="\033[m"
+
 run_setup() {
-  local header="\n===== %s =====\n"
+  local header="\n${bold}%s${reset}\n==========\n\n"
   local configs=~/Projects/configs
 
   # Determine install type
@@ -22,12 +29,12 @@ run_setup() {
     install_type='base'
   fi
 
-  echo "Running $install_type setup"
+  echo -e "\nRunning $bold$install_type$reset setup..."
 
   # Git
   #-----
 
-  printf "$header" "git"
+  printf "$header" "Git config"
 
   ln -fsv "$configs/git/.gitignore" ~
   ln -fsv "$configs/git/.gitconfig" ~
@@ -47,7 +54,7 @@ run_setup() {
   # Terminal
   #----------
 
-  printf "$header" "shell/terminal"
+  printf "$header" "Terminal"
 
   ln -fsv "$configs/terminal/.inputrc"            ~
   ln -fsv "$configs/terminal/.bash_profile"       ~
@@ -95,7 +102,7 @@ run_setup() {
   ln -fsv "$configs/vim/custom-snippets"     ~/.vim
   ln -fsv "$configs/vim/filetype.vim"        ~/.vim
 
-  echo -e "\n====> Make sure to run :PlugInstall once you open vim\n"
+  echo -e "\n${bold}Make sure to run :PlugInstall once you open vim\n$reset"
 }
 
 run_setup $1
