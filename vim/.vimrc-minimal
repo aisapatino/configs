@@ -2,48 +2,95 @@
 
 " Vim settings
 "------------------------------------------------------------------------------
-set encoding=utf-8
 
-set vb t_vb=                     " don't beep or flash on error
-set t_Co=256                     " 256-color terminal
-set shell=bash                   " default to bash instead of sh for !commands
-set lazyredraw                   " don't redraw during background/auto commands
+"- General
+"----------
 
-set number                       " show line numbers
-set showcmd                      " show commands as you type
-set wildmenu wildchar=<tab>      " autocomplete for commands
+set t_Co=256                   " 256-color terminal
+set vb t_vb=                   " don't beep or flash on error
+set shell=bash                 " default to bash instead of sh for !commands
+set lazyredraw                 " don't redraw during background/auto commands
 
-set expandtab                    " insert spaces instead of tabs
-set tabstop=2                    " how many columns wide a tab is visually
-set shiftwidth=2                 " how many columns to indent with >>
-set autoindent                   " take indent for new line from previous line
+set number                     " show line numbers
 
-set ignorecase                   " case-insensitive search by default
-set smartcase                    " case-sensitive if pattern has uppercase letter
+set wildmenu wildchar=<tab>    " autocomplete for commands
+set showcmd                    " show commands as you type
 
-set autoread                     " auto-update when file is changed from the outside
-set nowritebackup nobackup       " no backup file when overwriting something
-set noswapfile                   " no temp file to store changes since save
+"- Indent & wrap
+"----------------
 
-" Typical backspace behavior (not default on windows or in terminal)
+set expandtab                  " insert spaces instead of tabs
+set tabstop=2                  " how many columns wide a tab is visually
+set shiftwidth=2               " how many columns to indent with >>
+set autoindent                 " take indent for new line from previous line
+
+"- Movement
+"-----------
+
+" typical backspace behavior (not default on windows or in terminal)
 set backspace=indent,eol,start
 
-" Keybindings
+"- Search
+"---------
+
+set gdefault                   " default global (multiple matches per line)
+set ignorecase                 " case-insensitive search by default
+set smartcase                  " case-sensitive if pattern has uppercase letter
+set incsearch                  " show matches as you type
+set hlsearch                   " highlight search matches
+
+"- Statusline
+"-------------
+
+set laststatus=2                           " always show status line
+
+set statusline +=%n\ %t\ %m%=%f\ %l,%c
+
+"- Files, sessions
+"------------------
+
+set encoding=utf-8
+
+set autoread                " auto-update when file is changed from the outside
+set nowritebackup nobackup  " no backup file when overwriting something
+set noswapfile              " no temp file to store changes since save
+
+
+
+" Custom maps, commands, abbreviations
 "------------------------------------------------------------------------------
 
-" Set <Leader> key to space bar
-let mapleader=' '
+"- Basics
+"---------
 
-" Clear search highlighting
-nnoremap <silent> <Leader><Leader> :nohl<CR>
+let mapleader = ' '
 
-nnoremap ; :
-nnoremap : ;
+noremap ; :
+noremap : ;
 
-" Navigate window splits with Ctrl + movement key
+"- Movement/navigation
+"----------------------
+
+" navigate splits with ctrl + movement key (less keypresses than Ctrl+W+movement)
 noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
+
+" jump to conflict markers
+nnoremap <Leader>c /\(<<<<<<\\|======\\|>>>>>>\)<CR>
+
+" -Misc
+"--------
+
+cabbrev vres  vertical resize
+cabbrev dt    diffthis
+cabbrev dg    diffget
+cabbrev dp    diffput
+cabbrev dup   diffup
+cabbrev doff  diffoff!
+
+" clear search highlighting
+nnoremap <silent> <Leader><Leader> :nohl<CR>
 
 " vim: ft=vim
