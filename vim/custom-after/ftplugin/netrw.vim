@@ -1,1 +1,1 @@
-set nolist
+setl nolist
