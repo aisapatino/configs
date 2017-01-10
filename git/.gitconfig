@@ -41,7 +41,7 @@
 [rerere]
   enabled = true
 [sequence]
-  editor = gvim -f
+  editor = vim
 [user]
   email = anna.luisa.west@formidablelabs.com
   name = "Anna Luisa Patiño West"
@@ -66,11 +66,10 @@
   dc = diff --cached
   ds = diff --stat
   # log
-  l = log --format=\"%C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --date=format:%m/%d --graph
-  lb = "!git l --branches"
-  la = log --format=\"%<(4,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --date=format:%m/%d --graph
+  l = log --format=\"%C(blue)%h %C(cyan)%cd %C(reset)%s%C(auto)%d\" --date=format:%m/%d --graph --branches --remotes
+  la = log --format=\"%<(6,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --date=format:%m/%d --graph --branches --remotes
   ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(auto)%d%n%w(80,6,6)%-b%n\" --date=format:%m/%d --graph
-  lf = log --format=\"%n%C(cyan)%cd %C(blue)%h - %C(blue)%an%C(auto)%d%n%s\" --date=format:%m/%d --name-status
+  lf = log --format=\"%n%C(cyan)%cd %C(blue)%h %C(green)%s %C(auto)%d\" --date=format:%m/%d --name-status
   # fetch, pull, rebase
   f = fetch --all
   p = pull
