@@ -1,11 +1,10 @@
-# by default, only expands at beginning of line or after whitespace
-#
-# options:
-#	 b  beginning of line only (whitespace ok)
-#	 w  word boundary (can be adjacent to non-word, non-whitespace chars)
-#	 s  trim trailing whitespace before going to next line
-# 	  (use if there are optional params after a tab)
-#
+#  default = after whitespace or beginning of line
+
+# most-used options:
+#   b  beginning of line only (whitespace ok)
+#   w  word boundary (can be adjacent to non-word, non-whitespace chars)
+#   s  trim trailing whitespace before going to next line
+#      (use if there are optional params after a tab)
 # see UltiSnips-snippet-options for more
 
 #------------------------------------------------------------------------------
@@ -13,16 +12,16 @@
 #------------------------------------------------------------------------------
 
 snippet str "use strict statement" b
-"use strict";
+'use strict';
 endsnippet
 
-snippet cb "callback (anon func with closing parens)" ws
+snippet cb "es5 callback" ws
 function ($1) {
 	$2
 });
 endsnippet
 
-snippet af "arrow function (as callback)" ws
+snippet af "es6 arrow function as cb" ws
 ($1) => {
 	$2
 });$3
@@ -32,38 +31,36 @@ snippet co "console.log" b
 console.log($1);
 endsnippet
 
-snippet con "console.log with quotes" b
-console.log("$1"$2);
+snippet con "console.log with string" b
+console.log('$1'$2);
 endsnippet
 
-#------------------------------------------------------------------------------
-# LODASH
-#------------------------------------------------------------------------------
-
-snippet ea "_.each" bs
-_.each(${1:coll}, (${2:item}) => {
-	$3
-});
+snippet ok "wrap in Object.keys" w
+Object.keys(${VISUAL})
 endsnippet
 
 #------------------------------------------------------------------------------
 # NODE
 #------------------------------------------------------------------------------
 
-snippet cr "const require" b
-const $1 = require("$2")$3;
+snippet cr "es6 const require" b
+const $1 = require('$2')$3;
 endsnippet
 
-snippet crm "const require, matching" b
-const $1 = require("$1")$2;
+snippet crm "es6 const require, matching" b
+const $1 = require('$1')$2;
 endsnippet
 
-snippet re "require (var)" b
-var $1 = require('$2')$3;
+snippet re "es5 require (var)" b
+var $1 = require("$2")$3;
 endsnippet
 
-snippet req "matching require (var)" b
-var $1 = require('$1')$2;
+snippet req "es5 matching require (var)" b
+var $1 = require("$1")$2;
+endsnippet
+
+snippet im "import" b
+import $1 from '$2';
 endsnippet
 
 #------------------------------------------------------------------------------
@@ -74,29 +71,35 @@ endsnippet
 # ------
 
 snippet desc "describe wrapper" bs
-describe("$1", () => {
-	$2
+describe('$1', () => {$2
+});
+endsnippet
+
+snippet desco "es5 describe wrapper" bs
+describe("$1", function () {$2
 });
 endsnippet
 
 snippet be "beforeEach" bs
-beforeEach(($1) => {
-	$2
+beforeEach(($1) => {$2
 });
 
 endsnippet
 
 snippet ae "afterEach" bs
-afterEach(($1) => {
-	$2
+afterEach(($1) => {$2
 });
 
 endsnippet
 
 snippet it "it wrapper, sync" bs
-it("should $1", () => {
-	$2
+it('should $1', () => {$2
 });$3
+endsnippet
+
+snippet ito "es5 it wrapper, sync" bs
+it("should $1", function () {$2
+});
 endsnippet
 
 snippet ita "it wrapper, async" bs
@@ -107,16 +110,14 @@ it("should $1", (done) => {
 endsnippet
 
 snippet its "it.skip" bs
-it.skip("should $1", () => {
+it.skip('should $1', () => {
 });$2
 endsnippet
 
-snippet tt "test then (with catch done)" ws
-then((${1:results}) => {
-	$2
-	done();
-})
-.catch(done);
+snippet tc "wrap with test util for assertions in cb" bs
+tryCatch(done, function () {
+	${VISUAL}
+});
 endsnippet
 
 snippet wrap "wrap with test util for assertions in cb" bs
@@ -140,68 +141,85 @@ afterEach(() => {
 });
 endsnippet
 
+snippet sando "es5 set up sandbox" s
+var sandbox;
+
+before(function () {
+	sandbox = sinon.sandbox.create();
+});
+
+afterEach(function () {
+	sandbox.restore();
+});
+endsnippet
+
 snippet spy "sandbox spy"
-sandbox.spy($1, "$2");
+sandbox.spy($1, '$2');
 endsnippet
 
 snippet stub "sandbox stub"
-sandbox.stub($1, "$2")$3;
+sandbox.stub($1, '$2')$3;
 endsnippet
 
 # chai bdd
 # --------
 
 snippet exp "expect, generic" b
-expect(${1:VAR}).to.${2:ETC};
+expect($1).to.$2;
 endsnippet
 
 snippet ep "expect property" b
-expect($1).to.have.property("$2"$3);
-endsnippet
-
-snippet en "expect not (property)" b
-expect($1).to.not.have.$3property("$2");
+expect($1).to.have.property('$2'$3);
 endsnippet
 
 snippet epd "expect property, deep" b
-expect($1).to.have.deep.property("$2"$3);
+expect($1).to.$4have.deep.property('$2'$3);
 endsnippet
 
 snippet ept "expect property + type" b
-expect($1).to.have.$5property("$2").that.is.a$3("$4");
+expect($1).to.have.$5property('$2').that.is.a$3('$4');
+endsnippet
+
+snippet en "expect not (property)" b
+expect($1).to.not.have.$3property('$2');
 endsnippet
 
 snippet et "expect type" b
-expect($1).to.be.a$2("$3")$4;
+expect($1).to.be.a$2('$3')$4;
 endsnippet
 
 snippet ee "expect error" b
 expect(() => {
 	$1
-}).to.throw($3"${2:msg}");
+}).to.throw($3'$2');
 endsnippet
 
-snippet eco "expect calledOnce"
+snippet eco "expect calledOnce" b
 expect($1).to.have.been.calledOnce;
 endsnippet
 
-snippet ecn "expect not called"
+snippet ecn "expect not called" b
 expect($1).to.have.not.been.called;
 endsnippet
 
-snippet ecc "expect call count"
+snippet ecc "expect call count" b
 expect($1).to.have.callCount($2);
 endsnippet
 
-snippet ecw "expect called with"
-expect($1).to.have.$4been.calledWith$3($2);
+snippet ecw "expect called with" b
+expect($1).to.have.$4been.calledWith${3:Exactly}($2);
+endsnippet
+
+snippet eca "expect call count and with" b
+expect($1).to.have.been.called${2:Once}
+	.and.calledWith${4:Exactly}($3);
 endsnippet
 
 #-----------------------------------------------------------------------------
 # ESLINT
 #-----------------------------------------------------------------------------
 
-snippet dl "disable line" ws
+snippet dl "eslint disable line" ws
 // eslint-disable-line $1
 endsnippet
 

@@ -1,3 +1,5 @@
+" Custom filetype created for translating between English & Spanish. Supports spellcheck
+
 " Top title is centered
 syn region esTitle matchgroup=Folded start="|" end="|" concealends contains=esProperNoun
 

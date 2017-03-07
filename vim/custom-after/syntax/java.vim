@@ -1,14 +1,17 @@
+" Java function statement:
 " One or more of first set of words. Each has space at end
 " One of second set of words (no space)
 " Any combo of letters + spaces
 " Ends when it reaches a (
-syn region javaFuncStatement transparent start=+\(^\s\+\(\(public\|protected\|private\|static\|abstract\|final\|native\|synchronized\)\s\+\)*\(\(void\|boolean\|char\|byte\|short\|int\|long\|float\|double\|\([A-Za-z_][A-Za-z0-9_$]*\.\)*[A-Z][A-Za-z0-9_$]*\)\(<[^>]*>\)\=\(\[\]\)*\s\+[a-z][A-Za-z0-9_$]*\|[A-Z][A-Za-z0-9_$]*\)\)(+ end=+)+ contains=javaFuncName,javaType,javaStorageClass,javaScopeDecl
-syn match javaFuncName "\([a-zA-Z]*\)(\@=" contained
-hi link javaFuncName Function
+let lineStart = '^\s\+'
+let spaces = '\s\+'
+let scopeWords='\(public\|protected\|private\|static\|abstract\|final\|native\|synchronized\)'
 
-syn match javaClassName "\%(class\s\)\@<=\([A-Za-z]\)\+"
-hi link javaClassName Function
+execute 'syn region javaFuncStatement transparent start=+' . lineStart . scopeWords . spaces . '+ end=+)+ contains=javaFuncName,javaType,javaStorageClass,javaScopeDecl,javaC_JavaLang'
+syn match javaFuncName '\([a-zA-Z0-9]*\)(\@=' contained
 
-syn cluster javaTop add=javaFuncStatement,javaClassName
+syn match javaClassName '\%(class\s\)\@<=\([A-Za-z]\)\+'
 
-hi link javaTypedef Keyword
+hi! link javaFuncName   Function
+hi! link javaClassName  ClassName
+hi! link javaTypedef    Keyword
