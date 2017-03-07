@@ -24,7 +24,7 @@ set concealcursor=nc           " conceal in cursor line too, in normal or cmd
 
 set wildmenu wildchar=<tab>    " autocomplete for commands
 set showcmd                    " show commands as you type
-set shortmess=ilmnxOI          " shorter messages, don't show intro screen
+set shortmess=ilmnxOtI         " shorter messages, don't show intro screen
 
 set formatoptions+=j           " remove comment chars when joining
 set list                       " display things like tabs, spaces, eol, etc.
@@ -104,14 +104,15 @@ set noswapfile              " no temp file to store changes since save
 " persist undo history even after buffer is unloaded
 set undofile undodir=~/tmp/vim-undo
 
-" always include tags from cwd and Notes
-set tags+=./.tags,~/Drive/Notes/.tags
-set cpoptions+=d  " make ./ in tags option relative to cwd, not current file
+set tags+=./.tags,~/Drive/Notes/.tags  " always include tags from cwd and Notes
+set cpoptions+=d  "    make ./ in tags option relative to cwd, not current file
 
 "- Netrw
 "--------
 
 let g:netrw_timefmt = '%Y %b %d %H:%M'
+
+let g:java_highlight_all = 1
 
 " Custom maps, commands, abbreviations
 "------------------------------------------------------------------------------
@@ -127,7 +128,7 @@ noremap : ;
 "- Movement/navigation
 "----------------------
 
-" navigate window splits with less keypresses
+" navigate splits (less keypresses than defaults)
 noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
@@ -176,13 +177,11 @@ com! TrimTrailing %s/\s\+$
 com! PrettyJson %!python -m json.tool
 
 " command shortcuts for functions
-com! AlignRight           call s:AlignRight()
 com! UpdateJSCheckers     call s:UpdateSyntasticJavascriptCheckers()
-com! UseArchetypeEslint   call s:UseArchetypeEslint()
+com! UpdateTags           call s:UpdateTags()
 com! UseTabs              call s:UseTabs()
-com! WMSetEslint          call s:WMSetEslint()
 com! -nargs=? SetTabTitle call s:SetTabTitle(<q-args>)
-com! -nargs=? Note        call Alpw_note(<q-args>)
+com! -nargs=? Note        call Alpw_Note(<q-args>)
 
 "- Debugging
 "------------
@@ -213,34 +212,32 @@ Plug 'aisapatino/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 Plug 'scrooloose/syntastic'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-surround'
+
 Plug 'junegunn/gv.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-vinegar'
-
 Plug 'aisapatino/hex-highlight'
-Plug 'tpope/vim-surround'
 Plug 'jeetsukumaran/vim-indentwise'
 Plug 'shime/vim-livedown'
 
-Plug 'pangloss/vim-javascript', {'branch': 'develop'}
+Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-Plug 'digitaltoad/vim-jade'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'aisapatino/vim-markdown'
 Plug 'aisapatino/vim-stylus'
-
-Plug 'altercation/vim-colors-solarized'
+Plug 'nikvdp/ejs-syntax'
 
 call plug#end()
 
 "- Plugin config
 "----------------
 
-let g:ag_highlight = 1                     " highlight matches in qf & windows
-cabbrev ag Ag!
+cabbrev ag Ack!
+let g:ackprg = 'ag --hidden --vimgrep'
+let g:ackhighlight = 1
 
 let g:ctrlp_extensions = ['tag']           " enable searching of tags
 let g:ctrlp_follow_symlinks = 1            " follow symlinks unless they loop
@@ -255,9 +252,7 @@ let g:ctrlp_custom_ignore = {
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
 \}
 " replace F-key binding, which doesn't work well on mac keyboard
-let g:ctrlp_prompt_mappings = {
-\  'PrtDeleteEnt()':  ['<c-@>']
-\}
+let g:ctrlp_prompt_mappings = { 'PrtDeleteEnt()':  ['<c-@>'] }
 
 " quick shortcuts: find all, files, recent, buffers, tags
 nnoremap <Leader>fa :CtrlPMixed<CR>
@@ -268,22 +263,16 @@ nnoremap <Leader>ft :CtrlPTag<CR>
 
 let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbrowse
 
-cabbrev blame Gblame
-cabbrev gs    Gstatus
-cabbrev gf    Gfetch
 cabbrev gk    GV --format=%cd\ %h%d\ %s
 
 let g:javascript_conceal_function = 'ƒ'
 let g:javascript_plugin_jsdoc = 1
 
+let g:jsx_ext_required = 0              " support jsx syntax in .js files
+
 let g:livedown_browser = "'/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'"
 
 let g:SuperTabMappingBackward = '<c-tab>'
-
-cabbrev syc  SyntasticCheck
-cabbrev syre SyntasticReset
-cabbrev syt  SyntasticToggle
-cabbrev syi  SyntasticInfo
 
 let g:syntastic_always_populate_loc_list = 1 " show errors in location list
 let g:syntastic_auto_loc_list = 1            " automatically show/hide loc list
@@ -302,7 +291,8 @@ let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_lua_checkers = ['luac']
-let g:syntastic_python_checkers = ['prospector']
+let g:syntastic_python_checkers = []                                " too slow
+let g:syntastic_sh_checkers = ['shellcheck']
 "let g:syntastic_python_prospector_args = '--profile=/Users/aisa/Projects/personal/sjfnw/.landscape.yml'
 
 let g:UltiSnipsExpandTrigger = '<s-tab>'
@@ -318,7 +308,7 @@ let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
 "- Helpers
 "----------
 
-func! s:expect_readonly(ft)
+func! s:ExpectReadonly(ft)
   " return true if given filetype is expected to be readonly; else false
   return (a:ft == 'help') || (a:ft == 'netrw') || (a:ft == 'fugitiveblame')
 endf
@@ -353,7 +343,7 @@ func! SL_file()
   " return file identifier for status line
   " depending on filetype, may be buffer number, filetype, directory and/or filename
   let l:ft = getbufvar('%', '&filetype')
-  let l:result = s:expect_readonly(l:ft) ? '[' . l:ft . ']' : bufnr('%')
+  let l:result = s:ExpectReadonly(l:ft) ? '[' . l:ft . ']' : bufnr('%')
   let l:result .= ' '
   let l:result .= (l:ft == 'netrw') ? s:ShortPath(getbufvar('%', 'netrw_curdir')) : expand('%:t')
   return l:result
@@ -361,7 +351,7 @@ endf
 
 func! SL_mod()
   " return modified/nomodifiable indicator for statusline
-  if s:expect_readonly(getbufvar('%', '&filetype'))
+  if s:ExpectReadonly(getbufvar('%', '&filetype'))
     return ''
   elseif getbufvar('%', '&modified')
     return '[+]'
@@ -373,7 +363,7 @@ endf
 
 func! SL_branch_indent()
   " return indent level and branch name display for statusline
-  if s:expect_readonly(getbufvar('%', '&filetype'))
+  if s:ExpectReadonly(getbufvar('%', '&filetype'))
     return ''
   endif
 
@@ -429,6 +419,10 @@ endfunc
 "- Misc utility
 "---------------
 
+function! s:UpdateTags()
+  exec ':!ctags ' . getcwd()
+endfunction
+
 if !exists('*ReloadVimrc')
   " reload vim config(s) and retain working directory
   " wrapped to avoid trying to redefine function as it's being executed
@@ -444,7 +438,7 @@ endif
 
 let s:notes_dir = '~/Drive/Notes/'
 
-func! Alpw_note(title) abort
+func! Alpw_Note(title) abort
   " browse notes dir, edit existing file or create a new one
   if a:title == ''
     Vexplore ~/Drive/Notes
@@ -477,24 +471,6 @@ func! s:ShowHighlightGroup()
   return 'name: ' . l:name . ', hi: ' . l:linked . ', trans: ' . l:trans
 endf
 
-func! s:AlignRight() abort
-  " align the right-most word of current line against 80-char column
-  let line = getline('.')
-  let startpos = match(line, '\S\+$')
-  if startpos == -1
-    echom 'No match found'
-    return
-  endif
-  let endpos = matchend(line, '\S\+$')
-  if endpos >= 79
-    echom 'Text found at max column'
-    return
-  endif
-  echom startpos . ', ' . endpos
-  call cursor(0, startpos)
-  exec 'normal ' . (79 - endpos) . 'i '
-endf
-
 func! Alpw_SearchHelp()
   exec "help " . expand('<cword>')
 endf
@@ -508,9 +484,9 @@ func! s:UseTabs()
 endf
 
 func! Alpw_SetJump(pattern)
-  let b:jump_pattern = a:pattern
   " set basic jump mappings - useful if nothing language-specific is defined
   " maps [[ ]] to go to non-whitespace at col 0
+  let b:jump_pattern = a:pattern
   nnoremap <Leader>k :call Alpw_Jump(b:jump_pattern, 'bW')<CR>
   nnoremap <Leader>j :call Alpw_Jump(b:jump_pattern, 'W')<CR>
 endf
@@ -519,7 +495,7 @@ endf
 "---------
 
 func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
-  " see help for g:ctrlp_status_func
+  " sets statusline in ctrlp window - see help for g:ctrlp_status_func
   let statustext = ' ' . a:item . '        ' . a:byfname
   let statustext .= '     ' . substitute(a:marked, '\(<\|>\|-\)', '', 'g')
   if a:regex
@@ -535,85 +511,12 @@ endf
 func! s:UpdateSyntasticJavascriptCheckers()
   " get checkers based on configs present in working directory
   " for non-archetype projects
-  echom "getting js checkers"
+  echom "Checking for local eslint"
   let cwd = getcwd()
-  let checkers = []
-  if filereadable(cwd . '/.eslintrc')
-    call add(checkers, 'eslint')
-    let b:syntastic_javascript_eslint_exec = cwd . '/node_modules/.bin/eslint'
-    echom 'syntastic_javascript_eslint_exec: ' . b:syntastic_javascript_eslint_exec
-  elseif filereadable(cwd . '/.eslintrc-client')
-    call add(checkers, 'eslint')
-    let b:syntastic_javascript_eslint_args = '--config .eslintrc-client'
-  endif
-  echom 'checkers: ' . join(checkers, ', ')
-  let b:syntastic_javascript_checkers = checkers
-endf
-
-
-" Syntastic
-
-" use archetype-compatible eslint checking for cwd
-func! s:UseArchetypeEslint()
-  echom 'Setting up eslint config for buffer; checking for archetype'
-
-  let cwd = getcwd()
-  let mid_path = cwd . '/node_modules/@walmart/'
-  let arch_node =  'electrode-archetype-njs-module-dev'
-
-  if isdirectory(mid_path . arch_node)
-
-    let g:syntastic_javascript_eslint_exec = cwd . '/node_modules/.bin/eslint'
-    let b:syntastic_javascript_checkers = ['eslint']
-
-    let conf_path = '--config ' . mid_path . arch_node . '/config/eslint/'
-
-    if match(expand('%:'), '^test') > -1
-      let b:syntastic_javascript_eslint_args = conf_path . '.eslintrc-test'
-    else
-      let b:syntastic_javascript_eslint_args = conf_path . '.eslintrc-node'
-    endif
-    echom 'Exec: ' . g:syntastic_javascript_eslint_exec
-    echom 'Args: ' . b:syntastic_javascript_eslint_args
+  if isdirectory(cwd . '/node_modules/eslint')
+    let g:syntastic_javascript_eslint_exec = cwd . '/node_modules/eslint/bin/eslint.js'
+    echom 'Added eslint exec: ' . g:syntastic_javascript_eslint_exec
   else
-    echom arch_node . ' not found. make sure cwd is root of repo'
+    echom 'No local eslint bin found; will fall back to global if possible'
   endif
-endf
-
-func! s:GetColors()
-  let s:pattern = '#\(\x\x\x\)\{1,2}'
-  let colors = {}
-  for i in range(0, line('$'))
-    let line = getline(i)
-    let match_count = 1 " start by checking for 1st match
-    let match = matchstr(line, s:pattern, 0, match_count)
-
-    while match != ''
-      let l:match_name = match
-
-      if has_key(colors, match)
-        " mark color done
-        let colors[match] += 1
-      else
-        let colors[match] = 1
-      endif
-
-      let match_count += 1
-      let match = matchstr(line, s:pattern, 0, match_count)
-    endwhile
-  endfor
-  for key in keys(colors)
-    echo key . '    ' . colors[key]
-  endfor
-endf
-
-com! GetColors call s:GetColors()
-
-func! s:FormatJS()
-  :%s/{\(.\+\)/{\r\1/e
-  :%s/\([^ ]\+\s*\)}/\1\r}/e
-  :%s/\[\s*{/[\r{/e
-  :%s/}\s*\]/}\r]/e
-  :%s/\s\+$/e
-  exec 'normal gg=G'
 endf
