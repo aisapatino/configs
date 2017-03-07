@@ -16,7 +16,7 @@ hi SignColumn     guifg=#ffffff  guibg=#3f5472
 hi! link FoldColumn SignColumn
 
 hi LineNr         guifg=#a0b0c0
-hi Cursor         guifg=#f8f3a9  guibg=#303042
+hi Cursor         guifg=#e0f0e0  guibg=#303042
 hi CursorLine                    guibg=#f3f3f3
 hi CursorLineNr   guifg=#3f5472  guibg=#f3f3f3
 
@@ -35,7 +35,7 @@ hi Number         guifg=#38057f
 hi Boolean        guifg=#38057f
 
 hi Identifier     guifg=#1f798a
-hi Function       guifg=#38057f  gui=bold
+hi Function       guifg=#440899  gui=bold
 
 hi Statement      guifg=#093092  gui=bold
 hi Operator       guifg=#093092
@@ -54,7 +54,7 @@ hi! link SpecialKey  Comment
 
 hi Underlined     guifg=NONE     gui=underline
 
-hi Error          guifg=#a70035  guibg=NONE     gui=bold
+hi Error          guifg=#990033  guibg=NONE     gui=bold
 hi Todo           guifg=NONE     guibg=NONE     gui=italic,bold
 
 " Custom syntax groups
@@ -62,7 +62,7 @@ hi Todo           guifg=NONE     guibg=NONE     gui=italic,bold
 
 hi BoldUnderlined guifg=NONE     gui=bold,underline
 hi ClassName      guifg=#c600bd                 gui=bold
-hi Code           guifg=#38057f  guibg=#ffffff
+hi Code           guifg=#38057f  guibg=#f6f6f6
 hi WebLink        guifg=#1158a1                 gui=underline
 
 " Text states (dynamic highlights)
@@ -88,7 +88,7 @@ hi! SpellCap      gui=underline
 hi StatusLine     guifg=#ffffff  guibg=#3f5472  gui=NONE
 hi StatusLineNC   guifg=#a0b0c0  guibg=#3f5472  gui=NONE
 hi User1          guifg=#ffffff  guibg=#3f5472  gui=bold
-hi SLWarn         guifg=#a70035
+hi SLWarn         guifg=#990033
 
 hi TabLineFill     guifg=#ffffff  guibg=#3f5472  gui=NONE
 hi! link TabLine TablineFill
@@ -109,8 +109,8 @@ hi PmenuThumb                    guibg=#ffffff
 
 " Command line
 
-hi WarningMsg     guifg=#a70035  guibg=NONE     gui=bold
-hi ErrorMsg       guifg=#ffffff  guibg=#a70035
+hi WarningMsg     guifg=#990033  guibg=NONE     gui=bold
+hi ErrorMsg       guifg=#ffffff  guibg=#990033
 hi Title          guifg=NONE                    gui=bold
 
 hi WildMenu       guifg=#ffffff  guibg=#1f798a
@@ -120,5 +120,4 @@ hi ModeMsg        guifg=#c600bd
 "------------------------------------------------------------------------------
 
 hi SyntasticWarningSign  guifg=#ff8800  guibg=#ff8800
-hi SyntasticErrorSign    guifg=#a70035  guibg=#a70035
-
+hi SyntasticErrorSign    guifg=#990033  guibg=#990033
