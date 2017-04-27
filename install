@@ -2,13 +2,9 @@
 
 # Set up config files using symlinks, overwriting/creating directories as needed.
 #
-# Execute with an argument to specify install type: ./install work|linux
+# Execute with an argument to specify install type
 # Otherwise it will default to base install.
 
-red="\033[31m"
-green="\033[32m"
-yellow="\033[33m"
-cyan="\033[36m"
 bold="\033[1m"
 reset="\033[m"
 
@@ -72,7 +68,7 @@ run_setup() {
   #-------
 
   if [ $linux ] ; then
-    printf "$HEADER" "lint"
+    printf "$header" "lint"
     ln -fsv "$configs/other/.pylintrc" ~
     ln -fsv "$configs/other/.eslintrc" ~
   fi
@@ -105,4 +101,4 @@ run_setup() {
   echo -e "\n${bold}Make sure to run :PlugInstall once you open vim\n$reset"
 }
 
-run_setup $1
+run_setup "$1"
