@@ -25,6 +25,8 @@
   prune = true
 [hub]
   host = gecgithub01.walmart.com
+[log]
+  date = format:%m/%d
 [mailmap]
   file = ~/Projects/.mailmap
 [merge]
@@ -57,6 +59,7 @@
   re = reset
   cl = clean
   com = commit --verbose
+  cm = commit -m
   ca = commit --amend --verbose
   can = commit --amend -C HEAD
   cs = "!sh -c 'git commit --squash=$1' -"
@@ -66,14 +69,16 @@
   dc = diff --cached
   ds = diff --stat
   # log
-  l = log --format=\"%C(blue)%h %C(cyan)%cd %C(reset)%s%C(auto)%d\" --date=format:%m/%d --graph --branches --remotes
-  la = log --format=\"%<(6,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --date=format:%m/%d --graph --branches --remotes
-  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(auto)%d%n%w(80,6,6)%-b%n\" --date=format:%m/%d --graph
-  lf = log --format=\"%n%C(cyan)%cd %C(blue)%h %C(green)%s %C(auto)%d\" --date=format:%m/%d --name-status
+  l = "!sh -c 'git lo --branches --remotes'"
+  lo = log --format=\"%<(6,trunc)%aN %C(blue)%h %C(cyan)%cd %Creset%s%C(auto)%d\" --graph
+  ln = log --format=\"%C(cyan)%cd %C(reset)%s%C(auto)%d%n%w(80,6,6)%-b%n\" --graph
+  lf = log --format=\"%n%C(cyan)%cd   %C(green)%s %C(auto)%d%n%C(blue)%h %C(reset)%aN\" --name-status
+  lfd = "!sh -c 'git lf develop..'"
   # fetch, pull, rebase
   f = fetch --all
   p = pull
   pr = pull --rebase
+  up = "!sh -c 'git checkout $1 && git pull' -"
   r = rebase
   ri = rebase -i
   rc = rebase --continue

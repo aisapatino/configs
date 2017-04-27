@@ -11,7 +11,7 @@ check_statuses() {
   bold="\033[1m"
   reset="\033[m"
 
-  branch_width="%-13s"
+  branch_width="%-19s"
   remote_width="%-10s"
 
   echo -e "Checking git repos...\n"
@@ -33,18 +33,6 @@ check_statuses() {
     # run git status & pull out relevant lines
     st=$(git status | grep -E '^(On branch|Untracked|Changes|Your branch)')
 
-    # get branch name
-    branch=$(echo "$st" | grep -o "On branch \([a-z\-]\+\)")
-    branch=$(echo "$branch" | grep -o "[a-z_/\-]\+$")
-    if [ -z "$branch" ] ; then
-      echo -e "${red}could not find branch name$reset"
-      continue
-    elif [ "$branch" = "master" ] ; then
-      printf $branch_width $branch
-    else
-      printf "$cyan$branch_width$reset" $branch
-    fi
-
     # get remote
     remote=$(echo "$st" | grep -o "'[a-zA-Z]\+\/" | grep -o "[^'\/]\+")
     if [ -z "$remote" ] ; then
@@ -53,6 +41,18 @@ check_statuses() {
       printf $remote_width $remote
     else
       printf "$cyan$remote_width$reset" "$remote"
+    fi
+
+    # get branch name
+    branch=$(echo "$st" | grep -o "On branch \([a-zA-Z0-9_/\-]\+\)")
+    branch=$(echo "$branch" | grep -o "[a-zA-Z0-9_/\-]\+$")
+    if [ -z "$branch" ] ; then
+      echo -e "${red}could not find branch name$reset"
+      continue
+    elif [ "$branch" = "master" ] ; then
+      printf $branch_width $branch
+    else
+      printf "$cyan$branch_width$reset" $branch
     fi
 
     details=""
@@ -88,7 +88,7 @@ check_statuses() {
       details="$green[Up to date]"
     fi
 
-    echo -e "$details$reset"
+    echo -e " $details$reset"
 
     cd ..
   done
