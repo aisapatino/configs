@@ -261,8 +261,6 @@ nnoremap <Leader>fr :CtrlPMRU<CR>
 nnoremap <Leader>b  :CtrlPBuffer<CR>
 nnoremap <Leader>ft :CtrlPTag<CR>
 
-let g:fugitive_github_domains = ['https://gecgithub01.walmart.com']  " for :Gbrowse
-
 cabbrev gk    GV --format=%cd\ %h%d\ %s
 
 let g:javascript_conceal_function = 'ƒ'
@@ -471,10 +469,6 @@ func! s:ShowHighlightGroup()
   return 'name: ' . l:name . ', hi: ' . l:linked . ', trans: ' . l:trans
 endf
 
-func! Alpw_SearchHelp()
-  exec "help " . expand('<cword>')
-endf
-
 "- Modify settings/mappings
 "---------------------------
 
@@ -506,17 +500,4 @@ endf
 
 func! CtrlPProgress(str)
   return a:str . ' files scanned...'
-endf
-
-func! s:UpdateSyntasticJavascriptCheckers()
-  " get checkers based on configs present in working directory
-  " for non-archetype projects
-  echom "Checking for local eslint"
-  let cwd = getcwd()
-  if isdirectory(cwd . '/node_modules/eslint')
-    let g:syntastic_javascript_eslint_exec = cwd . '/node_modules/eslint/bin/eslint.js'
-    echom 'Added eslint exec: ' . g:syntastic_javascript_eslint_exec
-  else
-    echom 'No local eslint bin found; will fall back to global if possible'
-  endif
 endf
