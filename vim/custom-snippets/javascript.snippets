@@ -63,6 +63,10 @@ snippet im "import" b
 import $1 from '$2';
 endsnippet
 
+snippet imm "import matching" b
+import $1 from '$1';
+endsnippet
+
 #------------------------------------------------------------------------------
 # TESTING
 #------------------------------------------------------------------------------
@@ -221,6 +225,10 @@ endsnippet
 
 snippet dl "eslint disable line" ws
 // eslint-disable-line $1
+endsnippet
+
+snippet dn "eslint disable next line" ws
+// eslint-disable-next-line $1
 endsnippet
 
 snippet dis "eslint disable" b
