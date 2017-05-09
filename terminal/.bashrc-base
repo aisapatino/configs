@@ -4,8 +4,8 @@
 #----------
 
 HISTCONTROL=ignoreboth         # ignore duplicates & commands starting with space
-HISTIGNORE="ls:ll:gs:gd:cd *:g s*"  # ignore frequent short commands
-HISTSIZE=1000                  # double the default
+HISTIGNORE="ls:ll:gs:gd:cd *:g sp:g ch *"  # ignore frequent short commands
+HISTSIZE=2000                  # default is 500
 shopt -s histappend            # add to existing history instead of overwriting
 
 shopt -s cdable_vars           # cd using vars without having to include $
@@ -67,6 +67,19 @@ alias npmlist="npm ls --depth=0"
 base_tree="tree -a -C -I 'node_modules|.git|bower_components|coverage|.DS_Store|*.pyc'"
 alias t="$base_tree --dirsfirst -L "
 alias trd="$base_tree -d"
+
+# Python / GAE
+#-------------
+
+export PYTHONPATH=$PYTHONPATH:~/Projects/pylint-django
+export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
+export PATH=$PATH:~/Devel/google_appengine
+export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine
+export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine/lib/webob-1.2.3
+export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine/lib/yaml/lib
+export PYTHONPATH=$PYTHONPATH:~/Devel
+# django (for pylint)
+export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
 
 # Custom functions
 #------------------
