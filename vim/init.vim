@@ -73,6 +73,9 @@ set statusline=%1*                         " use User1 highlight group
 set statusline+=\ %{SL_file()}%*           " buffer number or special ft
 set statusline+=\ %#SLWarn#%{SL_mod()}%*   " modified/nomodifiable flag
 set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
+if has('nvim')
+  set statusline+=\ %{neomake#statusline#LoclistStatus('')}%*
+endif
 set statusline+=%=                         " end of left side
 set statusline+=\ \ \ %<%{SL_dir()}        " short-format path relative to cwd
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
@@ -265,6 +268,20 @@ let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0              " support jsx syntax in .js files
 
 let g:livedown_browser = "'/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'"
+
+if has('nvim')
+  augroup alpwNeomake
+    autocmd!
+    autocmd BufWritePost *.js Neomake
+    autocmd BufWritePost *.py Neomake
+  augroup END
+  let g:neomake_warning_sign = { 'text': '▶︎▶︎', 'texthl': 'WarningSign' }
+  let g:neomake_error_sign = { 'text': '▶︎▶︎', 'texthl': 'ErrorSign' }
+  let g:neomake_highlight_columns = 0
+  let g:neomake_highlight_lines = 0
+  let g:neomake_python_enabled_makers = ['pylint']
+  let g:neomake_javascript_enabled_makers = ['eslint']
+endif
 
 let g:SuperTabMappingBackward = '<c-tab>'
 
