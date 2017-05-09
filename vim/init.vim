@@ -6,10 +6,14 @@ cd ~/Projects
 "- General
 "----------
 
-set t_Co=256                   " 256-color terminal
-if !has('gui_running')
-  colorscheme aisadark         " gui scheme will be set in .gvimrc
+if has('gui_running') || has('termguicolors')
+  set termguicolors
+  colorscheme aisa
+else
+  colorscheme aisadark
 endif
+
+set t_Co=256                   " 256-color terminal
 
 set vb t_vb=                   " don't beep or flash on error
 set shell=bash                 " default to bash instead of sh for !commands
@@ -38,9 +42,7 @@ set tabstop=2                  " how many columns wide a tab is visually
 set shiftwidth=2               " how many columns to indent with >>
 
 set nowrap                     " don't wrap lines by default
-if exists('+breakindent')
-  set breakindent              " maintain indent when wrapping
-endif
+set breakindent                " maintain indent when wrapping
 set linebreak                  " only break between words when wrapping
 set showbreak=↳                " indicate start of wrapped lines
 
@@ -118,7 +120,7 @@ noremap : ;
 "----------------------
 
 " navigate splits (less keypresses than defaults)
-noremap <C-h> <C-w>h "TODO doesn't work in neovim :(
+noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
