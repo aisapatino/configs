@@ -11,7 +11,7 @@ shopt -s histappend            # add to existing history instead of overwriting
 shopt -s cdable_vars           # cd using vars without having to include $
 shopt -u hostcomplete          # fix tabcomplete with @ in name
 
-export EDITOR=vim
+export EDITOR=nvim
 export VISUAL=$EDITOR
 set -o vi
 

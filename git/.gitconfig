@@ -13,7 +13,7 @@
 [core]
   autocrlf = false
   excludesfile = ~/.gitignore
-  editor = vim
+  editor = nvim
 [credential]
   helper = cache --timeout=3600
 [diff]
@@ -33,7 +33,7 @@
   prompt = false
   keepBackup = false
 [mergetool "fugitive"]
-  cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
+  cmd = nvim -c \"Gdiff\" \"$MERGED\"
 [push]
   default = simple
 [rebase]
@@ -41,7 +41,7 @@
 [rerere]
   enabled = true
 [sequence]
-  editor = vim
+  editor = nvim
 [user]
   email = anna.luisa.west@formidablelabs.com
   name = "Anna Luisa Patiño West"
