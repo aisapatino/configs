@@ -1,11 +1,15 @@
 " Custom filetype detection. Loads before defaults.
 
-au BufRead,BufNewFile *.es.txt set filetype=lang
-au BufRead,BufNewFile *.en.txt set filetype=lang
-au BufRead,BufNewFile *.md set filetype=markdown
+augroup alpwFiletypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.es.txt set filetype=lang
+  autocmd BufRead,BufNewFile *.en.txt set filetype=lang
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+  autocmd BufNewFile,BufRead *.html call s:DetectDjangoTemplate()
+augroup END
 
 " Better detection for django templates. Checks for tag in first ten lines.
-au  BufNewFile,BufRead *.html call s:DetectDjangoTemplate()
 func! s:DetectDjangoTemplate()
   for n in range(1, 10)
     if getline(n) =~ '{%\|{{\|{#'
