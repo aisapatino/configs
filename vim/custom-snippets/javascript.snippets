@@ -39,6 +39,27 @@ snippet ok "wrap in Object.keys" w
 Object.keys(${VISUAL})
 endsnippet
 
+snippet t "then block" w
+.then(($1) => {
+	$2
+})
+endsnippet
+
+snippet c "catch block" w
+.catch((err) => {
+	$1
+});
+endsnippet
+
+snippet doc "jsdoc func outline" b
+/**
+ * $1
+ *
+ * @param $2
+ * @returns $3
+ */
+endsnippet
+
 #------------------------------------------------------------------------------
 # NODE
 #------------------------------------------------------------------------------

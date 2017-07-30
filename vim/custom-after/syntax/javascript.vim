@@ -4,21 +4,22 @@
 "--------
 
 syn match jsClassName "\(class\ \)\@<=\S\+" containedin=jsClassDefinition
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s(.*=>\)\@=" containedin=jsVariableDef,jsIdentExpIdent,jsAssignmentExpr,jsBlock,jsFuncBlock
+syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s(.*=>\)\@=" containedin=jsVariableDef,jsIdentExpIdent,jsAssignmentExpr,jsBlock,jsFuncBlock,jsObjectProp
 syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\sfunction\)\@=" containedin=jsObjectProp,jsVariableDef
 syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(:\sfunction\)\@="
 
-syn match testDesc +['"]\([_a-zA-Z]\+\ \)\?should[^"]\+['"]+ containedin=jsParen
-syn match routerDef "router.\(get\|post\|delete\|options\|put\)"
+syn match testDesc +'\([_a-zA-Z]\+\ \)\?should.\+'+ containedin=jsParen
+syn match routerDef "[a-zA-Z]*[rR]outer.\(get\|post\|delete\|options\|put\|use\)" containedin=jsFuncBlock
 
-syn keyword jsProto     prototype      containedin=jsObjectProp
+syn keyword jsProto     prototype        containedin=jsObjectProp
 syn keyword jsThis      self _this
-syn keyword jsModule    exports module containedin=jsObjectProp
+syn keyword jsModule    exports module   containedin=jsObjectProp
 syn keyword mocha       it before after beforeEach afterEach containedin=jsFuncCall,jsFuncBlock
-syn keyword mochaSuite  suite describe containedin=jsFuncCall
-syn keyword mochaDone   done           containedin=jsFuncCall,jsFuncArgs,jsParen
-syn keyword mochaWarn   skip only      containedin=jsFuncCall,jsObjectProp
-syn keyword chaiExpect  expect         containedin=jsFuncCall
+syn keyword mochaSuite  suite describe   containedin=jsFuncCall
+syn keyword mochaDone   done             containedin=jsFuncCall,jsFuncArgs,jsParen
+syn keyword mochaWarn   skip only        containedin=jsFuncCall,jsObjectProp
+syn keyword chaiExpect  expect           containedin=jsFuncCall
+syn keyword jsReactFunc setState render  containedin=jsFuncCall
 
 " Highlight
 "------------
@@ -46,3 +47,4 @@ hi! link mochaWarn       WarningMsg
 hi! link chaiExpect      Keyword
 hi! link testDesc        Underlined
 hi! link routerDef       Function
+hi! link jsReactFunc     SpecialFunc
