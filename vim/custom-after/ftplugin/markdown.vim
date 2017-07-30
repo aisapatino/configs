@@ -1,3 +1,4 @@
+setlocal wrap
 " Makes fenced languages work even if main_syntax had been set by another file
 " Ok to do because I never use markdown inside another filetype
 let main_syntax = 'markdown'
@@ -9,8 +10,8 @@ let g:markdown_fenced_languages = [
 \]
 
 " Jump between headers
-nnoremap ]] :call Alpw_Jump('^#', 'W')<CR>
-nnoremap [[ :call Alpw_Jump('^#', 'bW')<CR>
+nnoremap ]] :call alpw#main#Jump('^#', 'W')<CR>
+nnoremap [[ :call alpw#main#Jump('^#', 'bW')<CR>
 
 let b:prev = 0
 

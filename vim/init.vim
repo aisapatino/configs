@@ -1,6 +1,4 @@
-cd ~/Projects
-
-" Vim settings
+" Vim options
 "------------------------------------------------------------------------------
 
 "- General
@@ -64,26 +62,26 @@ set smartcase                  " case-sensitive if pattern has uppercase letter
 
 set nofoldenable               " start with all folds open
 set foldmethod=indent
-set foldtext=GetFoldText()
+set foldtext=alpw#main#GetFoldText()
 
 "- Statusline, tabline, title
 "-----------------------------
 
 set statusline=%1*                         " use User1 highlight group
-set statusline+=\ %{SL_file()}%*           " buffer number or special ft
-set statusline+=\ %#SLWarn#%{SL_mod()}%*   " modified/nomodifiable flag
-set statusline+=\ %{SL_branch_indent()}    " git branch, indentation
+set statusline+=\ %{alpw#statusline#FileId()}%*           " buffer number or special ft
+set statusline+=\ %#SLWarn#%{alpw#statusline#Modified()}%*   " modified/nomodifiable flag
+set statusline+=\ %{alpw#statusline#BranchIndent()}    " git branch, indentation
 if has('nvim')
-  set statusline+=\ %{neomake#statusline#LoclistStatus('')}%*
+  set statusline+=\ %#ErrorMsg#%{neomake#statusline#LoclistStatus('')}%*
 endif
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{SL_dir()}        " short-format path relative to cwd
+set statusline+=\ \ \ %<%{alpw#statusline#Dir()}        " short-format path relative to cwd
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
-set tabline=%!Alpw_Tabline()
+set tabline=%!alpw#main#Tabline()
 
-set titlestring=%{Alpw_CWD()}              " show cwd in titlestring
+set titlestring=%{alpw#utils#CWD()}              " show cwd in titlestring
 
 "- Files, sessions
 "------------------
@@ -171,21 +169,14 @@ com! TrimTrailing %s/\s\+$
 com! PrettyJson %!python -m json.tool
 
 " command shortcuts for functions
-com! UpdateTags           call s:UpdateTags()
-com! UseTabs              call s:UseTabs()
-com! -nargs=? SetTabTitle call s:SetTabTitle(<q-args>)
-com! -nargs=? Note        call Alpw_Note(<q-args>)
+com! UpdateTags           call alpw#commands#UpdateTags()
+com! UseTabs              call alpw#commands#UseTabs()
+com! -nargs=? Note        call alpw#commands#Note(<q-args>)
 
 "- Debugging
 "------------
 
-" go to help for word under cursor
-nnoremap gh :call Alpw_SearchHelp()<CR>
-
-" reload vimrc/gvimrc without losing working directory
-nnoremap <Leader>re :call ReloadVimrc()<CR>
-
-com! ShowHighlightGroup echo s:ShowHighlightGroup()
+com! ShowHighlightGroup echo alpw#commands#ShowHighlightGroup()
 
 " show test highlight page with current colors
 com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
@@ -228,11 +219,18 @@ Plug 'elzr/vim-json'
 Plug 'aisapatino/vim-markdown'
 Plug 'aisapatino/vim-stylus'
 Plug 'nikvdp/ejs-syntax'
+Plug 'digitaltoad/vim-pug'
+Plug 'mustache/vim-mustache-handlebars'
 
 call plug#end()
 
 "- Plugin config
 "----------------
+
+let g:python_host_prog = '/usr/bin/python'
+let g:python_host_skip_check=1
+" disable python 3 support
+let g:loaded_python3_provider=1
 
 cabbrev ag Ack!
 let g:ackprg = 'ag --hidden --vimgrep'
@@ -245,7 +243,7 @@ let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not 
 let g:ctrlp_show_hidden = 1                " show hidden files by default
 let g:ctrlp_switch_buffer = 0              " open buffer in current window even if it's open elsewhere
 let g:ctrlp_tilde_homedir = 1              " save mru paths with ~ for $HOME
-let g:ctrlp_status_func = {'main': 'CtrlPStatus', 'prog': 'CtrlPProgress'}
+let g:ctrlp_status_func = {'main': 'alpw#main#CtrlPStatus', 'prog': 'alpw#main#CtrlPProgress'}
 let g:ctrlp_custom_ignore = {
 \  'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|dist-.*|gen)$',
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
@@ -270,10 +268,16 @@ let g:jsx_ext_required = 0              " support jsx syntax in .js files
 let g:livedown_browser = "'/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'"
 
 if has('nvim')
+  augroup alpwNeovim
+    autocmd!
+    " mimic gvim autoread behavior
+    autocmd BufEnter * checktime
+  augroup END
   augroup alpwNeomake
     autocmd!
     autocmd BufWritePost *.js Neomake
     autocmd BufWritePost *.py Neomake
+    autocmd BufWritePost *.sh Neomake
   augroup END
   let g:neomake_warning_sign = { 'text': '▶︎▶︎', 'texthl': 'WarningSign' }
   let g:neomake_error_sign = { 'text': '▶︎▶︎', 'texthl': 'ErrorSign' }
@@ -291,205 +295,3 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-tab>'
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.vim/custom-snippets'   " for :UltiSnipsEdit
 let g:UltiSnipsSnippetDirectories = ['custom-snippets'] " don't include defaults
-
-" Functions
-"------------------------------------------------------------------------------
-
-"- Helpers
-"----------
-
-func! s:ExpectReadonly(ft)
-  " return true if given filetype is expected to be readonly; else false
-  return (a:ft == 'help') || (a:ft == 'netrw') || (a:ft == 'fugitiveblame')
-endf
-
-func! s:ShortPath(p)
-  let l:path = substitute(a:p, $HOME, '~', '')
-  let l:path = substitute(l:path, 'Projects', 'P', '')
-  let l:path = substitute(l:path, $VIMRUNTIME, 'VIMRUNTIME', '')
-  return l:path
-endf
-
-func! Alpw_CWD()
-  return s:ShortPath(getcwd())
-endf
-
-"- Folds & statusline
-"---------------------
-
-func! GetFoldText()
-  " get fold text: text of next line + fold line count
-  let l:num_lines = v:foldend - v:foldstart + 1
-  let l:line = getline(v:foldstart)
-  let l:pad_right = 75 - strlen(l:line)
-  if l:pad_right % 2
-    let l:line .= ' '
-  endif
-  let l:line .= repeat(' ⋅', l:pad_right/2)
-  return l:line . printf('%4d', l:num_lines)
-endf
-
-func! SL_file()
-  " return file identifier for status line
-  " depending on filetype, may be buffer number, filetype, directory and/or filename
-  let l:ft = getbufvar('%', '&filetype')
-  let l:result = s:ExpectReadonly(l:ft) ? '[' . l:ft . ']' : bufnr('%')
-  let l:result .= ' '
-  let l:result .= (l:ft == 'netrw') ? s:ShortPath(getbufvar('%', 'netrw_curdir')) : expand('%:t')
-  return l:result
-endf
-
-func! SL_mod()
-  " return modified/nomodifiable indicator for statusline
-  if s:ExpectReadonly(getbufvar('%', '&filetype'))
-    return ''
-  elseif getbufvar('%', '&modified')
-    return '[+]'
-  elseif getbufvar('%', '&modifiable') == 0
-    return '[-]'
-  endif
-  return ''
-endf
-
-func! SL_branch_indent()
-  " return indent level and branch name display for statusline
-  if s:ExpectReadonly(getbufvar('%', '&filetype'))
-    return ''
-  endif
-
-  let l:branch = fugitive#statusline()
-  let l:branch = substitute(branch, '[Git', '', '')
-  let l:branch = substitute(branch, ']', '', '')
-
-  let l:width = &tabstop
-  if (&expandtab == 'noexpandtab')
-    let l:width .= 't'
-  elseif l:width == 2
-    let l:width = ''
-  endif
-
-  return l:branch . ' ' . l:width
-endf
-
-func! SL_dir()
-  " return shortened path for current buffer
-  " skip for netrw since it displays path in file spot
-  if getbufvar('%', '&filetype') == 'netrw'
-    return ''
-  endif
-  return s:ShortPath(expand('%:h'))
-endf
-
-"- Tabline
-"----------
-
-func! Alpw_Tabline()
-  " tab numbers/titles on left, cwd on right
-  let s = ''
-  if tabpagenr('$') > 1
-    for i in range(1, tabpagenr('$'))
-      let s .= i == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-      let s .= ' ' . i . ' '
-      if exists('g:tabtitle_' . i)
-        let s .= ' ' . eval('g:tabtitle_' . i)
-      endif
-      let s .= ' '
-    endfor
-    let s .= '%#TabLineFill#'
-  endif
-  let s .= '%=%#StatusLineNC#cwd: %*%{Alpw_CWD()} '
-  return s
-endf
-
-func! s:SetTabTitle(title) abort
-  " set global variable used by Alpw_Tabline to display current tab's title
-  let g:['tabtitle_' . tabpagenr()] = a:title
-endfunc
-
-"- Misc utility
-"---------------
-
-function! s:UpdateTags()
-  exec ':!ctags ' . getcwd()
-endfunction
-
-if !exists('*ReloadVimrc')
-  " reload vim config(s) and retain working directory
-  " wrapped to avoid trying to redefine function as it's being executed
-  func ReloadVimrc()
-    let l:cwd = getcwd()
-    source ~/.vimrc
-    if has('gui_running') == 1
-      source ~/.gvimrc
-    endif
-    exec 'cd ' . l:cwd
-  endfunc
-endif
-
-let s:notes_dir = '~/Drive/Notes/'
-
-func! Alpw_Note(title) abort
-  " browse notes dir, edit existing file or create a new one
-  if a:title == ''
-    Vexplore ~/Drive/Notes
-  else
-    exec 'edit ' . s:notes_dir . fnameescape(a:title) . '.md'
-  endif
-endf
-
-func! Alpw_Jump(pattern, flags) range
-  " base jump function based on Python_jump. can be used for ft-specific jumps
-  let l:count = v:count1        " if triggered with number in front
-  let l:save = @/               " save last search pattern for restoring later
-  mark '                        " mark starting spot so you can go back
-  while l:count > 0
-    exe search(a:pattern, a:flags)
-    let l:count -= 1
-  endw
-  call histdel('/', -1)         " remove this from search history
-  let @/ = l:save               " restore last search pattern
-endf
-
-func! s:ShowHighlightGroup()
-  " show highlight group for item at cursor
-  let l:id = synID(line('.'), col('.'), 1)
-  let l:name = synIDattr(l:id, 'name')
-  " follow links to get syn group that is actually highlighting this item
-  let l:linked = synIDattr(synIDtrans(l:id), 'name')
-  " transparent item
-  let l:trans = synIDattr(synIDtrans(synID(line('.'), col('.'), 0)), 'name')
-  return 'name: ' . l:name . ', hi: ' . l:linked . ', trans: ' . l:trans
-endf
-
-"- Modify settings/mappings
-"---------------------------
-
-func! s:UseTabs()
-  setlocal noexpandtab
-  setlocal nolist
-endf
-
-func! Alpw_SetJump(pattern)
-  " set basic jump mappings - useful if nothing language-specific is defined
-  " maps [[ ]] to go to non-whitespace at col 0
-  let b:jump_pattern = a:pattern
-  nnoremap <Leader>k :call Alpw_Jump(b:jump_pattern, 'bW')<CR>
-  nnoremap <Leader>j :call Alpw_Jump(b:jump_pattern, 'W')<CR>
-endf
-
-"- Plugins
-"---------
-
-func! CtrlPStatus(focus, byfname, regex, prev, item, next, marked)
-  " sets statusline in ctrlp window - see help for g:ctrlp_status_func
-  let statustext = ' ' . a:item . '        ' . a:byfname
-  let statustext .= '     ' . substitute(a:marked, '\(<\|>\|-\)', '', 'g')
-  if a:regex
-    let statustext .= '     (regex)'
-  endif
-  return statustext . '%=%{Alpw_CWD()}'
-endf
-
-func! CtrlPProgress(str)
-  return a:str . ' files scanned...'
-endf

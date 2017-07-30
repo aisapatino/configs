@@ -5,12 +5,12 @@ if exists('b:did_ftplugin_2')
 endif
 let b:did_ftplugin_2 = 1
 
-if !exists('*Alpw_Jump')
-  echom 'Alpw_Jump not found; cannot set mappings'
+if !exists('*alpw#main#Jump')
+  echom 'alpw#main#Jump not found; cannot set mappings'
   finish
 endif
 
 " Move between headers
 let b:header = '^\(===\|---\).*\(===\|---\)$'
-nnoremap <buffer> [[ :call Alpw_Jump(b:header, 'e')<CR>j
-nnoremap <buffer> ]] :call Alpw_Jump(b:header, 'be')<CR>j
+nnoremap <buffer> [[ :call alpw#main#Jump(b:header, 'e')<CR>j
+nnoremap <buffer> ]] :call alpw#main#Jump(b:header, 'be')<CR>j
