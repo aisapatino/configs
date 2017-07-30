@@ -8,7 +8,7 @@ let colors_name = "aisadarkg"
 " Basic screen components                               see :h highlight-groups
 "------------------------------------------------------------------------------
 
-hi Normal         guifg=#f0efec  guibg=#303840
+hi Normal         guifg=#f0ecea  guibg=#303840
 hi NonText        guifg=#a0b0c0
 
 hi VertSplit      guifg=#3f5472  guibg=#3f5472
@@ -17,7 +17,7 @@ hi! link FoldColumn SignColumn
 
 hi LineNr         guifg=#a0b0c0
 hi Cursor         guifg=#f8f3a9  guibg=#303042
-hi CursorLine                    guibg=#253235
+hi CursorLine                    guibg=#333336
 hi CursorLineNr   guifg=#f0f0f0  guibg=#253235
 
 hi ColorColumn                   guibg=#253235

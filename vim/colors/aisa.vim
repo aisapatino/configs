@@ -12,7 +12,9 @@ hi Normal         guifg=#404850  guibg=#f0efec
 hi NonText        guifg=#a0b0c0
 
 hi VertSplit      guifg=#3f5472  guibg=#3f5472
-hi SignColumn     guifg=#ffffff  guibg=#3f5472
+hi SignColumn     guifg=#ffffff  guibg=NONE
+hi WarningSign    guifg=#ff8800  guibg=NONE
+hi ErrorSign      guifg=#990033  guibg=NONE
 hi! link FoldColumn SignColumn
 
 hi LineNr         guifg=#a0b0c0
@@ -36,6 +38,7 @@ hi Boolean        guifg=#38057f
 
 hi Identifier     guifg=#1f798a
 hi Function       guifg=#440899  gui=bold
+hi SpecialFunc    guifg=#1f798a  gui=bold
 
 hi Statement      guifg=#093092  gui=bold
 hi Operator       guifg=#093092
@@ -79,8 +82,9 @@ hi DiffDelete     guifg=NONE     guibg=#f3e2e2  gui=NONE
 hi DiffChange     guifg=NONE     guibg=NONE
 hi! link DiffText DiffAdd
 
-hi! SpellLocal    gui=underline  guisp=#ff8800
-hi! SpellCap      gui=underline
+hi SpellBad                     guisp=#990033
+hi SpellLocal    gui=underline  guisp=#ff8800
+hi SpellCap      gui=italic
 
 " Statusline / Tabline
 "------------------------------------------------------------------------------
@@ -115,9 +119,3 @@ hi Title          guifg=NONE                    gui=bold
 
 hi WildMenu       guifg=#ffffff  guibg=#1f798a
 hi ModeMsg        guifg=#c600bd
-
-" Plugins
-"------------------------------------------------------------------------------
-
-hi SyntasticWarningSign  guifg=#ff8800  guibg=#ff8800
-hi SyntasticErrorSign    guifg=#990033  guibg=#990033
