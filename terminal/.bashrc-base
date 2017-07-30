@@ -32,12 +32,8 @@ GIT_PS1_SHOWCOLORHINTS=1      # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
-add_virtual_env() {
-  if [ "$VIRTUAL_ENV" ] ; then
-    export PS1="`basename \"$VIRTUAL_ENV\"` $PS1"
-  fi
-}
-PROMPT_COMMAND='__git_ps1 "\[\e[1;34m\]\w\[\e[m\]" " \m " ; add_virtual_env'
+# color codes are wrapped in \[ \] so they're ignored when computing prompt length
+PROMPT_COMMAND='__git_ps1 "\n\[\e[34m\]\w\[\e[m\]" " $ "'
 
 # Autocomplete
 #--------------
@@ -46,7 +42,7 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-# Autocomplete for 'g' as well
+# Autocomplete for 'g' alias as well
 complete -o default -o nospace -F _git g
 
 # Aliases
@@ -73,10 +69,10 @@ alias trd="$base_tree -d"
 
 export PYTHONPATH=$PYTHONPATH:~/Projects/pylint-django
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
-export PATH=$PATH:~/Devel/google_appengine
-export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine
-export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine/lib/webob-1.2.3
-export PYTHONPATH=$PYTHONPATH:~/Devel/google_appengine/lib/yaml/lib
+export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+export PYTHONPATH=$PYTHONPATH:~/Devel/google-cloud-sdk/platform/google_appengine
+export PYTHONPATH=$PYTHONPATH:~/Devel/google-cloud-sdk/platform/google_appengine/lib/webob-1.2.3
+export PYTHONPATH=$PYTHONPATH:~/Devel/google-cloud-sdk/platform/google_appengine/lib/yaml/lib
 export PYTHONPATH=$PYTHONPATH:~/Devel
 # django (for pylint)
 export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
@@ -86,12 +82,12 @@ export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
 
 # Replace across files. Usage: sr <pattern> <replacement> "<filepattern>"
 sr() {
-  echo "replacing '$1' with '$2' in files matching '$3'"
-  echo "(if the file match looks wrong, make sure you put quotes around it)"
   if [ "$1" ] && [ "$2" ] && [ "$3" ] ; then
+    echo "Replacing '$1' with '$2' in files matching '$3'..."
+    echo "(if the file match looks wrong, make sure you put quotes around it)"
     find . -iname "$3" -print0 | xargs -0 sed -i s/"$1"/"$2"/g
   else
-    echo "missing arguments"
+    echo "Missing arguments. Got: '$1', '$2', '$3'"
   fi
 }
 
@@ -101,16 +97,40 @@ ff() {
   find "$1" -iname "$2"
 }
 
-# List local git branches with corresponding remotes and status.
-# Strips sha and commit subject from git branch -vv
-# For mac: brew install gnu-sed --with-default-names
-# Example input: * master      bbea826 [origin/master: ahead 12] update res serializer test
-#        output: * master      [origin/master: ahead 12]
+# List local git branches with corresponding remotes and ahead/behind status
+# Prereq for mac: brew install gnu-sed --with-default-names
 br() {
-  git branch -vv --color | sed -r "s/(.*\x1B\[m\ )[a-z0-9]{7}\ (\[.*\])?.*/\1\2/" | sed s/gone/`printf "\033[35mGONE\033[0m"`/g
+  # 1. Grab desired parts from each line:
+  #   \1 spaces/* at start
+  #   \2 branch name
+  #   \3 remote branch name & status
+  # 2-3. Remove brackets around remote branch info.
+  #    Use leading space to avoid matching color codes
+  # 4. Emphasize deleted branch indicator
+  # 5. Add color to behind/ahead text
+  # 6. Align text in columns
+  # 7. Add color to current branch
+  git branch -vv \
+    | sed -r "s/^([\* ]{2})([^ ]+)\ +[a-z0-9]{7,8}\ (\[.*\])?.*/\1\2!`printf "\e[34m"` \3`printf "\e[m"`/" \
+    | sed 's/\ \[//' \
+    | sed 's/\]//' \
+    | sed "s/:\ gone/`printf " \e[35mGONE\e[m"`/" \
+    | sed -r "s/:(.*)/`printf "\e[33m"`\1/" \
+    | column -t -s! \
+    | sed -r "s/^\*\ ([^ ]+)/\*\ `printf "\e[32m"`\1`printf "\e[m"`/"
+}
+
+mote() {
+  git remote -v | grep http
 }
 
 # Load check_statuses function
 source "$HOME/Projects/configs/git/check_statuses.sh"
 
 # vim: syntax=sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/annaluisa/Devel/google-cloud-sdk/path.bash.inc' ]; then source '/Users/annaluisa/Devel/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/annaluisa/Devel/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/annaluisa/Devel/google-cloud-sdk/completion.bash.inc'; fi
