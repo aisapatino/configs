@@ -2,8 +2,14 @@
 
 source ~/Projects/configs/terminal/.bashrc-base
 
-# Place brew installs before system
-export PATH=/usr/local/bin:$PATH
+
+# Add CWD to iterm tab title
+if [ $ITERM_SESSION_ID ]; then
+  export PROMPT_COMMAND=$PROMPT_COMMAND'; echo -ne "\033]0;${PWD##*/}\007"';
+fi
+
+# Place brew installs before system, add local node_modules (mostly for eslint)
+export PATH=/usr/local/bin:$PATH:./node_modules/.bin
 
 # Node version manager
 export NVM_DIR=~/.nvm
@@ -23,5 +29,9 @@ fi
 if [ -f ~/Projects/.bashrc ] ; then
   source ~/Projects/.bashrc
 fi
+
+source $(brew --prefix autoenv)/activate.sh
+
+alias check="npm run check"
 
 # vim: syntax=sh
