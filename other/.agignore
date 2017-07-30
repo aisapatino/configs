@@ -2,7 +2,8 @@
 *.min.*
 *bundle.js
 *.map
+coverage
+dist
 
 # SJF specific
 _theme
-libs
