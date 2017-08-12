@@ -184,9 +184,6 @@ com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 " Plugins & runtime path
 "------------------------------------------------------------------------------
 
-" custom syntax & ftplugins
-set runtimepath+=~/.vim/custom-after/
-
 "- Plugins via vim-plug
 "-----------------------
 

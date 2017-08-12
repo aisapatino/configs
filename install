@@ -66,12 +66,6 @@ run_setup() {
   # Other
   #-------
 
-  if [ $linux ] ; then
-    printf "$header" "lint"
-    ln -fsv "$configs/other/.pylintrc" ~
-    ln -fsv "$configs/other/.eslintrc" ~
-  fi
-
   printf "$header" "ag and ctags"
 
   ln -fsv "$configs/other/.agignore" ~
@@ -80,7 +74,7 @@ run_setup() {
   # Vim
   #-----
 
-  printf "$header" "vim"
+  printf "$header" "nvim"
 
   mkdir -pv ~/.config/nvim
 
@@ -93,7 +87,7 @@ run_setup() {
   fi
 
   ln -fsv "$configs/vim/colors"              ~/.config/nvim
-  ln -fsv "$configs/vim/custom-after"        ~/.config/nvim
+  ln -fsv "$configs/vim/after"               ~/.config/nvim
   ln -fsv "$configs/vim/custom-snippets"     ~/.config/nvim
   ln -fsv "$configs/vim/filetype.vim"        ~/.config/nvim
   ln -fsv "$configs/vim/autoload/alpw"       ~/.config/nvim/autoload
