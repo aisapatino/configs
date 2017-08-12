@@ -120,10 +120,6 @@ br() {
     | sed -r "s/^\*\ ([^ ]+)/\*\ `printf "\e[32m"`\1`printf "\e[m"`/"
 }
 
-mote() {
-  git remote -v | grep http
-}
-
 # Load check_statuses function
 source "$HOME/Projects/configs/git/check_statuses.sh"
 

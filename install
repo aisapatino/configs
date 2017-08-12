@@ -34,7 +34,6 @@ run_setup() {
 
   ln -fsv "$configs/git/.gitignore" ~
   ln -fsv "$configs/git/.gitconfig" ~
-  ln -fsv "$configs/git/.gitk"      ~
 
   if [ ! -f ~/.git-completion.bash ]; then
     echo "Getting git-completion.bash"

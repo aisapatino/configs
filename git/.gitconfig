@@ -23,8 +23,6 @@
   prompt = false
 [fetch]
   prune = true
-[hub]
-  host = gecgithub01.walmart.com
 [log]
   date = format:%m/%d
 [mailmap]
