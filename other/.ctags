@@ -1,4 +1,5 @@
 --exclude=*.json
+--exclude=*.css
 --exclude=.git
 --exclude=log
 --exclude=build
@@ -7,6 +8,8 @@
 --exclude=coverage
 --exclude=.coverage
 --exclude=node_modules
+--exclude=\*.min.\*
+--exclude=\*.map
 
 -f .tags
 --recurse=yes
@@ -19,12 +22,24 @@
 --langmap=js:.js
 --langmap=js:+.jsx
 
---regex-js=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]*\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*function[ \t]*\(/\5/f,function/
---regex-js=/function[ \t]+([A-Za-z0-9_$]+)[ \t]*\([^)]*\)/\1/f,function/
---regex-js=/(,|^|\*\/)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function[ \t]*\(/\2/f,function/
---regex-js=/(,|^|\*\/)[ \t]*(static[ \t]+)?(while|if|for|function|switch|with|([A-Za-z_$][A-Za-z0-9_$]+))[ \t]*\(.*\)[ \t]*\{/\2\4/f,function/
---regex-js=/(,|^|\*\/)[ \t]*get[ \t]+([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*\([ \t]*\)[ \t]*\{/get \2/,function/
---regex-js=/(,|^|\*\/)[ \t]*set[ \t]+([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*\([ \t]*([A-Za-z_$][A-Za-z0-9_$]+)?[ \t]*\)[ \t]*\{/set \2/f,function/
+--regex-js=/[ \t.]([A-Z][A-Z0-9._$]+)[ \t]*[=:][ \t]*([0-9"'\[\{]|null)/\1/c,constant/
+
+--regex-js=/\.([A-Za-z0-9._$]+)[ \t]*=[ \t]*\{/\1/o,object/
+--regex-js=/['"]*([A-Za-z0-9_$]+)['"]*[ \t]*:[ \t]*\{/\1/o,object/
+--regex-js=/([A-Za-z0-9._$]+)\[["']([A-Za-z0-9_$]+)["']\][ \t]*=[ \t]*\{/\1\.\2/o,object/
+
+--regex-js=/([A-Za-z0-9._$]+)[ \t]*=[ \t]*\(function\(\)/\1/C,class/
+--regex-js=/['"]*([A-Za-z0-9_$]+)['"]*:[ \t]*\(function\(\)/\1/C,class/
+--regex-js=/class[ \t]+([A-Za-z0-9._$]+)[ \t]*/\1/C,class/
+--regex-js=/([A-Za-z$][A-Za-z0-9_$()]+)[ \t]*=[ \t]*[Rr]eact.createClass[ \t]*\(/\1/C,class/
+--regex-js=/\ ([A-Z][a-z][A-Za-z0-9_$]+)[ \t]*[=:][ \t]*[A-Za-z0-9_$]*[ \t]*[{(]/\1/C,class/
+
+--regex-js=/([A-Za-z$][A-Za-z0-9_$]+)[ \t]*=[ \t]*function[ \t]*\(/\1/f,function/
+--regex-js=/(function)*[ \t]*([A-Za-z$_][A-Za-z0-9_$]+)[ \t]*\([^)]*\)[ \t]*\{/\2/f,function/
+
+--regex-js=/['"]*([A-Za-z$][A-Za-z0-9_$]+)['"]*:[ \t]*function[ \t]*\(/\1/m,method/
+--regex-js=/([A-Za-z0-9_$]+)\[["']([A-Za-z0-9_$]+)["']\][ \t]*=[ \t]*function[ \t]*\(/\2/m,method/
+
 --regex-js=/(,|^|\*\/)[ \t]*async[ \t]+([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*\([ \t]*([A-Za-z_$].+)?[ \t]*\)[ \t]*\{/\2/f,function/
 
 
