@@ -1,12 +1,13 @@
 " Note: this is set up on top of the pangloss/vim-javascript plugin
+" See ~/.vim/plugged/vim-javascript/syntax/javascript.vim
 
 " Syntax
 "--------
 
 syn match jsClassName "\(class\ \)\@<=\S\+" containedin=jsClassDefinition
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s(.*=>\)\@=" containedin=jsVariableDef,jsIdentExpIdent,jsAssignmentExpr,jsBlock,jsFuncBlock,jsObjectProp
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\sfunction\)\@=" containedin=jsObjectProp,jsVariableDef
-syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(:\sfunction\)\@="
+syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s\(async\ \)\?(.*=>\)\@=" containedin=jsVariableDef,jsIdentExpIdent,jsAssignmentExpr,jsBlock,jsFuncBlock,jsObjectProp
+syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(\s=\s\(async\ \)\?function\)\@=" containedin=jsObjectProp,jsVariableDef
+syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(:\s\function\)\@="
 
 syn match testDesc +'\([_a-zA-Z]\+\ \)\?should.\+'+ containedin=jsParen
 syn match routerDef "[a-zA-Z]*[rR]outer.\(get\|post\|delete\|options\|put\|use\)" containedin=jsFuncBlock

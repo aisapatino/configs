@@ -41,11 +41,9 @@ function! alpw#main#Jump(pattern, flags) range
 endfunction
 
 function! alpw#main#SetJump(pattern)
-  " set basic jump mappings - useful if nothing language-specific is defined
-  " maps [[ ]] to go to non-whitespace at col 0
   let b:jump_pattern = a:pattern
-  nnoremap <Leader>k :call alpw#commands#Jump(b:jump_pattern, 'bW')<CR>
-  nnoremap <Leader>j :call alpw#commands#Jump(b:jump_pattern, 'W')<CR>
+  nnoremap <buffer> <silent> <Leader>k :call alpw#main#Jump(b:jump_pattern, 'bWz')<CR>
+  nnoremap <buffer> <silent> <Leader>j :call alpw#main#Jump(b:jump_pattern, 'W')<CR>
 endfunction
 
 "- Plugins

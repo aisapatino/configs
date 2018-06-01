@@ -15,16 +15,28 @@ snippet str "use strict statement" b
 'use strict';
 endsnippet
 
-snippet cb "es5 callback" ws
+snippet cb "function callback" ws
 function ($1) {
 	$2
 });
 endsnippet
 
-snippet af "es6 arrow function as cb" ws
+snippet a "arrow function" ws
 ($1) => {
 	$2
-});$3
+};
+endsnippet
+
+snippet aa "async arrow function" ws
+async ($1) => {
+	$2
+};
+endsnippet
+
+snippet af "arrow function as arg " ws
+($1) => {
+	$2
+})$3;
 endsnippet
 
 snippet co "console.log" b
@@ -64,19 +76,19 @@ endsnippet
 # NODE
 #------------------------------------------------------------------------------
 
-snippet cr "es6 const require" b
+snippet cr "const require" b
 const $1 = require('$2')$3;
 endsnippet
 
-snippet crm "es6 const require, matching" b
+snippet crm "const require, matching" b
 const $1 = require('$1')$2;
 endsnippet
 
-snippet re "es5 require (var)" b
+snippet re "var require" b
 var $1 = require("$2")$3;
 endsnippet
 
-snippet req "es5 matching require (var)" b
+snippet req "var require, matching" b
 var $1 = require("$1")$2;
 endsnippet
 
@@ -95,46 +107,44 @@ endsnippet
 # mocha
 # ------
 
-snippet desc "describe wrapper" bs
+snippet desc "describe wrapper (arrow func)" bs
 describe('$1', () => {$2
 });
 endsnippet
 
-snippet desco "es5 describe wrapper" bs
+snippet desco "describe wrapper (function)" bs
 describe("$1", function () {$2
 });
 endsnippet
 
-snippet be "beforeEach" bs
-beforeEach(($1) => {$2
+snippet be "beforeEach (arrow)" bs
+beforeEach(() => {$2
 });
 
 endsnippet
 
-snippet ae "afterEach" bs
-afterEach(($1) => {$2
+snippet ae "afterEach (arrow)" bs
+afterEach(() => {$2
 });
 
 endsnippet
 
-snippet it "it wrapper, sync" bs
+snippet it "it wrapper, no cb (arrow)" bs
 it('should $1', () => {$2
 });$3
 endsnippet
 
-snippet ito "es5 it wrapper, sync" bs
+snippet ito "it wrapper, no cb (function)" bs
 it("should $1", function () {$2
 });
 endsnippet
 
 snippet ita "it wrapper, async" bs
-it("should $1", (done) => {
-	$2
-	done();
-});$3
+it('should $1', async () => {$2
+});
 endsnippet
 
-snippet its "it.skip" bs
+snippet its "it.skip (arrow)" bs
 it.skip('should $1', () => {
 });$2
 endsnippet
@@ -149,6 +159,17 @@ snippet wrap "wrap with test util for assertions in cb" bs
 utils.wrapTryCatch(done, () => {
 	${VISUAL}
 });
+endsnippet
+
+snippet mq "mockQueries util"
+const assertQueriesComplete = testUtils.mockQueries(tracker, [
+	{
+		method: '${1:first}',
+		sql: $2,
+		bindings: [$3],
+		response: $4
+	}
+]);
 endsnippet
 
 # sinon

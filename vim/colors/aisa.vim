@@ -14,7 +14,9 @@ hi NonText        guifg=#a0b0c0
 hi VertSplit      guifg=#3f5472  guibg=#3f5472
 hi SignColumn     guifg=#ffffff  guibg=NONE
 hi WarningSign    guifg=#ff8800  guibg=NONE
+hi NeomakeWarningDefault gui=undercurl  guisp=#ff8800
 hi ErrorSign      guifg=#990033  guibg=NONE
+hi! link NeomakeErrorDefault SpellBad
 hi! link FoldColumn SignColumn
 
 hi LineNr         guifg=#a0b0c0

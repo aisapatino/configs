@@ -10,8 +10,7 @@ let g:markdown_fenced_languages = [
 \]
 
 " Jump between headers
-nnoremap ]] :call alpw#main#Jump('^#', 'W')<CR>
-nnoremap [[ :call alpw#main#Jump('^#', 'bW')<CR>
+call alpw#main#SetJump('^#')
 
 let b:prev = 0
 

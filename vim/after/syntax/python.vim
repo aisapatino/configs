@@ -4,7 +4,7 @@
 "- Overrides
 "------------
 
-" decorator symbol & function as special
+" TODO what am i changing as far as the match?
 syn clear pythonDecorator
 syn match pythonDecorator "@" display nextgroup=pythonDecoratorContents skipwhite
 syn match pythonDecoratorContents "\%(\%(def\s\|class\s\|@\)\s*\)\@<=\h\%(\w\|\.\)*" contained
@@ -38,15 +38,16 @@ syn match pyAssert "\%(self\.\)\@<=assert.\{-}\ze("
 " highlight builtins as keywords, not functions
 hi! link pythonBuiltin          Keyword
 
-hi link pythonSelf              Type
-hi link pythonBoolean           Boolean
-hi link pythonDecorator         PreProc
-hi link pythonDecoratorContents Define
-hi link pythonArgs              Keyword
-hi link pythonClass             ClassName
-hi link pythonLogging           Debug
-hi link pythonDjangoField       Include
-hi link pythonDocString         Comment
-hi link pythonDocKeywords       Special
+hi! link pythonSelf              Type
+hi! link pythonBoolean           Boolean
+hi! link pythonDecorator         PreProc
+hi! link pythonDecoratorContents Define
+hi! link pythonArgs              Keyword
+hi! link pythonClass             ClassName
+hi! link pythonLogging           Debug
+hi! link pythonDjangoField       Include
+hi! link pythonDocString         Comment
+hi! link pythonDocKeywords       Special
+hi! link pythonRawString         Constant
 
-hi link pyAssert                Keyword
+hi! link pyAssert                Keyword
