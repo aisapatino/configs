@@ -2,32 +2,32 @@
 
 # Report the current branch & status of all repos inside of current directory
 # Calls fetch from all repos unless -s option is passed
+# Uses the same notation used by git prompt
 
 check_statuses() {
-  red="\033[31m"
-  green="\033[32m"
-  yellow="\033[33m"
-  cyan="\033[36m"
-  bold="\033[1m"
-  reset="\033[m"
+  red="\e[31m"
+  green="\e[32m"
+  yellow="\e[33m"
+  cyan="\e[36m"
+  bold="\e[1m"
+  reset="\e[m"
 
   branch_width="%-19s"
-  remote_width="%-10s"
+  remote_width="%-8s"
 
   echo -e "Checking git repos...\n"
 
   for d in */ ; do
-    # skip non-dir or non-repo
     if [ ! -d "$d" ] || [ ! -d "$d/.git" ] ; then
       continue
     fi
 
-    printf "$bold%30s$reset  " $(echo "$d" | sed "s/\///" )
-    cd $d
+    printf "      $bold%-17s$reset  " $(echo "$d" | sed "s/\///" )
+    cd "$d"
 
     # $1 = first arg; -s = skip fetch
     if [ -z "$1" ] || [ "$1" != "-s" ] ; then
-      git fetch -q
+      git fetch --all -q
     fi
 
     # run git status & pull out relevant lines
@@ -47,9 +47,10 @@ check_statuses() {
     branch=$(echo "$st" | grep -o "On branch \([a-zA-Z0-9_/\-]\+\)")
     branch=$(echo "$branch" | grep -o "[a-zA-Z0-9_/\-]\+$")
     if [ -z "$branch" ] ; then
-      echo -e "${red}could not find branch name$reset"
+      echo -e "${red}?$reset"
+      cd ..
       continue
-    elif [ "$branch" = "master" ] ; then
+    elif [ "$branch" = "master" ] || [ "$branch" = "develop" ] ; then
       printf $branch_width $branch
     else
       printf "$cyan$branch_width$reset" $branch
@@ -60,35 +61,37 @@ check_statuses() {
     # local changes
     local_changes=0
     if [ -n "$(echo "$st" | grep 'Untracked')" ] ; then
-      details="$red[New files]"
+      details="$red %%"
       local_changes=1
     fi
     if [ -n "$(echo "$st" | grep 'Changes not staged for commit')" ] ; then
-      details="$details$red[Modified]"
+      details="$details$red *"
       local_changes=1
     fi
     if [ -n "$(echo "$st" | grep 'Changes to be committed')" ] ; then
-      details="$details$yellow[Staged]"
+      details="$details$yellow +"
       local_changes=1
     fi
 
     # branch compared to remote
     if [ -n "$(echo "$st" | grep 'Your branch is ahead')" ] ; then
-      details="$details$yellow[Ahead of remote]"
+      details="$details$yellow >"
     elif [ -n "$(echo "$st" | grep 'Your branch is behind')" ] ; then
-      details="$details$yellow[Behind remote]"
+      behind="$yellow <"
       if [ $local_changes -eq 0 ] ; then
-        git pull -q --ff-only && details="$details$green[Pulled]"
+        git pull -q --ff-only && details="$details ${green}✔︎$reset$behind"
+      else
+        details="$details$behind"
       fi
     elif [ -n "$(echo "$st" | grep 'diverged')" ] ; then
-      details="$red[Diverged]"
+      details="$red <>"
     fi
 
     if [ -z "$details" ] ; then
-      details="$green[Up to date]"
+      details=" ${green}✔︎"
     fi
 
-    echo -e " $details$reset"
+    printf "\r$details$reset\n"
 
     cd ..
   done

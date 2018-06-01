@@ -24,7 +24,7 @@
 [fetch]
   prune = true
 [log]
-  date = format:%m/%d
+  date = format:%Y-%m-%d
 [mailmap]
   file = ~/Projects/.mailmap
 [merge]
@@ -59,9 +59,10 @@
   com = commit --verbose
   cm = commit -m
   ca = commit --amend --verbose
-  can = commit --amend -C HEAD
+  can = commit --amend -C HEAD --reset-author
   cs = "!sh -c 'git commit --squash=$1' -"
   cf = "!sh -c 'git commit --fixup=$1' -"
+  wip = commit -m WIP --no-verify
   # diff
   d = diff
   dc = diff --cached
@@ -84,7 +85,7 @@
   sa = "!sh -c 'git stash apply stash@{$1}' -"
   sd = "!sh -c 'git stash drop stash@{$1}' -"
   sl = stash list --format=\"\n%C(yellow)%gd %C(green)%s%Creset %ar\" --name-status
-  ss = "!f() { if [ -z \"$1\" ]; then echo \"Failed - missing stash description\"; else git stash save $1; fi }; f"
+  ss = stash push --include-untracked -m
   sp = stash pop
   shows = stash show -p
   # misc

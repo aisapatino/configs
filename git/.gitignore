@@ -16,6 +16,7 @@ temp/
 # Node
 node_modules
 bower_components
+.tern-port
 
 # Mac OS
 .DS_Store
