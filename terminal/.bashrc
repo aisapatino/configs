@@ -1,6 +1,6 @@
 # Base config - common to linux & osx. Sourced by the other specific bashrc files
 
-# Settings
+# History
 #----------
 
 HISTCONTROL=ignoreboth         # ignore duplicates & commands starting with space
@@ -8,13 +8,17 @@ HISTIGNORE="ls:ll:gs:gd:cd *:g sp:g ch *"  # ignore frequent short commands
 HISTSIZE=2000                  # default is 500
 shopt -s histappend            # add to existing history instead of overwriting
 
+# Misc options
+#--------------
+
 shopt -s cdable_vars           # cd using vars without having to include $
 shopt -u hostcomplete          # fix tabcomplete with @ in name
 
+# Editor
+#--------
+
 export EDITOR=nvim
 export VISUAL=$EDITOR
-set -o vi
-alias vim="nvim"
 
 # Colors
 #--------
@@ -23,6 +27,8 @@ export CLICOLOR=1
 
 # Prompt
 #--------
+
+set -o vi
 
 GIT_PS1_SHOWUPSTREAM=1        # indicate ahead/behind upstream
 GIT_PS1_SHOWDIRTYSTATE=1      # indicate staged & unstaged changed
@@ -49,6 +55,8 @@ complete -o default -o nospace -F _git g
 #---------
 
 alias ag="ag --hidden"
+alias vim="nvim"
+
 alias ll="ls -la"
 alias f="find . -not -path \"*node_modules*\" -iname"
 alias fa="find . -iname"                 # see function ff() for specifying dir
@@ -59,6 +67,7 @@ alias gd="git diff"
 alias gk="gitk --all"
 
 alias npmlist="npm ls --depth=0"
+alias check="npm run check"
 
 base_tree="tree -a -C -I 'node_modules|.git|bower_components|coverage|.DS_Store|*.pyc'"
 alias t="$base_tree --dirsfirst -L "
@@ -70,12 +79,21 @@ alias trd="$base_tree -d"
 export PYTHONPATH=$PYTHONPATH:~/Projects/pylint-django
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
-export PYTHONPATH=$PYTHONPATH:~/Devel/google-cloud-sdk/platform/google_appengine
-export PYTHONPATH=$PYTHONPATH:~/Devel/google-cloud-sdk/platform/google_appengine/lib/webob-1.2.3
-export PYTHONPATH=$PYTHONPATH:~/Devel/google-cloud-sdk/platform/google_appengine/lib/yaml/lib
 export PYTHONPATH=$PYTHONPATH:~/Devel
 # django (for pylint)
 export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
+
+# Google Cloud SDK
+#------------------
+
+gcdir=~/Devel/google-cloud-sdk
+if [ -d "$gcdir" ] ; then
+  source $gcdir/path.bash.inc
+  source $gcdir/completion.bash.inc
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/webob-1.2.3
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/yaml/lib
+fi
 
 # Custom functions
 #------------------
@@ -123,10 +141,34 @@ br() {
 # Load check_statuses function
 source "$HOME/Projects/configs/git/check_statuses.sh"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/annaluisa/Devel/google-cloud-sdk/path.bash.inc' ]; then source '/Users/annaluisa/Devel/google-cloud-sdk/path.bash.inc'; fi
+# Untracked .bashrc (for passwords, etc.)
+if [ -f ~/Projects/.bashrc ] ; then
+  source ~/Projects/.bashrc
+fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/annaluisa/Devel/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/annaluisa/Devel/google-cloud-sdk/completion.bash.inc'; fi
+# Mac-specific
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Add CWD to iterm tab title
+  if [ $ITERM_SESSION_ID ]; then
+    export PROMPT_COMMAND=$PROMPT_COMMAND'; echo -ne "\033]0;${PWD##*/}\007"';
+  fi
 
-# vim: syntax=sh
+  # Place brew installs before system, add local node_modules (mostly for eslint)
+  export PATH=/usr/local/bin:$PATH:./node_modules/.bin
+
+  # Node version manager
+  export NVM_DIR=~/.nvm
+  if [ -f /usr/local/opt/nvm/nvm.sh ] ; then
+    source /usr/local/opt/nvm/nvm.sh
+  fi
+
+  # Colors for ls. Differs from linux - see man ls for more info
+  export LSCOLORS=ExGxBxDxCxEgEdxbxgExEx
+
+  # Enhanced bash autocomplete. See http://superuser.com/a/288491
+  if [ -f /usr/local/etc/bash_completion ]; then
+    source /usr/local/etc/bash_completion
+  fi
+
+  source $(brew --prefix autoenv)/activate.sh
+fi

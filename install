@@ -53,14 +53,10 @@ run_setup() {
 
   ln -fsv "$configs/terminal/.inputrc"            ~
   ln -fsv "$configs/terminal/.bash_profile"       ~
-  if [ $work ] ; then
-    ln -fsv "$configs/terminal/.bashrc-work"      ~/.bashrc
-  elif [ $linux ] ; then
+  ln -fsv "$configs/terminal/.bashrc"             ~
+  if [ $linux ] ; then
     mkdir -pv ~/.config/terminator
     ln -fsv "$configs/terminal/terminator-config" ~/.config/terminator/config
-    ln -fsv "$configs/terminal/.bashrc-linux"     ~/.bashrc
-  else
-    ln -fsv "$configs/terminal/.bashrc-base"      ~/.bashrc
   fi
 
   # Other
