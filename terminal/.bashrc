@@ -55,45 +55,17 @@ complete -o default -o nospace -F _git g
 #---------
 
 alias ag="ag --hidden"
-alias vim="nvim"
 
 alias ll="ls -la"
-alias f="find . -not -path \"*node_modules*\" -iname"
-alias fa="find . -iname"                 # see function ff() for specifying dir
 
 alias g="git"
 alias gs="git status"
 alias gd="git diff"
 alias gk="gitk --all"
 
-alias npmlist="npm ls --depth=0"
-alias check="npm run check"
-
 base_tree="tree -a -C -I 'node_modules|.git|bower_components|coverage|.DS_Store|*.pyc'"
 alias t="$base_tree --dirsfirst -L "
 alias trd="$base_tree -d"
-
-# Python / GAE
-#-------------
-
-export PYTHONPATH=$PYTHONPATH:~/Projects/pylint-django
-export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages
-export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
-export PYTHONPATH=$PYTHONPATH:~/Devel
-# django (for pylint)
-export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
-
-# Google Cloud SDK
-#------------------
-
-gcdir=~/Devel/google-cloud-sdk
-if [ -d "$gcdir" ] ; then
-  source $gcdir/path.bash.inc
-  source $gcdir/completion.bash.inc
-  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine
-  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/webob-1.2.3
-  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/yaml/lib
-fi
 
 # Custom functions
 #------------------
@@ -107,12 +79,6 @@ sr() {
   else
     echo "Missing arguments. Got: '$1', '$2', '$3'"
   fi
-}
-
-# Find file in specified dir. Usage: ff <pathtosearch> "<pattern>"
-# Example: ff ../frontend "*.png"
-ff() {
-  find "$1" -iname "$2"
 }
 
 # List local git branches with corresponding remotes and ahead/behind status
@@ -141,11 +107,6 @@ br() {
 # Load check_statuses function
 source "$HOME/Projects/configs/git/check_statuses.sh"
 
-# Untracked .bashrc (for passwords, etc.)
-if [ -f ~/Projects/.bashrc ] ; then
-  source ~/Projects/.bashrc
-fi
-
 # Mac-specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Add CWD to iterm tab title
@@ -169,6 +130,4 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -f /usr/local/etc/bash_completion ]; then
     source /usr/local/etc/bash_completion
   fi
-
-  source $(brew --prefix autoenv)/activate.sh
 fi
