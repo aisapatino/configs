@@ -4,6 +4,9 @@
 *.map
 coverage
 dist
+yarn.lock
+package-lock.json
+*dump.sql
 
 # SJF specific
 _theme
