@@ -26,6 +26,7 @@ syn keyword jsReactFunc setState render  containedin=jsFuncCall
 "------------
 
 " pre-existing groups
+hi! link jsFuncCall       Normal
 hi! link jsUndefined      Constant
 hi! link jsGlobalObjects  Keyword
 hi! link jsFunction       Operator

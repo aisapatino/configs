@@ -40,7 +40,7 @@ hi Boolean        guifg=#38057f
 
 hi Identifier     guifg=#1f798a
 hi Function       guifg=#440899  gui=bold
-hi SpecialFunc    guifg=#1f798a  gui=bold
+hi SpecialFunc    guifg=#1158a1  gui=bold
 
 hi Statement      guifg=#093092  gui=bold
 hi Operator       guifg=#093092
