@@ -95,7 +95,7 @@ br() {
   # 6. Align text in columns
   # 7. Add color to current branch
   git branch -vv \
-    | sed -r "s/^([\* ]{2})([^ ]+)\ +[a-z0-9]{7,8}\ (\[.*\])?.*/\1\2!`printf "\e[34m"` \3`printf "\e[m"`/" \
+    | sed -r "s/^([\* ]{2})([^ ]+)\ +[a-z0-9]{7,8}\ (\[[^ ]+\/[^]]+\])?.*/\1\2!`printf "\e[34m"` \3`printf "\e[m"`/" \
     | sed 's/\ \[//' \
     | sed 's/\]//' \
     | sed "s/:\ gone/`printf " \e[35mGONE\e[m"`/" \
