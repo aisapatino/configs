@@ -12,6 +12,8 @@ syn match jsFuncName "\([a-zA-Z0-9_]\+\)\(:\s\function\)\@="
 syn match testDesc +'\([_a-zA-Z]\+\ \)\?should.\+'+ containedin=jsParen
 syn match routerDef "[a-zA-Z]*[rR]outer.\(get\|post\|delete\|options\|put\|use\)" containedin=jsFuncBlock
 
+syn region jsGraphqlComment start=+"""+ end=+"""+ containedin=jsTemplateString
+
 syn keyword jsProto     prototype        containedin=jsObjectProp
 syn keyword jsThis      self _this
 syn keyword jsModule    exports module   containedin=jsObjectProp
@@ -50,3 +52,4 @@ hi! link chaiExpect      Keyword
 hi! link testDesc        Underlined
 hi! link routerDef       Function
 hi! link jsReactFunc     SpecialFunc
+hi! link jsGraphqlComment Comment
