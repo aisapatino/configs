@@ -51,13 +51,8 @@ run_setup() {
 
   printf "$header" "Terminal"
 
-  ln -fsv "$configs/terminal/.inputrc"            ~
   ln -fsv "$configs/terminal/.bash_profile"       ~
   ln -fsv "$configs/terminal/.bashrc"             ~
-  if [ $linux ] ; then
-    mkdir -pv ~/.config/terminator
-    ln -fsv "$configs/terminal/terminator-config" ~/.config/terminator/config
-  fi
 
   # Other
   #-------
