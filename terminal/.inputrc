@@ -1,6 +1,0 @@
-# init file for readline lib
-
-# indicate vim mode in prompt using different color $
-set show-mode-in-prompt on
-set vi-ins-mode-string ""
-set vi-cmd-mode-string \1\e[35;7m\2C\1\e[m\2

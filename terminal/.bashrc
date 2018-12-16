@@ -1,5 +1,3 @@
-# Base config - common to linux & osx. Sourced by the other specific bashrc files
-
 # History
 #----------
 
@@ -12,7 +10,7 @@ shopt -s histappend            # add to existing history instead of overwriting
 #--------------
 
 shopt -s cdable_vars           # cd using vars without having to include $
-shopt -u hostcomplete          # fix tabcomplete with @ in name
+shopt -u hostcomplete          # fix tabcomplete with @ in name (for scoped node modules)
 
 # Editor
 #--------
@@ -109,11 +107,6 @@ source "$HOME/Projects/configs/git/check_statuses.sh"
 
 # Mac-specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  # Add CWD to iterm tab title
-  if [ $ITERM_SESSION_ID ]; then
-    export PROMPT_COMMAND=$PROMPT_COMMAND'; echo -ne "\033]0;${PWD##*/}\007"';
-  fi
-
   # Place brew installs before system, add local node_modules (mostly for eslint)
   export PATH=/usr/local/bin:$PATH:./node_modules/.bin
 
@@ -131,3 +124,16 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     source /usr/local/etc/bash_completion
   fi
 fi
+
+# Google app engine / SJF setup
+gcdir=~/Devel/google-cloud-sdk
+if [ -d "$gcdir" ] ; then
+  source $gcdir/path.bash.inc
+  source $gcdir/completion.bash.inc
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/webob-1.2.3
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/yaml/lib
+fi
+
+# access to vendor libs
+export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
