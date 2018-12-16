@@ -28,7 +28,7 @@ set wildchar=<tab>             " autocomplete for commands
 set shortmess=ilmnxOtI         " shorter messages, don't show intro screen
 
 set list                       " display things like tabs, spaces, eol, etc.
-set listchars=trail:▫︎,tab:▷-,extends:›,precedes:‹
+set listchars=trail:◦,tab:▷-,extends:›,precedes:‹
 set fillchars=fold:\ ,diff:\ ,vert:\ 
 set diffopt=filler,context:3,vertical,foldcolumn:0
 
@@ -166,7 +166,8 @@ noremap <C-y> :%y+<CR>
 com! Current cd %:h
 
 com! TrimTrailing %s/\s\+$
-com! PrettyJson %!python -m json.tool
+com! PrettyJson %!jq '.'
+com! Prettier silent !prettier --write %
 
 " command shortcuts for functions
 com! UpdateTags           call alpw#commands#UpdateTags()
@@ -191,17 +192,16 @@ com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 call plug#begin('~/.vim/plugged')
 
 Plug 'aisapatino/ctrlp.vim'
-Plug 'sirver/ultisnips'
+Plug 'sirver/ultisnips', { 'for': 'javascript' }
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-surround'
+Plug 'ervandew/supertab'
 
 if has('nvim')
   Plug 'neomake/neomake'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
   Plug 'scrooloose/syntastic'
 endif
@@ -215,11 +215,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
 Plug 'aisapatino/vim-markdown'
-Plug 'aisapatino/vim-stylus'
-Plug 'nikvdp/ejs-syntax'
-Plug 'digitaltoad/vim-pug'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'kchmck/vim-coffee-script'
+Plug 'digitaltoad/vim-pug'
+Plug 'stephpy/vim-yaml'
 
 call plug#end()
 
@@ -227,7 +225,6 @@ call plug#end()
 "----------------
 
 let g:python_host_prog = 'python3'
-" let g:python_host_skip_check = 1
 
 cabbrev ag Ack!
 let g:ackprg = 'ag --hidden --vimgrep'
@@ -239,34 +236,14 @@ let g:ctrlp_open_multiple_files = '1vjr'   " open 1st in current window, rest hi
 let g:ctrlp_reuse_window = 'netrw\|help'   " open in help or netrw windows (not qf)
 let g:ctrlp_show_hidden = 1                " show hidden files by default
 let g:ctrlp_switch_buffer = 0              " open buffer in current window even if it's open elsewhere
-let g:ctrlp_tilde_homedir = 1              " save mru paths with ~ for $HOME
-" this was buggy after switching to neovim
-" let g:ctrlp_status_func = {'main': 'alpw#main#CtrlPStatus', 'prog': 'alpw#main#CtrlPProgress'}
+let g:ctrlp_tilde_homedir = 1              " show mru paths with ~ for $HOME
+let g:ctrlp_status_func = {'main': 'alpw#main#CtrlPStatus', 'prog': 'alpw#main#CtrlPProgress'}
 let g:ctrlp_custom_ignore = {
 \  'dir': '\v(\.git|node_modules|libs|\.coverage-html|coverage|build|dist|dist-.*|gen)$',
 \  'file': '\v\.(min.*|map|fugitiveblame)$'
 \}
 " replace F-key binding, which doesn't work well on mac keyboard
-let g:ctrlp_prompt_mappings = { 'PrtDeleteEnt()':  ['<c-@>'] }
-
-" don't show popup menu until triggered
-let g:deoplete#disable_auto_complete = 1
-" avoid seeing the typed word as first suggestion
-call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ deoplete#mappings#manual_complete()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <s-TAB>
-  \ pumvisible() ? "\<C-p>" :
-  \ "<C-R>=UltiSnips#ExpandSnippetOrJump()<cr>"
+let g:ctrlp_prompt_mappings = { 'PrtDeleteEnt()':  ['<c-2>'] }
 
 " quick shortcuts: find all, files, recent, buffers, tags
 nnoremap <Leader>fa :CtrlPMixed<CR>
@@ -284,8 +261,6 @@ augroup javascript_folding
   au FileType javascript setlocal foldmethod=syntax
 augroup END
 
-"let g:jsx_ext_required = 0              " support jsx syntax in .js files
-
 let g:livedown_browser = "'/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'"
 
 if has('nvim')
@@ -301,7 +276,6 @@ if has('nvim')
     autocmd BufWritePost *.py Neomake
     autocmd BufWritePost *.sh Neomake
   augroup END
-  let g:deoplete#enable_at_startup = 1
   let g:neomake_warning_sign = { 'text': '▶︎▶︎', 'texthl': 'WarningSign' }
   let g:neomake_error_sign = { 'text': '▶︎▶︎', 'texthl': 'ErrorSign' }
   let g:neomake_highlight_columns = 1
@@ -313,6 +287,7 @@ if has('nvim')
     \   '%W%f: line %l\, col %c\, Warning - %m,%-G,%-G%*\d problems%#',
   \ }
   let g:neomake_javascript_enabled_makers = ['eslint']
+  let g:neomake_yaml_enabled_makers = ['yamllint']
 endif
 
 " prevent default ultisnips bindings. see <TAB> / <s-TAB> bindings above
