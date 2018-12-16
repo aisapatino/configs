@@ -192,7 +192,7 @@ com! TestHi :source $VIMRUNTIME/syntax/hitest.vim
 call plug#begin('~/.vim/plugged')
 
 Plug 'aisapatino/ctrlp.vim'
-Plug 'sirver/ultisnips', { 'for': 'javascript' }
+Plug 'sirver/ultisnips', { 'for': ['javascript', 'snippets'] }
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
