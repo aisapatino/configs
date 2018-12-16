@@ -10,10 +10,6 @@ syn keyword htmlArg contained itemid itemscope itemtype itemprop itemref
 " Highlight
 "----------
 
-" Don't highlight js - let js syntax do the highlighting
-" hi link javaScript Normal
-" hi link javaScriptBraces Normal
-
 " De-emphasize brackets themselves
 hi! link htmlTag Comment
 

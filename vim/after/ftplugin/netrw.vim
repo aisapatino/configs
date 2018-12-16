@@ -1,1 +1,1 @@
-setl nolist
+setlocal nolist
