@@ -107,6 +107,11 @@ source "$HOME/Projects/configs/git/check_statuses.sh"
 
 # Mac-specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Add CWD to iterm tab title
+  if [ $ITERM_SESSION_ID ]; then
+    export PROMPT_COMMAND=$PROMPT_COMMAND'; echo -ne "\033]0;${PWD##*/}\007"';
+  fi
+
   # Place brew installs before system, add local node_modules (mostly for eslint)
   export PATH=/usr/local/bin:$PATH:./node_modules/.bin
 
