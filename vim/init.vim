@@ -290,9 +290,8 @@ if has('nvim')
   let g:neomake_yaml_enabled_makers = ['yamllint']
 endif
 
-" prevent default ultisnips bindings. see <TAB> / <s-TAB> bindings above
-let g:UltiSnipsExpandTrigger = '<nul>'
-let g:UltiSnipsJumpForwardTrigger = '<nul>'
+let g:UltiSnipsExpandTrigger = '<s-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<s-tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<nul>'
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/custom-snippets'   " for :UltiSnipsEdit
