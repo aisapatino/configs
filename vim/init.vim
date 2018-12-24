@@ -69,12 +69,12 @@ set foldtext=alpw#main#GetFoldText()
 
 set statusline=%{alpw#statusline#FileId()}           " buffer number or special ft
 set statusline+=\ %#SLWarn#%{alpw#statusline#Modified()}%*   " modified/nomodifiable flag
-set statusline+=\ %{alpw#statusline#BranchIndent()}    " git branch, indentation
+set statusline+=\ %<%{alpw#statusline#BranchIndent()}    " git branch, indentation
 if has('nvim')
   set statusline+=\ %#ErrorMsg#%{neomake#statusline#LoclistStatus('')}%*
 endif
 set statusline+=%=                         " end of left side
-set statusline+=\ \ \ %<%{alpw#statusline#Dir()}        " short-format path relative to cwd
+set statusline+=\ \ \ %{alpw#statusline#Dir()}        " short-format path relative to cwd
 set statusline+=\ %4L,%v                   " total lines in file, cursor column
 
 set showtabline=2                          " always show tabline
