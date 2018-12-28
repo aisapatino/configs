@@ -36,8 +36,16 @@ GIT_PS1_SHOWCOLORHINTS=1      # color like git status for untracked/modified
 
 source ~/.git-prompt.sh
 
+add_virtual_env() {
+  if [ "$VIRTUAL_ENV" ] ; then
+    export PS1="\n`basename \"$VIRTUAL_ENV\"` $PS1"
+  else
+    export PS1="\n$PS1"
+  fi
+}
+
 # color codes are wrapped in \[ \] so they're ignored when computing prompt length
-PROMPT_COMMAND='__git_ps1 "\n\[\e[34m\]\w\[\e[m\]" " $ "'
+PROMPT_COMMAND='__git_ps1 "\[\e[34m\]\w\[\e[m\]" " $ "; add_virtual_env'
 
 # Autocomplete
 #--------------
@@ -130,6 +138,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   fi
 fi
 
+# export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+
 # Google app engine / SJF setup
 gcdir=~/Devel/google-cloud-sdk
 if [ -d "$gcdir" ] ; then
@@ -137,8 +147,9 @@ if [ -d "$gcdir" ] ; then
   source $gcdir/completion.bash.inc
   export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine
   export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/webob-1.2.3
-  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/yaml/lib
+  export PYTHONPATH=$PYTHONPATH:$gcdir/platform/google_appengine/lib/yaml-3.10
 fi
 
 # access to vendor libs
 export PYTHONPATH=$PYTHONPATH:~/Projects/sjfnw/libs
+# export PYTHONPATH=$PYTHONPATH:~/Projects/env-sjfnw/lib/python2.7/site-packages
