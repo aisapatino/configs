@@ -168,6 +168,7 @@ com! Current cd %:h
 com! TrimTrailing %s/\s\+$
 com! PrettyJson %!jq '.'
 com! Prettier silent !prettier --write %
+com! TabsToSpaces %s/\t/\ \ /
 
 " command shortcuts for functions
 com! UpdateTags           call alpw#commands#UpdateTags()
@@ -272,6 +273,7 @@ if has('nvim')
   " automatic 
   augroup alpwNeomake
     autocmd!
+    autocmd BufWritePost *.js silent !prettier --write %
     autocmd BufWritePost *.js Neomake
     autocmd BufWritePost *.py Neomake
     autocmd BufWritePost *.sh Neomake
